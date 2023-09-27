@@ -10,7 +10,7 @@
             <li><a href="#"class="main-font-20 {if isset($kits)}active{/if}">Mes kits</a></li>
             {*
             {if $loggedInAdmin}
-            <li><a href="#"class="main-font-20">Admin</a></li>
+            <li><a href="#"class="main-font-20  {if isset($admin)}active{/if}">Admin</a></li>
             {/if}
             *}
         </ul>

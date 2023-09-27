@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="assets/styles/general.css">
     <link rel="stylesheet" href="assets/styles/navbar.css">
     <link rel="stylesheet" href="assets/styles/header.css">
+    <link rel="stylesheet" href="assets/styles/footer.css">
+    <link rel="stylesheet" href="assets/styles/welcome.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     {block name=styles}
     {/block}
     {block name=script}
@@ -18,5 +22,6 @@
     {block name=body}
 
     {/block}
+    {include file='partials/_footer.tpl'}
 </body>
 </html>

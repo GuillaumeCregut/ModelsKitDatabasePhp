@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap');
+
+* {
+    list-style-type: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* colors */
+    --menu-color: #BBFDC9;
+    --title-color: #912C51;
+    --back-menu-color: #4C57AA;
+    /* Fonts */
+    --main-font: 'Kanit', sans-serif;
+    ;
+    --title-font: 'Pacifico', cursive;
+    ;
+}
+
+body {
+    font-family: var(--main-font);
+}
+
+.main-font-20 {
+    font-family: var(--main-font);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.App {
+    margin-bottom: 150px;
+
+}
+
+.right-page {
+    grid-area: 1 / 2 / 2 / 3;
+
+    @media screen and (max-width: 768px) {
+        grid-area: 1/1/2/2;
+    }
+
+}
+
+
+@media screen and (max-width: 768px) {
+    .main-font-20 {
+        font-size: 16px;
+        line-height: 20px;
+    }
+}

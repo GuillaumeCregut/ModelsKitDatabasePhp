@@ -1,0 +1,25 @@
+.params {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    height: 100%;
+}
+.solo-container {
+    padding: 0 10px;
+    margin: 0 20px;
+    padding: 20px;
+}
+
+.solo-title{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .params {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 5fr;
+    }
+}

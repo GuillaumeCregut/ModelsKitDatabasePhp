@@ -4,7 +4,7 @@
         <div class="burger-menu"></div>
        
         <ul class="menu">
-            <li><a href="#"class="main-font-20 {if isset($accueil)}active{/if} ">Accueil</a></li>
+            <li><a href="index.php"class="main-font-20 {if isset($accueil)}active{/if} ">Accueil</a></li>
             <li><a href="#"class="main-font-20 {if isset($params)}active{/if}">Paramètres</a></li>
             <li><a href="#"class="main-font-20 {if isset($profil)}active{/if}">Mon profil</a></li>
             <li><a href="#"class="main-font-20 {if isset($kits)}active{/if}">Mes kits</a></li>

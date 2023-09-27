@@ -15,5 +15,12 @@
             *}
         </ul>
     </div>
-    <Welcome />
+    <div class='welcome' id="welcome">
+        {if isset($logged_in)}
+            <p><span class="welcome-name">{$firstname} {$lastname}</span> 
+            <a href="#"><span  class='welcome-unlock material-icons-outlined'>lock</span></a> </p>
+        {else}
+        <a href="#"><span  class="material-icons md-48 welcome-lock">lock</span></a>
+        {/if}
+    </div>
 </nav>

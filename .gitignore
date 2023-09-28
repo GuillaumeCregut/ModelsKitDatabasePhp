@@ -2,3 +2,4 @@ src/templates_c/*
 skeleton.php
 src/templates/skeletons*.tpl
 test.php
+config.xml

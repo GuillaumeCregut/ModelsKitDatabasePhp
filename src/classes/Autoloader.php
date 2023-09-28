@@ -13,6 +13,11 @@ class Autoloader{
             $class=str_replace('\\','/',$class);
             require '../src/classes/'.$class.'.php';
         }
+        if(strpos($class,'App'.'\\')===0){
+            $class=str_replace('App'.'\\','',$class);
+            $class=str_replace('\\','/',$class);
+            require '../src/'.$class.'.php';
+        }
     }
 
     

@@ -1,4 +1,4 @@
-templates_c/*
+src/templates_c/*
 skeleton.php
-templates/skeletons*.tpl
+src/templates/skeletons*.tpl
 test.php

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+   <login>YOUR_LOGIN</login> 
+   <pass>YOUR_PASS</pass>
+   <host>DB_HOST</host>
+   <name>DB_NAME</name>
+</database>

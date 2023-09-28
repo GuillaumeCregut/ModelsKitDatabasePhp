@@ -13,7 +13,7 @@ class SmartyMKD extends \Smarty{
         parent::__construct();
         $templateDir=__DIR__ . '/../templates/';
         $this->template_dir=$templateDir;
-       //$this->compile_dir='templates_c/';
+       $this->compile_dir=__DIR__ . '/../templates_c/';
       // $this->config_dir='configs';
        //$this->cache_dir='cache/';
       // $this->caching=true;

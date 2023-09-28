@@ -10,10 +10,10 @@ require_once(dirname((__FILE__)).'/smarty/Smarty.class.php');
 class SmartyMKD extends \Smarty{ 
    public function __construct()
    {
-        parent::__construct();
-        $templateDir=__DIR__ . '/../templates/';
-        $this->template_dir=$templateDir;
-       $this->compile_dir=__DIR__ . '/../templates_c/';
+      parent::__construct();
+      $baseDir=__DIR__ . '/../';
+      $this->template_dir=$baseDir . 'templates/';
+      $this->compile_dir=$baseDir . 'templates_c/';
       // $this->config_dir='configs';
        //$this->cache_dir='cache/';
       // $this->caching=true;

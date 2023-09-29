@@ -61,4 +61,11 @@ class Database{
         }
         return $data;
     }
+
+    public function exec(string $statement,array $values) :bool | int
+    {
+        $req=$this->getConnect()->prepare($statement);
+        $result=$req->execute($values);
+        return $result;
+    }
 }

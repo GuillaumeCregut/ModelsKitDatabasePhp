@@ -1,4 +1,5 @@
 src/templates_c/*
-skeleton.php
+skeleton.sample
 src/templates/skeletons*.tpl
 test.php
+config.xml

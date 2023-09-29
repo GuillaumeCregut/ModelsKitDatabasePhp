@@ -5,7 +5,7 @@ use Editiel98\SmartyMKD;
 
 abstract class Route
 {
-    protected $smarty;
+    protected SmartyMKD $smarty;
 
     public function __construct()
     {

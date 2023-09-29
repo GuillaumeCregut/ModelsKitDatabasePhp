@@ -1,7 +1,7 @@
 <?php
 namespace Editiel98\Entity;
 
-class Country {
+class Country extends Entity{
     private string $name;
     private int $id;
 

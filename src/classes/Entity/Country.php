@@ -1,8 +1,6 @@
 <?php
 namespace Editiel98\Entity;
 
-use Editiel98\Database\Database;
-
 class Country {
     private string $name;
     private int $id;

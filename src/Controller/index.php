@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Controller;
 
 use Editiel98\Router\Route;
 

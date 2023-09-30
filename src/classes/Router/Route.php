@@ -9,7 +9,7 @@ abstract class Route
     protected array $subPages;
     protected array $params;
 
-    public function __construct(array $subPages=null, array $params=null)
+    public function __construct(array $subPages=[], array $params=[])
     {
         $this->smarty=new SmartyMKD();
         $this->subPages=$subPages;

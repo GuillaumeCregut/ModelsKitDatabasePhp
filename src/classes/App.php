@@ -1,6 +1,8 @@
 <?php
 namespace Editiel98;
 
+use App\Controller\Error;
+
 class App{
 
     private string $route;
@@ -26,7 +28,9 @@ class App{
                 $this->route='parameters';
                 break;
             default : //home
-               $this->route='Index';
+               $page=new Error('404');
+               $page->render();
+               die();
         }
         $classPage='\\App\\Controller\\' . $this->route;
         $page=new $classPage($this->subPages,$this->params);

@@ -8,6 +8,8 @@ class Parameters extends Route
 {
     public function render()
     {
+        
+        $this->getCredentials();
         var_dump($this->subPages);
         if (empty($this->subPages)) {
             $this->smarty->assign('params','params');

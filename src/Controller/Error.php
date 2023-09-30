@@ -23,7 +23,7 @@ class Error extends Route
         //$this->smarty->assign('accueil','accueil');
         $template=$this->error . '.tpl';
         if(isset($this->message)){
-            $this->smarty->assign('errMesg',$this->message);
+            $this->smarty->assign('errMsg',$this->message);
         }
         $this->getCredentials();
         $this->smarty->display($template);

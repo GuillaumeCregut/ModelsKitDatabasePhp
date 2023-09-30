@@ -1,10 +1,13 @@
 <?php
 namespace Editiel98;
 
+use App\Controller\Error;
+
 class App{
 
-    private $route;
-
+    private string $route;
+    private array $params;
+    private array $subPages;
     public function run()
     {
         
@@ -15,23 +18,26 @@ class App{
             header('HTTP/1.1 301 Moved Permanently');
             exit();
         }
-        $routing=$this->decodeURI($uri);
-        $firstRoute=$routing[0][0];
+        $firstRoute=$this->decodeURI($uri);
         switch($firstRoute){
             case '' : //Home
-                $this->route='home';
+                $this->route='Index';
+                $classPage='\\App\Index';
                 break;
             case 'parametres': //parameters
                 $this->route='parameters';
                 break;
             default : //home
-               $this->route='home';
+               $page=new Error('404');
+               $page->render();
+               die();
         }
-        $test=new \App\Index();
-        $test->render();
+        $classPage='\\App\\Controller\\' . $this->route;
+        $page=new $classPage($this->subPages,$this->params);
+        $page->render();
     }
 
-    private function decodeURI($uri)
+    private function decodeURI($uri) : string
     {
         //remove first /
         $uri=substr($uri,1);
@@ -41,8 +47,11 @@ class App{
         }
         else
         $paramsList=[];
+        $this->params= $paramsList;
         $pages=explode('/',$params[0]);
-        return [$pages,$paramsList];
+        $subPages=explode('_',$pages[0]);
+        $this->subPages=array_slice($subPages,1);
+        return $subPages[0];
 
     }
 }

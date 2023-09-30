@@ -9,6 +9,7 @@ class Factory
 {
     private static $_instance;
     private static $db;
+    private static $smarty;
 
     public static function getInstance()
     {
@@ -40,4 +41,11 @@ class Factory
         return new $className(self::$db);
     }
 
+    public static function getSmarty():SmartyMKD
+    {
+        if(is_null(self::$smarty)){
+            self::$smarty=new SmartyMKD();
+        }
+        return self::$smarty;
+    }
 }

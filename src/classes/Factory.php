@@ -10,6 +10,7 @@ class Factory
     private static $_instance;
     private static $db;
     private static $smarty;
+    private static $session;
 
     public static function getInstance()
     {
@@ -47,5 +48,13 @@ class Factory
             self::$smarty=new SmartyMKD();
         }
         return self::$smarty;
+    }
+
+    public static function getSession():Session
+    {
+        if(is_null(self::$session)){
+            self::$session=new Session();
+        }
+        return self::$session;
     }
 }

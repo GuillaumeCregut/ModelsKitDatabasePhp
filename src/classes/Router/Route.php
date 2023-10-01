@@ -25,11 +25,12 @@ abstract class Route
     }
     abstract public function render();
     protected function getCredentials(){
-        if(isset($_SESSION['isConnected'])){
-            if($_SESSION['isConnected']){
+        $connected=$this->session->getKey('isConnected');
+        if(!is_null($connected)){
+            if($connected){
                 $this->smarty->assign('logged_in','accueil');
-                $this->smarty->assign('fullname',$_SESSION['fullName']);
-                if (App::ADMIN===$_SESSION['rankUser']){
+                $this->smarty->assign('fullname',$this->session->getKey('fullName'));
+                if (App::ADMIN===$this->session->getKey('rankUser')){
                     $this->smarty->assign('loggedInAdmin','true');
                 }
             }

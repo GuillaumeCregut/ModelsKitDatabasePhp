@@ -37,6 +37,9 @@ class App{
             case 'parametres': //parameters
                 $this->route='parameters';
                 break;
+            case 'rgpd':
+                $this->route='rgpd';
+                break;
             case 'signup':
                 $this->route='Signup';
                 break;

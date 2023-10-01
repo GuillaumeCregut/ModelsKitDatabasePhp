@@ -4,6 +4,7 @@ let enableButton=false;
 let enableLogin=false;
 let enablePass=false;
 let enablePassEqual=false;
+let enableRgpd=false;
 
 const login=document.getElementById('login');
 const pass=document.getElementById('password1');
@@ -17,6 +18,12 @@ const badPass=document.getElementById('badPass1');
 const checkPass2=document.getElementById('checkPass2');
 const badPass2=document.getElementById('badPass2');
 const SubmitButton=document.getElementById('submitButton');
+const cbRgpd=document.getElementById('cbRGPD');
+
+cbRgpd.addEventListener('change',function (e){
+        enableRgpd=e.target.checked;
+        evalButton();
+})
 
 login.addEventListener('keyup',function (e){
     const result=USER_REGEX.test(e.target.value);
@@ -120,8 +127,8 @@ pass2.addEventListener('keyup',function (e){
 })
 
 function evalButton(){
-    console.log(enableLogin,enablePass,enablePassEqual);
-    const isEnable=enableLogin&&enablePass&&enablePassEqual;
+    console.log(enableLogin,enablePass,enablePassEqual,enableRgpd);
+    const isEnable=enableLogin&&enablePass&&enablePassEqual&&enableRgpd;
     SubmitButton.disabled=!isEnable;
     if(isEnable){
         SubmitButton.classList.add('form-signup-btn-valid');

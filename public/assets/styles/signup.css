@@ -85,6 +85,16 @@
   margin-left: 3px;
 }
 
+.message_signup{
+    margin: 20px auto;
+    width: fit-content;
+    padding: 15px;
+}
+.signup_form_info{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
 @media screen and (max-width: 768px) {
     .signup-instruction{
         width: 75%;

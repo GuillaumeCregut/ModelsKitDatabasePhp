@@ -23,7 +23,9 @@ abstract class Route
         $this->session=Factory::getSession();
         $this->flash=new Flash();
     }
+    
     abstract public function render();
+
     protected function getCredentials(){
         $connected=$this->session->getKey('isConnected');
         if(!is_null($connected)){

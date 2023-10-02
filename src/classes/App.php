@@ -43,6 +43,9 @@ class App{
             case 'signup':
                 $this->route='Signup';
                 break;
+            case 'test':
+                $this->route="Test";
+                break;
             default : //home
                $page=new Error('404');
                $page->render();

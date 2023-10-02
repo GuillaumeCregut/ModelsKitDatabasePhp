@@ -1,13 +1,19 @@
 <div>
-<ul class="toast_notifications" id="toast_notifications">
- {include file="partials/_flash_success.tpl" message=$accueil}
-</ul>
-</div>
-{* virer les bouton ci dessous en fin de travail*}
-<div class="toast_buttons">
-    <button class="toast_btn" id="success">Success</button>
-    <button class="toast_btn" id="error">Error</button>
-    <button class="toast_btn" id="warning">Warnig</button>
-    <button class="toast_btn" id="info">Info</button>
 
+<ul class="toast_notifications" id="toast_notifications">
+    {foreach from=$flash key=k item=v}
+    {if $v.flashType=="success"}
+        {include file="partials/_flash_success.tpl" message=$v.message}
+    {/if}
+    {if $v.flashType=="error"}
+        {include file="partials/_flash_error.tpl" message=$v.message}
+    {/if}
+    {if $v.flashType=="warning"}
+        {include file="partials/_flash_warning.tpl" message=$v.message}
+    {/if}
+    {if $v.flashType=="info"}
+        {include file="partials/_flash_info.tpl" message=$v.message}
+    {/if}
+{/foreach}
+</ul>
 </div>

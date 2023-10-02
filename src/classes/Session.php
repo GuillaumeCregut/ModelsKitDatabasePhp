@@ -11,7 +11,7 @@ class Session implements SessionInterface
         session_start();
     }
     
-    public function getKey($key): mixed
+    public function getKey(string $key): mixed
     {
         if(isset( $_SESSION[$key])){
             return $_SESSION[$key];
@@ -20,12 +20,16 @@ class Session implements SessionInterface
         }
     }
 
-    public function setKey($key,$value)
+    public function setKey(string $key, mixed $value)
     {
         $_SESSION[$key]=$value;
     }
 
-    public function deleteKey($key)
+    public function setMultipleKey(string $key, mixed $value){
+        $_SESSION[$key][]=$value;
+    }
+
+    public function deleteKey(string $key)
     {
         unset($_SESSION[$key]);
     }

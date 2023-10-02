@@ -5,20 +5,37 @@ class Flash
 {
     private Session $session;
     const KEY='editielFlash';
+    const FLASH_ERROR='error';
+    const FLASH_INFO='info';
+    const FLASH_WARNING='warning';
+    const FLASH_SUCCESS='success';
+
     public function __construct()
     {
         $this->session=Factory::getSession();
     }
-
+    /**
+     * Set a flash message in session
+     *
+     * @param string $message
+     * @param string $type
+     * @return void
+     */
     public function setFlash(string $message, string $type )
     {
-        $this->session->setKey(self::KEY,[
+        $this->session->setMultipleKey(self::KEY,[
             'message'=>$message,
             'flashType'=>$type,
         ]);
     }
 
-    public function getFlash():mixed{
+    /**
+     * get the flash message stored in session
+     *
+     * @return mixed
+     */
+    public function getFlash():mixed
+    {
 
         $flash=$this->session->getKey(self::KEY);
         if(!is_null($flash)){
@@ -27,6 +44,9 @@ class Flash
         return $flash;
     }
 
-    
+    public function hasFlash(): bool
+    {
+        return !is_null($this->session->getKey(self::KEY));
+    }
   
 }

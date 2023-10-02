@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<database>
-   <login>YOUR_LOGIN</login> 
-   <pass>YOUR_PASS</pass>
-   <host>DB_HOST</host>
-   <name>DB_NAME</name>
-</database>
+<config>
+   <general>
+      <!-- value should be debug or prod -->
+      <env>prod</env>
+   </general>
+   <database>
+      <login>YOUR_LOGIN</login> 
+      <pass>YOUR_PASS</pass>
+      <host>DB_HOST</host>
+      <name>DB_NAME</name>
+   </database>
+   <mail>
+      <admin>MAIL_ADMIN</admin>
+   </mail>
+</config>

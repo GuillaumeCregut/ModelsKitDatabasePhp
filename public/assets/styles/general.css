@@ -76,8 +76,6 @@ body {
     display: inline-block;
 }
 
-
-
   .nav-item::after {
     content: '';
     width: 0%;
@@ -95,6 +93,15 @@ body {
 .active{
     color: var(--menu-color);
     background-color: var(--back-menu-color);
+}
+
+.success{
+    background-color: rgb(58, 197, 36);
+}
+
+.error{
+    background-color: rgb(244, 99, 66);
+    color : white;
 }
 
 @media screen and (max-width: 768px) {

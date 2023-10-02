@@ -3,12 +3,12 @@ namespace App\Controller;
 
 use Editiel98\Router\Route;
 
-class Index extends Route{
+class Rgpd extends Route{
 
     public function render()
     {
+        $this->getCredentials();
         $this->smarty->assign('accueil','accueil');
-
-        $this->smarty->display('index.tpl');
+        $this->smarty->display('rgpd.tpl');
     }
 }

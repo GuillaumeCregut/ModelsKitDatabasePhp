@@ -13,6 +13,7 @@ class Database{
     private string $pass;
     private $pdo;
     private static $_instance;
+
     public function __construct() {
         $this->loadCredentials();
         
@@ -50,10 +51,10 @@ class Database{
             if ($config===false){
                 throw new Exception('Impossible de lire les credentials');
             }
-            $this->user=$config->login;
-            $this->pass=$config->pass;
-            $this->name=$config->name;
-            $this->host=$config->host;
+            $this->user=$config->database->login;
+            $this->pass=$config->database->pass;
+            $this->name=$config->database->name;
+            $this->host=$config->database->host;
         }
         catch (Exception $e)
         {

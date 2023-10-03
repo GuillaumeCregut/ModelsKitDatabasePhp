@@ -8,6 +8,10 @@ class Emitter
     private static $instance;
     private array $listeners=[];
 
+    const DATABASE_ERROR='database.error';
+    const DATABASE_WARNING='database.warning';
+    const USER_SUBSCRIBED='user.subscribed';
+
     /**
      * Get Emitter instance (singleton)
      *

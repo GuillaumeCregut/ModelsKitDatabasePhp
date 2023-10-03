@@ -11,6 +11,7 @@ class App{
     const ADMIN=5;
     const USER=1;
     const MODERATE=2;
+    const VERSION='1.3a';
 
     private string $route;
     private array $params;

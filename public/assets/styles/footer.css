@@ -11,6 +11,19 @@
     width: 100%;
 }
 
+.footer-mentions{
+    
+    margin-left: 50px;
+}
+
+.footer-mentions a{
+    color: black;
+}
+
+.footer-mentions a:hover{
+    color : blue;
+}
+
 .copyright{
     padding-left: 20px;
 }

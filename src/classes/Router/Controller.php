@@ -74,6 +74,7 @@ abstract class Controller
             $flashes=$this->flash->getFlash();
             $this->smarty->assign('flash',$flashes);
         }
+        $this->smarty->assign('AppVersion',App::VERSION);
         $this->emitter=Emitter::getInstance();
 }
     

@@ -1,0 +1,9 @@
+/* .admin-user{
+
+} */
+
+@media screen and (max-width: 768px) {
+    .admin-user{
+         grid-area: 1/1/2/2;
+    }
+}

@@ -35,6 +35,9 @@ class App{
                 $this->route='Home';
                 //$classPage='\\App\Index';
                 break;
+            case 'admin':
+                $this->route='Admin';
+                break;
             case 'login':
                 $this->route='Login';
                 break;

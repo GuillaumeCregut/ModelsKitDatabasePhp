@@ -4,7 +4,8 @@ namespace Editiel98\Manager;
 use App\Controller\Error as ControllerError;
 use Editiel98\DbException;
 use Editiel98\Entity\Entity;
-use Error;
+use Editiel98\Event\Emitter;
+
 
 /**
  * Manage single entity to DB
@@ -106,6 +107,9 @@ abstract class SingleManager extends Manager implements ManagerInterface
             return $result;
         }
         catch(DbException $e){
+            $message='SQL : ' . $query .'a poser problème';
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR,$message);
             $this->loadErrorPage($e->getdbMessage());
         }
 
@@ -126,6 +130,9 @@ abstract class SingleManager extends Manager implements ManagerInterface
             return $result;
         }
         catch(DbException $e){
+            $message='SQL : ' . $query .'a poser problème';
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR,$message); 
             $this->loadErrorPage($e->getMessage());
         }
     }

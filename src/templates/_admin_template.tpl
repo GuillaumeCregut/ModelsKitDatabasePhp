@@ -8,7 +8,7 @@
 {include file='partials/_navbar.tpl'}
 <div class="admin">
 {include file='partials/_left_menu_admin.tpl'}
-{block name=innerMenu}
+{block name=innerMenu}{/block}
 </div>
-{/block}
+
 {/block}

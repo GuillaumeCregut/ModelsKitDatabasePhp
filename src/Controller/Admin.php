@@ -9,7 +9,7 @@ class Admin extends Controller
     public function render()
     {
         if(App::ADMIN===$this->userRank){
-            var_dump($this->subPages);
+            //var_dump($this->subPages);
             if (empty($this->subPages)) {
                 $this->smarty->assign('admin','params');
                 $this->smarty->display('admin/index.tpl');
@@ -17,6 +17,9 @@ class Admin extends Controller
                 switch ($this->subPages[0]) {
                     case 'logs':
                             $className='Logs';
+                            break;
+                    case 'users':
+                            $className='Users';
                             break;
                     default :
                         $page=new Error('404');

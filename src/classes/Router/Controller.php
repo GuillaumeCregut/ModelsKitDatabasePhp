@@ -61,6 +61,12 @@ abstract class Controller
      */
     protected Emitter $emitter;
 
+    protected int $userId;
+
+    protected int $userRank;
+
+    protected bool $isConnected=false;
+
     public function __construct(array $subPages=[], array $params=[])
     {
         $this->smarty=new SmartyMKD();
@@ -76,6 +82,7 @@ abstract class Controller
         }
         $this->smarty->assign('AppVersion',App::VERSION);
         $this->emitter=Emitter::getInstance();
+        $this->getCredentials();
 }
     
     abstract public function render();
@@ -89,8 +96,11 @@ abstract class Controller
         $connected=$this->session->getKey(Session::SESSION_CONNECTED);
         if(!is_null($connected)){
             if($connected){
+                $this->isConnected=true;
                 $this->smarty->assign('logged_in','accueil');
                 $this->smarty->assign('fullname',$this->session->getKey(Session::SESSION_FULLNAME));
+                $this->userRank=$this->session->getKey(Session::SESSION_RANK_USER);
+                $this->userId=$this->session->getKey(Session::SESSION_USER_ID);
                 if (App::ADMIN===$this->session->getKey(Session::SESSION_RANK_USER)){
                     $this->smarty->assign('loggedInAdmin','true');
                 }

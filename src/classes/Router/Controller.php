@@ -10,7 +10,7 @@ use Editiel98\SmartyMKD;
 /**
  * Class to generate views
  */
-abstract class Route
+abstract class Controller
 {
     /**
      * Smarty : Template generator

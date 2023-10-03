@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
 
-use Editiel98\Router\Route;
+use Editiel98\Router\Controller;
 
-class Home extends Route{
+class Home extends Controller{
 
     public function render()
     {

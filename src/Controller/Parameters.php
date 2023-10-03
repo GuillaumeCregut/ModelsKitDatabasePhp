@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use Editiel98\Router\Route;
+use Editiel98\Router\Controller;
 
-class Parameters extends Route
+class Parameters extends Controller
 {
     public function render()
     {

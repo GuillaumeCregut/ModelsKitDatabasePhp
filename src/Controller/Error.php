@@ -2,9 +2,9 @@
 namespace App\Controller;
 
 use Editiel98\App;
-use Editiel98\Router\Route;
+use Editiel98\Router\Controller;
 
-class Error extends Route
+class Error extends Controller
 {
     private string $error;
     private string $message;

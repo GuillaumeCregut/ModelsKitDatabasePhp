@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
 
-use Editiel98\Router\Route;
+use Editiel98\Router\Controller;
 
-class Logout extends Route
+class Logout extends Controller
 {
     public function render()
     {

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/styles/footer.css">
     <link rel="stylesheet" href="assets/styles/welcome.css">
     <link rel="stylesheet" href="assets/styles/param_general.css">
+    <link rel="stylesheet" href="assets/styles/admin_general.css">
     <link rel="stylesheet" href="assets/styles/flash.css">
     {*Ci dessous, peut être à enlever *}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">

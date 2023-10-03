@@ -12,8 +12,9 @@ class User extends Entity
     private int $id;
     private int $rankUser;
     private string $avatar;
+    private bool $isvalid;
 
-    public function __construct(string $firstname, string  $lastname, int  $id, int $rankUser, string  $avatar)
+    public function __construct(string $firstname, string  $lastname, int  $id, int $rankUser, string  $avatar, bool $isValid)
     {
        // $this->manager=Factory::getManager('countryManager');
        $this->firstname=$firstname;
@@ -21,6 +22,7 @@ class User extends Entity
        $this->id=$id;
        $this->rankUser=$rankUser;
        $this->avatar=$avatar;
+       $this->isvalid=$isValid;
     }
 
     public function getFirstname(): string

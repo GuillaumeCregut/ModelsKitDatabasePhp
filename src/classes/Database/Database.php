@@ -76,6 +76,9 @@ class Database{
             $errMessage=$e->getMessage();
             throw new DbException('Erreur Query',$errCode,$errMessage);
         }
+        catch(Exception $e){
+            throw new DbException('Erreur DB:  Inconnue',0,'Erreur DB:  Inconnue');
+        }
     }
 
     public function prepare(string $statement,?string $className, ?array $values=[], ?bool $single=false)

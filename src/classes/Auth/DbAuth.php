@@ -1,12 +1,11 @@
 <?php
 namespace Editiel98\Auth;
 
-use App\Controller\Error;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
 use Editiel98\Entity\User;
 use Editiel98\Factory;
-
+use Editiel98\Session;
 use Exception;
 
 
@@ -34,10 +33,10 @@ class DbAuth
                     $userDb->rankUser,
                     $userDb->avatar
                 );
-                $_SESSION['isConnected']=true;
-                $_SESSION['userId']=$user->getId();
-                $_SESSION['fullName']=$user->getFullname();
-                $_SESSION['rankUser']=$user->getRankUser();
+                $_SESSION[Session::SESSION_CONNECTED]=true;
+                $_SESSION[Session::SESSION_USER_ID]=$user->getId();
+                $_SESSION[Session::SESSION_FULLNAME]=$user->getFullname();
+                $_SESSION[Session::SESSION_RANK_USER]=$user->getRankUser();
             }
             return $isValid;
         }

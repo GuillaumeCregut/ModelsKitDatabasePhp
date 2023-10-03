@@ -85,12 +85,12 @@ abstract class Controller
      * @return void
      */
     protected function getCredentials(){
-        $connected=$this->session->getKey('isConnected');
+        $connected=$this->session->getKey(Session::SESSION_CONNECTED);
         if(!is_null($connected)){
             if($connected){
                 $this->smarty->assign('logged_in','accueil');
-                $this->smarty->assign('fullname',$this->session->getKey('fullName'));
-                if (App::ADMIN===$this->session->getKey('rankUser')){
+                $this->smarty->assign('fullname',$this->session->getKey(Session::SESSION_FULLNAME));
+                if (App::ADMIN===$this->session->getKey(Session::SESSION_RANK_USER)){
                     $this->smarty->assign('loggedInAdmin','true');
                 }
             }

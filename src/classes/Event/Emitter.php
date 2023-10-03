@@ -11,6 +11,7 @@ class Emitter
     const DATABASE_ERROR='database.error';
     const DATABASE_WARNING='database.warning';
     const USER_SUBSCRIBED='user.subscribed';
+    const MAIL_ERROR='mail.error';
 
     /**
      * Get Emitter instance (singleton)

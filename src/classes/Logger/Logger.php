@@ -22,18 +22,13 @@ abstract class Logger implements LoggerInterface
         $dateMessage=date_format($now, 'd/m/Y H:i:s');
         $message=$dateMessage . ' : ' .$value ."\n"; 
         try{
-            if (is_writable($this->filename)) {
-                if($file=fopen($this->filename,'a')){
+            if (($file=fopen($this->filename,'a'))&&(is_writable($this->filename))) {
                     fwrite($file,$message);
                     fclose($file);
                     return true;
-                }
-                else{
-                    fclose($file);
-                    return false;
-                }
             }
             else{
+                echo "Pas put ouvrir";
                 return false;
             }
         }

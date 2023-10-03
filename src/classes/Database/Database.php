@@ -2,6 +2,7 @@
 namespace Editiel98\Database;
 
 use Editiel98\DbException;
+use Editiel98\Event\Emitter;
 use Exception;
 use \PDO;
 use PDOException;
@@ -32,12 +33,13 @@ class Database{
         if($this->pdo===null){
             try{
                 $this->pdo=new PDO('mysql:dbname='. $this->name . ';host='. $this->host,$this->user,$this->pass);
-               // $this->pdo=new PDO('mysql:dbname='. 'titi' . ';host='. $this->host,$this->user,$this->pass);
-                $this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); //Enlever en prod si le try / catch ne le planque pas
+                $this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); 
             }
             catch(PDOException $e){
                 $errCode=$e->getCode();
                 $errMessage=$e->getMessage();
+                $emitter=Emitter::getInstance();
+                $emitter->emit(Emitter::DATABASE_ERROR,'database : '. $errMessage);
                 throw new DbException('Erreur de connexion à la base',$errCode,$errMessage);
             }
         }
@@ -58,8 +60,8 @@ class Database{
         }
         catch (Exception $e)
         {
-            $errCode=$e->getCode();
-            $errMessage=$e->getMessage();
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR,'database : Impossible de lire les credentials');
             throw new Exception('Impossible de lire les credentials');
         }
     }
@@ -77,6 +79,8 @@ class Database{
             throw new DbException('Erreur Query',$errCode,$errMessage);
         }
         catch(Exception $e){
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR,'database : ' .$e->getMessage());
             throw new DbException('Erreur DB:  Inconnue',0,'Erreur DB:  Inconnue');
         }
     }
@@ -102,6 +106,8 @@ class Database{
         catch(PDOException $e){
             $errCode=$e->getCode();
             $errMessage=$e->getMessage();
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR,'database : ' .$e->getMessage());
             throw new DbException('Erreur Prepare',$errCode,$errMessage);
         }
     }
@@ -116,6 +122,8 @@ class Database{
         catch(Exception $e){
             $errCode=$e->getCode();
             $errMessage=$e->getMessage();
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR,'database : ' .$e->getMessage());
             throw new DbException('Erreur Exec',$errCode,$errMessage);
         }
     }

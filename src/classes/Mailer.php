@@ -1,6 +1,7 @@
 <?php
 namespace Editiel98;
 
+use Editiel98\Event\Emitter;
 use Exception;
 
 /**
@@ -58,7 +59,16 @@ class Mailer
         if($html){
             $headers['Content-Type']='text/html; charset=utf-8';
         }
-        return mail($to,$subject,$message,$headers);
+        try{
+            $mailSent= mail($to,$subject,$message,$headers);
+            if(!$mailSent){
+                $emitter=Emitter::getInstance();
+                $emitter->emit(Emitter::MAIL_ERROR,$to);
+            }
+            return $mailSent;
+        } catch(Exception $e){
+
+        }
     }
     /**
      * Send a text mail to the admin

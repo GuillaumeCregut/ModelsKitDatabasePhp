@@ -2,6 +2,7 @@
 namespace Editiel98\Router;
 
 use Editiel98\App;
+use Editiel98\Database\Database;
 use Editiel98\Event\Emitter;
 use Editiel98\Factory;
 use Editiel98\Flash;
@@ -67,6 +68,8 @@ abstract class Controller
 
     protected bool $isConnected=false;
 
+    protected Database $dbConnection;
+
     public function __construct(array $subPages=[], array $params=[])
     {
         $this->smarty=new SmartyMKD();
@@ -83,6 +86,7 @@ abstract class Controller
         $this->smarty->assign('AppVersion',App::VERSION);
         $this->emitter=Emitter::getInstance();
         $this->getCredentials();
+        $this->dbConnection=Database::getInstance();
 }
     
     abstract public function render();

@@ -8,7 +8,7 @@ class Logout extends Controller
     public function render()
     {
         //Empty $_Session
-        session_destroy();
+        $this->session->destroy();
         header('Status: 200');
         header('Location: /');
     }

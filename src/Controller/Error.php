@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
 
-use Editiel98\App;
 use Editiel98\Router\Controller;
 
 class Error extends Controller

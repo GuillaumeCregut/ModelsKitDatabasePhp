@@ -2,6 +2,7 @@
 namespace Editiel98\Router;
 
 use Editiel98\App;
+use Editiel98\Event\Emitter;
 use Editiel98\Factory;
 use Editiel98\Flash;
 use Editiel98\Session;
@@ -53,6 +54,13 @@ abstract class Route
      */
     protected bool $hasFlash=false;
 
+    /**
+     * Allow to emit an action to event listener
+     *
+     * @var Emitter
+     */
+    protected Emitter $emitter;
+
     public function __construct(array $subPages=[], array $params=[])
     {
         $this->smarty=new SmartyMKD();
@@ -66,6 +74,7 @@ abstract class Route
             $flashes=$this->flash->getFlash();
             $this->smarty->assign('flash',$flashes);
         }
+        $this->emitter=Emitter::getInstance();
 }
     
     abstract public function render();

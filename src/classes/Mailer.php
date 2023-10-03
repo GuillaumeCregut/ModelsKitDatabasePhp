@@ -21,16 +21,13 @@ class Mailer
     {
         try{
             $config= simplexml_load_file(__DIR__ . '/../config.xml');
-            var_dump($config);
             if ($config===false){
                 throw new Exception('Impossible de lire les credentials');
             }
             if($config->general->env=='debug'){
                 ini_set('SMTP','192.168.1.10');
-                echo "passe";
             }
             $this->adminMail=$config->mail->admin;
-            var_dump(gettype($this->adminMail),$this->adminMail);
           
         }
         catch (Exception $e)

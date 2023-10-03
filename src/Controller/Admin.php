@@ -1,13 +1,14 @@
 <?php
 namespace App\Controller;
 
+use Editiel98\App;
 use Editiel98\Router\Controller;
 
 class Admin extends Controller
 {
     public function render()
     {
-        if($this->isConnected){
+        if(App::ADMIN===$this->userRank){
             var_dump($this->subPages);
             if (empty($this->subPages)) {
                 $this->smarty->assign('admin','params');

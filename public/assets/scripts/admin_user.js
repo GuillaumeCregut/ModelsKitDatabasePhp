@@ -12,10 +12,23 @@ listRole.forEach((list)=>{
     })
 })
 
+
+
 const changeUserStatus=(id,status)=>{
+    const myInit = {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify({idUser:id, newStatus:status})
+      };
     console.log(id,status);
+    fetch('http://modelskit:8080/api_userRank',myInit)
+    .then((response)=>response.json())
+    .then(json=>console.log(json));
 }
 
 const changeUserRole=(id,role)=>{
-    
+
 }

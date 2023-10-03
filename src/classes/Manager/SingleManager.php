@@ -136,19 +136,4 @@ abstract class SingleManager extends Manager implements ManagerInterface
             $this->loadErrorPage($e->getMessage());
         }
     }
-
-    /**
-     * On DB Error, log to lofile, and display error page
-     *
-     * @param string $message : Error message from DB
-     * @return void
-     */
-    private function loadErrorPage(string $message)
-    {
-        //Log to error log
-        //display error page
-        $errPage=new ControllerError('500',$message);
-        $errPage->render();
-        die();
-    }
 }

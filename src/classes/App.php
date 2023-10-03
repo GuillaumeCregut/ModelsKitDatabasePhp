@@ -2,6 +2,7 @@
 namespace Editiel98;
 
 use App\Controller\Error;
+use Editiel98\Event\Emitter;
 
 class App{
 
@@ -12,8 +13,11 @@ class App{
     private string $route;
     private array $params;
     private array $subPages;
+    private Emitter $emitter;
+
     public function run()
     {
+        $this->setEmitter();
         // var_dump($_SERVER['REQUEST_METHOD']);
         $uri=$_SERVER['REQUEST_URI'];
         if(strlen($uri)>1&& $uri[-1]=='/'){
@@ -72,5 +76,18 @@ class App{
         $this->subPages=array_slice($subPages,1);
         return $subPages[0];
 
+    }
+
+    private function setEmitter()
+    {
+       /* $this->emitter=Emitter::getInstance();
+        $this->emitter->on('Comment.created',function ($firstname, $lastname){
+            echo $firstname . 'a poster un commentaire'; 
+        });
+        $this->emitter->on('Comment.created',function ($firstname, $lastname){
+            $email=new Mailer();
+            $email->sendMailToAdmin('test@editiel.local','Test Emitter','Ceci est un test'); 
+        });
+        */
     }
 }

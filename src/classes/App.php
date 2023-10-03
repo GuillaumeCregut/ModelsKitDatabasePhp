@@ -3,6 +3,8 @@ namespace Editiel98;
 
 use App\Controller\Error;
 use Editiel98\Event\Emitter;
+use Editiel98\Logger\ErrorLogger;
+use Editiel98\Logger\WarnLogger;
 
 class App{
 
@@ -80,8 +82,25 @@ class App{
 
     private function setEmitter()
     {
-       /* $this->emitter=Emitter::getInstance();
-        $this->emitter->on('Comment.created',function ($firstname, $lastname){
+        $this->emitter=Emitter::getInstance();
+        $this->emitter->on(Emitter::DATABASE_ERROR,function($message){
+            $logger=new ErrorLogger();
+            if($logger->storeToFile($message)){
+                $logger=null;
+            }
+        });
+        $this->emitter->on(Emitter::USER_SUBSCRIBED,function ($message){
+            $mail=new Mailer();
+            $mail->sendMailToAdmin('no-reply@MKD.local','Nouvel utilisateur',$message);
+        });
+        $this->emitter->on(Emitter::MAIL_ERROR,function ($to){
+            $logger=new WarnLogger();
+            $message="L'envoi du mail à " . $to . ' a échoué';
+            if($logger->storeToFile($message)){
+                $logger=null;
+            }
+        });
+        /*$this->emitter->on('Comment.created',function ($firstname, $lastname){
             echo $firstname . 'a poster un commentaire'; 
         });
         $this->emitter->on('Comment.created',function ($firstname, $lastname){

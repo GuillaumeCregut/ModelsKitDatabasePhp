@@ -8,6 +8,11 @@ class Emitter
     private static $instance;
     private array $listeners=[];
 
+    const DATABASE_ERROR='database.error';
+    const DATABASE_WARNING='database.warning';
+    const USER_SUBSCRIBED='user.subscribed';
+    const MAIL_ERROR='mail.error';
+
     /**
      * Get Emitter instance (singleton)
      *
@@ -21,6 +26,13 @@ class Emitter
         return self::$instance;
     }
 
+    /**
+     * Emit an event to be listen
+     *
+     * @param string $event
+     * @param [type] ...$args
+     * @return void
+     */
     public function emit(string $event, ...$args)
     {
         if($this->hasListener($event)){

@@ -19,6 +19,13 @@ class DbAuth
         $this->db=$db;
     }
 
+    /**
+     * Get user and credentials from DB
+     *
+     * @param string $login
+     * @param string $password
+     * @return boolean : are user credentials OK
+     */
     public function login(string $login, string $password):bool
     {
         $query='SELECT firstname,id,lastname,rankUser,passwd,avatar,isvalid FROM user WHERE login=:login';
@@ -45,11 +52,16 @@ class DbAuth
         }
     }
 
-    // public function isLogged() : bool
-    // {
-    //     return isset($_SESSION['auth']);
-    // }
-
+    /**
+     * Store new user id DB
+     *
+     * @param string $login
+     * @param string $mail
+     * @param string $firstname
+     * @param string $lastname
+     * @param string $pass
+     * @return boolean : user is stored
+     */
     public function signUp(string $login, string $mail, string $firstname, string $lastname, string $pass): bool
     {
         $hashedPassword=password_hash($pass,PASSWORD_DEFAULT);

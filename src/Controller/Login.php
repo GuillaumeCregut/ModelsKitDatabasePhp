@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use Editiel98\Auth\DbAuth;
-use Editiel98\Router\Route;
+use Editiel98\Router\Controller;
 use Exception;
 
-class Login extends Route
+class Login extends Controller
 {
     public function render()
     {

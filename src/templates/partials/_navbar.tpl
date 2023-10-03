@@ -9,7 +9,7 @@
             <li><a href="#"class="main-font-20 {if isset($profil)}active{/if}">Mon profil</a></li>
             <li><a href="#"class="main-font-20 {if isset($kits)}active{/if}">Mes kits</a></li>
             {if isset($loggedInAdmin)}
-            <li><a href="#"class="main-font-20  {if isset($admin)}active{/if}">Admin</a></li>
+            <li><a href="admin"class="main-font-20  {if isset($admin)}active{/if}">Admin</a></li>
             {/if}
         </ul>
     </div>

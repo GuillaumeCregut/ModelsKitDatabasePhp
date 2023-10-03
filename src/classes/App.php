@@ -39,6 +39,9 @@ class App{
             case 'admin':
                 $this->route='Admin';
                 break;
+            case 'api':
+                $this->route='Api';
+                break;
             case 'login':
                 $this->route='Login';
                 break;

@@ -21,6 +21,13 @@ class Emitter
         return self::$instance;
     }
 
+    /**
+     * Emit an event to be listen
+     *
+     * @param string $event
+     * @param [type] ...$args
+     * @return void
+     */
     public function emit(string $event, ...$args)
     {
         if($this->hasListener($event)){

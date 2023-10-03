@@ -45,10 +45,6 @@ class DbAuth
         }
     }
 
-    // public function isLogged() : bool
-    // {
-    //     return isset($_SESSION['auth']);
-    // }
 
     public function signUp(string $login, string $mail, string $firstname, string $lastname, string $pass): bool
     {

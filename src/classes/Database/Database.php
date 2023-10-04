@@ -121,7 +121,12 @@ class Database{
         try{
             $req=$this->getConnect()->prepare($statement);
             $result=$req->execute($values);
-            return $result;
+            if($result){
+                $count=$req->rowCount();
+                return $count;
+            }else{
+                return $result;
+            }
         }
         catch(Exception $e){
             $errCode=$e->getCode();

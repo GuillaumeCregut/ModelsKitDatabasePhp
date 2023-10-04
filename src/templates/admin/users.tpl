@@ -9,33 +9,34 @@
 {block name=innerMenu}
 <section class="admin-user">
     <h2>Gestion des utilisateurs</h2>
-    <table>
+    <table class="user_table">
         <thead>
             <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Rang</th>
-                <th>Etat</th>
+                <th class="user_table_cell header_cell">Prénom</th>
+                <th  class="user_table_cell header_cell">Nom</th>
+                <th  class="user_table_cell header_cell">Rang</th>
+                <th  class="user_table_cell header_cell">Valide</th>
             </tr>
         </thead>
         <tbody>
             {if isset($users)}
             {foreach from=$users item=user}
                 <tr>
-                    <td>{$user->id}->{$user->firstname}</td>
-                    <td>{$user->lastname}</td>
+                    <td  class="user_table_cell">{$user->firstname}</td>
+                    <td  class="user_table_cell">{$user->lastname}</td>
                     
-                    <td><select 
-                        data-id="{$user->id}" 
-                        data-role="{$user->rankUser}"
-                        class="select_user_role"
-                        {if $user->id==$defaultUser}disabled{/if}>
-                        <option value="1" {if $user->rankUser==1}selected{/if}>Utilisateur</option>
-                        <option value="2" {if $user->rankUser==2}selected{/if}>Modérateur</option>
-                        <option value="5" {if $user->rankUser==5}selected{/if}>Administrateur</option>
-                    </select>
-                        {$user->rankUser}</td>
-                    <td><input type="checkbox" class="cb_user_valid" data-id="{$user->id}"  {if $user->isvalid==1}checked{/if}></td>
+                    <td  class="user_table_cell">
+                        <select 
+                            data-id="{$user->id}" 
+                            data-role="{$user->rankUser}"
+                            class="select_user_role"
+                            {if $user->id==$defaultUser}disabled{/if}>
+                                <option value="1" {if $user->rankUser==1}selected{/if}>Utilisateur</option>
+                                <option value="5" {if $user->rankUser==5}selected{/if}>Administrateur</option>
+                                <option value="2" {if $user->rankUser==2}selected{/if}>Modérateur</option>
+                        </select>
+                    </td>
+                    <td  class="user_table_cell"><input type="checkbox" class="cb_user_valid" data-id="{$user->id}"  {if $user->isvalid==1}checked{/if}></td>
                 </tr>
             {/foreach}
             {else}

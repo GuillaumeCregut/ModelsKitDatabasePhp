@@ -11,8 +11,6 @@ const toastDetails={
 }
 
 
-
-
 const checkboxes=document.querySelectorAll('input.cb_user_valid');
 checkboxes.forEach((cb)=>{
     cb.addEventListener('change',()=>{
@@ -23,7 +21,7 @@ checkboxes.forEach((cb)=>{
 const listRole=document.querySelectorAll('select.select_user_role');
 listRole.forEach((list)=>{
     list.addEventListener('change',()=>{
-        changeUserRole(list.dataset.id, list.value);
+        changeUserRole(list);
     })
 })
 
@@ -39,7 +37,6 @@ const changeUserStatus=(id,status,caller)=>{
           },
         body:JSON.stringify({idUser:idUser, newStatus:status})
       };
-    console.log(id,status);
     fetch('http://modelskit:8080/api_userRank',myInit)
     .then((response)=>{
         if(response.ok){
@@ -65,13 +62,54 @@ const changeUserStatus=(id,status,caller)=>{
     });
 }
 
-const changeUserRole=(id,role)=>{
+const changeUserRole=(list)=>{
+    let sentFlash=false;
+    const oldRole=parseInt(list.dataset.role);
+    const id=parseInt(list.dataset.id);
+    const newRole=parseInt(list.value);
+    const myInit = {
+        method: "PUT",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify({idUser:id, newRole:newRole})
+      };
+    //   list.value=oldRole;
+    fetch('http://modelskit:8080/api_userRole',myInit)
+    .then((response)=>{
+        if(response.ok){
+            return response.json()
+        }
+        else{
+            list.value=oldRole;
+            sentFlash=true;
+            launchFlash(toastDetails.error,`Une erreur s'est produite ${response.statusText}`);
+            return response;
+        }
+    })
+    .then((json)=>{
+        if(json.result){
+            launchFlash(toastDetails.success,"La modification a bien été effectuée");
+        }
+        else{
+            list.value=oldRole;
+            if(!sentFlash){
+                launchFlash(toastDetails.error,"Une erreur s'est produite");
+            }
+        }
+    });
 
 }
 
 const launchFlash=(typeFlash,message)=>{
-    const flashContainer=document.createElement('ul');
-    flashContainer.classList.add('toast_notifications');
+    if(document.getElementsByClassName('toast_notifications').length===0)
+    {
+        const flashContainer=document.createElement('ul');
+        flashContainer.classList.add('toast_notifications');
+        document.body.appendChild(flashContainer);
+    }
+    flashContainer=document.getElementsByClassName('toast_notifications')[0];
     const toast=document.createElement('li');
     toast.className=typeFlash.classname;
     toast.classList.add('toast');
@@ -92,5 +130,4 @@ const launchFlash=(typeFlash,message)=>{
     toast.appendChild(closeIcon);
     flashContainer.appendChild(toast);
     toast.timeouId=setTimeout(()=>removeToast(toast),toastDetails.timer);
-    document.body.appendChild(flashContainer);
 }

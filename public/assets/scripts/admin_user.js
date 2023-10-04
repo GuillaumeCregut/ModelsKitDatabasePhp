@@ -37,7 +37,7 @@ const changeUserStatus=(id,status,caller)=>{
           },
         body:JSON.stringify({idUser:idUser, newStatus:status})
       };
-    fetch('http://modelskit:8080/api_userRank',myInit)
+    fetch('http://modelskit:8080/api_userValid',myInit)
     .then((response)=>{
         if(response.ok){
             return response.json()

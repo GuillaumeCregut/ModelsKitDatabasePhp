@@ -16,12 +16,11 @@ class Api extends Controller
                 case 'userRank':
                         $className='Admin\\ChangeRankUser';
                         break;
-                case 'users':
-                        $className='Users';
+                case 'userRole':
+                        $className='Admin\\ChangeRoleUser';
                         break;
                 default :
-                    $page=new Error('404');
-                    $page->render();
+                    header("HTTP/1.1 404 Not Found");
                     die();
             }
             if(isset($className))

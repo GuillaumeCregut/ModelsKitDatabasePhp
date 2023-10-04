@@ -13,8 +13,8 @@ class Api extends Controller
             $this->smarty->display('admin/index.tpl');
         } else{
             switch ($this->subPages[0]) {
-                case 'userRank':
-                        $className='Admin\\ChangeRankUser';
+                case 'userValid':
+                        $className='Admin\\ChangeValidUser';
                         break;
                 case 'userRole':
                         $className='Admin\\ChangeRoleUser';

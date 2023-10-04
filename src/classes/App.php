@@ -108,17 +108,9 @@ class App{
                 $logger=null;
             }
         });
-        $this->emitter->on(Emitter::USER_VALIDATED,function ($userMail){
+        $this->emitter->on(Emitter::USER_VALIDATED,function ($userMail, $values){
             $mail=new Mailer();
-            $mail->sendMailToUser($userMail,'Votre compte est validé','Votre compte est bien validé' );
+            $mail->sendHTMLMailToUser($userMail,'Votre compte est validé',$values,'validate' );
         });
-        /*$this->emitter->on('Comment.created',function ($firstname, $lastname){
-            echo $firstname . 'a poster un commentaire'; 
-        });
-        $this->emitter->on('Comment.created',function ($firstname, $lastname){
-            $email=new Mailer();
-            $email->sendMailToAdmin('test@editiel.local','Test Emitter','Ceci est un test'); 
-        });
-        */
     }
 }

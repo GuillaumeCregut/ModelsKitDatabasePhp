@@ -80,7 +80,7 @@ class Mailer
      */
     public function sendMailToAdmin(string $from,string $subject,string $message): bool
     {
-        $MessageMail=wordwrap($message,70,'\r\n');
+        $MessageMail=wordwrap($message,70,'\n');
         return $this->sendMail($this->adminMail,$from,$subject,$MessageMail,false);
     }
 
@@ -114,7 +114,7 @@ class Mailer
     public function sendMailToUser(string $to,string $subject, string $message): bool
     {
         $MessageMail=wordwrap($message,70,'\r\n');
-        return $this->sendMail($to,$subject,$MessageMail,false);
+        return $this->sendMail($to,$this->adminMail,$subject,$MessageMail,false);
     }
 
     /**
@@ -122,7 +122,7 @@ class Mailer
      *
      * @param string $to
      * @param string $subject
-     * @param array $values
+     * @param array $values : values to place in template as['templateValue'=>value]
      * @param string $template
      * @return boolean
      */

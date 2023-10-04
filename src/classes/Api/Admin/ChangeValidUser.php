@@ -7,7 +7,7 @@ use Editiel98\Manager\UserManager;
 use Editiel98\Router\ApiController;
 use Exception;
 
-class ChangeRankUser extends ApiController
+class ChangeValidUser extends ApiController
 {
     public function manage()
     {
@@ -16,7 +16,7 @@ class ChangeRankUser extends ApiController
             if(App::ADMIN==$this->userRank){
                 $method=$_SERVER['REQUEST_METHOD'];
                 switch ($method){
-                    case 'GET': 
+                    case 'GET':
                         header("HTTP/1.1 405 Method Not Allowed");
                         die();
                         break;
@@ -77,7 +77,11 @@ class ChangeRankUser extends ApiController
             $result=!!$result;
             if($newStatus && $result){
                 $emitter=Emitter::getInstance();
-                $emitter->emit(Emitter::USER_VALIDATED,$user->getEmail());
+                $mailValues=[
+                    'firstname'=>$user->getFirstname(),
+                    'lastname'=>$user->getLastname()
+                ];
+                $emitter->emit(Emitter::USER_VALIDATED,$user->getEmail(),$mailValues );
             }
             $arrayData=[
                 'Utilisateur'=>$idUser,

@@ -2,6 +2,7 @@
 namespace Editiel98\Manager;
 
 use Editiel98\Database\Database;
+use App\Controller\Error as ControllerError;
 
 /**
  * Manage informations from DB to Entity
@@ -39,6 +40,21 @@ abstract class Manager
     {
         $method='get' . ucfirst($name);
         return $this->$method();
+    }
+
+    /**
+     * On DB Error, log to lofile, and display error page
+     *
+     * @param string $message : Error message from DB
+     * @return void
+     */
+    protected function loadErrorPage(string $message)
+    {
+        //Log to error log
+        //display error page
+        $errPage=new ControllerError('500',$message);
+        $errPage->render();
+        die();
     }
     
 } 

@@ -1,0 +1,34 @@
+    .logs-title{
+        text-align: center;
+    }
+    
+    .log-item-container{
+        margin-bottom: 20px;
+    }
+
+    .log-item-value{
+        width: 850px;
+        max-height: 450px;
+        padding: 10px;
+        border : 1px solid black;
+        overflow: auto;
+        overflow-x: scroll;
+        word-wrap: none;
+        white-space: nowrap;
+        font-size: 0.8rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        .logs{
+            grid-area: 1/1/2/2;
+        }
+
+        .log-container{
+            display: flex;
+            justify-content: center;
+        }
+
+        .log-item-value{
+            width: 320px;
+        }
+    }

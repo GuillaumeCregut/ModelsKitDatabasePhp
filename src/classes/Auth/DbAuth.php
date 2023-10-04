@@ -38,7 +38,8 @@ class DbAuth
                     $userDb->lastname,
                     $userDb->id,
                     $userDb->rankUser,
-                    $userDb->avatar
+                    $userDb->avatar,
+                    $userDb->isvalid
                 );
                 $_SESSION[Session::SESSION_CONNECTED]=true;
                 $_SESSION[Session::SESSION_USER_ID]=$user->getId();

@@ -66,11 +66,15 @@ class Database{
         }
     }
 
-    public function query(string $statement,string $className): array
+    public function query(string $statement,?string $className=null): array
     {
         try{
             $req=$this->getConnect()->query($statement);
-            $datas=$req->fetchAll(PDO::FETCH_CLASS,$className);
+            if(is_null($className)){
+                $datas=$req->fetchAll(PDO::FETCH_OBJ);
+            }else{
+                $datas=$req->fetchAll(PDO::FETCH_CLASS,$className);
+            }
             return $datas;
         }
         catch(PDOException $e){
@@ -117,7 +121,12 @@ class Database{
         try{
             $req=$this->getConnect()->prepare($statement);
             $result=$req->execute($values);
-            return $result;
+            if($result){
+                $count=$req->rowCount();
+                return $count;
+            }else{
+                return $result;
+            }
         }
         catch(Exception $e){
             $errCode=$e->getCode();

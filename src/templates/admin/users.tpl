@@ -27,6 +27,7 @@
                     
                     <td><select 
                         data-id="{$user->id}" 
+                        data-role="{$user->rankUser}"
                         class="select_user_role"
                         {if $user->id==$defaultUser}disabled{/if}>
                         <option value="1" {if $user->rankUser==1}selected{/if}>Utilisateur</option>

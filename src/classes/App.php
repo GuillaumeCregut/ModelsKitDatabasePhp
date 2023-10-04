@@ -108,6 +108,10 @@ class App{
                 $logger=null;
             }
         });
+        $this->emitter->on(Emitter::USER_VALIDATED,function ($userMail){
+            $mail=new Mailer();
+            $mail->sendMailToUser($userMail,'Votre compte est validé','Votre compte est bien validé' );
+        });
         /*$this->emitter->on('Comment.created',function ($firstname, $lastname){
             echo $firstname . 'a poster un commentaire'; 
         });

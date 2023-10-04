@@ -12,6 +12,7 @@ class Emitter
     const DATABASE_WARNING='database.warning';
     const USER_SUBSCRIBED='user.subscribed';
     const MAIL_ERROR='mail.error';
+    const USER_VALIDATED="user.validated";
 
     /**
      * Get Emitter instance (singleton)

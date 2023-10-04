@@ -79,4 +79,17 @@ class UserManager extends Manager //implements ManagerInterface
            throw new Exception($e->getdbMessage());
         }
     }
+
+    public function setNewRole(int $user, int $role) : bool
+    {
+        $query="UPDATE " . $this->table . " SET rankUser=:rankUser WHERE id=:id";
+        $values=[":rankUser"=>$role,":id"=>$user];
+        try{
+            $test=$this->db->exec($query,$values);
+            return $test;
+        }
+        catch(DbException $e){
+           throw new Exception($e->getdbMessage());
+        }
+    }
 }

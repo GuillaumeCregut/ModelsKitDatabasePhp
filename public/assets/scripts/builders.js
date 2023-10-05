@@ -4,6 +4,10 @@ const updateBtns=document.querySelectorAll('.single-update-btn');
 const updateFormBtn=document.getElementById('update_single');
 const inputName=document.getElementById('newNameMod');
 const countrySelector=document.getElementById('countryBuilder');
+const deleteBtn=document.querySelectorAll('.single-delete-btn');
+const formDelete=document.getElementById('form-delete-builder');
+const idDelete=document.getElementById('id_hidden');
+
 
 countrySelector.addEventListener('change',(e)=>{
     if (parseInt(countrySelector.value)!==0){
@@ -75,21 +79,14 @@ updateBtns.forEach((btn)=>{
     btn.addEventListener('click',()=>showModal(id,name,countryId))
 });
 
-/*
-        Update this to adapt with builder
-const deleteBtn=document.querySelectorAll('.single-delete-btn');
-const formDelete=document.getElementById('form-delete-category');
-const idDelete=document.getElementById('id_hidden');
-
 deleteBtn.forEach((btn)=>{
     btn.addEventListener('click',()=>{
         const id=btn.dataset.id;
         const name=btn.dataset.name;
-        if(confirm(`Voulez-vous supprimer la catégorie ${name} ?`)){
+        if(confirm(`Voulez-vous supprimer le constructeur ${name} ?`)){
             idDelete.value=id;
             formDelete.submit();
         }
     })
 })
 
-*/

@@ -55,7 +55,7 @@ class Builder extends Controller
                     else
                         return false;
                     break;
-                case "remove": return false;
+                case "remove": 
                     if(isset($_POST['id'])){
                         $id=intval($_POST['id']);
                         return $this->remove($id);
@@ -105,15 +105,18 @@ class Builder extends Controller
 
     private function remove(int $id): bool 
     {
-        // $country=new EntityCountry();
-        // $country->setId($id);
-        // return $country->delete();
-        return false;
+        if($id===0){
+            return false;
+        }
+        $builder=new EntityBuilder();
+        $builder->setId($id);
+        return $builder->delete();
+        
     }
 
     private function update(int $id, string $name, int $countryId): bool 
     {
-        if(($countryId===0) || ($name==='') ||($countryId===0)){
+        if(($id===0) || ($name==='') ||($countryId===0)){
             return false;
         }
         $builder=new EntityBuilder();

@@ -105,12 +105,10 @@ class BuilderManager extends Manager implements ManagerInterface
      * @return boolean
      */
     public function delete(Entity $entity) : bool{
-        // $query='DELETE FROM ' . $this->table . ' WHERE id=:id';
-        // $id=$entity->getId();
-        // $result=$this->execSQL($query,['id'=>$id]);
-        //return $result;
-        //Debug
-        return false;
+        $query='DELETE FROM ' . $this->table . ' WHERE id=:id';
+        $id=$entity->getId();
+        $result=$this->execSQL($query,['id'=>$id]);
+        return $result;
     }
 
     /**

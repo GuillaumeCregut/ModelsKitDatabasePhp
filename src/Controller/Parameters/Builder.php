@@ -39,7 +39,6 @@ class Builder extends Controller
     }
 
     private function usePost(): bool{
-        var_dump($_POST);
         if(isset($_POST['action'])){
             switch ($_POST['action']){
                 case "add" :

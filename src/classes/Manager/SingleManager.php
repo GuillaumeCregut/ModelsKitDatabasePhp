@@ -20,7 +20,7 @@ abstract class SingleManager extends Manager implements ManagerInterface
     public function getAll():array
     {
         try{
-            $result=$this->db->query('SELECT id,name FROM ' . $this->table,$this->className); 
+            $result=$this->db->query('SELECT id,name FROM ' . $this->table . ' ORDER BY name',$this->className); 
             return $result;
         }
         catch(DbException $e){

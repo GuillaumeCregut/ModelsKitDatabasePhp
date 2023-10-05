@@ -1,9 +1,9 @@
-
+.params-container{
+    position: relative;
+}
 .single-table{
     width: 100%;
 }
-
-
 
 .single-cell{
     text-align: center;
@@ -17,9 +17,12 @@
     font-size: 1.7rem;
 }
 
-.single-delete-btn{
+
+
+.single-btn{
     border: 0;
     outline: 0;
+    margin: 0 10px;
 }
 
 .trash-simple{
@@ -67,7 +70,7 @@
     margin-bottom: 10px;
     padding: 6px 10px;
     border-bottom: 1px solid  rgba(0, 0, 0, 0.87);
-
+    background-color: transparent;
 }
 
 .form-add-simple-btn{
@@ -103,6 +106,44 @@
     min-height: 25px;
     min-width: 25px;
 }
+
+
+/* Modal section */
+.modal-hidden{
+    display: none;
+}
+
+.blured{
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
+.singleModal{
+    z-index: 1;
+    position: fixed;
+    top:50%;
+    left: 50%;
+    width: 350px;
+    transform: translateX(-50%);
+    border: 1px solid black;
+    background-color: var(--menu-color);
+}
+
+.single-modal-container{
+    position: relative;
+    padding : 20px;
+}
+
+#close-modal{
+    position: absolute;
+    top : 5px;
+    right: 5px;
+    cursor: pointer;
+    border: 0;
+    background-color: transparent;
+    outline: 0;
+}
+/* End modal section */
 
 @media screen and (max-width: 768px) {
     .params-container{

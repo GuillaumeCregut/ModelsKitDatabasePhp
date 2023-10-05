@@ -31,7 +31,7 @@ class Category extends Controller
         }
         $this->smarty->assign('list',$categories);
         $this->smarty->assign('params','params');
-        $this->smarty->assign('country_menu','params');
+        $this->smarty->assign('cat_menu','params');
         $this->smarty->display('params/categories.tpl');
     }
 

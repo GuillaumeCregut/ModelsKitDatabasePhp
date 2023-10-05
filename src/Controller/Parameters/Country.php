@@ -3,7 +3,6 @@ namespace App\Controller\Parameters;
 
 use Editiel98\App;
 use Editiel98\Entity\Country as EntityCountry;
-use Editiel98\Factory;
 use Editiel98\Manager\CountryManager;
 use Editiel98\Router\Controller;
 
@@ -12,15 +11,18 @@ class Country extends Controller
     public function render()
     {
         if(!empty($_POST)){
-            var_dump($_POST);
             if(!$this->usePost())
             {
-                //Une erreur s'est produite;
+                $this->hasFlash=$this->flash->hasFlash();
+                /* Render flashes messages */
+                if($this->hasFlash){
+                    $flashes=$this->flash->getFlash();
+                    $this->smarty->assign('flash',$flashes);
+                }
             }
         }
         $countryManager=new CountryManager($this->dbConnection);
         $countries= $countryManager->getAll();
-        //var_dump($countries);
         if($this->isConnected){
             $this->smarty->assign('connected',true);
             if(App::ADMIN===$this->userRank){
@@ -75,14 +77,15 @@ class Country extends Controller
     {
         $country=new EntityCountry();
         $country->setName($name);
-        $test=$country->save();
-        var_dump($test);
-        return false;
+        $result=$country->save();
+        return !!$result;
     }
 
     private function remove(int $id): bool 
     {
-        return false;
+        $country=new EntityCountry();
+        $country->setId($id);
+        return $country->delete();
     }
 
     private function update(int $id, string $name): bool 

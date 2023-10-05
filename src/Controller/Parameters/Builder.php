@@ -64,7 +64,6 @@ class Builder extends Controller
                         return false;
                     break;
                 case "update":
-                    return false;
                     if(isset($_POST['name'])){
                         $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
                     }
@@ -74,8 +73,13 @@ class Builder extends Controller
                         $id=intval($_POST['id']);
                     }
                     else
+                        return false;
+                    if(isset($_POST['countryId'])){
+                        $countryId=intval($_POST['countryId']);
+                    }
+                    else
                         return false; 
-                    return $this->update($id,$name);   
+                    return $this->update($id,$name,$countryId);   
                     break;
                 default:
                     return false;
@@ -107,12 +111,16 @@ class Builder extends Controller
         return false;
     }
 
-    private function update(int $id, string $name): bool 
+    private function update(int $id, string $name, int $countryId): bool 
     {
-    //    $country=new EntityCountry();
-    //    $country->setId($id);
-    //    $country->setName($name);
-    //    return $country->update();
-        return false;
+        if(($countryId===0) || ($name==='') ||($countryId===0)){
+            return false;
+        }
+        $builder=new EntityBuilder();
+        $builder
+            ->setName($name)
+            ->setCountryId($countryId)
+            ->setId($id);
+        return $builder->update();
     }
 }

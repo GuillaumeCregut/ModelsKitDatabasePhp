@@ -74,10 +74,12 @@ class BuilderManager extends Manager implements ManagerInterface
      * @return boolean
      */
     public function update(Entity $entity): bool{
-        // $query='UPDATE ' . $this->table .' SET name=:name WHERE id=:id';
-        // $name=$entity->getName();
-        // $id=$entity->getId();
-        //return $this->execSQL($query,['name'=>$name,':id'=>$id]);
+        $query='UPDATE ' . $this->table .' SET name=:name, country=:country WHERE id=:id';
+        $name=$entity->getName();
+        $id=$entity->getId();
+        $country=$entity->getCountryId();
+        $values=['name'=>$name,':id'=>$id,':country'=>$country];
+        return $this->execSQL($query,$values);
         //Debug
         return false;
     }

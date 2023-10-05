@@ -5,10 +5,10 @@
    
 {/block}
 {block name=body}
-{include file='partials/_navbar.tpl'}
-<div class="params">
-{include file='partials/_left_menu_params.tpl'}
-{block name=innerMenu}
-</div>
-{/block}
+    {include file='partials/_navbar.tpl'}
+    <div class="params">
+        {include file='partials/_left_menu_params.tpl'}
+        {block name=innerMenu}
+        {/block}
+    </div>
 {/block}

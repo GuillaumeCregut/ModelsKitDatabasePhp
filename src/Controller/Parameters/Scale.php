@@ -2,11 +2,11 @@
 namespace App\Controller\Parameters;
 
 use Editiel98\App;
-use Editiel98\Entity\Category as EntityCategory;
-use Editiel98\Manager\CategoryManager;
+use Editiel98\Entity\Scale as EntityScale;
+use Editiel98\Manager\ScaleManager;
 use Editiel98\Router\Controller;
 
-class Category extends Controller
+class Scale extends Controller
 {
     public function render()
     {
@@ -21,18 +21,18 @@ class Category extends Controller
                 }
             }
         }
-        $categoryManager=new CategoryManager($this->dbConnection);
-        $categories= $categoryManager->getAll();
+        $scaleManager=new ScaleManager($this->dbConnection);
+        $scales= $scaleManager->getAll();
         if($this->isConnected){
             $this->smarty->assign('connected',true);
             if(App::ADMIN===$this->userRank){
                 $this->smarty->assign('isAdmin',true);
             }
         }
-        $this->smarty->assign('list',$categories);
+        $this->smarty->assign('list',$scales);
         $this->smarty->assign('params','params');
-        $this->smarty->assign('cat_menu','params');
-        $this->smarty->display('params/categories.tpl');
+        $this->smarty->assign('scale_menu','params');
+        $this->smarty->display('params/scales.tpl');
     }
 
     private function usePost(): bool{
@@ -78,24 +78,24 @@ class Category extends Controller
 
     private function add(string $name): bool 
     {
-        $category=new EntityCategory();
-        $category->setName($name);
-        $result=$category->save();
+        $scale=new EntityScale();
+        $scale->setName($name);
+        $result=$scale->save();
         return !!$result;
     }
 
     private function remove(int $id): bool 
     {
-        $category=new EntityCategory();
-        $category->setId($id);
-        return $category->delete();
+        $scale=new EntityScale();
+        $scale->setId($id);
+        return $scale->delete();
     }
 
     private function update(int $id, string $name): bool 
     {
-        $category=new EntityCategory();
-        $category->setId($id);
-       $category->setName($name);
-       return $category->update();
+       $country=new EntityScale();
+       $country->setId($id);
+       $country->setName($name);
+       return $country->update();
     }
 }

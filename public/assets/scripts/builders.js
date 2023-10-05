@@ -37,7 +37,7 @@ newName.addEventListener('keypress',()=>{
         newName.classList.remove('wrong');
 })
 
-const showModal=(id, name)=>{
+const showModal=(id, name,country)=>{
     //Blur the page
     const page=document.querySelector('.params-container');
     page.classList.add('blured');
@@ -45,6 +45,14 @@ const showModal=(id, name)=>{
     inputName.value=name;
     const inputHiddenId=document.getElementById('modSingle');
     inputHiddenId.value=id;
+    const selectCountry=document.getElementById('countryBuilderUpdate');
+    let selected=0;
+    for(let i=0;i<selectCountry.children.length;i++){
+        if(selectCountry.children[i].value===country){
+            selected=selectCountry.children[i].index;
+        }
+    }
+    selectCountry.selectedIndex=selected;
     //show the modal div
     const modalDiv=document.querySelector('.singleModal')
     modalDiv.classList.remove('modal-hidden');
@@ -63,7 +71,8 @@ closeModal.addEventListener('click',hideModal);
 updateBtns.forEach((btn)=>{
     const id=btn.dataset.id;
     const name=btn.dataset.name;
-    btn.addEventListener('click',()=>showModal(id,name))
+    const countryId=btn.dataset.country;
+    btn.addEventListener('click',()=>showModal(id,name,countryId))
 });
 
 /*

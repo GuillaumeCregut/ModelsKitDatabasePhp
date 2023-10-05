@@ -120,7 +120,19 @@
 .form-update-builder{
     display: flex;
     flex-direction: column;
+    gap : 10px;
 }
+
+.builder-update-btn{
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    width: 50px;
+    margin : 0 auto;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
 /* Modal section */
 .modal-hidden{
     display: none;

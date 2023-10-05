@@ -71,6 +71,9 @@ class Country extends Controller
                     return false;
             }
         }
+        else{
+            return false;
+        }
     }
 
     private function add(string $name): bool 
@@ -90,8 +93,9 @@ class Country extends Controller
 
     private function update(int $id, string $name): bool 
     {
-        return false;
+       $country=new EntityCountry();
+       $country->setId($id);
+       $country->setName($name);
+       return $country->update();
     }
-
-    
 }

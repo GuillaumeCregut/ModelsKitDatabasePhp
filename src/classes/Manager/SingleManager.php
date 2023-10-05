@@ -5,7 +5,7 @@ use App\Controller\Error as ControllerError;
 use Editiel98\DbException;
 use Editiel98\Entity\Entity;
 use Editiel98\Event\Emitter;
-
+use Editiel98\Flash;
 
 /**
  * Manage single entity to DB
@@ -107,6 +107,11 @@ abstract class SingleManager extends Manager implements ManagerInterface
             return $result;
         }
         catch(DbException $e){
+            if($e->getDbCode()===23000){
+                $flash=new Flash();
+                $flash->setFlash('Modification impossible','error');
+                return false;
+            }
             $message='SQL : ' . $query .'a poser problème';
             $emitter=Emitter::getInstance();
             $emitter->emit(Emitter::DATABASE_ERROR,$message);

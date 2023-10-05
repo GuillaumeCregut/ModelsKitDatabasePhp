@@ -1,0 +1,46 @@
+.filter-models {
+    padding: 5px;
+    margin: 10px;
+}
+
+.filters-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filter-element-container {
+    width: 45%;
+    display: flex;
+}
+
+.model-filter-label {
+    display: flex;
+    margin: 5px;
+    flex-wrap: wrap;
+}
+
+.filter-name-input{
+    margin-left: 5px;
+    border : none;
+    border-bottom: 1px solid black;
+    background-color: transparent;
+    outline: none;
+}
+
+.btn-filter{
+    display: flex;
+    padding: 8px;
+    margin: 10px auto;
+}
+
+.search-model-icon{
+    min-height: 20px;
+    min-width: 20px;
+    margin-right: 10px;
+}
+
+.select-filter{
+    border-radius: 3px;
+    padding: 3px;
+    margin-left: 5px;
+}

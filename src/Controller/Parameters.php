@@ -25,7 +25,7 @@ class Parameters extends Controller
                 case 'builder':
                     $className = 'Builder';
                     break;
-                case 'category':
+                case 'categories':
                     $className = 'Category';
                     break;
                 case 'scale':

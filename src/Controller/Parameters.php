@@ -19,7 +19,7 @@ class Parameters extends Controller
                 case 'brand':
                     $className = 'Brand';
                     break;
-                case 'period':
+                case 'periods':
                     $className = 'Period';
                     break;
                 case 'builder':

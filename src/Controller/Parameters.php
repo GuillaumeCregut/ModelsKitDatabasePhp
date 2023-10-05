@@ -22,16 +22,16 @@ class Parameters extends Controller
                 case 'periods':
                     $className = 'Period';
                     break;
-                case 'builder':
+                case 'builders':
                     $className = 'Builder';
                     break;
                 case 'categories':
                     $className = 'Category';
                     break;
-                case 'scale':
+                case 'scales':
                     $className = 'Scale';
                     break;
-                case 'model':
+                case 'models':
                     $className = 'Model';
                     break;
                 default: 

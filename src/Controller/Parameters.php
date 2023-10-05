@@ -8,14 +8,12 @@ class Parameters extends Controller
 {
     public function render()
     {
-        
-        var_dump($this->subPages);
         if (empty($this->subPages)) {
             $this->smarty->assign('params','params');
             $this->smarty->display('params/index.tpl');
         } else {
             switch ($this->subPages[0]) {
-                case 'country':
+                case 'countries':
                     $className = 'Country';
                     break;
                 case 'brand':

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use Editiel98\App;
 use Editiel98\Router\Controller;
 
 class Error extends Controller
@@ -13,7 +14,13 @@ class Error extends Controller
         parent::__construct();
         $this->error=$error;
         if(!is_null($message)){
-            $this->message=$message;
+            $env=App::getEnv();
+            if ($env==='debug'){
+                $this->message=$message;
+            }
+            else{
+                $this->message='Une erreur est survenue';
+            }
         }
     }
     

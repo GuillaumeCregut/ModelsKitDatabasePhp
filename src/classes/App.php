@@ -5,6 +5,7 @@ use App\Controller\Error;
 use Editiel98\Event\Emitter;
 use Editiel98\Logger\ErrorLogger;
 use Editiel98\Logger\WarnLogger;
+use Exception;
 
 class App{
 
@@ -22,7 +23,6 @@ class App{
     public function run()
     {
         $this->setEmitter();
-        // var_dump($_SERVER['REQUEST_METHOD']);
         $uri=$_SERVER['REQUEST_URI'];
         if(strlen($uri)>1&& $uri[-1]=='/'){
             var_dump(substr($uri,0,-1));
@@ -86,6 +86,21 @@ class App{
         $this->subPages=array_slice($subPages,1);
         return $subPages[0];
 
+    }
+
+    public static function getEnv() : string
+    {
+        try{
+            $config= simplexml_load_file(dirname(__DIR__) . '/config.xml');
+            if ($config===false){
+                throw new Exception('Config not readable');
+            }
+            return $config->general->env;
+        }
+        catch (Exception $e)
+        {
+            throw new Exception('Config not readable');
+        }
     }
 
     private function setEmitter()

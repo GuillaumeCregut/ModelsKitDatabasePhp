@@ -33,14 +33,14 @@ class DbAuth
             $userDb=$this->db->prepare($query,null,[':login'=>$login],true);
             $isValid=password_verify( $password,  $userDb->passwd)&&($userDb->isvalid===1);
             if($isValid){
-                $user=new User(
-                    $userDb->firstname,
-                    $userDb->lastname,
-                    $userDb->id,
-                    $userDb->rankUser,
-                    $userDb->avatar,
-                    $userDb->isvalid
-                );
+                $user=new User();
+                $user
+                ->setFirstname($userDb->firstname)
+                ->setLastname($userDb->lastname)
+                ->setId ($userDb->id)
+                ->setRankUser($userDb->rankUser)
+                ->setAvatar($userDb->avatar)
+                ->setValid($userDb->isvalid);
                 $_SESSION[Session::SESSION_CONNECTED]=true;
                 $_SESSION[Session::SESSION_USER_ID]=$user->getId();
                 $_SESSION[Session::SESSION_FULLNAME]=$user->getFullname();

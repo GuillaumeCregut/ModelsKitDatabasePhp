@@ -1,23 +1,23 @@
 {extends file="../_params_template.tpl"}
-{block name=title}Paramètres - Périodes{/block}
+{block name=title}Paramètres - Marques{/block}
 {block name=styles}
-<link rel="stylesheet" href="assets/styles/params/period.css">
+<link rel="stylesheet" href="assets/styles/params/brand.css">
 <link rel="stylesheet" href="assets/styles/params/single.css">
 {/block}
 {block name=script}
 {if isset($connected) &&  isset(isAdmin)}
-    <script src="assets/scripts/periods.js" defer></script>
+    <script src="assets/scripts/brands.js" defer></script>
     <script src="assets/scripts/single.js" defer></script>
 {/if}
 {/block}
 {block name=innerMenu}
 <div class="params-container">
     <section class="list">
-        <h2 class="periods_title">Gestion des périodes</h2>
+        <h2 class="brands_title">Gestion des marques</h2>
         {if isset($list)}
             <div class="items-container">
                 {if isset($connected) &&  isset(isAdmin)}
-                    <form action="parametres_periods" method="post" id="form-delete-period">
+                    <form action="parametres_brands" method="post" id="form-delete-brand">
                         <input type="hidden" name="action" value="remove">
                         <input type="hidden" name="id" value="0" id="id_hidden">
                     </form>
@@ -30,19 +30,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {foreach from=$list item=period}
+                        {foreach from=$list item=brand}
                             <tr class="single-row">
                                 <td class="single-cell">
-                                    <span class="period-name" data-id="{$period->getId()}">
-                                        {$period->getName()}
+                                    <span class="brand-name" data-id="{$brand->getId()}">
+                                        {$brand->getName()}
                                     </span>
                                 </td>
                                 <td class="single-cell">
                                     {if isset($connected) &&  isset(isAdmin)}
                                     <button 
                                         class="single-delete-btn single-btn" 
-                                        data-id="{$period->getId()}"
-                                        data-name="{$period->getName()}">
+                                        data-id="{$brand->getId()}"
+                                        data-name="{$brand->getName()}">
                                         <svg 
                                             stroke="currentColor" 
                                             fill="currentColor" 
@@ -57,8 +57,8 @@
                                     </button>
                                     <button
                                         class="single-update-btn single-btn" 
-                                        data-id="{$period->getId()}"
-                                        data-name="{$period->getName()}">
+                                        data-id="{$brand->getId()}"
+                                        data-name="{$brand->getName()}">
                                         <svg 
                                             stroke="currentColor" 
                                             fill="none" 
@@ -81,13 +81,13 @@
                 </table>
             </div>
         {else}
-            <p>Il n'y a aucun résultat</p>   
+            <p>Il n'y a aucun résultat</p>
         {/if}
     </section>
     {if isset($connected)}
         <section class="single-form">
-            <h2>Ajouter une nouvelle période</h2>
-            <form action="parametres_periods" class="form-add-simple" method="post" id="form-add">
+            <h2>Ajouter une nouvelle marque</h2>
+            <form action="parametres_brands" class="form-add-simple" method="post" id="form-add">
                 <input type="hidden" name="action" value="add">
                 <label for="new-name">Nom du nouvel élément : 
                     <input 
@@ -125,7 +125,7 @@
     {if isset($connected) &&  isset(isAdmin)}
         <div class="singleModal modal-hidden">
             <section class="single-modal-container">
-                <form action="parametres_periods" method="post" id="update_single">
+                <form action="parametres_brands" method="post" id="update_single">
                     <label for="newNameMod">Nouveau nom
                         <input type="text" name="name" id="newNameMod" class="input_simple">    
                     </label>

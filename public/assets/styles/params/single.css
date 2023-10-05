@@ -1,6 +1,12 @@
 .params-container{
     position: relative;
 }
+
+.items-container{
+    max-height: 700px;
+    overflow-y: scroll;
+}
+
 .single-table{
     width: 100%;
 }

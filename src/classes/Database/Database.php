@@ -78,7 +78,7 @@ class Database{
             return $datas;
         }
         catch(PDOException $e){
-            $errCode=$e->getCode();
+            $errCode=intVal($e->getCode());
             $errMessage=$e->getMessage();
             throw new DbException('Erreur Query',$errCode,$errMessage);
         }
@@ -108,7 +108,7 @@ class Database{
             return $data;
         }
         catch(PDOException $e){
-            $errCode=$e->getCode();
+            $errCode=intVal($e->getCode());
             $errMessage=$e->getMessage();
             $emitter=Emitter::getInstance();
             $emitter->emit(Emitter::DATABASE_ERROR,'database : ' .$e->getMessage());
@@ -129,7 +129,7 @@ class Database{
             }
         }
         catch(Exception $e){
-            $errCode=$e->getCode();
+            $errCode=intVal($e->getCode());
             $errMessage=$e->getMessage();
             $emitter=Emitter::getInstance();
             $emitter->emit(Emitter::DATABASE_ERROR,'database : ' .$e->getMessage());

@@ -1,23 +1,21 @@
 {extends file="../_params_template.tpl"}
-{block name=title}Paramètres - Echelles{/block}
+{block name=title}Paramètres - Constructeurs{/block}
 {block name=styles}
-<link rel="stylesheet" href="assets/styles/params/scale.css">
-<link rel="stylesheet" href="assets/styles/params/single.css">
+    <link rel="stylesheet" href="assets/styles/params/builder.css">
 {/block}
 {block name=script}
 {if isset($connected) &&  isset(isAdmin)}
-    <script src="assets/scripts/scales.js" defer></script>
-    <script src="assets/scripts/single.js" defer></script>
+    <script src="assets/scripts/builders.js" defer></script>
 {/if}
 {/block}
 {block name=innerMenu}
 <div class="params-container">
     <section class="list">
-        <h2 class="scales_title">Gestion des échelles</h2>
+        <h2 class="builders_title">Gestion des constructeurs</h2>
         {if isset($list)}
             <div class="items-container">
                 {if isset($connected) &&  isset(isAdmin)}
-                    <form action="parametres_scales" method="post" id="form-delete-scale">
+                    <form action="parametres_builders" method="post" id="form-delete-builder">
                         <input type="hidden" name="action" value="remove">
                         <input type="hidden" name="id" value="0" id="id_hidden">
                     </form>
@@ -26,23 +24,27 @@
                     <thead>
                         <tr class="single-row">
                             <th class="single-cell single-table-head">Nom</th>
+                            <th class="single-cell single-table-head">Pays</th>
                             <th class="single-cell single-table-head">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {foreach from=$list item=scale}
+                        {foreach from=$list item=builder}
                             <tr class="single-row">
                                 <td class="single-cell">
-                                    <span class="scale-name" data-id="{$scale->getId()}">
-                                        {$scale->getName()}
+                                    <span class="builder-name" data-id="{$builder->getId()}">
+                                        {$builder->getName()}
                                     </span>
+                                </td>
+                                <td class="single-cell">
+                                    {$builder->getCountryName()}
                                 </td>
                                 <td class="single-cell">
                                     {if isset($connected) &&  isset(isAdmin)}
                                     <button 
                                         class="single-delete-btn single-btn" 
-                                        data-id="{$scale->getId()}"
-                                        data-name="{$scale->getName()}">
+                                        data-id="{$builder->getId()}"
+                                        data-name="{$builder->getName()}">
                                         <svg 
                                             stroke="currentColor" 
                                             fill="currentColor" 
@@ -57,8 +59,9 @@
                                     </button>
                                     <button
                                         class="single-update-btn single-btn" 
-                                        data-id="{$scale->getId()}"
-                                        data-name="{$scale->getName()}">
+                                        data-id="{$builder->getId()}"
+                                        data-country="{$builder->getCountryId()}"
+                                        data-name="{$builder->getName()}">
                                         <svg 
                                             stroke="currentColor" 
                                             fill="none" 
@@ -81,13 +84,13 @@
                 </table>
             </div>
         {else}
-                <p>Il n'y a aucun résultat</p>
+            <p>Il n'y a aucun résultat</p>
         {/if}
     </section>
     {if isset($connected)}
         <section class="single-form">
-            <h2>Ajouter une nouvelle échelle</h2>
-            <form action="parametres_scales" class="form-add-simple" method="post" id="form-add">
+            <h2>Ajouter un nouveau constructeur</h2>
+            <form action="parametres_builders" class="form-add-simple" method="post" id="form-add">
                 <input type="hidden" name="action" value="add">
                 <label for="new-name">Nom du nouvel élément : 
                     <input 
@@ -98,6 +101,16 @@
                         placeholder="Nom"
                         autocomplete="off"
                         >
+                </label>
+                <label for="countryBuilder">Pays :
+                    <select name="countryId" id="countryBuilder" class="builder-select-country">
+                        <option value="0">--</option>
+                        {if isset($countries)}
+                            {foreach from=$countries item=country}
+                                <option value="{$country->getId()}">{$country->getName()}</option>
+                            {/foreach}
+                        {/if}
+                    </select>
                 </label>
                 <button type="submit" class="form-add-simple-btn">
                     <svg 
@@ -125,13 +138,35 @@
     {if isset($connected) &&  isset(isAdmin)}
         <div class="singleModal modal-hidden">
             <section class="single-modal-container">
-                <form action="parametres_scales" method="post" id="update_single">
+                <form action="parametres_builders" method="post" id="update_single" class="form-update-builder">
                     <label for="newNameMod">Nouveau nom
                         <input type="text" name="name" id="newNameMod" class="input_simple">    
                     </label>
+                    <label for="countryBuilderUpdate">Pays :
+                        <select name="countryId" id="countryBuilderUpdate" class="builder-select-country">
+                            {if isset($countries)}
+                                {foreach from=$countries item=country}
+                                    <option 
+                                        value="{$country->getId()}">{$country->getName()}</option>
+                                {/foreach}
+                            {/if}
+                        </select>
+                    </label>
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" value="0" id="modSingle">
-                        <button type="submit">Modifier</button>
+                        <button type="submit" class="builder-update-btn">
+                            <svg 
+                            stroke="currentColor" 
+                            fill="none" 
+                            stroke-width="0" 
+                            viewBox="0 0 15 15" 
+                            class="trash-simple" 
+                            height="1em" 
+                            width="1em" 
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.90321 7.29677C1.90321 10.341 4.11041 12.4147 6.58893 12.8439C6.87255 12.893 7.06266 13.1627 7.01355 13.4464C6.96444 13.73 6.69471 13.9201 6.41109 13.871C3.49942 13.3668 0.86084 10.9127 0.86084 7.29677C0.860839 5.76009 1.55996 4.55245 2.37639 3.63377C2.96124 2.97568 3.63034 2.44135 4.16846 2.03202L2.53205 2.03202C2.25591 2.03202 2.03205 1.80816 2.03205 1.53202C2.03205 1.25588 2.25591 1.03202 2.53205 1.03202L5.53205 1.03202C5.80819 1.03202 6.03205 1.25588 6.03205 1.53202L6.03205 4.53202C6.03205 4.80816 5.80819 5.03202 5.53205 5.03202C5.25591 5.03202 5.03205 4.80816 5.03205 4.53202L5.03205 2.68645L5.03054 2.68759L5.03045 2.68766L5.03044 2.68767L5.03043 2.68767C4.45896 3.11868 3.76059 3.64538 3.15554 4.3262C2.44102 5.13021 1.90321 6.10154 1.90321 7.29677ZM13.0109 7.70321C13.0109 4.69115 10.8505 2.6296 8.40384 2.17029C8.12093 2.11718 7.93465 1.84479 7.98776 1.56188C8.04087 1.27898 8.31326 1.0927 8.59616 1.14581C11.4704 1.68541 14.0532 4.12605 14.0532 7.70321C14.0532 9.23988 13.3541 10.4475 12.5377 11.3662C11.9528 12.0243 11.2837 12.5586 10.7456 12.968L12.3821 12.968C12.6582 12.968 12.8821 13.1918 12.8821 13.468C12.8821 13.7441 12.6582 13.968 12.3821 13.968L9.38205 13.968C9.10591 13.968 8.88205 13.7441 8.88205 13.468L8.88205 10.468C8.88205 10.1918 9.10591 9.96796 9.38205 9.96796C9.65819 9.96796 9.88205 10.1918 9.88205 10.468L9.88205 12.3135L9.88362 12.3123C10.4551 11.8813 11.1535 11.3546 11.7585 10.6738C12.4731 9.86976 13.0109 8.89844 13.0109 7.70321Z" fill="currentColor"></path>
+                        </svg>
+                        </button>
                 </form>
                 <button id="close-modal">
                     <i class="fa-solid fa-xmark" ></i>

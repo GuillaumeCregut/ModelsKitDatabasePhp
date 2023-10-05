@@ -86,7 +86,7 @@
     </section>
     {if isset($connected)}
         <section class="single-form">
-            <h2>Ajouter un nouveau pays</h2>
+            <h2>Ajouter une nouvelle catégorie</h2>
             <form action="parametres_categories" class="form-add-simple" method="post" id="form-add">
                 <input type="hidden" name="action" value="add">
                 <label for="new-name">Nom du nouvel élément : 

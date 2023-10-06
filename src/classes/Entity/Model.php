@@ -160,7 +160,7 @@ class Model extends Entity{
     }
 
 
-    public function setImage($image): self
+    public function setImage(string $image): self
     {
         $this->picture=$image;
         return $this;
@@ -181,5 +181,35 @@ class Model extends Entity{
     public function update(): bool|int
     {
         return $this->manager->update($this);
+    }
+
+    public function setBrandId(int $id): self
+    {
+        $this->brand=$id;
+        return $this;
+    }
+
+    public function setScaleId(int $id): self
+    {
+        $this->scale=$id;
+        return $this;
+    }
+
+    public function setBuilderId(int $id): self
+    {
+        $this->builder=$id;
+        return $this;
+    }
+
+    public function setCategoryId(int $id): self
+    {
+        $this->category=$id;
+        return $this;
+    }
+
+    public function setPeriodId(int $id): self
+    {
+        $this->period=$id;
+        return $this;
     }
 }

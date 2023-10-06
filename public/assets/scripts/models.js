@@ -1,6 +1,6 @@
-// if ( window.history.replaceState ) {
-//     window.history.replaceState( null, null, window.location.href );
-// }
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+}
 const fileUpdloader=document.getElementById('new-picture');
 const formAdd=document.getElementById('form-add');
 const selectsAdd=document.querySelectorAll('.new');

@@ -104,6 +104,7 @@
                 </button>
             </form>
         </section>
+        {if isset($filtered)}Filtrage actif{/if}
         <div class="model-container">
             {if isset($connected) && isset(isAdmin)}
             <form action="parametres_models" method="post" id="form-delete-model">

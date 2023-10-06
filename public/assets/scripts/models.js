@@ -70,7 +70,10 @@ fileUpdloader.addEventListener('change',()=>{
     console.log(file);
     const mimeType=file.type;
     if(!(mimeType==='image/jpeg') && !(mimeType==='image/png') ){
-        console.log('pas bon');
+        launchFlash(toastDetails.error,"Le fichier doit être au format jpeg ou png");
+        fileUpdloader.value="";
+        image.classList.remove('display-image');
+        return;
     }
     
     const fileSize=file.size;

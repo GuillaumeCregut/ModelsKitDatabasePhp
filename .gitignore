@@ -6,4 +6,6 @@ config.xml
 notes.txt
 src/logs/*
 !.gitkeep
-/public/assets/uploads/*
+/public/assets/uploads/models/*
+!/public/assets/uploads/models/no_image.jpg
+!public/assets/uploads/models/.gitkeep

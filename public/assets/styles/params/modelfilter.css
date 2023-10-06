@@ -29,8 +29,18 @@
 
 .btn-filter{
     display: flex;
-    padding: 8px;
-    margin: 10px auto;
+    background-color: rgb(25, 118, 210);
+    outline: 0px;
+    border: 0px;
+    margin: 30px auto;
+    padding: 7px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    border-radius: 4px;
 }
 
 .search-model-icon{
@@ -43,4 +53,5 @@
     border-radius: 3px;
     padding: 3px;
     margin-left: 5px;
+    outline: 0;
 }

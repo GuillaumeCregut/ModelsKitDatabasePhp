@@ -40,6 +40,37 @@ class ModelManager extends Manager implements ManagerInterface
             $this->loadErrorPage($e->getdbMessage());
         }
     }
+    
+    public function getFiltered(array $filter): array
+    {
+        $values=[];
+        $searchString='';
+        $startQuery="SELECT id,name, builder, category, brand, period, scale, reference, picture, scalemates,
+        buildername, countryid, categoryname, brandname, periodname, scalename, countryname  
+        FROM model_full";
+        if(count($filter)>0){
+            $count=0;
+            foreach($filter as $k=>$v){
+                if ($count===0){
+                    $searchString.=' WHERE ' . $k .'=:' . $k;
+                }
+                else{
+                    $searchString.=' AND ' . $k . '=:' . $k;
+                }
+                $key=':' . $k;
+                $values[$key]=$v;
+                $count++;
+            }
+        }
+        $query=$startQuery . $searchString;
+        try{
+            $result=$this->db->prepare($query,$this->className,$values); 
+            return $result;
+        }
+        catch(DbException $e){
+            $this->loadErrorPage($e->getdbMessage());
+        }
+    }
 
     /**
      * Find an entity in DB by Id

@@ -121,11 +121,14 @@
                             <div class="card-flip card-settings">
                                 <div class="card-inner">
                                     <div class="flip-card-front">
-                                        <img src="" alt="nom image" class="model-picture">
+                                        <img 
+                                        src="{if $model->getImage()}{$model->getImage()}{else} assets/uploads/models/no_image.jpg {/if}" 
+                                        alt="{$model->getName()}" 
+                                        class="model-picture">
                                     </div>
                                     <div class="flip-card-back">
                                         constructeur: {$model->getBuilder()}<br>
-                                        Pays: {$model->getCountry()}<br>
+                                        Pays: {$model->getCountryName()}<br>
                                         Catégorie: {$model->getCategory()}<br>
                                         Période: {$model->getPeriod()}<br>
                                         {if {$model->getScalemates()}!=''}
@@ -146,7 +149,7 @@
                                     fill="currentColor" 
                                     stroke-width="0" 
                                     viewBox="0 0 1024 1024" 
-                                    class="model-like" 
+                                    class="model-like {if $model->getLiked() }model-like-true{/if}" 
                                     height="1em" 
                                     width="1em" 
                                     xmlns="http://www.w3.org/2000/svg">

@@ -92,4 +92,18 @@ class UserManager extends Manager //implements ManagerInterface
            throw new Exception($e->getdbMessage());
         }
     }
+
+    public function getFavorites(User $user): array
+    {
+        $userId=$user->getId();
+        $query="SELECT model as idModel FROM model_favorite WHERE owner=:owner";
+        $values=['owner'=>$userId];
+        try{
+            $test=$this->db->prepare($query,null,$values);
+            return $test;
+        }
+        catch(DbException $e){
+           throw new Exception($e->getdbMessage());
+        }
+    }
 }

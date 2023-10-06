@@ -13,6 +13,7 @@ class User extends Entity
     private string $avatar;
     private bool $isvalid;
     private string $email;
+    private array $favorites=[];
     private UserManager $manager;
 
     public function __construct()
@@ -116,5 +117,16 @@ class User extends Entity
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getFavorite(): array
+    {
+        $this->favorites=[];
+        $favorites=$this->manager->getFavorites($this);
+        foreach($favorites as $favorite){
+            $this->favorites[]=$favorite->idModel;
+        }
+        return $this->favorites;
+        
     }
 }

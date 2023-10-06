@@ -2,6 +2,7 @@
 namespace App\Controller\Parameters;
 
 use Editiel98\App;
+use Editiel98\Entity\Model as EntityModel;
 use Editiel98\Entity\User;
 use Editiel98\Manager\BrandManager;
 use Editiel98\Manager\BuilderManager;
@@ -61,7 +62,7 @@ class Model extends Controller
         $this->smarty->assign('builders',$builders);
         $this->smarty->assign('scales',$scales);
         $this->smarty->assign('brands',$brands);
-        $this->smarty->assign('$model_menu','');
+        $this->smarty->assign('model_menu','');
         $this->smarty->assign('params','params');
         $this->smarty->display('params/models.tpl');
     }
@@ -78,15 +79,117 @@ class Model extends Controller
                 $searchValues=$this->makeFilters();
                 break;
             case 'remove':
-                return false;
+                return $this->remove();
                 break;
             case 'add':
-                return false;
+                return $this->add();
                 break;
             default : ;
         }
         $this->getModels($searchValues);
         return true;
+    }
+
+    private function remove() : bool
+    {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
+        if(!isset($_POST['id'])){
+            return false;    
+        }
+        $id=intval($_POST['id']);
+        if($id===0){
+            return false;
+        }
+        //remove model
+
+        return false;
+    }
+
+    private function add() : bool
+    {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
+        if(!isset($_POST['name'])){
+            return false;
+        }
+        if(!isset($_POST['new-brand'])){
+            return false;
+        }
+        if(!isset($_POST['new-builder'])){
+            return false;
+        }
+        if(!isset($_POST['new-scale'])){
+            return false;
+        }
+        if(!isset($_POST['new-category'])){
+            return false;
+        }
+        if(!isset($_POST['new-period'])){
+            return false;
+        }
+        $scalemates='';
+        if(isset($_POST['new-scalemates'])){
+            $scalemates=htmlspecialchars($_POST['new-scalemates'], ENT_NOQUOTES, 'UTF-8');
+        }
+        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+        if($name===''){
+            return false;
+        }
+        $brand=intval($_POST['new-brand']);
+        if($brand==0){
+            return false;
+        }
+        $builder=intval($_POST['new-builder']);
+        if($builder==0){
+            return false;
+        }
+        $scale=intval($_POST['new-scale']);
+        if($scale==0){
+            return false;
+        }
+        $category=intval($_POST['new-category']);
+        if($category==0){
+            return false;
+        }
+        $period=intval($_POST['new-period']);
+        if($period==0){
+            return false;
+        }
+        $filename='';
+        $baseDir='assets/uploads/models/';
+        if(isset($_FILES['new-picture'])){
+            $image=$_FILES['new-picture'];
+            if ($image['error'] == UPLOAD_ERR_OK){ 
+                $type=$image['type'];
+                if($type==='image/jpeg' || $type==='image/png'){
+                    $ext=explode('/',$type)[1];
+                    if($image['size']<=500*1000){
+                        $uploadDir=dirname(dirname(dirname(__DIR__))) . '/public/';
+                        $filename=$baseDir . $name . uniqid() . '.' . $ext;
+                        $destFile=$uploadDir . $filename;
+                        $resultFile=move_uploaded_file($image['tmp_name'],"$destFile");
+                        if(!$resultFile){
+                            $filename='';
+                        }
+                    }
+                }
+            }
+        }
+        $model=new EntityModel();
+        $model
+            ->setName($name)
+            ->setCategoryId($category)
+            ->setScaleId($scale)
+            ->setBrandId($brand)
+            ->setBuilderId($builder)
+            ->setPeriodId($period)
+            ->setScalemates($scalemates)
+            ->setImage($filename);
+
+        return false;
     }
 
     private function makeFilters(): array{
@@ -137,6 +240,7 @@ class Model extends Controller
         }
         else{
             $models=$modelManager->getFiltered($filter);
+            $this->smarty->assign('filtered',true);
         }
         if($this->user){
             $favorite=$this->user->getFavorite();

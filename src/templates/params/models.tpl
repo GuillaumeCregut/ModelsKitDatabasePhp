@@ -259,7 +259,13 @@
 
                 <div class="box-input" id="file-drop">
                     <div class="box-inner" id="box-inner">
-                        <input type="file" name="new-picture" id="new-picture" class="input-file-add">
+                        <input 
+                        type="file" 
+                        ame="new-picture" 
+                        id="new-picture" 
+                        class="input-file-add"
+                        accept="image/jpeg,image/png"
+                        >
                         <label for="new-picture"><span class="box-dragndrop">Glisser la photo</span></label>
                         <img src="" alt="picture display" class="new-picture-display" id="new-picture-display">
                     </div>

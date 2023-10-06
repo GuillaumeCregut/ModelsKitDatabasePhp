@@ -80,8 +80,6 @@ class BuilderManager extends Manager implements ManagerInterface
         $country=$entity->getCountryId();
         $values=['name'=>$name,':id'=>$id,':country'=>$country];
         return $this->execSQL($query,$values);
-        //Debug
-        return false;
     }
 
     /**

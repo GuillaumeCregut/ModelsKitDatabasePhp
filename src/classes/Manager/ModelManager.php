@@ -80,10 +80,10 @@ class ModelManager extends Manager implements ManagerInterface
      */
     public function findById(int $id): Entity
     {
-        // $query='SELECT id, name FROM ' . $this->table.' WHERE id=:id';
-        // $result=$this->prepareSQL($query,[':id'=>$id],true); 
-        // return $result;
-        return new Model();
+        $query='SELECT * FROM ' . $this->table.' WHERE id=:id';
+        $result=$this->prepareSQL($query,[':id'=>$id],true); 
+        return $result;
+        //return new Model();
     }
 
     /**
@@ -148,11 +148,19 @@ class ModelManager extends Manager implements ManagerInterface
      * @return boolean
      */
     public function delete(Entity $entity) : bool{
-        // $query='DELETE FROM ' . $this->table . ' WHERE id=:id';
-        // $id=$entity->getId();
-        // $result=$this->execSQL($query,['id'=>$id]);
-        // return $result;
-        return false;
+        $query='DELETE FROM ' . $this->table . ' WHERE id=:id';
+        $id=$entity->getId();
+        $oldModel=$this->findById($id);
+        $image=$oldModel->getImage();
+        if(!is_null($image) || ($image!=='')){
+            //Delete image file 
+            $baseDirectory=dirname(dirname(dirname(__DIR__))) . '/public/';
+            $fileName=$baseDirectory . $image;
+            $test=unlink($fileName);
+        }
+        $result=$this->execSQL($query,['id'=>$id]);
+        $result=false;
+        return $result;
     }
 
     /**

@@ -63,13 +63,8 @@ class ModelManager extends Manager implements ManagerInterface
             }
         }
         $query=$startQuery . $searchString;
-        try{
-            $result=$this->db->prepare($query,$this->className,$values); 
-            return $result;
-        }
-        catch(DbException $e){
-            $this->loadErrorPage($e->getdbMessage());
-        }
+        $result=$this->db->prepare($query,$this->className,$values); 
+        return $result;
     }
 
     /**
@@ -83,7 +78,6 @@ class ModelManager extends Manager implements ManagerInterface
         $query='SELECT * FROM model_full WHERE id=:id';
         $result=$this->prepareSQL($query,[':id'=>$id],true); 
         return $result;
-        //return new Model();
     }
 
     /**

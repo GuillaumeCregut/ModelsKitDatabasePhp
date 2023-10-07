@@ -37,10 +37,10 @@ class Model extends Controller
         else{
             $this->getModels();
         }
-        $this->displaPage();
+        $this->displayPage();
     }
 
-    private function displaPage()
+    private function displayPage()
     {
         //Get all needed datas for create a model
         $builderManager=new BuilderManager($this->dbConnection);
@@ -103,9 +103,9 @@ class Model extends Controller
         if($id===0){
             return false;
         }
-        //remove model
-
-        return false;
+        $model=new EntityModel();
+        $model->setId($id);
+        return $model->delete();
     }
 
     private function add() : bool

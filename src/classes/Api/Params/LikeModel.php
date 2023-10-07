@@ -62,10 +62,10 @@ class LikeModel extends ApiController
         }
         $modelLike=$datas->idModel;
         $likeState=$datas->newLike;*/
-        /*debug */
-        $modelLike=27;
-        $likeState=false;
-        /*end debug*/
+    /*debug */
+        $modelLike=26;
+        $likeState=true;
+    /*end debug*/
         $userId=$this->session->getKey(Session::SESSION_USER_ID);
         $user=new User();
         $user->setId($userId);
@@ -74,7 +74,6 @@ class LikeModel extends ApiController
         $arrayData=[
             'Model'=>$modelLike,
             'Like'=>$likeState,
-            'userId'=>$userId,
             'result'=>false
         ];
         if(in_array($modelLike,$liked) && $likeState){
@@ -83,54 +82,35 @@ class LikeModel extends ApiController
             $arrayData=[
                 'Model'=>$modelLike,
                 'Like'=>$likeState,
-                'userId'=>$userId,
                 'result'=>false
             ];
             header("HTTP/1.1 409 Conflict");
             echo json_encode($arrayData);
             die();
         }
-        //Here, we know that user never liked this model, or had disliked it
-        //We can like / dislike in DB
-        /*
-
-            todo
-
-        */
+        if(!in_array($modelLike,$liked) && !$likeState){
+        
+            echo "On ne l'as pas et on peut pas l'enlever";
+            $arrayData=[
+                'Model'=>$modelLike,
+                'Like'=>$likeState,
+                'result'=>false
+            ];
+            header("HTTP/1.1 404 Not found");
+            echo json_encode($arrayData);
+            die();
+        }
+        if($likeState){
+            $result=$user->addFavorite($modelLike);
+        }else{
+            $result=$user->removeFavorite($modelLike);
+        }
+        $arrayData=[
+            'Model'=>$modelLike,
+            'Like'=>$likeState,
+            'result'=>$result
+        ];
         echo json_encode($arrayData);
-        // $idUser=$datas->idUser;
-        // $newRole=$datas->newRole;
-        // if(!is_int($idUser) ||!is_int($newRole) || !in_array($newRole,[1,2,5])){
-        //     $return=[
-        //         "result"=>false,
-        //         'Utilisateur'=>$idUser,
-        //         'NewValue'=>$newRole,
-        //     ];
-        //     header("HTTP/1.1 422 Unprocessable entity");
-        //     echo json_encode($return);
-        //     die();
-        // }
-        // $userManager=new UserManager($this->dbConnection);
-        // try{
-        //     $user=$userManager->findById($idUser);
-        // }
-        // catch(Exception $e){
-        //     header("HTTP/1.1 500 Unprocessable entity");
-        //     die();
-        // }
-        // try{
-        //     $result=$userManager->setNewRole($idUser,$newRole);
-        //     $result=!!$result;
-        //     $arrayData=[
-        //         'Utilisateur'=>$idUser,
-        //         'NewValue'=>$newRole,
-        //         'result'=>$result
-        //     ];
-        //     echo (json_encode($arrayData));
-        // }
-        // catch(Exception $e){
-        //     header("HTTP/1.1 500 Unprocessable entity");
-        //     die();
-        // }
+        die();
     }
 }

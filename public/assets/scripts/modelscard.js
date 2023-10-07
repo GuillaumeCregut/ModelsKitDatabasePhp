@@ -12,7 +12,39 @@ const updateCart=(id)=>{
 //Send to Api like info
 const sendLike=(id,value,btn)=>{
     const heart=btn.querySelector('.model-like');
-    heart.classList.toggle('model-like-true');
+
+    //Put this in  APIresponse
+    
+
+    const myInit = {
+        method: "PUT",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify({idModel:id, newLike:value})
+      };
+    
+    fetch('api_likemodel',myInit)
+    .then((response)=>{
+        if(response.ok){
+            return response.json()
+        }
+        else{
+            //Une erreur réseau c'esdt produite (voir pour l'afficher)
+            return response;
+        }
+    })
+    .then((json)=>{
+        console.log(json)
+        if(json.result){
+           //Ok, tout c'est bien passé
+           heart.classList.toggle('model-like-true');
+        }
+        else{
+           //Erreur
+        }
+    });
 }
 
 //Send to Api cart info
@@ -44,7 +76,13 @@ flipperCards.forEach((flipperCard)=>{
 likeButtons.forEach((likeBtn)=>{
     likeBtn.addEventListener('click',()=>{
         const id=likeBtn.dataset.id;
-        const oldLike=likeBtn.dataset.like;
+        let oldLike=likeBtn.dataset.like;
+        if(oldLike!=='1'){
+            oldLike='false';
+        }
+        else{
+            oldLike='true';
+        }
         let like=false;
         if(oldLike==='false'){
             like=true;

@@ -123,12 +123,22 @@ class ModelManager extends Manager implements ManagerInterface
      * @return boolean
      */
     public function save(Entity $entity): bool{
-        // $query='INSERT INTO ' . $this->table . '(name, country) VALUES (:name,:country)';
-        // $name=$entity->getName();  
-        // $country=$entity->getCountryId();
-        // $result=$this->execSQL($query,['name'=>$name,':country'=>$country]);
-        // return $result;
-        return false;
+        $query="INSERT INTO " . $this->table . 
+        "(builder, category, brand, period, scale, name, reference, picture, scalemates) 
+        VALUES (:builder, :category, :brand, :period,:scale, :name, :reference, :picture, :scalemates)";
+        $values=[
+            ":builder"=>$entity->getBuilderId(),
+            ":category"=>$entity->getCategoryId(),
+            ":brand"=>$entity->getBrandId(),
+            ":period"=>$entity->getPeriodId(),
+            ":scale"=>$entity->getScaleId(),
+            ":name"=>$entity->getName(),
+            ":reference"=>$entity->getRef(),
+            ":picture"=>$entity->getImage(),
+            "scalemates"=>$entity->getScalemates()
+        ];
+        $result=$this->execSQL($query,$values);
+        return $result;
     }
 
     /**

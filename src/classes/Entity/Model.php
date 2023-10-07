@@ -183,10 +183,20 @@ class Model extends Entity{
         return $this->manager->update($this);
     }
 
+    public function getBrandId(): int
+    {
+        return $this->brand;
+    }
+
     public function setBrandId(int $id): self
     {
         $this->brand=$id;
         return $this;
+    }
+
+    public function getScaleId(): int
+    {
+        return $this->scale;
     }
 
     public function setScaleId(int $id): self
@@ -195,16 +205,31 @@ class Model extends Entity{
         return $this;
     }
 
+    public function getBuilderId(): int
+    {
+        return $this->builder;
+    }
+
     public function setBuilderId(int $id): self
     {
         $this->builder=$id;
         return $this;
     }
 
+    public function getCategoryId(): int
+    {
+        return $this->category;
+    }
+
     public function setCategoryId(int $id): self
     {
         $this->category=$id;
         return $this;
+    }
+
+    public function getPeriodId(): int
+    {
+        return $this->period;
     }
 
     public function setPeriodId(int $id): self

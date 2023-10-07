@@ -106,4 +106,20 @@ class UserManager extends Manager //implements ManagerInterface
            throw new Exception($e->getdbMessage());
         }
     }
+
+    public function addFavorite(User $user, int $idModel) : bool
+    {
+        $query='INSERT model_user (state,owner,model) VALUES (4,:user,:model)';
+        $values=[':user'=>$user->getId(), ':model'=>$idModel];
+        var_dump($values);
+        return false;
+    }
+
+    public function removeFavorite(User $user, int $idModel): bool
+    {
+        $query='DELETE FROM model_user WHERE state=4 AND owner=:user AND model=:model';
+        $values=[':user'=>$user->getId(), ':model'=>$idModel];
+        var_dump($values);
+        return false;
+    }
 }

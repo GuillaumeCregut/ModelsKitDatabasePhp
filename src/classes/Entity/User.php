@@ -129,4 +129,29 @@ class User extends Entity
         return $this->favorites;
         
     }
+
+    public function addFavorite(int $id): bool
+    {
+        $addFavorite=$this->manager->addFavorite($this, $id);
+        if($addFavorite){
+            $this->favorites[]=$id;
+            return true;
+        }
+        return false;
+
+    }
+
+    public function removeFavorite(int $id): bool
+    {
+        $removeFavorite=$this->manager->removeFavorite($this,$id);
+        if($removeFavorite){
+            $this->favorites[]=$id;
+            return true;
+            if (($key = array_search($id,  $this->favorites)) !== false) {
+                unset($this->favorites[$key]);
+            }
+            return true;
+        }
+        return false;
+    }
 }

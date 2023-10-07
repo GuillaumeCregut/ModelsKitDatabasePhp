@@ -196,7 +196,12 @@
                         autocomplete="off">
                 </label>
                 <label for="new-reference">Référence :
-                    <input placeholder="référence" id="new-reference" class='add-model-form-input' autoComplete="off"
+                    <input 
+                    placeholder="référence" 
+                    id="new-reference" 
+                    class='add-model-form-input' 
+                    autoComplete="off"
+                    name="reference"
                         required>
                 </label>
                 <label for="new-brand">Marque du kit :
@@ -262,7 +267,7 @@
                     <div class="box-inner" id="box-inner">
                         <input 
                         type="file" 
-                        ame="new-picture" 
+                        name="new-picture" 
                         id="new-picture" 
                         class="input-file-add"
                         accept="image/jpeg,image/png"

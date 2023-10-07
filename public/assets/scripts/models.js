@@ -65,9 +65,7 @@ dropAreaOuter.addEventListener('drop',()=>{
 
 fileUpdloader.addEventListener('change',()=>{
     const image=document.getElementById('new-picture-display');
-    console.log(fileUpdloader.files)
     const file=fileUpdloader.files[0];
-    console.log(file);
     const mimeType=file.type;
     if(!(mimeType==='image/jpeg') && !(mimeType==='image/png') ){
         launchFlash(toastDetails.error,"Le fichier doit être au format jpeg ou png");

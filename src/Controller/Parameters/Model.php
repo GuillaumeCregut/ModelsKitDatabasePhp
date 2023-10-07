@@ -31,12 +31,12 @@ class Model extends Controller
             }
         }
         if(!empty($_POST)){
+            var_dump($_POST);
             $this->usePost();
         }
         else{
             $this->getModels();
         }
-            var_dump($_POST);
         $this->displaPage();
     }
 
@@ -74,20 +74,21 @@ class Model extends Controller
         }
         $searchValues=[];
         $action=$_POST['action'];
+        $result=false;
         switch($action){
             case 'search':
                 $searchValues=$this->makeFilters();
                 break;
             case 'remove':
-                return $this->remove();
+                $result= $this->remove();
                 break;
             case 'add':
-                return $this->add();
+                $result= $this->add();
                 break;
-            default : ;
+            default : $result=false;
         }
         $this->getModels($searchValues);
-        return true;
+        return $result;
     }
 
     private function remove() : bool
@@ -115,6 +116,9 @@ class Model extends Controller
         if(!isset($_POST['name'])){
             return false;
         }
+        if(!isset($_POST['reference'])){
+            return false;
+        }
         if(!isset($_POST['new-brand'])){
             return false;
         }
@@ -136,6 +140,10 @@ class Model extends Controller
         }
         $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
         if($name===''){
+            return false;
+        }
+        $reference=htmlspecialchars($_POST['reference'], ENT_NOQUOTES, 'UTF-8');
+        if($reference===''){
             return false;
         }
         $brand=intval($_POST['new-brand']);
@@ -170,7 +178,7 @@ class Model extends Controller
                         $uploadDir=dirname(dirname(dirname(__DIR__))) . '/public/';
                         $filename=$baseDir . $name . uniqid() . '.' . $ext;
                         $destFile=$uploadDir . $filename;
-                        $resultFile=move_uploaded_file($image['tmp_name'],"$destFile");
+                        $resultFile=move_uploaded_file($image['tmp_name'],$destFile);
                         if(!$resultFile){
                             $filename='';
                         }
@@ -187,9 +195,10 @@ class Model extends Controller
             ->setBuilderId($builder)
             ->setPeriodId($period)
             ->setScalemates($scalemates)
+            ->setRef($reference)
             ->setImage($filename);
-
-        return false;
+        $result=$model->save();
+        return $result;
     }
 
     private function makeFilters(): array{

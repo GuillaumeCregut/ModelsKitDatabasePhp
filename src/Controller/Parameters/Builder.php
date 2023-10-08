@@ -9,6 +9,8 @@ use Editiel98\Router\Controller;
 
 class Builder extends Controller
 {
+    private array $builders;
+
     public function render()
     {
         if(!empty($_POST)){
@@ -22,11 +24,12 @@ class Builder extends Controller
                 }
             }
         }
-        $builderManager=new BuilderManager($this->dbConnection);
-        $builders=$builderManager->getAll();
+        if(!isset($this->builders)){
+            $this->getBuilders();
+        }
         $countryManager=new CountryManager($this->dbConnection);
         $countries= $countryManager->getAll();
-        $this->smarty->assign('list',$builders);
+        $this->smarty->assign('list',$this->builders);
         if($this->isConnected){
             $this->smarty->assign('connected',true);
             if(App::ADMIN===$this->userRank){
@@ -36,6 +39,17 @@ class Builder extends Controller
         $this->smarty->assign('countries',$countries);
         $this->smarty->assign('builder_menu','params');
         $this->smarty->display('params/builders.tpl');
+    }
+
+    private function getBuilders(?string $filter=null)
+    {
+        $builderManager=new BuilderManager($this->dbConnection);
+        if(is_null($filter)){
+            $builders=$builderManager->getAll();
+        }else{
+            $builders=$builderManager->getAllFiltered($filter);
+        }
+        $this->builders=$builders;
     }
 
     private function usePost(): bool{
@@ -80,6 +94,8 @@ class Builder extends Controller
                         return false; 
                     return $this->update($id,$name,$countryId);   
                     break;
+                case 'filter': return $this->search();
+                    break;
                 default:
                     return false;
             }
@@ -87,6 +103,16 @@ class Builder extends Controller
         else{
             return false;
         }
+    }
+
+    private function search() : bool
+    {
+        if(isset($_POST['searchName'])){
+            $name=htmlspecialchars($_POST['searchName'], ENT_NOQUOTES, 'UTF-8');
+        }
+        else  return false;
+        $this->getBuilders($name);
+        return true;
     }
 
     private function add(string $name,int $countryId): bool 

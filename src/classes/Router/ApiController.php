@@ -31,8 +31,6 @@ abstract class ApiController
      */
     protected Session $session;
 
-
-
     /**
      * Allow to emit an action to event listener
      *
@@ -48,6 +46,8 @@ abstract class ApiController
 
     protected Database $dbConnection;
 
+    protected object $datas;
+
     public function __construct(array $subPages=[], array $params=[])
     {
         $this->subPages=$subPages;
@@ -56,6 +56,8 @@ abstract class ApiController
         $this->emitter=Emitter::getInstance();
         $this->getCredentials();
         $this->dbConnection=Database::getInstance();
+        $rawData = file_get_contents("php://input");
+        $this->datas=json_decode($rawData);
 }
     
     abstract public function manage();

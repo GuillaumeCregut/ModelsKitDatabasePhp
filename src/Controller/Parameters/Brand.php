@@ -21,6 +21,7 @@ class Brand extends Controller
                 }
             }
         }
+
         $brandManager=new BrandManager($this->dbConnection);
         $brands= $brandManager->getAll();
         if($this->isConnected){
@@ -78,6 +79,9 @@ class Brand extends Controller
 
     private function add(string $name): bool 
     {
+        if(!$this->isConnected){
+            return false;
+        }
         $brand=new EntityBrand();
         $brand->setName($name);
         $result=$brand->save();
@@ -86,6 +90,9 @@ class Brand extends Controller
 
     private function remove(int $id): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         $brand=new EntityBrand();
         $brand->setId($id);
         return $brand->delete();
@@ -93,7 +100,10 @@ class Brand extends Controller
 
     private function update(int $id, string $name): bool 
     {
-       $brand=new EntityBrand();
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
+        $brand=new EntityBrand();
        $brand->setId($id);
        $brand->setName($name);
        return $brand->update();

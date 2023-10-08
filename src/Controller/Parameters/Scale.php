@@ -78,6 +78,9 @@ class Scale extends Controller
 
     private function add(string $name): bool 
     {
+        if(!$this->isConnected){
+            return false;
+        }
         $scale=new EntityScale();
         $scale->setName($name);
         $result=$scale->save();
@@ -86,6 +89,9 @@ class Scale extends Controller
 
     private function remove(int $id): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         $scale=new EntityScale();
         $scale->setId($id);
         return $scale->delete();
@@ -93,9 +99,12 @@ class Scale extends Controller
 
     private function update(int $id, string $name): bool 
     {
-       $country=new EntityScale();
-       $country->setId($id);
-       $country->setName($name);
-       return $country->update();
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
+        $scale=new EntityScale();
+        $scale->setId($id);
+        $scale->setName($name);
+       return $scale->update();
     }
 }

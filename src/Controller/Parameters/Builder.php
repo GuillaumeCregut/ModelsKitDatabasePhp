@@ -91,6 +91,9 @@ class Builder extends Controller
 
     private function add(string $name,int $countryId): bool 
     {
+        if(!$this->isConnected){
+            return false;
+        }
         if($countryId===0 || $name===''){
             return false;
         }
@@ -104,6 +107,9 @@ class Builder extends Controller
 
     private function remove(int $id): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         if($id===0){
             return false;
         }
@@ -115,6 +121,9 @@ class Builder extends Controller
 
     private function update(int $id, string $name, int $countryId): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         if(($id===0) || ($name==='') ||($countryId===0)){
             return false;
         }

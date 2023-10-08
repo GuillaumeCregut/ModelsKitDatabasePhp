@@ -162,4 +162,10 @@ class User extends Entity
         }
         return false;
     }
+
+    public function addModelStock(int $idModel, ?int $provider=null, ?float $price=null): bool
+    {
+        $result=$this->manager->addModelStock($this,$idModel,$provider,$price);
+        return $result;
+    }
 }

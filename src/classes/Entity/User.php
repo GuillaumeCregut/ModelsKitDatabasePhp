@@ -132,6 +132,10 @@ class User extends Entity
 
     public function addFavorite(int $id): bool
     {
+        $this->getFavorite();
+        if(in_array($id,$this->favorites)){
+            return false;
+        }
         $addFavorite=$this->manager->addFavorite($this, $id);
         if($addFavorite){
             $this->favorites[]=$id;
@@ -143,6 +147,10 @@ class User extends Entity
 
     public function removeFavorite(int $id): bool
     {
+        $this->getFavorite();
+        if(!in_array($id,$this->favorites)){
+            return false;
+        }
         $removeFavorite=$this->manager->removeFavorite($this,$id);
         if($removeFavorite){
             $this->favorites[]=$id;

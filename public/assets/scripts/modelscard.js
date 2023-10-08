@@ -6,7 +6,7 @@ const updateButtons=document.querySelectorAll('.update-card');
 
 //Redirect to update page
 const updateCart=(id)=>{
-    location.href = `/?model=${id}`;
+    location.href = `/parametres_modelUpdate?model=${id}`;
 }
 
 

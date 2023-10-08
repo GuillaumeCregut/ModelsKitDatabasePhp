@@ -46,12 +46,9 @@ class LikeModel extends ApiController
         $modelLike=intval($datas->idModel);
         $likeState=$datas->newLike;
         if(is_null($datas->idModel) || is_null($datas->newLike)){
-           // header("HTTP/1.1 422 Unprocessable entity");
+            header("HTTP/1.1 422 Unprocessable entity");
             $return=[
                 "result"=>false,
-                "reason"=>"Not bool or not int",
-                "model"=>$modelLike,
-                "state"=>$likeState
             ];
             echo json_encode($return);
             die();

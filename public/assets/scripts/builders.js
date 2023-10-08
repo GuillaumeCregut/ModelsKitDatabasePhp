@@ -7,6 +7,8 @@ const countrySelector=document.getElementById('countryBuilder');
 const deleteBtn=document.querySelectorAll('.single-delete-btn');
 const formDelete=document.getElementById('form-delete-builder');
 const idDelete=document.getElementById('id_hidden');
+const formSearch=document.querySelector('.form-search-builder');
+const searchName=document.getElementById('searchName');
 
 if ( window.history.replaceState ) {
     window.history.replaceState( null, null, window.location.href );
@@ -91,3 +93,8 @@ deleteBtn.forEach((btn)=>{
     })
 })
 
+formSearch.addEventListener('submit',(e)=>{
+    if(searchName.value===''){
+        e.preventDefault();
+    }
+})

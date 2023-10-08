@@ -4,6 +4,10 @@ const updateBtns=document.querySelectorAll('.single-update-btn');
 const updateFormBtn=document.getElementById('update_single');
 const inputName=document.getElementById('newNameMod');
 
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+}
+
 updateFormBtn.addEventListener('submit',(e)=>{
     if (inputName.value===''){
         e.preventDefault();

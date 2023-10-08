@@ -34,13 +34,16 @@ class Parameters extends Controller
                 case 'models':
                     $className = 'Model';
                     break;
+                case 'modelUpdate':
+                    $className="UpdateModel";
+                    break;
                 default: 
                     $page=new Error('404');
                     $page->render();
                     die();
             }
             $classPage = 'App\\Controller\\Parameters\\' . $className;
-            $page=new $classPage($this->params);
+            $page=new $classPage([],$this->params);
             $page->render();
         }
     }

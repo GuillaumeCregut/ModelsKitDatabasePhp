@@ -13,6 +13,7 @@ class User extends Entity
     private string $avatar;
     private bool $isvalid;
     private string $email;
+    private array $favorites=[];
     private UserManager $manager;
 
     public function __construct()
@@ -116,5 +117,55 @@ class User extends Entity
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getFavorite(): array
+    {
+        $this->favorites=[];
+        $favorites=$this->manager->getFavorites($this);
+        foreach($favorites as $favorite){
+            $this->favorites[]=$favorite->idModel;
+        }
+        return $this->favorites;
+        
+    }
+
+    public function addFavorite(int $id): bool
+    {
+        $this->getFavorite();
+        if(in_array($id,$this->favorites)){
+            return false;
+        }
+        $addFavorite=$this->manager->addFavorite($this, $id);
+        if($addFavorite){
+            $this->favorites[]=$id;
+            return true;
+        }
+        return false;
+
+    }
+
+    public function removeFavorite(int $id): bool
+    {
+        $this->getFavorite();
+        if(!in_array($id,$this->favorites)){
+            return false;
+        }
+        $removeFavorite=$this->manager->removeFavorite($this,$id);
+        if($removeFavorite){
+            $this->favorites[]=$id;
+            return true;
+            if (($key = array_search($id,  $this->favorites)) !== false) {
+                unset($this->favorites[$key]);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function addModelStock(int $idModel, ?int $provider=null, ?float $price=null): bool
+    {
+        $result=$this->manager->addModelStock($this,$idModel,$provider,$price);
+        return $result;
     }
 }

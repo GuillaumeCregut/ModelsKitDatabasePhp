@@ -37,7 +37,7 @@ const changeUserStatus=(id,status,caller)=>{
           },
         body:JSON.stringify({idUser:idUser, newStatus:status})
       };
-    fetch('http://modelskit:8080/api_userValid',myInit)
+    fetch('api_userValid',myInit)
     .then((response)=>{
         if(response.ok){
             return response.json()
@@ -76,7 +76,7 @@ const changeUserRole=(list)=>{
         body:JSON.stringify({idUser:id, newRole:newRole})
       };
     //   list.value=oldRole;
-    fetch('http://modelskit:8080/api_userRole',myInit)
+    fetch('api_userRole',myInit)
     .then((response)=>{
         if(response.ok){
             return response.json()

@@ -19,6 +19,12 @@ class Api extends Controller
                 case 'userRole':
                         $className='Admin\\ChangeRoleUser';
                         break;
+                case 'likemodel':
+                        $className='Params\\LikeModel';
+                        break;
+                case 'addCart':
+                        $className='Params\\AddCart';
+                        break;
                 default :
                     header("HTTP/1.1 404 Not Found");
                     die();

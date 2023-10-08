@@ -2,7 +2,6 @@
 namespace Editiel98\Api\Admin;
 
 use Editiel98\App;
-use Editiel98\Event\Emitter;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\ApiController;
 use Exception;

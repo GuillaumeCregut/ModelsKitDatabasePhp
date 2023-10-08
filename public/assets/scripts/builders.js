@@ -8,6 +8,9 @@ const deleteBtn=document.querySelectorAll('.single-delete-btn');
 const formDelete=document.getElementById('form-delete-builder');
 const idDelete=document.getElementById('id_hidden');
 
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href );
+}
 
 countrySelector.addEventListener('change',(e)=>{
     if (parseInt(countrySelector.value)!==0){
@@ -22,9 +25,7 @@ updateFormBtn.addEventListener('submit',(e)=>{
 })
 
 const newName=document.getElementById('new-name');
-if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href );
-}
+
 form.addEventListener('submit',(event)=>{
     const countryId=parseInt(countrySelector.value);
     if ((newName.value==='')||countryId===0){

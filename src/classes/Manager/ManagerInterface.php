@@ -5,7 +5,7 @@ use Editiel98\Entity\Entity;
 
 interface ManagerInterface
 {
-    public function findById(int $id): Entity;
+    public function findById(int $id): Entity | null;
     public function getAll(): array;
     public function findByName(string $name): Entity;
     public function update(Entity $entity): bool;

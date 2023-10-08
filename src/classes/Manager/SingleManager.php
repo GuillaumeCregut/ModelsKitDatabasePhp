@@ -34,7 +34,7 @@ abstract class SingleManager extends Manager implements ManagerInterface
      * @param integer $id
      * @return object : class of the entity
      */
-    public function findById(int $id): Entity
+    public function findById(int $id): Entity |null
     {
         $query='SELECT id, name FROM ' . $this->table.' WHERE id=:id';
         $result=$this->prepareSQL($query,[':id'=>$id],true); 

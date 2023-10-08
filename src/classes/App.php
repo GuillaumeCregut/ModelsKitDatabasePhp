@@ -60,6 +60,9 @@ class App{
             case 'test':
                 $this->route="Test";
                 break;
+            case'profil':
+                $this->route='Profil';
+                break;
             default : //home
                $page=new Error('404');
                $page->render();

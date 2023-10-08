@@ -31,7 +31,6 @@ class Model extends Controller
             }
         }
         if(!empty($_POST)){
-            var_dump($_POST);
             $this->usePost();
         }
         else{
@@ -85,13 +84,59 @@ class Model extends Controller
             case 'add':
                 $result= $this->add();
                 break;
+            case 'update':
+                $result=$this->update();
             default : $result=false;
         }
         $this->getModels($searchValues);
         return $result;
     }
 
-    private function remove() : bool
+    private function update(): bool
+    {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
+        if(!$this->checkForm()){
+            return false;
+        }
+        $formData=$this->getDatasFromPOST();
+        if(!$formData){
+            return false;
+        }
+        if(isset($_POST['oldPicture'])){
+            $oldFile=htmlspecialchars($_POST['oldPicture'], ENT_NOQUOTES, 'UTF-8');
+        }
+        if(isset($_POST['id'])){
+            $id=intval($_POST['id']);
+            if($id===0){
+                return false;
+            }
+        }
+        $filename=$this->storeFile($formData['name']);
+        if ($filename===''){
+            $filename=$oldFile;
+        }
+        else{
+            $result=$this->removeFile($oldFile);
+        }
+        $model=new EntityModel();
+        $model
+            ->setName($formData['name'])
+            ->setCategoryId($formData['category'])
+            ->setScaleId($formData['scale'])
+            ->setBrandId($formData['brand'])
+            ->setBuilderId($formData['builder'])
+            ->setPeriodId($formData['period'])
+            ->setScalemates($formData['scalemates'])
+            ->setRef($formData['reference'])
+            ->setImage($filename)
+            ->setId($id);
+        $result=$model->update();   
+        return $result;
+    }
+
+    private function remove(): bool
     {
         if(App::ADMIN!==$this->userRank){
             return false;
@@ -113,89 +158,24 @@ class Model extends Controller
         if(App::ADMIN!==$this->userRank){
             return false;
         }
-        if(!isset($_POST['name'])){
+        if(!$this->checkForm()){
             return false;
         }
-        if(!isset($_POST['reference'])){
+        $formData=$this->getDatasFromPOST();
+        if(!$formData){
             return false;
         }
-        if(!isset($_POST['new-brand'])){
-            return false;
-        }
-        if(!isset($_POST['new-builder'])){
-            return false;
-        }
-        if(!isset($_POST['new-scale'])){
-            return false;
-        }
-        if(!isset($_POST['new-category'])){
-            return false;
-        }
-        if(!isset($_POST['new-period'])){
-            return false;
-        }
-        $scalemates='';
-        if(isset($_POST['new-scalemates'])){
-            $scalemates=htmlspecialchars($_POST['new-scalemates'], ENT_NOQUOTES, 'UTF-8');
-        }
-        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
-        if($name===''){
-            return false;
-        }
-        $reference=htmlspecialchars($_POST['reference'], ENT_NOQUOTES, 'UTF-8');
-        if($reference===''){
-            return false;
-        }
-        $brand=intval($_POST['new-brand']);
-        if($brand==0){
-            return false;
-        }
-        $builder=intval($_POST['new-builder']);
-        if($builder==0){
-            return false;
-        }
-        $scale=intval($_POST['new-scale']);
-        if($scale==0){
-            return false;
-        }
-        $category=intval($_POST['new-category']);
-        if($category==0){
-            return false;
-        }
-        $period=intval($_POST['new-period']);
-        if($period==0){
-            return false;
-        }
-        $filename='';
-        $baseDir='assets/uploads/models/';
-        if(isset($_FILES['new-picture'])){
-            $image=$_FILES['new-picture'];
-            if ($image['error'] == UPLOAD_ERR_OK){ 
-                $type=$image['type'];
-                if($type==='image/jpeg' || $type==='image/png'){
-                    $ext=explode('/',$type)[1];
-                    if($image['size']<=500*1000){
-                        $uploadDir=dirname(dirname(dirname(__DIR__))) . '/public/';
-                        $filename=$baseDir . $name . uniqid() . '.' . $ext;
-                        $destFile=$uploadDir . $filename;
-                        $resultFile=move_uploaded_file($image['tmp_name'],$destFile);
-                        if(!$resultFile){
-                            $filename='';
-                        }
-                    }
-                }
-            }
-        }
+        $filename=$this->storeFile($formData['name']);
         $model=new EntityModel();
         $model
-            ->setName($name)
-            ->setCategoryId($category)
-            ->setScaleId($scale)
-            ->setBrandId($brand)
-            ->setBuilderId($builder)
-            ->setPeriodId($period)
-            ->setScalemates($scalemates)
-            ->setRef($reference)
+            ->setName($formData['name'])
+            ->setCategoryId($formData['category'])
+            ->setScaleId($formData['scale'])
+            ->setBrandId($formData['brand'])
+            ->setBuilderId($formData['builder'])
+            ->setPeriodId($formData['period'])
+            ->setScalemates($formData['scalemates'])
+            ->setRef($formData['reference'])
             ->setImage($filename);
         $result=$model->save();
         return $result;
@@ -261,5 +241,109 @@ class Model extends Controller
             }
         }
         $this->models=$models;
+    }
+
+    function removeFile(string $filename): bool
+    {
+        $uploadDir=dirname(dirname(dirname(__DIR__))) . '/public/';
+        $destFile=$uploadDir . $filename;
+        return unlink($destFile);
+    }
+
+    private function storeFile(string $name): string
+    {
+        $filename='';
+        $baseDir='assets/uploads/models/';
+        if(isset($_FILES['new-picture'])){
+            $image=$_FILES['new-picture'];
+            if ($image['error'] == UPLOAD_ERR_OK){ 
+                $type=$image['type'];
+                if($type==='image/jpeg' || $type==='image/png'){
+                    $ext=explode('/',$type)[1];
+                    if($image['size']<=500*1000){
+                        $uploadDir=dirname(dirname(dirname(__DIR__))) . '/public/';
+                        $filename=$baseDir . $name . uniqid() . '.' . $ext;
+                        $destFile=$uploadDir . $filename;
+                        $resultFile=move_uploaded_file($image['tmp_name'],$destFile);
+                        if(!$resultFile){
+                            $filename='';
+                        }
+                    }
+                }
+            }
+        }
+        return $filename;
+    }
+
+    private function checkForm(): bool
+    {
+        if(!isset($_POST['name'])){
+            return false;
+        }
+        if(!isset($_POST['reference'])){
+            return false;
+        }
+        if(!isset($_POST['new-brand'])){
+            return false;
+        }
+        if(!isset($_POST['new-builder'])){
+            return false;
+        }
+        if(!isset($_POST['new-scale'])){
+            return false;
+        }
+        if(!isset($_POST['new-category'])){
+            return false;
+        }
+        if(!isset($_POST['new-period'])){
+            return false;
+        }
+        return true;
+    }
+
+    private function getDatasFromPOST(): array | bool
+    {
+        $scalemates='';
+        if(isset($_POST['new-scalemates'])){
+            $scalemates=htmlspecialchars($_POST['new-scalemates'], ENT_NOQUOTES, 'UTF-8');
+        }
+        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+        if($name===''){
+            return false;
+        }
+        $reference=htmlspecialchars($_POST['reference'], ENT_NOQUOTES, 'UTF-8');
+        if($reference===''){
+            return false;
+        }
+        $brand=intval($_POST['new-brand']);
+        if($brand==0){
+            return false;
+        }
+        $builder=intval($_POST['new-builder']);
+        if($builder==0){
+            return false;
+        }
+        $scale=intval($_POST['new-scale']);
+        if($scale==0){
+            return false;
+        }
+        $category=intval($_POST['new-category']);
+        if($category==0){
+            return false;
+        }
+        $period=intval($_POST['new-period']);
+        if($period==0){
+            return false;
+        }
+        return [
+            'name'=>$name,
+            'reference'=>$reference,
+            'brand'=>$brand,
+            'scalemates'=>$scalemates,
+            'builder'=>$builder,
+            'scale'=>$scale,
+            'category'=>$category,
+            'period'=>$period
+        ];
     }
 }

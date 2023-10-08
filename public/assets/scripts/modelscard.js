@@ -47,8 +47,34 @@ const sendLike=(id,value,btn, btnState)=>{
 
 //Send to Api cart info
 const sendCart=(id)=>{
-
-    console.log(id);
+    const myInit = {
+        method: "PUT",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify({idModel:id})
+      };
+      fetch('api_addCart',myInit)
+      .then((response)=>{
+          if(response.ok){
+              return response.json()
+          }
+          else{
+              //Une erreur réseau c'esdt produite (voir pour l'afficher)
+              return response;
+          }
+      })
+      .then((json)=>{
+        if(json.result){
+           //Ok, tout c'est bien passé
+          launchFlash(toastDetails.success,'Le kit a bien été rajouté à votre stock')
+        }
+        else{
+           //Erreur
+           launchFlash(toastDetails.error,'Une erreur est survenue');
+        }
+    });
 };
 
 //Send deleteCard

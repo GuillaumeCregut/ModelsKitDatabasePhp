@@ -165,13 +165,15 @@ class ModelManager extends Manager implements ManagerInterface
         $id=$entity->getId();
         $oldModel=$this->findById($id);
         $image=$oldModel->getImage();
-        if(!is_null($image) || ($image!=='')){
-            //Delete image file 
-            $baseDirectory=dirname(dirname(dirname(__DIR__))) . '/public/';
-            $fileName=$baseDirectory . $image;
-            $test=unlink($fileName);
-        }
         $result=$this->execSQL($query,['id'=>$id]);
+        if($result){
+            if(!is_null($image) || ($image!=='')){
+                //Delete image file 
+                $baseDirectory=dirname(dirname(dirname(__DIR__))) . '/public/';
+                $fileName=$baseDirectory . $image;
+                $test=unlink($fileName);
+            }
+        }
         $result=false;
         return $result;
     }

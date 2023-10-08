@@ -128,13 +128,13 @@
                                 Pays: {$model->getCountryName()}<br>
                                 Catégorie: {$model->getCategory()}<br>
                                 Période: {$model->getPeriod()}<br>
-                                {if {$model->getScalemates()}!=''}
-                                <a href="{$model->getScalemates()}" target="_blank">scalemates</a>
+                                {if {$model->getScalemates()}!='' or $model->getScalemates()!=null }
+                                    <a href="{$model->getScalemates()}" target="_blank">scalemates</a>
                                 {/if}
                             </div>
                         </div>
                     </div>
-                    <h3 class="model-card-title">{$model->getName()}</h3>
+                    <h3 class="model-card-title">{$model->getBrand()}<br>{$model->getName()}</h3>
                     <p class="model-reference">{$model->getRef()} - {$model->getScale()}</p>
                     {if isset($connected)}
                         <div class="user-buttons">

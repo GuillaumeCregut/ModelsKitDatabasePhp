@@ -55,3 +55,17 @@
     margin-left: 5px;
     outline: 0;
 }
+
+
+@media screen and (max-width: 768px) {
+    .filters-list {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .filter-element-container{
+        flex-direction: column;
+    }
+
+}

@@ -99,24 +99,40 @@ class ModelManager extends Manager implements ManagerInterface
     /**
      * Update an entity in DB
      *
-     * @param Buidler $entity : entity to update
+     * @param Model $entity : entity to update
      * @return boolean
      */
     public function update(Entity $entity): bool{
-        // $query='UPDATE ' . $this->table .' SET name=:name, country=:country WHERE id=:id';
-        // $name=$entity->getName();
-        // $id=$entity->getId();
-        // $country=$entity->getCountryId();
-        // $values=['name'=>$name,':id'=>$id,':country'=>$country];
-        // return $this->execSQL($query,$values);
-        //Debug
-        return false;
+        $query="UPDATE model SET
+         builder=:builder,
+         category=:category,
+         brand=:brand,
+         period=:period,
+         scale=:scale,
+         name=:name,
+         reference=:reference,
+         scalemates=:scalemates,
+         picture=:picture 
+         WHERE id=:id";
+         $values=[
+            ':builder'=>$entity->getBuilderId(),
+            ':category'=>$entity->getCategoryId(),
+            ':brand'=>$entity->getBrandId(),
+            ':period'=>$entity->getPeriodId(),
+            ':scale'=>$entity->getScaleId(),
+            ':name'=>$entity->getName(),
+            ':reference'=>$entity->getRef(),
+            ':scalemates'=>$entity->getScalemates(),
+            ':picture'=>$entity->getImage(),
+            ':id'=>$entity->getId()
+         ];
+         return $this->execSQL($query,$values);
     }
 
     /**
      * Store Entity in Database
      *
-     * @param Builder $entity : Entity to store in DB
+     * @param Model $entity : Entity to store in DB
      * @return boolean
      */
     public function save(Entity $entity): bool{
@@ -141,7 +157,7 @@ class ModelManager extends Manager implements ManagerInterface
     /**
      * Delete an entity into DB
      *
-     * @param Builder $entity : Entity to delete
+     * @param Model $entity : Entity to delete
      * @return boolean
      */
     public function delete(Entity $entity) : bool{

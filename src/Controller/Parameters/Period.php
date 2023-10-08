@@ -41,6 +41,7 @@ class Period extends Controller
                 case "add" :
                     if(isset($_POST['name'])){
                         $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+                        if($name='') return false;
                         return $this->add($name);
                     }
                     else
@@ -49,6 +50,7 @@ class Period extends Controller
                 case "remove":
                     if(isset($_POST['id'])){
                         $id=intval($_POST['id']);
+                        if($id=0) return false;
                         return $this->remove($id);
                     }
                     else
@@ -57,11 +59,13 @@ class Period extends Controller
                 case "update":
                     if(isset($_POST['name'])){
                         $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+                        if($name='') return false;
                     }
                     else
                         return false;
                     if(isset($_POST['id'])){
                         $id=intval($_POST['id']);
+                        if($id=0) return false;
                     }
                     else
                         return false; 

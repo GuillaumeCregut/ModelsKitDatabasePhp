@@ -41,6 +41,21 @@ class BuilderManager extends Manager implements ManagerInterface
         }
     }
 
+    public function getAllFiltered(string $filter):array
+    {
+        $query='SELECT b.id,b.name,b.country,c.name as countryName FROM ' 
+        . $this->table . 
+        ' b INNER JOIN country c on b.country=c.id WHERE b.name Like :name ORDER BY b.name';
+        $values=[':name'=>'%'.$filter.'%'];
+        try{
+            $result=$this->db->prepare($query,$this->className,$values,false); 
+            return $result;
+        }
+        catch(DbException $e){
+            $this->loadErrorPage($e->getdbMessage());
+        }
+    }
+
     /**
      * Find an entity in DB by Id
      *

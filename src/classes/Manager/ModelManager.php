@@ -52,13 +52,28 @@ class ModelManager extends Manager implements ManagerInterface
             $count=0;
             foreach($filter as $k=>$v){
                 if ($count===0){
-                    $searchString.=' WHERE ' . $k .'=:' . $k;
+                    if($k==='name'){
+                        $searchString.=' WHERE ' . $k .' LIKE :' . $k;
+                        $key=':' . $k;
+                        $values[$key]='%'.$v.'%';
+                        
+                    }else{
+                        $searchString.=' WHERE ' . $k .'=:' . $k;
+                        $key=':' . $k;
+                        $values[$key]=$v;
+                    }
                 }
                 else{
-                    $searchString.=' AND ' . $k . '=:' . $k;
+                    if($k==='name'){
+                        $searchString.=' AND ' . $k . ' Like :' . $k;
+                        $key=':' . $k;
+                        $values[$key]='%'.$v.'%';
+                    }else{
+                        $searchString.=' AND ' . $k . '=:' . $k;
+                        $key=':' . $k;
+                        $values[$key]=$v;
+                    }
                 }
-                $key=':' . $k;
-                $values[$key]=$v;
                 $count++;
             }
         }

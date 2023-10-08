@@ -13,7 +13,7 @@ class LikeModel extends ApiController
     public function manage()
     {
         error_reporting(0);
-      //  if($this->isConnected){
+       if($this->isConnected){
                 $method=$_SERVER['REQUEST_METHOD'];
                 switch ($method){
                     case 'GET':  $this->updateLike();
@@ -34,17 +34,30 @@ class LikeModel extends ApiController
                         header("HTTP/1.1 405 Method Not Allowed");
                         die();
                 }
-        // }
-        // else{
-        //     header("HTTP/1.1 401 Unauthorized");
-        // }
+        }
+        else{
+            header("HTTP/1.1 401 Unauthorized");
+        }
     }
 
     private function updateLike()
     {
-        /*$rawData = file_get_contents("php://input");
-        $datas=json_decode($rawData);
+        $datas=$this->datas;
+        $modelLike=intval($datas->idModel);
+        $likeState=$datas->newLike;
         if(is_null($datas->idModel) || is_null($datas->newLike)){
+           // header("HTTP/1.1 422 Unprocessable entity");
+            $return=[
+                "result"=>false,
+                "reason"=>"Not bool or not int",
+                "model"=>$modelLike,
+                "state"=>$likeState
+            ];
+            echo json_encode($return);
+            die();
+        }
+
+        if(($modelLike===0) || !is_bool($datas->newLike)){
             header("HTTP/1.1 422 Unprocessable entity");
             $return=[
                 "result"=>false,
@@ -52,63 +65,16 @@ class LikeModel extends ApiController
             echo json_encode($return);
             die();
         }
-        if(!is_int($datas->idModel) || !is_bool($datas->newLike)){
-            header("HTTP/1.1 422 Unprocessable entity");
-            $return=[
-                "result"=>false,
-            ];
-            echo json_encode($return);
-            die();
-        }
-        $modelLike=$datas->idModel;
-        $likeState=$datas->newLike;*/
-    /*debug */
-        $modelLike=26;
-        $likeState=true;
-    /*end debug*/
         $userId=$this->session->getKey(Session::SESSION_USER_ID);
         $user=new User();
         $user->setId($userId);
-        $liked=$user->getFavorite();
-        var_dump($liked);
-        $arrayData=[
-            'Model'=>$modelLike,
-            'Like'=>$likeState,
-            'result'=>false
-        ];
-        if(in_array($modelLike,$liked) && $likeState){
-            //On ne fais rien
-            echo "Déjà";
-            $arrayData=[
-                'Model'=>$modelLike,
-                'Like'=>$likeState,
-                'result'=>false
-            ];
-            header("HTTP/1.1 409 Conflict");
-            echo json_encode($arrayData);
-            die();
-        }
-        if(!in_array($modelLike,$liked) && !$likeState){
-        
-            echo "On ne l'as pas et on peut pas l'enlever";
-            $arrayData=[
-                'Model'=>$modelLike,
-                'Like'=>$likeState,
-                'result'=>false
-            ];
-            header("HTTP/1.1 404 Not found");
-            echo json_encode($arrayData);
-            die();
-        }
         if($likeState){
-            $result=$user->addFavorite($modelLike);
+            $result=$user->addFavorite($modelLike); 
         }else{
             $result=$user->removeFavorite($modelLike);
         }
         $arrayData=[
-            'Model'=>$modelLike,
-            'Like'=>$likeState,
-            'result'=>$result
+            'result'=>$result,
         ];
         echo json_encode($arrayData);
         die();

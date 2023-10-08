@@ -1,12 +1,10 @@
 <?php
 namespace Editiel98\Api\Params;
 
-use Editiel98\App;
 use Editiel98\Entity\User;
-use Editiel98\Manager\UserManager;
 use Editiel98\Router\ApiController;
 use Editiel98\Session;
-use Exception;
+
 
 class LikeModel extends ApiController
 {
@@ -16,8 +14,8 @@ class LikeModel extends ApiController
        if($this->isConnected){
                 $method=$_SERVER['REQUEST_METHOD'];
                 switch ($method){
-                    case 'GET':  $this->updateLike();
-                       // header("HTTP/1.1 405 Method Not Allowed");
+                    case 'GET':  
+                        header("HTTP/1.1 405 Method Not Allowed");
                         die();
                         break;
                     case 'POST': 

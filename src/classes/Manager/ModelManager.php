@@ -73,11 +73,14 @@ class ModelManager extends Manager implements ManagerInterface
      * @param integer $id
      * @return object : class of the entity
      */
-    public function findById(int $id): Entity
+    public function findById(int $id): Entity | null
     {
         $query='SELECT * FROM model_full WHERE id=:id';
         $result=$this->prepareSQL($query,[':id'=>$id],true); 
-        return $result;
+        if ($result){
+            return $result;
+        }
+        return null;
     }
 
     /**

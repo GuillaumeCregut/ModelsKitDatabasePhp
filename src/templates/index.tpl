@@ -30,7 +30,7 @@
           </section> 
           <section class="step-item">
             <div class="text-item">
-              La liste des modèles proposés est créée par les utilistateurs. Un kit est manquant ? Rajouter le simplement !
+              La liste des modèles proposés est créée par les utilisateurs. Un kit est manquant ? Rajouter le simplement !
             </div>
             <div class="picture-item">
               <img src="assets/pictures/homepage/modeles.png" alt="modèles" class="screen-picture" />
@@ -46,7 +46,7 @@
           </section>
           <section class="step-item">
             <div class="text-item">
-              Vous pouvez gérer vos fournisseurs habituels, simplement. Ces informations vous permettrons de pouvoir génrer un suivi d'achat.
+              Vous pouvez gérer vos fournisseurs habituels, simplement. Ces informations vous permettrons de pouvoir gérer un suivi d'achat.
             </div>
             <div class="picture-item">
               <img src="assets/pictures/homepage/fournisseurs.png" alt="fournisseurs" class="screen-picture" />

@@ -46,7 +46,7 @@ abstract class ApiController
 
     protected Database $dbConnection;
 
-    protected object $datas;
+    protected object | null $datas;
 
     public function __construct(array $subPages=[], array $params=[])
     {

@@ -9,13 +9,10 @@ const updateCart=(id)=>{
     location.href = `/?model=${id}`;
 }
 
+
 //Send to Api like info
-const sendLike=(id,value,btn)=>{
+const sendLike=(id,value,btn, btnState)=>{
     const heart=btn.querySelector('.model-like');
-
-    //Put this in  APIresponse
-    
-
     const myInit = {
         method: "PUT",
         headers: {
@@ -36,13 +33,14 @@ const sendLike=(id,value,btn)=>{
         }
     })
     .then((json)=>{
-        console.log(json)
         if(json.result){
            //Ok, tout c'est bien passé
            heart.classList.toggle('model-like-true');
+           btn.dataset.like=btnState;
         }
         else{
            //Erreur
+           launchFlash(toastDetails.error,'Une erreur est survenue');
         }
     });
 }
@@ -60,7 +58,6 @@ const sendDelete=(id, name)=>{
         const hiddenId=document.getElementById('id_hidden');
         hiddenId.value=id;
         formDelete.submit();
-        console.log(id);
     }
 }
 
@@ -84,10 +81,12 @@ likeButtons.forEach((likeBtn)=>{
             oldLike='true';
         }
         let like=false;
+        let likeBtnState="false";
         if(oldLike==='false'){
             like=true;
+            likeBtnState='1';
         }
-        sendLike(id,like,likeBtn);
+        sendLike(id,like,likeBtn, likeBtnState);
     });
 });
 
@@ -118,3 +117,4 @@ updateButtons.forEach((updateBtn)=>{
         updateCart(id);
     });
 });
+

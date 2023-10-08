@@ -78,6 +78,9 @@ class Period extends Controller
 
     private function add(string $name): bool 
     {
+        if(!$this->isConnected){
+            return false;
+        }
         $period=new EntityPeriod();
         $period->setName($name);
         $result=$period->save();
@@ -86,6 +89,9 @@ class Period extends Controller
 
     private function remove(int $id): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         $period=new EntityPeriod();
         $period->setId($id);
         return $period->delete();
@@ -93,9 +99,12 @@ class Period extends Controller
 
     private function update(int $id, string $name): bool 
     {
-       $period=new EntityPeriod();
-       $period->setId($id);
-       $period->setName($name);
-       return $period->update();
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
+        $period=new EntityPeriod();
+        $period->setId($id);
+        $period->setName($name);
+        return $period->update();
     }
 }

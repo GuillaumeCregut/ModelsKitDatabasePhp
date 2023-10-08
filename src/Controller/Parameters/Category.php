@@ -78,6 +78,9 @@ class Category extends Controller
 
     private function add(string $name): bool 
     {
+        if(!$this->isConnected){
+            return false;
+        }
         $category=new EntityCategory();
         $category->setName($name);
         $result=$category->save();
@@ -86,6 +89,9 @@ class Category extends Controller
 
     private function remove(int $id): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         $category=new EntityCategory();
         $category->setId($id);
         return $category->delete();
@@ -93,9 +99,12 @@ class Category extends Controller
 
     private function update(int $id, string $name): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         $category=new EntityCategory();
         $category->setId($id);
-       $category->setName($name);
-       return $category->update();
+        $category->setName($name);
+        return $category->update();
     }
 }

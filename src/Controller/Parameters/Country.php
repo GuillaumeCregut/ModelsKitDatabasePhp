@@ -78,6 +78,9 @@ class Country extends Controller
 
     private function add(string $name): bool 
     {
+        if(!$this->isConnected){
+            return false;
+        }
         $country=new EntityCountry();
         $country->setName($name);
         $result=$country->save();
@@ -86,6 +89,9 @@ class Country extends Controller
 
     private function remove(int $id): bool 
     {
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
         $country=new EntityCountry();
         $country->setId($id);
         return $country->delete();
@@ -93,9 +99,12 @@ class Country extends Controller
 
     private function update(int $id, string $name): bool 
     {
-       $country=new EntityCountry();
-       $country->setId($id);
-       $country->setName($name);
-       return $country->update();
+        if(App::ADMIN!==$this->userRank){
+            return false;
+        }
+        $country=new EntityCountry();
+        $country->setId($id);
+        $country->setName($name);
+        return $country->update();
     }
 }

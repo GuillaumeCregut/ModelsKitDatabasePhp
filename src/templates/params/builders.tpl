@@ -10,8 +10,17 @@
 {/block}
 {block name=innerMenu}
 <div class="params-container">
+    <h2 class="builders_title">Gestion des constructeurs</h2>
+    <section class="builder-filter">
+        <form action="parametres_builders" method="post" class="form-search-builder">
+            <input type="hidden" name="action" value="filter">
+            <label for="searchName" class="builder-search-label">Rechercher un constructeur
+                <input type="text" name="searchName" id="searchName" class="filter-name-input" placeholder="Nom">
+            </label>
+            <button type="submit" class="btn-filter">Rechercher</button>
+        </form>
+    </section>
     <section class="list">
-        <h2 class="builders_title">Gestion des constructeurs</h2>
         {if isset($list)}
             <div class="items-container">
                 {if isset($connected) &&  isset(isAdmin)}

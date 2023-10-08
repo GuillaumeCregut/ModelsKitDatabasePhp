@@ -2,6 +2,45 @@
     position: relative;
 }
 
+.builder-filter{
+    margin: 10px 0;
+}
+
+.form-search-builder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-name-input{
+    margin-left: 5px;
+    font-size: 1rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    padding: 1px;
+    border : none;
+    border-bottom: 1px solid black;
+    background-color: transparent;
+    outline: none;
+}
+
+.btn-filter{
+    display: flex;
+    background-color: rgb(25, 118, 210);
+    outline: 0px;
+    border: 0px;
+    margin: 30px auto;
+    padding: 7px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .items-container{
     max-height: 700px;
     overflow-y: scroll;
@@ -145,6 +184,7 @@
     font-size: 0.875rem;
     line-height: 1.75;
     letter-spacing: 0.02857em;
+    border-radius: 4px;
 }
 
 .blured{

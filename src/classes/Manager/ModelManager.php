@@ -87,13 +87,15 @@ class ModelManager extends Manager implements ManagerInterface
      * Return entity from DB by name
      *
      * @param string $name
-     * @return object class of the entity
+     * @return Model class of the entity
      */
-    public function findByName(string $name): Model
+    public function findByName(string $name): Entity | null
     {
         $query='SELECT id, name FROM ' . $this->table .' WHERE name=:name';
         $result=$this->prepareSQL($query,[':name'=>$name],true); 
-        return $result;
+        if($result){
+            return $result;
+        } else return null;
     }
 
     /**

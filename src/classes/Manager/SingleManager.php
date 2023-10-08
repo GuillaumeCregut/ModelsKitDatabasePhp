@@ -38,7 +38,9 @@ abstract class SingleManager extends Manager implements ManagerInterface
     {
         $query='SELECT id, name FROM ' . $this->table.' WHERE id=:id';
         $result=$this->prepareSQL($query,[':id'=>$id],true); 
-        return $result;
+        if($result){
+            return $result;
+        } else return null;
     }
 
     /**
@@ -47,11 +49,14 @@ abstract class SingleManager extends Manager implements ManagerInterface
      * @param string $name
      * @return object class of the entity
      */
-    public function findByName(string $name):Entity
+    public function findByName(string $name):Entity | null
     {
         $query='SELECT id, name FROM ' . $this->table .' WHERE name=:name';
         $result=$this->prepareSQL($query,[':name'=>$name],true); 
-        return $result;
+        if($result){
+            return $result;
+        }
+        else return null;
     }
 
     /**

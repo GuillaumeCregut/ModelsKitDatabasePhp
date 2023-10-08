@@ -21,7 +21,10 @@ class UserManager extends Manager //implements ManagerInterface
             $query="SELECT firstname, lastname,email, rankUser, id, email,isvalid FROM " . $this->table . " WHERE id=:id";
             $classname='Editiel98\Entity\User';
             $values=[':id'=>$id];
-            return $this->db->prepare($query,$classname,$values,true);
+            $result= $this->db->prepare($query,$classname,$values,true);
+            if($result){
+                return $result;
+            } else return null;
         }
         catch(DbException $e){
            throw new Exception($e->getdbMessage());
@@ -45,7 +48,8 @@ class UserManager extends Manager //implements ManagerInterface
             $query="SELECT firstname, lastname,email, rankUser, id, email,isvalid FROM " . $this->table . " WHERE login=:login";
             $classname='Editiel98\Entity\User';
             $values=[':id'=>$lastname];
-            return $this->db->prepare($query,$classname,$values,true);
+            $result=$this->db->prepare($query,$classname,$values,true);
+            return $result;
         }
         catch(DbException $e){
            throw new Exception($e->getdbMessage());

@@ -49,6 +49,7 @@ class Category extends Controller
                 case "remove":
                     if(isset($_POST['id'])){
                         $id=intval($_POST['id']);
+                        if($id=0) return false;
                         return $this->remove($id);
                     }
                     else
@@ -62,6 +63,7 @@ class Category extends Controller
                         return false;
                     if(isset($_POST['id'])){
                         $id=intval($_POST['id']);
+                        if($id=0) return false;
                     }
                     else
                         return false; 

@@ -47,11 +47,13 @@ class BuilderManager extends Manager implements ManagerInterface
      * @param integer $id
      * @return object : class of the entity
      */
-    public function findById(int $id): Entity
+    public function findById(int $id): Entity | null
     {
         $query='SELECT id, name FROM ' . $this->table.' WHERE id=:id';
         $result=$this->prepareSQL($query,[':id'=>$id],true); 
-        return $result;
+        if($result){
+            return $result;
+        }else return null;
     }
 
     /**
@@ -64,7 +66,9 @@ class BuilderManager extends Manager implements ManagerInterface
     {
         $query='SELECT id, name FROM ' . $this->table .' WHERE name=:name';
         $result=$this->prepareSQL($query,[':name'=>$name],true); 
-        return $result;
+        if($result){
+            return $result;
+        }else return null;
     }
 
     /**

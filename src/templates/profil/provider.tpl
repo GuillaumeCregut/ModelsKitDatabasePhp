@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="assets/styles/profil/provider.css">
 {/block}
 {block name=script}
-<script src="assets/provider.js" defer></script>
+<script src="assets/scripts/provider.js" defer></script>
 {/block}
 {block name=innerMenu}
 <div class="provider-container">
@@ -114,6 +114,7 @@
     </div>
     <div class="provider-modal modal-hidden">
         <section class="provider-modal-container">
+            <h3>Modifier</h3>
             <form action="profil_fournisseurs" method="post" id="update_provider">
                 <label for="newNameMod">Nouveau nom
                     <input type="text" name="name" id="newNameMod" class="input_provider">    

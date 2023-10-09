@@ -8,4 +8,7 @@ src/logs/*
 !.gitkeep
 /public/assets/uploads/models/*
 !/public/assets/uploads/models/no_image.jpg
-!public/assets/uploads/models/.gitkeep
+!public/assets/uploads/models/index.html
+src/Controller/Profil/template.php
+/public/assets/uploads/users/*
+!/public/assets/uploads/users/index.html

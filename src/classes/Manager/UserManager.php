@@ -18,7 +18,7 @@ class UserManager extends Manager //implements ManagerInterface
      public function findById(int $id): User|bool
      {
         try{
-            $query="SELECT firstname, lastname,email, rankUser, id, email,isvalid FROM " . $this->table . " WHERE id=:id";
+            $query="SELECT firstname, lastname, email, login,isVisible, avatar, allow, rankUser, id, email,isvalid FROM " . $this->table . " WHERE id=:id";
             $classname='Editiel98\Entity\User';
             $values=[':id'=>$id];
             $result= $this->db->prepare($query,$classname,$values,true);
@@ -56,17 +56,47 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
-    public function update(USer $entity): bool
+    public function update(User $entity): bool
+    {
+        $query="UPDATE " . $this->table . " SET 
+        firstname=:firstname,
+        lastname=:lastname,
+        login=:login,
+        email=:email,
+        isVisible=:visible,
+        allow=:allow,
+        avatar=:avatar
+        ";
+        if($entity->getPassword()!=='')
+        {
+            $query.=" password=:password";
+            $values[':password']=$entity->getPassword();
+        }
+        $query.=" WHERE id=:id";
+        $values[':firstname']=$entity->getFirstname();
+        $values[':lastname']=$entity->getLastname();
+        $values[':login']=$entity->getLogin();
+        $values[':email']=$entity->getEmail();
+        $values[':visible']=$entity->getVisible();
+        $values[':allow']=$entity->getAllow();
+        $values[':avatar']=$entity->getAvatar();
+        $values[':id']=$entity->getId();
+        try{
+            $result=$this->db->exec($query,$values);
+            return $result;
+        }
+        catch(DbException $e){
+           return false;
+        }
+        return false;
+    }
+
+    public function save(User $entity): bool
     {
         return false;
     }
 
-    public function save(USer $entity): bool
-    {
-        return false;
-    }
-
-    public function delete(USer $entity) : bool
+    public function delete(User $entity) : bool
     {
         return false;
     }

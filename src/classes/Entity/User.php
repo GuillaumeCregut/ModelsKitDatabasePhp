@@ -13,8 +13,12 @@ class User extends Entity
     private string $avatar;
     private bool $isvalid;
     private string $email;
+    private string $login;
+    private bool $allow;
+    private bool $isVisible;
     private array $favorites=[];
     private UserManager $manager;
+    private string $password='';
 
     public function __construct()
     {
@@ -168,4 +172,49 @@ class User extends Entity
         $result=$this->manager->addModelStock($this,$idModel,$provider,$price);
         return $result;
     }
+
+    public function getLogin(): string
+    {
+        return $this->login;
+    }
+
+    public function setLogin(string $login): self
+    {
+        $this->login=$login;
+        return $this;
+    }
+
+    public function getVisible(): bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setVisible(bool $visibility): self
+    {
+        $this->isVisible=$visibility;
+        return $this;
+    }
+
+    public function getAllow(): bool
+    {
+        return $this->allow;
+    }
+
+    public function setAllow(bool $allow): self
+    {
+        $this->allow=$allow;
+        return $this;
+    }
+
+    public function setPassword($pass)
+    {
+        //Encrypt password
+        $hashedPassword=password_hash($pass,PASSWORD_DEFAULT);
+        $this->password=$hashedPassword;
+    }
+
+    public function getPassword(): string{
+        return $this->password;
+    }
+
 }

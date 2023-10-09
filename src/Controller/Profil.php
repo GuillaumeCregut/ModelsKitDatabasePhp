@@ -14,7 +14,7 @@ class Profil extends Controller
         } else {
             switch ($this->subPages[0]) {
                 case 'info':
-                    $className = '';
+                    $className = 'Info';
                     break;
                 case 'fournisseurs':
                     $className = '';
@@ -36,7 +36,7 @@ class Profil extends Controller
                     $page->render();
                     die();
             }
-            $classPage = 'App\\Controller\\Parameters\\' . $className;
+            $classPage = 'App\\Controller\\Profil\\' . $className;
             $page=new $classPage([],$this->params);
             $page->render();
         }

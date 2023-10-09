@@ -18,6 +18,7 @@ class User extends Entity
     private bool $isVisible;
     private array $favorites=[];
     private UserManager $manager;
+    private string $password='';
 
     public function __construct()
     {
@@ -205,5 +206,15 @@ class User extends Entity
         return $this;
     }
 
+    public function setPassword($pass)
+    {
+        //Encrypt password
+        $hashedPassword=password_hash($pass,PASSWORD_DEFAULT);
+        $this->password=$hashedPassword;
+    }
+
+    public function getPassword(): string{
+        return $this->password;
+    }
 
 }

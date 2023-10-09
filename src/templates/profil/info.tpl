@@ -9,8 +9,8 @@
     {if isset($user)}
         <div>
             <h2>Mon profil</h2>
-            <p class="user-data"><span class="entry">Nom : </span>{$user->getFirstname()|capitalize}</p>
-            <p class="user-data"><span class="entry">Prénom : </span>{$user->getLastname()|capitalize}</p>
+            <p class="user-data"><span class="entry">Prénom : </span>{$user->getFirstname()|capitalize}</p>
+            <p class="user-data"><span class="entry">Nom : </span>{$user->getLastname()|capitalize}</p>
             <p class="user-data"><span class="entry">Login : </span>{$user->getLogin()} </p>
             <p class="user-data"><span class="entry">Email : </span>{$user->getEmail()}</p>
             <div class="user-info-avatar-container">

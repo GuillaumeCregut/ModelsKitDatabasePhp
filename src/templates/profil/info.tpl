@@ -1,5 +1,5 @@
 {extends file="../_profil_template.tpl"}
-{block name=title} {/block}
+{block name=title}Mes informations{/block}
 {block name=styles}
     <link rel="stylesheet" href="assets/styles/profil_general.css">
     <link rel="stylesheet" href="assets/styles/profil/info.css">

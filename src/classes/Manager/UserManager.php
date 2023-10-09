@@ -18,7 +18,7 @@ class UserManager extends Manager //implements ManagerInterface
      public function findById(int $id): User|bool
      {
         try{
-            $query="SELECT firstname, lastname,email, rankUser, id, email,isvalid FROM " . $this->table . " WHERE id=:id";
+            $query="SELECT firstname, lastname, email, login,isVisible, avatar, allow, rankUser, id, email,isvalid FROM " . $this->table . " WHERE id=:id";
             $classname='Editiel98\Entity\User';
             $values=[':id'=>$id];
             $result= $this->db->prepare($query,$classname,$values,true);

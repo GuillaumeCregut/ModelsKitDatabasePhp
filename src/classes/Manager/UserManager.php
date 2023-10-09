@@ -175,4 +175,18 @@ class UserManager extends Manager //implements ManagerInterface
         $result=$this->db->exec($query,$values);
         return $result;
     }
+
+    public function getProviders(User $entity): array
+    {
+        $idUser=$entity->getId();
+        $classname='Editiel98\Entity\Provider';
+        $query='SELECT id, name FROM provider WHERE owner=:id';
+        $values=[':id'=>$idUser];
+        try{
+            return $this->db->prepare($query,$classname,$values);
+        }
+        catch(DbException $e){
+            throw new Exception($e->getdbMessage());
+         }
+    }
 }

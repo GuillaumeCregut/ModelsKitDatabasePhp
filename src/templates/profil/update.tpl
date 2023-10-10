@@ -9,7 +9,7 @@
 {/block}
 {block name=innerMenu}
     {if isset($user)}
-        <div>
+        <div class="main-profil-container">
             <form action="profil_info" method="post" enctype="multipart/form-data">
                 <h2>Mon profil - Update</h2>
                 <label for="firstname" class="user-data">

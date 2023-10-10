@@ -19,6 +19,7 @@ class User extends Entity
     private array $favorites=[];
     private UserManager $manager;
     private string $password='';
+    private array $providers;
 
     public function __construct()
     {
@@ -217,4 +218,10 @@ class User extends Entity
         return $this->password;
     }
 
+    public function getProviders(): array
+    {
+        //Fetch providers
+        $this->providers=$this->manager->getProviders($this);
+        return $this->providers;
+    }
 }

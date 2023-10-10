@@ -1,5 +1,5 @@
 {extends file="../_profil_template.tpl"}
-{block name=title} {/block}
+{block name=title}Mes informations{/block}
 {block name=styles}
     <link rel="stylesheet" href="assets/styles/profil_general.css">
     <link rel="stylesheet" href="assets/styles/profil/info.css">
@@ -7,7 +7,7 @@
 {block name=script}{/block}
 {block name=innerMenu}
     {if isset($user)}
-        <div>
+        <div class="main-profil-container">
             <h2>Mon profil</h2>
             <p class="user-data"><span class="entry">Prénom : </span>{$user->getFirstname()|capitalize}</p>
             <p class="user-data"><span class="entry">Nom : </span>{$user->getLastname()|capitalize}</p>

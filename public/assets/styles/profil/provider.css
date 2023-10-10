@@ -1,86 +1,56 @@
-.params-container{
-    position: relative;
+h2{
+    text-align: center;
+    margin: 20px 0;
 }
 
-.items-container{
-    max-height: 700px;
-    overflow-y: scroll;
+.provider-table{
+    width: 80%;
+    margin: 0 auto;
 }
 
-.single-table{
-    width: 100%;
-}
-
-.single-cell{
+.provider-cell{
     text-align: center;
     border-bottom: 1px solid rgb(224, 224, 224);
     padding: 16px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
-.single-table-head{
-    font-weight: bold;
-    font-size: 1.7rem;
-}
-
-
-
-.single-btn{
+.provider-btn{
     border: 0;
     outline: 0;
     margin: 0 10px;
 }
 
-.trash-simple{
+.trash-provider, .change-provider{
     width: 30px;
     height: 30px;
     cursor: pointer;
 }
 
-.trash-simple:hover{
+.trash-provider:hover{
     color : red;
 }
 
-.single-form{
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
+.change-provider:hover{
+    color : rgb(153, 153, 11);
 }
 
-.single-form h2{
-    text-align: center;
-    margin-bottom: 20px;
+.form-add-supplier-container{
+    width: 80%;
+    margin: 20px 0;
+   
 }
 
-.form-add-simple{
+.form-add-provider{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
-.wrong{
-    border-bottom: 1px solid  rgba(255, 0, 0, 0.87) !important;
-    background-color:  rgba(255, 0, 0, 0.60);
-}
-
-.input_simple{
-    color: rgba(0, 0, 0, 0.87);
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 1.4375em;
-    letter-spacing: 0.00938em;
-    cursor: text;
+.provider-form-btn{
     border: 0;
     outline: 0;
-    margin-bottom: 10px;
-    padding: 6px 10px;
-    border-bottom: 1px solid  rgba(0, 0, 0, 0.87);
-    background-color: transparent;
-}
-
-.form-add-simple-btn{
+    cursor: pointer;
+    margin-top: 20px;
     max-width: 120px;
     cursor: pointer;
     margin: 20px;
@@ -101,21 +71,22 @@
     font-size: 0.875rem;
     line-height: 1.75;
     letter-spacing: 0.02857em;
+}
+
+.add-btn{
+    gap: 5px;
+}
+
+.input_provider{
     border: 0;
-}
-
-.form-add-simple-btn:hover{
-    background-color: rgb(23, 105, 186);
-}
-
-.icon-add-simple-button{
-    margin: 0 10px;
-    min-height: 25px;
-    min-width: 25px;
+    outline: 0;
+    padding: 3px;
+    border-bottom: 1px solid black;
+    background-color: transparent;
 }
 
 
-/* Modal section */
+/* Modal */
 .modal-hidden{
     display: none;
 }
@@ -125,7 +96,7 @@
     -webkit-filter: blur(8px);
 }
 
-.singleModal{
+.provider-modal{
     z-index: 1;
     position: fixed;
     top:50%;
@@ -136,9 +107,14 @@
     background-color: var(--menu-color);
 }
 
-.single-modal-container{
+.provider-modal-container{
     position: relative;
     padding : 20px;
+}
+
+.provider-modal-container h3{
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 #close-modal{
@@ -150,22 +126,18 @@
     background-color: transparent;
     outline: 0;
 }
-/* End modal section */
 
 @media screen and (max-width: 768px) {
-    .params-container{
-        grid-area: 1/1/2/2;
-   }
-    .single-cell{
-        font-size: 0.7rem;
-    }
-
-    .single-table-head{
-        font-weight: bold;
-        font-size: 0.9rem;
-    }
-    .trash-simple{
+    .trash-provider, .change-provider{
         width: 20px;
         height: 20px;
+    }
+
+    .provider-cell{
+        font-size: 0.8rem;
+    }
+
+    .provider-modal{
+        top: 25%;
     }
 }

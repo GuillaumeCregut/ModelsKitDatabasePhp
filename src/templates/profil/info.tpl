@@ -7,7 +7,7 @@
 {block name=script}{/block}
 {block name=innerMenu}
     {if isset($user)}
-        <div>
+        <div class="main-profil-container">
             <h2>Mon profil</h2>
             <p class="user-data"><span class="entry">Prénom : </span>{$user->getFirstname()|capitalize}</p>
             <p class="user-data"><span class="entry">Nom : </span>{$user->getLastname()|capitalize}</p>

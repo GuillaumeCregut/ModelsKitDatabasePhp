@@ -8,6 +8,7 @@ class Provider extends Entity
 {
     private int $id;
     private string $name;
+    private int $owner;
     private ProviderManager $manager;
     public function __construct()
     {
@@ -34,5 +35,31 @@ class Provider extends Entity
     {
         $this->name=$name;
         return $this;
+    }
+
+    public function getOwner(): int
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(int $owner): self
+    {
+        $this->owner=$owner;
+        return $this;
+    }
+
+    public function save(): bool
+    {
+        return $this->manager->save($this);
+    }
+
+    public function update(): bool
+    {
+        return $this->manager->update($this);
+    }
+
+    public function delete(): bool
+    {
+        return $this->manager->delete($this);
     }
 }

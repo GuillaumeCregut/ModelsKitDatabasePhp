@@ -41,6 +41,12 @@ class Model extends Controller
 
     private function displayPage()
     {
+        $this->hasFlash=$this->flash->hasFlash();
+        /* Render flashes messages */
+        if($this->hasFlash){
+            $flashes=$this->flash->getFlash();
+            $this->smarty->assign('flash',$flashes);
+        }
         //Get all needed datas for create a model
         $builderManager=new BuilderManager($this->dbConnection);
         $builders=$builderManager->getAll();

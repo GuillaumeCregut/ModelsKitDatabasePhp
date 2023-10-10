@@ -8,7 +8,7 @@
 <script src="assets/scripts/provider.js" defer></script>
 {/block}
 {block name=innerMenu}
-<div class="provider-container">
+<div class="provider-container main-profil-container">
     <h2>Mes Fournisseurs</h2>
     <div>
         <table class="provider-table">
@@ -27,6 +27,7 @@
                                 <button 
                                 class="provider-delete-btn provider-btn"
                                 data-id="{$provider->getId()}"
+                                data-name="{$provider->getName()}"
                                 >
                                     <svg 
                                     stroke="currentColor" 
@@ -74,25 +75,27 @@
                 {/if}
             </tbody>
         </table>
-        <form action="profil_fournisseurs" method="post">
-            <input type="hidden" name="action" value="add">
-            <input type="hidden" name="id" value="0">
+        <form action="profil_fournisseurs" method="post" id="delete-provider">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="id" value="0" id="deleteId">
         </form>
     </div>
     <div class="form-add-supplier-container">
         <h3>Ajouter un fournisseur</h3>
-        <form action="profil_fournisseurs" method="post">
+        <form action="profil_fournisseurs" method="post" class="form-add-provider">
             <input type="hidden" name="action" value="add">
             <label for="name">
                 Nom du fournisseur : 
                 <input 
                 type="text" 
-                class="input-form-add"
+                class="input_provider"
                 name="name" 
-                id="name" 
+                id="name"
+                autocomplete="off"
+                required
                 autocomplete="off">
             </label>
-            <button type="submit">
+            <button type="submit" class="provider-form-btn add-btn">
                 <svg 
                 stroke="currentColor" 
                 fill="currentColor" 
@@ -112,21 +115,27 @@
             </button>
         </form>
     </div>
-    <div class="provider-modal modal-hidden">
-        <section class="provider-modal-container">
-            <h3>Modifier</h3>
-            <form action="profil_fournisseurs" method="post" id="update_provider">
-                <label for="newNameMod">Nouveau nom
-                    <input type="text" name="name" id="newNameMod" class="input_provider">    
-                </label>
-                <input type="hidden" name="action" value="update">
-                <input type="hidden" name="id" value="0" id="mod-provider">
-                    <button type="submit">Modifier</button>
-            </form>
-            <button id="close-modal">
-                <i class="fa-solid fa-xmark" ></i>
-            </button>
-        </section>
-    </div>
+</div>
+<div class="provider-modal modal-hidden">
+    <section class="provider-modal-container">
+        <h3>Modifier</h3>
+        <form action="profil_fournisseurs" method="post" id="update_provider">
+            <label for="newNameMod">Nouveau nom
+                <input
+                 type="text" 
+                 name="name" 
+                 id="newNameMod"
+                 required
+                 autocomplete="off" 
+                 class="input_provider">    
+            </label>
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="id" value="0" id="mod-provider">
+                <button type="submit" class="provider-form-btn">Modifier</button>
+        </form>
+        <button id="close-modal">
+            <i class="fa-solid fa-xmark" ></i>
+        </button>
+    </section>
 </div>
 {/block}

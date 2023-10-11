@@ -3,6 +3,7 @@ namespace Editiel98\Entity;
 
 use Editiel98\Factory;
 use Editiel98\Manager\UserManager;
+use Exception;
 
 class User extends Entity
 {
@@ -20,6 +21,7 @@ class User extends Entity
     private UserManager $manager;
     private string $password='';
     private array $providers;
+    private array $orders;
 
     public function __construct()
     {
@@ -223,5 +225,16 @@ class User extends Entity
         //Fetch providers
         $this->providers=$this->manager->getProviders($this);
         return $this->providers;
+    }
+
+    public function getOrders(): array
+    {
+        try{
+            $this->orders=$this->manager->getOrders($this);
+        }
+        catch(Exception $e){
+            $this->orders=[];
+        }
+        return $this->orders;
     }
 }

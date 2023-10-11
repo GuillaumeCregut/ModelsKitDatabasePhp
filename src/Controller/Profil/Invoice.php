@@ -50,7 +50,6 @@ class Invoice extends Controller
     private function displayPage()
     {
         $orders=$this->user->getOrders();
-        var_dump($orders);
         $this->smarty->assign('providers',$this->providers);
         $this->smarty->assign('orders',$orders);
         $this->smarty->assign('profil','profil');

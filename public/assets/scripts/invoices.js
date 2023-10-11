@@ -1,11 +1,13 @@
 const detailBtns=document.querySelectorAll('.detail-btn');
 const HideOrdersBtn=document.getElementById('order-show-btn');
+const showNewModelModalBtn=document.querySelector('.new-model-add');
+
 let mypopup=null;
+let modelPopup=null;
 let isOrdersShown=false;
 
 
 const openDetailPopup=(ref,key)=>{
-    console.log(ref);
     if(mypopup==null || mypopup.closed){
         mypopup=window.open(
            `./profil_popup?ref=${ref}&key=${key}`,
@@ -43,3 +45,28 @@ HideOrdersBtn.addEventListener('click',()=>{
         HideOrdersBtn.textContent='Afficher';
     }
 });
+
+function addModelToList(model){
+    console.log(model);
+}
+
+
+showNewModelModalBtn.addEventListener('click',()=>{
+    if(modelPopup==null || modelPopup.closed){
+        modelPopup=window.open(
+           `./profil_model`,
+            'test',
+            `popup,
+            width=640px,
+            height=480px,
+            top=50px,
+            left=100px,
+            toolbar=no,
+            status=no,
+            menubar=no,
+            scrollbars=yes`
+        )
+    }else{
+        modelPopup.focus();
+    }
+})

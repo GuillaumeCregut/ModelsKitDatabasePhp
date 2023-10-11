@@ -60,12 +60,12 @@
         <h2 class="ew-order-title">Ajouter une nouvelle commmande</h2>
         <form action="profil_commandes" method="post" class="new-order-form">
             <div class="form-header-inputs">
-                <label for="">Référence de la commande
-                    <input type="text" name="" id="" class="input-ref-order">
+                <label for="new-ref" class="label-add-order">Référence de la commande :
+                    <input type="text" name="newRef" id="new-ref" placeholder="Référence" class="input-ref-order input-new-order">
                 </label>
                 <div class="order-details">
-                    <label for="">Fournisseur : 
-                        <select name="" id="" class="provider-list">
+                    <label for="new-provider" class="label-add-order">Fournisseur : 
+                        <select name="newProvider" id="new-provider" class="provider-list">
                             <option value="0">--</option>
                             {if isset($providers)}
                                 {foreach from=$providers item=$provider}
@@ -74,12 +74,12 @@
                             {/if}
                         </select>
                     </label>
-                    <label for="">Date :
-                        <input type="date" name="" id="" class="order-date">
+                    <label for="new-date" class="label-add-order">Date :
+                        <input type="date" name="newDate" id="new-date" class="order-date input-new-order">
                     </label>
                 </div>
             </div>
-            <button class="order-list-btn">Ajouter un modèle à la commande</button>
+            <div class="order-list-btn new-model-add">Ajouter un modèle à la commande</div>
             <div class="model-list-added">
                 <table class="new-order-list">
                     <thead>

@@ -31,6 +31,9 @@ class Profil extends Controller
                 case 'social':
                     $className = '';
                     break;
+                case 'popup':
+                    $className ='PopupDetail';
+                    break;
                 default: 
                     $page=new Error('404');
                     $page->render();

@@ -13,10 +13,10 @@
     <section class="orders-container">
         Mes commandes
         <button class="order-list-btn" id="order-show-btn">Afficher</button>
-        <div class="list-order">
+        <div class="list-order-container">
             {if isset($orders)}
-            <table class="order-list">
-                <thead>
+            <table class="order-list-table">
+                <thead class="head-orders">
                     <tr>
                         <th class="orders-cell ref-order-cell cell-head">Référence</th>
                         <th class="orders-cell provider-cell cell-head">Fournisseur</th>
@@ -81,7 +81,7 @@
             </div>
             <button class="order-list-btn">Ajouter un modèle à la commande</button>
             <div class="model-list-added">
-                <table>
+                <table class="new-order-list">
                     <thead>
                         <tr>
                             <td class="orders-cell">Nom du modèle</td>

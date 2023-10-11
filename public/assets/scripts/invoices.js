@@ -1,5 +1,7 @@
 const detailBtns=document.querySelectorAll('.detail-btn');
+const HideOrdersBtn=document.getElementById('order-show-btn');
 let mypopup=null;
+let isOrdersShown=false;
 
 
 const openDetailPopup=(ref,key)=>{
@@ -29,4 +31,15 @@ detailBtns.forEach((btn)=>{
     btn.addEventListener('click',()=>{
         openDetailPopup(ref,key);
     })
-})
+});
+
+HideOrdersBtn.addEventListener('click',()=>{
+    const listOrders=document.querySelector('.list-order-container');
+    listOrders.classList.toggle('list-order-deployed');
+    isOrdersShown=!isOrdersShown;
+    if(isOrdersShown){
+        HideOrdersBtn.textContent='Cacher';
+    }else{
+        HideOrdersBtn.textContent='Afficher';
+    }
+});

@@ -34,6 +34,9 @@ class Profil extends Controller
                 case 'popup':
                     $className ='PopupDetail';
                     break;
+                case 'model':
+                    $className='ModelSelector';
+                    break;
                 default: 
                     $page=new Error('404');
                     $page->render();

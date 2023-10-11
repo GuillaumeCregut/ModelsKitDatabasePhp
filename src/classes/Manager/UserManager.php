@@ -195,7 +195,6 @@ class UserManager extends Manager //implements ManagerInterface
         $query="SELECT o.provider, o.owner,o.reference,DATE_FORMAT(o.dateOrder,\"%d/%m/%Y\") as dateOrder, p.name 
         FROM orders o INNER JOIN provider p ON o.provider=p.id 
         WHERE o.owner=:id";
-        var_dump($query);
         $values=[':id'=>$entity->getId()];
         try{
             return $this->db->prepare($query, null, $values);

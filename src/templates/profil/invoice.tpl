@@ -27,11 +27,21 @@
                     <tbody>
                         {foreach from=$orders item=order}
                         <tr>
-                            <td class="orders-cell ref-order-cell"></td>
-                            <td class="orders-cell provider-cell"></td>
-                            <td class="orders-cell date-cell"></td>
+                            <td class="orders-cell ref-order-cell">{$order->reference}</td>
+                            <td class="orders-cell provider-cell">{$order->name}</td>
+                            <td class="orders-cell date-cell">
+                                {if isset($order->dateOrder)}
+                                    {$order->dateOrder}
+                                {else}
+                                    --
+                                {/if}
+                            </td>
                             <td class="orders-cell order-detail-cell">
-                                <button class="order-list-btn"></button>
+                                <button 
+                                class="order-list-btn detail-btn" 
+                                data-id="{$order->reference}"
+                                data-key="{$order->owner}"
+                                >Détails</button>
                             </td>
                         </tr>
                         {foreachelse}
@@ -57,6 +67,11 @@
                     <label for="">Fournisseur : 
                         <select name="" id="" class="provider-list">
                             <option value="0">--</option>
+                            {if isset($providers)}
+                                {foreach from=$providers item=$provider}
+                                    <option value="{$provider->getId()}">{$provider->getName()}</option>
+                                {/foreach}
+                            {/if}
                         </select>
                     </label>
                     <label for="">Date :
@@ -84,14 +99,5 @@
             <button class="order-list-btn">Valider</button>
         </form>
     </section>
-</div>
-<div class="inner-popup">
-    <p>Fournisseur :</p>
-    <p>Référence : </p>
-    <p>Date : </p>
-    <p>Détails</p>
-    <ul>
-        <li> - model.name -Quantité : model.qtty - Prix unitaire : model.price euros</li>
-    </ul> 
 </div>
 {/block}

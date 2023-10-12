@@ -42,6 +42,9 @@ class App{
             case 'api':
                 $this->route='Api';
                 break;
+            case 'kit':
+                $this->route='Kit';
+                break;
             case 'login':
                 $this->route='Login';
                 break;
@@ -50,6 +53,9 @@ class App{
                 break;
             case 'parametres': //parameters
                 $this->route='parameters';
+                break;
+            case'profil':
+                $this->route='Profil';
                 break;
             case 'rgpd':
                 $this->route='rgpd';
@@ -60,9 +66,7 @@ class App{
             case 'test':
                 $this->route="Test";
                 break;
-            case'profil':
-                $this->route='Profil';
-                break;
+            
             default : //home
                $page=new Error('404');
                $page->render();

@@ -96,6 +96,7 @@
                     </tbody>
                 </table>
             </div>
+            <input type="hidden" name="test" id="test">
             <button class="order-list-btn">Valider</button>
         </form>
     </section>

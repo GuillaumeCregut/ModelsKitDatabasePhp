@@ -108,6 +108,33 @@
     width: 100%;
 }
 
+.orders-cell-qtty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.minusQtty,.addQtty{
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.minusQtty{
+    border-radius: 50%;
+    background-color: red;
+    margin-right: 10px;
+}
+
+.addQtty{
+    background-color: green;
+    margin-left: 10px;
+}
+
 @media screen and (max-width: 768px) {
     .detail-btn{
         font-size: 0.875rem;

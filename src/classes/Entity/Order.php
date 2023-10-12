@@ -13,6 +13,7 @@ class Order extends Entity
     private int $provider;
     private $dateOrder;
     private string $name;
+    private array $lines=[];
     public function __construct()
     {
         $this->manager=Factory::getManager('orderManager');
@@ -66,7 +67,27 @@ class Order extends Entity
 
     public function setDate(string $date): self
     {
-        /*todo */
+        $this->dateOrder=$date;
         return $this;
+    }
+    public function addLines(int $id, float $price,int $qty):self
+    {
+        $newLine=[
+            'price'=>$price,
+            'id'=>$id,
+            'qty'=>$qty
+        ];
+        $this->lines[]=$newLine;
+        return $this;
+    }
+
+    public function getLines(): array
+    {
+        return $this->lines;
+    }
+    
+    public function save(): bool
+    {
+        return $this->manager->save($this);
     }
 }

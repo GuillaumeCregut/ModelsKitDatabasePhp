@@ -76,6 +76,14 @@ body{
     width: 25px;
 }
 
+.list-item-selector{
+    list-style-type: none;
+}
+
+.line-item-selector{
+    font-size: 0.8rem;
+}
+
 .info-container{
     display: flex;
     flex-direction: column;
@@ -85,4 +93,14 @@ body{
 
 .info-label{
     margin: 10px 0;
+}
+
+.wrong{
+    border-color: red;
+}
+
+@media screen and (max-width: 768px) {
+    .models-lists-container{
+        flex-direction: column;
+    }
 }

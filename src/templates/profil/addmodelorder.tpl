@@ -12,14 +12,32 @@
         <div class="favorites box-models">
             <h2>Liste des modèles favoris</h2>
             <div class="favorites-container">
-                toto
+                {if isset($favorites)}
+                <ul class="list-item-selector">
+                    {foreach from=$favorites item=favorite}
+                        <li class="line-item-selector">
+                            <input 
+                            type="radio" 
+                            name="model"
+                            class="radio-model" 
+                            value="{$favorite->getId()}" 
+                            data-brand=" {$favorite->getBrand()}"
+                            data-name="{$favorite->getName()}"
+                            data-scale="{$favorite->getScale()}">
+                            {$favorite->getBrand()} - {$favorite->getBuilder()} - {$favorite->getName()} - {$favorite->getScale()}
+                        </li>
+                    {foreachelse}
+                    <p>Il n'y a pas de modèle</p>
+                    {/foreach}
+                </ul>
+                {/if}
             </div>
         </div>
         <div class="others-models box-models">
             <h2>Liste des modèles</h2>
             <form action="profil_model" method="get" class="form-search">
                 <label for="filter-text" class="filter-label">Filtre : 
-                    <input type="text" name="name" id="filter-text" class="filter-text" autocomplete="off">
+                    <input type="text" name="name" id="filter-text" class="filter-text" autocomplete="off" value="{if isset($filterName)}{$filterName}{/if}">
                 </label>
                 <button type="submit" class="search-button">
                     <svg 
@@ -37,7 +55,25 @@
                 </button>
             </form>
             <div class="others-models-container">
-                titi
+                {if isset($models)}
+                    <ul class="list-item-selector">
+                        {foreach from=$models item=model}
+                            <li class="line-item-selector">
+                                <input 
+                                class="radio-model"
+                                type="radio" 
+                                name="model" 
+                                value="{$model->getId()}"
+                                data-brand=" {$model->getBrand()}"
+                                data-name="{$model->getName()}"
+                                data-scale="{$model->getScale()}">
+                                {$model->getBrand()} - {$model->getBuilder()} - {$model->getName()} - {$model->getScale()}
+                            </li>
+                        {foreachelse}
+                        <p>Il n'y a pas de modèles</p>
+                        {/foreach}
+                    </ul>
+                {/if}
             </div>
         </div>
     </div>
@@ -48,7 +84,7 @@
         <label for="qtty" class="info-label">Quantité : 
             <input type="number" name="qtty" id="qtty" class="filter-text">
         </label>
-        <button class="search-button">
+        <button class="search-button" id="add-button">
             <svg 
             stroke="currentColor" 
             fill="currentColor" 

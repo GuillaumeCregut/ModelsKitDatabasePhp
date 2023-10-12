@@ -13,7 +13,7 @@ class OrderManager extends Manager implements ManagerInterface
     public function __construct(Database $db)
     {
         $this->db=$db;
-        $this->table='model';
+        $this->table='orders';
         $this->className='Editiel98\Entity\Order';
     }
 
@@ -63,9 +63,70 @@ class OrderManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * Save order in DB
+     *
+     * @param Order $entity
+     * @return boolean
+     */
     public function save(Entity $entity): bool
     {
-        return false;
+        
+        //On commence une opération de transaction
+        try{
+            $this->db->startTransac();
+            $query="INSERT INTO orders (owner,provider,reference,dateOrder) VALUES (:owner,:provider,:ref,:dateOrder)";
+            $values=[
+                ':owner'=>$entity->getOwner(),
+                ':provider'=>$entity->getProvider(),
+                ':ref'=>$entity->getRef(),
+                ':dateOrder'=>$entity->getDateOrder()
+            ];
+            //On ajoute la commande
+            $result=$this->db->exec($query,$values);
+            if($result!==1){
+                return false;
+            }
+            $lines=$entity->getLines();
+            foreach($lines as $line){
+                $query_add_modelOrder="INSERT INTO model_order (model_id,order_id,price,qtte) VALUES (:idmodel,:orderRef,:price,:qty)";
+                $valuesOrder=[
+                    ':idmodel'=>$line['id'],
+                    ':orderRef'=>$entity->getRef(),
+                    ':price'=>$line['price'],
+                    ':qty'=>$line['qty']
+                ];
+                try{
+                    $result=$this->db->exec($query_add_modelOrder,$valuesOrder);
+                }catch(DbException $e){
+                    $this->db->rollBack();
+                    return false;
+                }
+                //Add Every qtty to user model table
+                $quantity=$line['qty'];
+                for($i=0;$i<$quantity;$i++){
+                    $queryModelUser="INSERT INTO model_user (price,model,owner,provider,state) VALUES (:price,:model,:owner,:provider,5)";
+                    $valuesModelUser=[
+                        ':price'=>$line['price'],
+                        ':model'=>$line['id'],
+                        ':owner'=>$entity->getOwner(),
+                        ':provider'=>$entity->getProvider()
+                    ];
+                    try{
+                        $result=$this->db->exec($queryModelUser,$valuesModelUser);
+                    }catch(DbException $e){
+                        $this->db->rollBack();
+                        return false;
+                    }
+                }
+            }
+            //On fini l'opération de transaction
+            $this->db->commitTransc();
+            return true;
+        }catch(DbException $e){
+            $this->db->rollBack();
+            return false;
+        }
     }
 
     public function update(Entity $entity): bool

@@ -7,7 +7,7 @@
             <li><a href="/" class="main-font-20 {if isset($accueil)}active{/if} ">Accueil</a></li>
             <li><a href="parametres" class="main-font-20 {if isset($params)}active{/if}">Paramètres</a></li>
             <li><a href="profil" class="main-font-20 {if isset($profil)}active{/if}">Mon profil</a></li>
-            <li><a href="#" class="main-font-20 {if isset($kits)}active{/if}">Mes kits</a></li>
+            <li><a href="kit" class="main-font-20 {if isset($kits)}active{/if}">Mes kits</a></li>
             {if isset($loggedInAdmin)}
             <li><a href="admin" class="main-font-20  {if isset($admin)}active{/if}">Admin</a></li>
             {/if}

@@ -136,4 +136,18 @@ class Database{
             throw new DbException('Erreur Exec',$errCode,$errMessage);
         }
     }
+    public function startTransac(): void
+    {
+        $this->getConnect()->beginTransaction();
+    }
+
+    public function commitTransc(): void
+    {
+        $this->getConnect()->commit();
+    }
+
+    public function rollBack(): void
+    {
+        $this->getConnect()->rollBack();
+    }
 }

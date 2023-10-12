@@ -74,7 +74,7 @@ class Provider extends Controller
         if(!isset($_POST['name'])){
             return;
         }
-        $name=trim(htmlspecialchars($_POST['name']));
+        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
         if($name===''){
             return;
         }

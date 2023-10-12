@@ -20,7 +20,7 @@ class Profil extends Controller
                     $className = 'Provider';
                     break;
                 case 'commandes':
-                    $className = '';
+                    $className = 'Invoice';
                     break;
                 case 'stats':
                     $className = '';
@@ -30,6 +30,12 @@ class Profil extends Controller
                     break;
                 case 'social':
                     $className = '';
+                    break;
+                case 'popup':
+                    $className ='PopupDetail';
+                    break;
+                case 'model':
+                    $className='ModelSelector';
                     break;
                 default: 
                     $page=new Error('404');

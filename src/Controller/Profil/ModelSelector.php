@@ -25,7 +25,7 @@ class ModelSelector extends Controller
         $filter=null;
         if(!empty($_GET)){
             if(isset($_GET['name'])){
-                $filter=trim(htmlspecialchars($_GET['name']));
+                $filter=trim(htmlspecialchars($_GET['name'], ENT_NOQUOTES, 'UTF-8'));
             }
         }
         $this->getModels($filter);

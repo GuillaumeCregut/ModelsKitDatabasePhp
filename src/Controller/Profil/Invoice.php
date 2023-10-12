@@ -1,7 +1,9 @@
 <?php
 namespace App\Controller\Profil;
 
+use Editiel98\Entity\Order;
 use Editiel98\Entity\User;
+use Editiel98\Flash;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
 use Editiel98\Session;
@@ -18,6 +20,7 @@ class Invoice extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
+        $this->getUser();
         if(!empty($_POST)){
             $this->usePost();
         }
@@ -27,7 +30,6 @@ class Invoice extends Controller
             $flashes=$this->flash->getFlash();
             $this->smarty->assign('flash',$flashes);
         }
-        $this->getUser();
         //todo 
         $this->displayPage();
 
@@ -44,7 +46,25 @@ class Invoice extends Controller
     }
 
     private function usePost(){
-        var_dump($_POST);
+        if(isset($_POST['newRef'])){
+            $newRef=trim(htmlspecialchars($_POST['newRef'], ENT_NOQUOTES, 'UTF-8'));
+        }else return;
+        if(isset($_POST['newDate'])){
+            $newDate=trim(htmlspecialchars($_POST['newDate'], ENT_NOQUOTES, 'UTF-8'));
+        }else return;
+        if(isset($_POST['newProvider'])){
+            $newProvider=intval($_POST['newProvider']);
+        }else return;
+        if(isset($_POST['lines'])){
+           $lines=$_POST['lines'];
+        } else return;
+        $error=!is_array($lines) || $newRef==='' || $newDate==='' ||  $newProvider===0;
+        if($error){
+            return;
+        }
+        $this->createOrder($newRef,$newDate,$newProvider,$lines);
+       
+        
     }
 
     private function displayPage()
@@ -55,5 +75,30 @@ class Invoice extends Controller
         $this->smarty->assign('profil','profil');
         $this->smarty->assign('bills_menu','profil');
         $this->smarty->display('profil/invoice.tpl');
+    }
+
+    private function createOrder(string $RefOrder, string $dateOrder, int $provider,array $linesOrder)
+    {
+        $order=new Order();
+        $order->setOwner($this->user->getId());
+        $order->setRef($RefOrder);
+        $order->setDate($dateOrder);
+        $order->setProvider($provider);
+        foreach($linesOrder as $info){
+            $newLine=explode(';',$info);
+            //check if values are OK
+            $idModel=intval($newLine[0]);
+            $price=floatval($newLine[1]);
+            $qty=intval($newLine[2]);
+            if($idModel===0 || $price===0 || $qty===0){
+                continue;
+            }
+            $order->addLines($idModel,$price,$qty);
+        }
+        $result=$order->save();
+        if(!$result){
+            $flash=new Flash();
+            $flash->setFlash("Une erreur c'est produite à l'enregistrement",'error');
+        }
     }
 }

@@ -58,7 +58,7 @@
     </section>
     <section class="new-order-container">
         <h2 class="ew-order-title">Ajouter une nouvelle commmande</h2>
-        <form action="profil_commandes" method="post" class="new-order-form">
+        <form action="profil_commandes" method="post" class="new-order-form" id="new-order-form">
             <div class="form-header-inputs">
                 <label for="new-ref" class="label-add-order">Référence de la commande :
                     <input type="text" name="newRef" id="new-ref" placeholder="Référence" class="input-ref-order input-new-order">
@@ -96,7 +96,6 @@
                     </tbody>
                 </table>
             </div>
-            <input type="hidden" name="test" id="test">
             <button class="order-list-btn">Valider</button>
         </form>
     </section>

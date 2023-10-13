@@ -1,7 +1,7 @@
 <?php
 namespace Editiel98\Manager;
 
-
+use Editiel98\App;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
 use Editiel98\Entity\Entity;
@@ -193,6 +193,52 @@ class ModelManager extends Manager implements ManagerInterface
         }
         $result=false;
         return $result;
+    }
+
+    public function changeUserModelState(int $id, int $state, int $user) :bool
+    {
+        //Check if model is already user favorite
+        if($state==App::STATE_LIKED){
+            $querySearch="SELECT model FROM model_user WHERE id=:id";
+            $value=[':id'=>$id];
+            try{
+                $modelResult=$this->db->prepare($querySearch,null,$value,true);
+                if(!$modelResult){
+                    return false;
+                }
+                $idModel=$modelResult->model;
+                $queryIsFavorite="SELECT count(*) as nbre FROM model_user WHERE model=:model AND owner=:owner AND state=:state";
+                $valueFavorite=[
+                    ':model'=>$idModel,
+                    ':owner'=>$user,
+                    ':state'=>App::STATE_LIKED
+                ];
+                try{
+                    $isFavorite=$this->db->prepare($queryIsFavorite,null,$valueFavorite);
+                    if($isFavorite[0]->nbre===1){
+                        return false;
+                    }
+                }catch(DbException $e){
+                    return false;
+                }
+            }catch(DbException $e)
+            {
+                return false;
+            }
+        }
+        
+        $query="UPDATE model_user SET state=:newState WHERE id=:id";
+        $values=[
+            ':id'=>$id,
+            'newState'=>$state
+        ];
+        try{
+            $result=$this->db->exec($query,$values);
+            return $result;
+        }catch (DbException $e){
+            return false;
+        }
+        return true;
     }
 
     /**

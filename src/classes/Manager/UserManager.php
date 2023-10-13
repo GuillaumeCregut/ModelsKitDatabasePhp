@@ -1,6 +1,7 @@
 <?php
 namespace Editiel98\Manager;
 
+use Editiel98\App;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
 use Editiel98\Entity\User;
@@ -141,9 +142,27 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    public function getMyModels(User $user): array
+    {
+        $userId=$user->getId();
+        $query="SELECT id, idModel,state, pictures,price, stateName, modelName, reference, boxPicture,builderName, scaleName, brandName, providerName 
+        FROM mymodels WHERE owner=:id";
+        $values=[':id'=>$userId];
+        try{
+            $result=$this->db->prepare($query,null,$values);
+            if($result){
+                return $result;
+            }else return [];
+        }
+        catch(DbException $e){
+           throw new Exception($e->getdbMessage());
+        }
+
+    }
+
     public function addFavorite(User $user, int $idModel) : bool
     {
-        $query='INSERT model_user (state,owner,model) VALUES (4,:user,:model)';
+        $query='INSERT model_user (state,owner,model) VALUES ('. App::STATE_LIKED . ',:user,:model)';
         $values=[':user'=>$user->getId(), ':model'=>$idModel];
         $result=$this->db->exec($query,$values);
         return $result;
@@ -151,7 +170,7 @@ class UserManager extends Manager //implements ManagerInterface
 
     public function removeFavorite(User $user, int $idModel): bool
     {
-        $query='DELETE FROM model_user WHERE state=4 AND owner=:user AND model=:model';
+        $query='DELETE FROM model_user WHERE state=' . App::STATE_LIKED .' AND owner=:user AND model=:model';
         $values=[':user'=>$user->getId(), ':model'=>$idModel];
         $result=$this->db->exec($query,$values);
         return $result;

@@ -8,12 +8,19 @@ use Editiel98\Logger\WarnLogger;
 use Exception;
 
 class App{
-
+    //user states
     const ADMIN=5;
     const USER=1;
     const MODERATE=2;
-    const VERSION='1.3a';
+    //default admin ID
     const DEFAULT_ADMIN=5;
+    const VERSION='1.3a';
+    //Model States
+    const STATE_STOCK=1;
+    const STATE_WIP=2;
+    const STATE_FINISHED=3;
+    const STATE_LIKED=4;
+    const STATE_BUY=5;
 
     private string $route;
     private array $params;

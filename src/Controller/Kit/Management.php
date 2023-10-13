@@ -25,6 +25,11 @@ class Management extends Controller
 
     private function displayPage()
     {
+        $this->smarty->assign('likeModels',$this->liked);
+        $this->smarty->assign('buyModels',$this->buy);
+        $this->smarty->assign('stockedModels',$this->stock);
+        $this->smarty->assign('wipModels',$this->wip);
+        $this->smarty->assign('finishedModels',$this->finished);
         $this->smarty->assign('zoneLike', App::STATE_LIKED);
         $this->smarty->assign('zoneBuy',App::STATE_BUY);
         $this->smarty->assign('zoneStock',App::STATE_STOCK);

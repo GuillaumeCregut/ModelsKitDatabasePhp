@@ -25,6 +25,9 @@ class Api extends Controller
                 case 'addCart':
                         $className='Params\\AddCart';
                         break;
+                case 'updateState':
+                        $className='Kit\\UpdateState';
+                        break;
                 default :
                     header("HTTP/1.1 404 Not Found");
                     die();

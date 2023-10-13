@@ -22,6 +22,7 @@ class User extends Entity
     private string $password='';
     private array $providers;
     private array $orders;
+    private array $models=[];
 
     public function __construct()
     {
@@ -236,5 +237,14 @@ class User extends Entity
             $this->orders=[];
         }
         return $this->orders;
+    }
+
+    public function getModels(): array
+    {
+        if(empty($this->models)){
+            $models=$this->manager->getMyModels($this);
+            $this->models=$models;
+        }
+        return $this->models;
     }
 }

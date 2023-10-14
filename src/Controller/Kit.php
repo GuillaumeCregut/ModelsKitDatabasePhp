@@ -22,7 +22,7 @@ class Kit extends Controller{
                     $className='InStock';
                     break;
                 case 'wip':
-                    $className='';
+                    $className='WipKit';
                     break;
                 case 'choose':
                     $className='';

@@ -5,7 +5,7 @@ use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
 
-class InStock extends Controller
+class WipKit extends Controller
 {
     private string $search='';
     public function render()
@@ -28,7 +28,7 @@ class InStock extends Controller
         if(!empty($_POST)){
             $this->usePost();
         }
-        $kits=$user->getStockKit($this->search);
+        $kits=$user->getWipKit($this->search);
         $kitCount=count($kits);
         $page='kit_stock';
         $this->displayPage($kitCount, $page, $kits, $this->search);  //search : search from $_POST
@@ -37,9 +37,9 @@ class InStock extends Controller
     private function displayPage(int $count, string $page, array $list, ?string $search='')
     {
         $this->smarty->assign('dataList',$list);
-        $this->smarty->assign('instock_menu', true);
-        $this->smarty->assign('title','Kit en stock');
-        $this->smarty->assign('titleDisplay','en stock');
+        $this->smarty->assign('wip_menu', true);
+        $this->smarty->assign('title','Kit en cours');
+        $this->smarty->assign('titleDisplay','en cours');
         $this->smarty->assign('actionPage',$page);
         $this->smarty->assign('countKit',$count);
         $this->smarty->assign('searchValue',$search);

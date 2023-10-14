@@ -242,7 +242,6 @@ class ModelManager extends Manager implements ManagerInterface
         }catch (DbException $e){
             return false;
         }
-        return true;
     }
 
     /**

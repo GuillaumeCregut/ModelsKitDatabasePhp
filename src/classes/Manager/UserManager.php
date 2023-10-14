@@ -222,4 +222,53 @@ class UserManager extends Manager //implements ManagerInterface
             throw new Exception($e->getdbMessage());
          }
     }
+
+    public function deleteModelFromStock(int $id, int $user): bool
+    {
+        //Vérifier si il y a des photos dans le kit, si oui, les supprimer, et supprimer le répertoire qui va bien
+        $queryKit="SELECT owner, id,state,pictures FROM model_user WHERE id=:id";
+        $valuesKit=[':id'=>$id];
+        try{
+            $theKit= $this->db->prepare($queryKit, null, $valuesKit,true);
+            if($theKit){
+                var_dump($theKit);
+                if($theKit->owner!==$user) return false;
+                if($theKit->pictures){
+                    //Delete pictures 
+                }
+                //delete from db
+                $query="DELETE FROM model_user WHERE id=:id";
+                try{
+                    return $this->db->exec($query,$valuesKit);
+                }catch(DbException $e){
+                    return false;
+                }
+            }
+            else return false; //The kit does not exists, so no need to do more
+        }
+        catch(DbException $e){
+            echo "Erreur";
+            return false;
+         }
+        return false;
+    }
+
+    public function getKitByState(int $state, int $user, ?string $filter=''):array 
+    {
+        $query="SELECT id, pictures, modelName, reference, boxPicture,builderName, scaleName, brandName 
+        FROM mymodels WHERE state=:state AND owner=:owner";
+        $values=[
+            ':state'=>$state,
+            ':owner'=>$user
+        ];
+        if($filter!==''){
+            $query.=' AND modelName like :name';
+            $values[':name']="%{$filter}%";
+        }
+        try{
+            return $this->db->prepare($query, null, $values);
+        }catch(DbException $e){
+            return [];
+        }
+    }
 }

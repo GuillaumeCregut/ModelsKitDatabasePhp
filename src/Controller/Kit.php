@@ -25,7 +25,7 @@ class Kit extends Controller{
                     $className='WipKit';
                     break;
                 case 'choose':
-                    $className='';
+                    $className='ChooseKit';
                     break;
                 case 'finis':
                     $className='';

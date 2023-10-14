@@ -37,6 +37,7 @@ class OrderedKit extends Controller
     private function displayPage(int $count, string $page, array $list, ?string $search='')
     {
         $this->smarty->assign('dataList',$list);
+        $this->smarty->assign('kits', true);
         $this->smarty->assign('commandes_menu', true);
         $this->smarty->assign('title','Kit commandés');
         $this->smarty->assign('titleDisplay','commandés');

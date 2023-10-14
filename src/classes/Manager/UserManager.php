@@ -231,7 +231,6 @@ class UserManager extends Manager //implements ManagerInterface
         try{
             $theKit= $this->db->prepare($queryKit, null, $valuesKit,true);
             if($theKit){
-                var_dump($theKit);
                 if($theKit->owner!==$user) return false;
                 if($theKit->pictures){
                     //Delete pictures 

@@ -68,6 +68,19 @@ h2{
     z-index: 2;
 }
 
+.name-details{
+    cursor: zoom-in;
+    color : black;
+}
+
+.name-details:hover{
+    text-decoration: underline;
+}
+
+.box-picture{
+    width: 230px;
+}
+
 .delete-btn{
     border: 0;
     outline: 0;
@@ -107,5 +120,9 @@ h2{
     .table-cell{
         padding: 8px;
         font-size: 0.7rem;
+    }
+
+    .box-picture{
+        width: 100px;
     }
 }

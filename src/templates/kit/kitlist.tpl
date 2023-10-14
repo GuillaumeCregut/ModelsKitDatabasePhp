@@ -33,7 +33,7 @@
             </button>
        </form>
         <div class="tableContainer">
-     {*    {if isset($dataList)} *}
+            {if isset($dataList)} 
             <table class="list-table">
                 <thead>
                     <tr>
@@ -45,13 +45,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {foreach from=$dataList item=data}
                     <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
+                        <td class="table-cell"><span ><a href="kit_details?id={$data->id}" class="name-details">{$data->modelName} - {$data->builderName}</a></td>
+                        <td class="table-cell">{$data->brandName} - {$data->scaleName}</td>
+                        <td class="table-cell">{$data->reference}</td>
                         <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
+                            <img src="{$data->boxPicture}" alt="{$data->modelName}" class="box-picture"> 
+                        </td>
+                        <td class="table-cell">
+                            <button class="delete-btn" data-id="{$data->id}">
                                 <svg 
                                 stroke="currentColor" 
                                 fill="currentColor" 
@@ -66,162 +69,21 @@
                             </button>
                         </td>
                     </tr>
-                    {* temporaire*}
+                    {foreachelse}
                     <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
-                                <svg 
-                                stroke="currentColor" 
-                                fill="currentColor" 
-                                stroke-width="0" 
-                                viewBox="0 0 448 512" 
-                                class="icon-delete-kit" 
-                                height="1em" 
-                                width="1em" 
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </button>
-                        </td>
+                        <td colspan="5">Il n'y a aucun résultat</td>
                     </tr>
-                    <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
-                                <svg 
-                                stroke="currentColor" 
-                                fill="currentColor" 
-                                stroke-width="0" 
-                                viewBox="0 0 448 512" 
-                                class="icon-delete-kit" 
-                                height="1em" 
-                                width="1em" 
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
-                                <svg 
-                                stroke="currentColor" 
-                                fill="currentColor" 
-                                stroke-width="0" 
-                                viewBox="0 0 448 512" 
-                                class="icon-delete-kit" 
-                                height="1em" 
-                                width="1em" 
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
-                                <svg 
-                                stroke="currentColor" 
-                                fill="currentColor" 
-                                stroke-width="0" 
-                                viewBox="0 0 448 512" 
-                                class="icon-delete-kit" 
-                                height="1em" 
-                                width="1em" 
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
-                                <svg 
-                                stroke="currentColor" 
-                                fill="currentColor" 
-                                stroke-width="0" 
-                                viewBox="0 0 448 512" 
-                                class="icon-delete-kit" 
-                                height="1em" 
-                                width="1em" 
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
-                                <svg 
-                                stroke="currentColor" 
-                                fill="currentColor" 
-                                stroke-width="0" 
-                                viewBox="0 0 448 512" 
-                                class="icon-delete-kit" 
-                                height="1em" 
-                                width="1em" 
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell"></td>
-                        <td class="table-cell">
-                            <button class="delete-btn" data-id="1">
-                                <svg 
-                                stroke="currentColor" 
-                                fill="currentColor" 
-                                stroke-width="0" 
-                                viewBox="0 0 448 512" 
-                                class="icon-delete-kit" 
-                                height="1em" 
-                                width="1em" 
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    {* fin temporaire *}
+                    {/foreach}
                 </tbody>
             </table>
             <form action="{$actionPage}" method="post" id="form-delete">
                 <input type="hidden" name="id" id="id-delete">
                 <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="search" value="{$searchValue}">
             </form>
-     {*  {/if} *}
+        {else}
+            <p>Il n'y a aucun résultat</p>
+        {/if} 
        </div>
     </div>
 {/block}

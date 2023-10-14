@@ -16,7 +16,7 @@ class Kit extends Controller{
                     $className='Management';
                     break;
                 case 'commandes':
-                    $className='';
+                    $className='OrderedKit';
                     break;
                 case 'stock':
                     $className='';

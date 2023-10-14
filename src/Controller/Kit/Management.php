@@ -13,8 +13,15 @@ class Management extends Controller
     private array $stock=[];
     private array $wip=[];
     private array $finished=[];
+
     public function render()
     {
+        if(!$this->isConnected){
+        //Render antoher page and die
+            $this->smarty->assign('profil','profil');
+            $this->smarty->display('profil/notconnected.tpl');
+            die();
+        }
         $userId=$this->session->getKey(Session::SESSION_USER_ID);
         $user=new User();
         $user->setId($userId);

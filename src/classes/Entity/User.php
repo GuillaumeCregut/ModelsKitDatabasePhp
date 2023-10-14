@@ -1,6 +1,7 @@
 <?php
 namespace Editiel98\Entity;
 
+use Editiel98\App;
 use Editiel98\Factory;
 use Editiel98\Manager\UserManager;
 use Exception;
@@ -246,5 +247,25 @@ class User extends Entity
             $this->models=$models;
         }
         return $this->models;
+    }
+
+    public function getOrderedKit(?string $filter=''): array
+    {
+        return $this->manager->getKitByState(App::STATE_BUY,$this->id,$filter);
+    }
+
+    public function getStockKit(?string $filter=''): array
+    {
+        return $this->manager->getKitByState(App::STATE_STOCK,$this->id,$filter);
+    }
+
+    public function getWipKit(?string $filter=''): array
+    {
+        return $this->manager->getKitByState(App::STATE_WIP,$this->id,$filter);
+    }
+
+    public function getFinishedKit(?string $filter=''): array
+    {
+        return $this->manager->getKitByState(App::STATE_FINISHED,$this->id,$filter);
     }
 }

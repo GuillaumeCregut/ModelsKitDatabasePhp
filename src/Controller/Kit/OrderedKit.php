@@ -4,7 +4,6 @@ namespace App\Controller\Kit;
 use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
-use Editiel98\Session;
 
 class OrderedKit extends Controller
 {
@@ -32,7 +31,6 @@ class OrderedKit extends Controller
         $kits=$user->getOrderedKit($this->search);
         $kitCount=count($kits);
         $page='kit_commandes';
-        $listKit=[];
         $this->displayPage($kitCount, $page, $kits, $this->search);  //search : search from $_POST
     }
 

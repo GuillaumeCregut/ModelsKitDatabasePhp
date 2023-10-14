@@ -197,32 +197,36 @@ class ModelManager extends Manager implements ManagerInterface
 
     public function changeUserModelState(int $id, int $state, int $user) :bool
     {
+        //get model
+        $querySearch="SELECT model,state FROM model_user WHERE id=:id";
+        $value=[':id'=>$id];
+        try{
+            $modelResult=$this->db->prepare($querySearch,null,$value,true);
+            if(!$modelResult){
+                return false;
+            }
+            if($modelResult->state===App::STATE_FINISHED){
+                return false;
+            }
+        }catch(DbException $e){
+            return false;
+        }
+
         //Check if model is already user favorite
         if($state==App::STATE_LIKED){
-            $querySearch="SELECT model FROM model_user WHERE id=:id";
-            $value=[':id'=>$id];
+            $idModel=$modelResult->model;
+            $queryIsFavorite="SELECT count(*) as nbre FROM model_user WHERE model=:model AND owner=:owner AND state=:state";
+            $valueFavorite=[
+                ':model'=>$idModel,
+                ':owner'=>$user,
+                ':state'=>App::STATE_LIKED
+            ];
             try{
-                $modelResult=$this->db->prepare($querySearch,null,$value,true);
-                if(!$modelResult){
+                $isFavorite=$this->db->prepare($queryIsFavorite,null,$valueFavorite);
+                if($isFavorite[0]->nbre===1){
                     return false;
                 }
-                $idModel=$modelResult->model;
-                $queryIsFavorite="SELECT count(*) as nbre FROM model_user WHERE model=:model AND owner=:owner AND state=:state";
-                $valueFavorite=[
-                    ':model'=>$idModel,
-                    ':owner'=>$user,
-                    ':state'=>App::STATE_LIKED
-                ];
-                try{
-                    $isFavorite=$this->db->prepare($queryIsFavorite,null,$valueFavorite);
-                    if($isFavorite[0]->nbre===1){
-                        return false;
-                    }
-                }catch(DbException $e){
-                    return false;
-                }
-            }catch(DbException $e)
-            {
+            }catch(DbException $e){
                 return false;
             }
         }
@@ -233,7 +237,7 @@ class ModelManager extends Manager implements ManagerInterface
             'newState'=>$state
         ];
         try{
-            $result=$this->db->exec($query,$values);
+            $result=$this->db->exec($query,$values); 
             return $result;
         }catch (DbException $e){
             return false;

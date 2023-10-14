@@ -270,4 +270,20 @@ class UserManager extends Manager //implements ManagerInterface
             return [];
         }
     }
+
+    public function getRandomKit(int $user)
+    {
+        $query="SELECT id,modelName,reference,boxPicture,builderName,scaleName,brandName 
+        FROM mymodels WHERE owner=:owner AND state=:state ORDER BY RAND() LIMIT 1";
+        $values=[
+            ':owner'=>$user,
+            ':state'=>App::STATE_STOCK
+        ];
+        try{
+           return $this->db->prepare($query, null, $values,true);
+        }
+        catch(DbException $e){
+            return null;
+        }
+    }
 }

@@ -37,6 +37,7 @@ class InStock extends Controller
     private function displayPage(int $count, string $page, array $list, ?string $search='')
     {
         $this->smarty->assign('dataList',$list);
+        $this->smarty->assign('kits', true);
         $this->smarty->assign('instock_menu', true);
         $this->smarty->assign('title','Kit en stock');
         $this->smarty->assign('titleDisplay','en stock');

@@ -43,6 +43,7 @@ class Management extends Controller
         $this->smarty->assign('zoneWip',App::STATE_WIP);
         $this->smarty->assign('zoneFinished',App::STATE_FINISHED);
         $this->smarty->assign('stock_menu',true);
+        $this->smarty->assign('kits', true);
         $this->smarty->display('kit/management.tpl');
     }
 

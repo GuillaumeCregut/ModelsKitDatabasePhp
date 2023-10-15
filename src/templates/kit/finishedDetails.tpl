@@ -82,20 +82,26 @@
         <section>
             <h3 class="kit-detail-message">Messages</h3>
             <div class="kit-details-messages-container">
+                {foreach from=$messages item=message}
                 <div class="friend-build-message-container">
                     <div class="friend-identity-message-container">
                         <div class="avatar">
-                            MM
+                            {if $message->avatar=='' || $message->avatar==null}
+                                {$message->firstname|truncate:1:""|upper}{$message->lastname|truncate:1:""|upper}
+                          {*  {else}
+                                <img src="{$message->avatar}" alt="{$message->firstname}" class="avatar-img"> *}
+                            {/if}
                         </div>
                         <div class="right-identity-message">
-                            <p>Nom Prenom</p>
-                            <p>Le : date</p>
+                            <p>{$message->firstname} {$message->lastname}</p>
+                            <p>Le : {$message->dateMessage}</p>
                         </div>
                     </div>
                     <article>
-                        Message
+                        {$message->message}
                     </article>
                 </div>
+                {/foreach}
             </div>
         </section>
         {/if}

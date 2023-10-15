@@ -244,6 +244,19 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    public function getOneFullById(int $id, int $user){
+        $query='SELECT * FROM model_fullwithCountry WHERE id=:id AND owner=:owner';
+        $values=[
+            ':id'=>$id,
+            ':owner'=>$user
+        ];
+        try{
+            return $this->db->prepare($query,null,$values,true);
+        }catch(DbException $e){
+            return null;
+        }
+    }
+
     /**
      * Exec the query
      *

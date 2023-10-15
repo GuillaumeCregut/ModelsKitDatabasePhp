@@ -49,8 +49,11 @@ class FinishedDetails extends Controller
         //get messages
         $messageManager=new MessageManager($this->dbConnection);
         $messages=$messageManager->getMessagesForModel($id);
-        $this->messages=$messages;
-        var_dump($model);
+        if($messages){
+            if(!empty($messages)){
+                $this->formatAvatar($messages);
+            }
+        }
         $this->displayPage();
     }
 
@@ -62,5 +65,17 @@ class FinishedDetails extends Controller
             $this->smarty->assign('messages',$this->messages);
         }
         $this->smarty->display('kit/finishedDetails.tpl');
+    }
+
+    private function formatAvatar(array $messages)
+    {
+        foreach($messages as $message){
+            $id=$message->userId;
+            if( $message->avatar){
+                $baseUrl='assets/uploads/users/'. $id . '/' . $message->avatar;
+                $message->avatar=$baseUrl;
+            }
+            $this->messages[]=$message;
+        }
     }
 }

@@ -29,15 +29,17 @@
             </div>
         </div>
         <div class="picturebox">
+            {if isset($pictures)}
             <ul class="picture-container">
+                {foreach from=$pictures item=picture}
                 <li>
                     <div>
-                        <div class="image-container">
-                            <img src="" alt="" class="img-model">
+                        <div class="image-container" data-file="{$picture}">
+                            <img src="{$picture}" alt="photo" class="img-model">
                         </div>
-                        <div class="zoom-image"></div>
+                        
                     </div>
-                    <button class="btn-delete-picture">
+                    <button class="btn-delete-picture" data-file="{$picture}">
                         <svg 
                         stroke="currentColor" 
                         fill="currentColor" 
@@ -51,7 +53,11 @@
                         </svg>
                     </button>
                 </li>
+                {/foreach}
             </ul>
+            {else}
+            <p>Il n'y a pas de photos</p>
+            {/if}
         </div>
         <div class="file-uploader">
             <section class="file-upload-container">
@@ -88,8 +94,8 @@
                         <div class="avatar">
                             {if $message->avatar=='' || $message->avatar==null}
                                 {$message->firstname|truncate:1:""|upper}{$message->lastname|truncate:1:""|upper}
-                          {*  {else}
-                                <img src="{$message->avatar}" alt="{$message->firstname}" class="avatar-img"> *}
+                            {else}
+                                <img src="{$message->avatar}" alt="{$message->firstname}" class="avatar-img"> 
                             {/if}
                         </div>
                         <div class="right-identity-message">
@@ -105,5 +111,11 @@
             </div>
         </section>
         {/if}
+    </div>
+    <div class="zoom-image hidden" id="zoom-container">
+        <div class="zoom-in-div">
+             <img src="" alt="photo" id="zoom-picture">
+             <button class="close-zoom" id="close-zoom">X</button>
+        </div>
     </div>
 {/block}

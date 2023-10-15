@@ -2,6 +2,11 @@
     margin-bottom: 50px;
 }
 
+.blured{
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
 .details-zone{
     margin-top: 10px;
     display: flex;
@@ -24,9 +29,55 @@
     margin: 0 auto;
 }
 
+.image-container{
+    cursor: zoom-in;
+}
+
 .img-model{
     width: 200px;
     height: auto;
+}
+
+.btn-delete-picture{
+    border: 0;
+    outline: 0;
+    margin-top: 10px;
+}
+
+.trash-delete-icon{
+    width: 20px;
+    height: 20px;
+}
+
+.trash-delete-icon:hover{
+    color: red;
+}
+
+.zoom-image{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.hidden{
+    display: none;
+}
+
+.zoom-in-div{
+    position: relative;
+}
+
+#zoom-picture{
+    max-width: 90vw;
+}
+
+.close-zoom{
+    position: absolute;
+    top: 0;
+    right: -15px;
+
 }
 
 .file-uploader{
@@ -174,4 +225,10 @@
 .avatar-img{
     width: 40px;
     height: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .friend-build-message-container{
+        width: 80vw;
+    }
 }

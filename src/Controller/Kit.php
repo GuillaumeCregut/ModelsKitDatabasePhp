@@ -31,7 +31,7 @@ class Kit extends Controller{
                     $className="DetailsKit";
                     break;
                 case 'finis':
-                    $className='';
+                    $className='FinishedKit';
                     break;
                 default: 
                     $page=new Error('404');

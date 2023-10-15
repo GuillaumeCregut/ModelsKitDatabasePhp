@@ -11,6 +11,7 @@ class FinishedDetails extends Controller
 {
     private object $model;
     private array $messages=[];
+    private array $files=[];
     public function render()
     {
         if (!$this->isConnected || !isset($_GET['id'])) {
@@ -44,7 +45,13 @@ class FinishedDetails extends Controller
         $dirPictures=$model->pictures;
         if($dirPictures){
             //Get pictures if there are
-
+            $baseDir=dirname(dirname(dirname(__DIR__))) . '/public/';
+            $scan=scandir($baseDir . $dirPictures);
+            foreach($scan as $file){
+                if($file!=='.' && $file!=='..'){
+                    $this->files[]=$dirPictures .'/' . $file;
+                }
+            }
         }
         //get messages
         $messageManager=new MessageManager($this->dbConnection);
@@ -63,6 +70,9 @@ class FinishedDetails extends Controller
         $this->smarty->assign('model',$this->model);
         if(!empty($this->messages)){
             $this->smarty->assign('messages',$this->messages);
+        }
+        if(!empty($this->files)){
+            $this->smarty->assign('pictures',$this->files);
         }
         $this->smarty->display('kit/finishedDetails.tpl');
     }

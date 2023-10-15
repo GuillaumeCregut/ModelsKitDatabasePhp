@@ -27,6 +27,9 @@ class Kit extends Controller{
                 case 'choose':
                     $className='ChooseKit';
                     break;
+                case 'details':
+                    $className="DetailsKit";
+                    break;
                 case 'finis':
                     $className='';
                     break;

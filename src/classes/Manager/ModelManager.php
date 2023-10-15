@@ -257,6 +257,42 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    public function getFinishedModels(int $user): array
+    {
+        //Get array of messages by kit
+        $messageError=false;
+        $queryMessage="SELECT count(*) as numberMessages, mm.id, mm.fk_model, mu.owner 
+        FROM model_message mm 
+        INNER JOIN model_user mu ON mm.fk_model=mu.id WHERE mu.owner=:owner GROUP BY mm.fk_model";
+        $value=[':owner'=>$user];
+        try{
+            $messages=$this->db->prepare($queryMessage,null,$value);
+        }
+        catch(DbException $e){
+            $messageError=true;
+        }
+        $query="SELECT * FROM mymodels WHERE owner=:owner AND state=:state";
+        $value[':state']=App::STATE_FINISHED;
+        try{
+            $models=$this->db->prepare($query,null,$value);
+        }
+        catch(DbException $e){
+            return [];
+        }
+        //Mix models and messages
+        if(!$messageError){
+            foreach($models as $model){
+                $id=$model->id;
+                foreach($messages as $message){
+                    if ($message->fk_model===$id){
+                        $model->nbMessages=$message->numberMessages;
+                    }
+                }
+            }
+        }
+        return $models;
+    }
+
     /**
      * Exec the query
      *

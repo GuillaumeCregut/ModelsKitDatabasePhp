@@ -31,6 +31,9 @@ class Kit extends Controller{
                     $className="DetailsKit";
                     break;
                 case 'finis':
+                    $className='FinishedKit';
+                    break;
+                case 'finishedDetails':
                     $className='';
                     break;
                 default: 

@@ -75,9 +75,17 @@
 
 .close-zoom{
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     top: 0;
-    right: -15px;
-
+    right: -25px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: red;
+    font-weight: bold;
+    color : white;
 }
 
 .file-uploader{

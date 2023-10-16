@@ -28,6 +28,9 @@ class Api extends Controller
                 case 'updateState':
                         $className='Kit\\UpdateState';
                         break;
+                case 'addPictures':
+                        $className='Kit\\AddPictures';
+                        break;
                 default :
                     header("HTTP/1.1 404 Not Found");
                     die();

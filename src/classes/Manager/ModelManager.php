@@ -293,6 +293,25 @@ class ModelManager extends Manager implements ManagerInterface
         return $models;
     }
 
+    public function updatelinkModelUser(int $idModel, int $idUser,mixed $link): bool
+    {
+        $query="UPDATE model_user SET pictures=:link WHERE id=:id AND owner=:owner";
+        $values=[
+            ':id'=>$idModel,
+            ':owner'=>$idUser,
+            ':link'=>$link
+        ];
+        try{
+            $result=$this->db->exec($query,$values);
+            if(!$result){
+                return false;
+            }
+            return true;
+        }catch(DbException $e){
+            return false;
+        }
+    }
+
     /**
      * Exec the query
      *

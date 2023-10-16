@@ -30,6 +30,11 @@
         </div>
         <div class="picturebox">
             {if isset($pictures)}
+            <form action="kit_finishedDetails?id={$model->id}" method="post" id="delete-picture-form">
+                <input type="hidden" name="action" value="deletePicture">
+                <input type="hidden" name="id" value="{$model->id}">
+                <input type="hidden" name="file" value="" id="filename-delete">
+            </form>
             <ul class="picture-container">
                 {foreach from=$pictures item=picture}
                 <li>

@@ -172,6 +172,71 @@
     flex-wrap: wrap;
     margin-top: 10px;
     overflow-y: scroll;
+    gap : 10px;
+}
+
+.image-preview{
+    border-radius: 6px;
+    width: auto;
+    height: 120px;
+    object-fit: cover;
+}
+
+.file-meta-data{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    background-color: rgba(5,5,5,0.55);
+}
+.classic-btn{
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid var(--back-menu-color);
+    cursor: pointer;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 0.7rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 6px;
+    color: var(--back-menu-color);
+    overflow: hidden;
+    font-family: "Open sans", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.upload-icon-launch, .trash-icon{
+    width: 20px;
+    height: 20px;
+}
+
+.deleteBtnUpload{
+    border : 0;
+    outline: 0;
+    margin: 10px 20px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.deleteBtnUpload:hover{
+    color: red;
+}
+
+
+.hidden-btn{
+    display: none;
 }
 
 .kit-details-messages-container{

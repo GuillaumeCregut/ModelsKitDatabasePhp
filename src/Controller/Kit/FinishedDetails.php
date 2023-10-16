@@ -81,7 +81,10 @@ class FinishedDetails extends Controller
         }
         if(!empty($this->files)){
             $this->smarty->assign('pictures',$this->files);
+            $this->smarty->assign('countPicture',count($this->files));
         }
+        else
+            $this->smarty->assign('countPicture',0);
         $this->smarty->display('kit/finishedDetails.tpl');
     }
 

@@ -1,0 +1,307 @@
+.main-kit-container{
+    margin-bottom: 50px;
+}
+
+.blured{
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
+.details-zone{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.detail-img{
+    width: 250px;
+    height: auto;
+}
+
+.picture-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    padding: 10px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.image-container{
+    cursor: zoom-in;
+}
+
+.img-model{
+    width: 200px;
+    height: auto;
+}
+
+.btn-delete-picture{
+    border: 0;
+    outline: 0;
+    margin-top: 10px;
+}
+
+.trash-delete-icon{
+    width: 20px;
+    height: 20px;
+}
+
+.trash-delete-icon:hover{
+    color: red;
+}
+
+.zoom-image{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.hidden{
+    display: none;
+}
+
+.zoom-in-div{
+    position: relative;
+}
+
+#zoom-picture{
+    max-width: 90vw;
+}
+
+.close-zoom{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: -25px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: red;
+    font-weight: bold;
+    color : white;
+}
+
+.file-uploader{
+    margin-bottom: 20px;
+}
+
+.file-upload-container{
+    position: relative;
+    margin: 25px auto;
+    width: 90%;
+    border: 2px dotted var(--back-menu-color);
+    padding: 35px 20px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.input-label{
+    position: absolute;
+    top: -21px;
+    font-size: 13px;
+    color: black;
+    left: 0;  
+}
+
+.drag-drop-text{
+    font-weight: bold;
+    letter-spacing: 2.2px;
+    margin-top: 0;
+    text-align: center;
+}
+
+.upload-file-btn{
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid var(--back-menu-color);
+    cursor: pointer;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 0.7rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 6px;
+    color: var(--back-menu-color);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 250ms ease-in-out;
+    font-family: "Open sans", sans-serif;
+    width: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.upload-icon{
+    width: 50px;
+    height: 50px;
+}
+
+.form-field{
+    font-size: 18px;
+    display: block;
+    width: 100%;
+    border: none;
+    text-transform: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+}
+
+.file-preview-container{
+    margin-bottom: 35px;
+}
+
+.preview-list{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    overflow-y: scroll;
+    gap : 10px;
+}
+
+.image-preview{
+    border-radius: 6px;
+    width: auto;
+    height: 120px;
+    object-fit: cover;
+}
+
+.file-meta-data{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    background-color: rgba(5,5,5,0.55);
+}
+.classic-btn{
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid var(--back-menu-color);
+    cursor: pointer;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 0.7rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 6px;
+    color: var(--back-menu-color);
+    overflow: hidden;
+    font-family: "Open sans", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.upload-icon-launch, .trash-icon{
+    width: 20px;
+    height: 20px;
+}
+
+.deleteBtnUpload{
+    border : 0;
+    outline: 0;
+    margin: 10px 20px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.deleteBtnUpload:hover{
+    color: red;
+}
+
+
+.hidden-btn{
+    display: none;
+}
+
+.kit-details-messages-container{
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.friend-build-message-container{
+    border: 1px solid rgb(157, 157, 157);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+    -webkit-box-shadow: 5px 5px 16px 2px #8A8A8A;
+    box-shadow: 5px 5px 16px 2px #8A8A8A;  
+}
+
+.friend-identity-message-container{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.avatar{
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #fff;
+    background-color: #bdbdbd;
+    background-color: #c04eb2;
+}
+
+.avatar-img{
+    width: 40px;
+    height: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .friend-build-message-container{
+        width: 80vw;
+    }
+}

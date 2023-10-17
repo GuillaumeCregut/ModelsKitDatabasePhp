@@ -32,7 +32,10 @@ class Database{
     {
         if($this->pdo===null){
             try{
-                $this->pdo=new PDO('mysql:dbname='. $this->name . ';host='. $this->host,$this->user,$this->pass);
+                $options = array(
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "set lc_time_names = 'fr_FR'"
+                  );
+                $this->pdo=new PDO('mysql:dbname='. $this->name . ';host='. $this->host,$this->user,$this->pass,$options);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); 
             }
             catch(PDOException $e){

@@ -117,9 +117,6 @@ const createCard=(file)=>{
     spanSize.textContent=`${convertBytesToKB(file.size)} Kb`;
     aside.appendChild(spanSize);
     const deleteBtn=document.createElement('button');
-    /*
-<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" class="trash-icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg>
-    */
    deleteBtn.className='deleteBtnUpload';
    deleteBtn.addEventListener('click',()=>{
     deleteFileFromArray(file.name,id);
@@ -141,14 +138,13 @@ const createCard=(file)=>{
 }
 
 //Send to backend
-
 uploadBtn.addEventListener('click',()=>{
     const formData=new FormData();
-    console.log(filesArray);
-    filesArray.forEach((theFile)=>{
-        formData.append('file[]',theFile);
-    })
-    formData.append('id',12);
+    filesArray.forEach((theFile,index)=>{
+        formData.append(index,theFile);
+    });
+    const idModel=document.getElementById('id_add').value;
+    formData.append('id',idModel);
     const myInit = {
         method: "POST",
         headers: {

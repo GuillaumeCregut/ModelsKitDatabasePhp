@@ -66,6 +66,7 @@
         </div>
         {if $countPicture<=4}
         <input type="hidden" id="count-files" value="{$countPicture}">
+        <input type="hidden" id="id_add" value="{$model->id}">
         <div class="file-uploader">
                 <section class="file-upload-container">
                     <label for="" class="input-label">Téléchargement</label>

@@ -102,7 +102,6 @@ class FinishedDetails extends Controller
 
     private function usePost()
     {
-        var_dump($_POST);
         if(!isset($_POST['action'])){
             return;
         }

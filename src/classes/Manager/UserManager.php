@@ -1,6 +1,8 @@
 <?php
 namespace Editiel98\Manager;
 
+use DateTime;
+use DateTimeZone;
 use Editiel98\App;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
@@ -19,7 +21,7 @@ class UserManager extends Manager //implements ManagerInterface
      public function findById(int $id): User|bool
      {
         try{
-            $query="SELECT firstname, lastname, email, login,isVisible, avatar, allow, rankUser, id, email,isvalid FROM " . $this->table . " WHERE id=:id";
+            $query="SELECT firstname, lastname, email, login,isVisible, avatar, allow, rankUser, id, isvalid FROM " . $this->table . " WHERE id=:id";
             $classname='Editiel98\Entity\User';
             $values=[':id'=>$id];
             $result= $this->db->prepare($query,$classname,$values,true);
@@ -31,6 +33,22 @@ class UserManager extends Manager //implements ManagerInterface
            throw new Exception($e->getdbMessage());
         }
      }
+
+     public function findByMail(string $mail)
+     {
+        try{
+            $query="SELECT id, firstname, lastname, isvalid FROM " . $this->table . " WHERE email=:email";
+            $values=[':email'=>$mail];
+            $result= $this->db->prepare($query,null,$values,true);
+            if($result){
+                return $result;
+            } else return null;
+        }
+        catch(DbException $e){
+           return false;
+        }
+     }
+
 
     public function getAll(): array
     {
@@ -46,7 +64,7 @@ class UserManager extends Manager //implements ManagerInterface
     public function findByName(string $lastname): User|bool
     {
         try{
-            $query="SELECT firstname, lastname,email, rankUser, id, email,isvalid FROM " . $this->table . " WHERE login=:login";
+            $query="SELECT firstname, lastname,email, rankUser, id, email, isvalid FROM " . $this->table . " WHERE login=:login";
             $classname='Editiel98\Entity\User';
             $values=[':id'=>$lastname];
             $result=$this->db->prepare($query,$classname,$values,true);
@@ -125,6 +143,56 @@ class UserManager extends Manager //implements ManagerInterface
         }
         catch(DbException $e){
            throw new Exception($e->getdbMessage());
+        }
+    }
+
+    public function getResetCredentials(string $email)
+    {
+        $query="SELECT id, pwdtoken, pwdTokenDate, isvalid, email FROM user WHERE email=:email";
+        $values=[
+            ':email'=>$email
+        ];
+        try{
+            $result=$this->db->prepare($query,null,$values,true);
+            return $result;
+        }
+        catch(DbException $e){
+           return false;
+        }
+
+    }
+
+    public function setResetCode(int $id, string $code)
+    {
+        $mysql_date_now = new DateTime('now',new DateTimeZone('Europe/Paris')); 
+        $mysql_date_now->modify('+1 day');
+        $expireDate=$mysql_date_now->format('Y-m-d H:i:s');
+        $query="UPDATE user SET pwdtoken=:code, pwdTokenDate=:newDate  WHERE id=:id";
+        $values=[
+            ':id'=>$id,
+            ':code'=>$code,
+            ':newDate'=>$expireDate
+        ];
+        try{
+            return $this->db->exec($query,$values);
+        }catch(DbException $e){
+            var_dump($e->getdbMessage());
+            return false;
+        }
+    }
+
+    public function resetPassword(int $id, string $newPass)
+    {
+        $query="UPDATE user SET passwd=:pass, pwdtoken=null, pwdTokenDate=null WHERE id=:id";
+        $values=[
+            ':pass'=>$newPass,
+            ':id'=>$id
+        ];
+        try{
+            $test=$this->db->exec($query,$values);
+            return $test;
+        }catch(DbException $e){
+            return false;
         }
     }
 

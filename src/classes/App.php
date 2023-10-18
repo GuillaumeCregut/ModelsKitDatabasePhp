@@ -49,6 +49,9 @@ class App{
             case 'api':
                 $this->route='Api';
                 break;
+            case 'forgot':
+                $this->route='Forgot';
+                break;
             case 'kit':
                 $this->route='Kit';
                 break;
@@ -63,6 +66,9 @@ class App{
                 break;
             case'profil':
                 $this->route='Profil';
+                break;
+            case 'recover':
+                $this->route='Recover';
                 break;
             case 'rgpd':
                 $this->route='rgpd';

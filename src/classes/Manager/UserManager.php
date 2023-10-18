@@ -64,7 +64,7 @@ class UserManager extends Manager //implements ManagerInterface
     public function findByName(string $lastname): User|bool
     {
         try{
-            $query="SELECT firstname, lastname,email, rankUser, id, email,isvalid FROM " . $this->table . " WHERE login=:login";
+            $query="SELECT firstname, lastname,email, rankUser, id, email, isvalid FROM " . $this->table . " WHERE login=:login";
             $classname='Editiel98\Entity\User';
             $values=[':id'=>$lastname];
             $result=$this->db->prepare($query,$classname,$values,true);
@@ -146,6 +146,22 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    public function getResetCredentials(string $email)
+    {
+        $query="SELECT id, pwdtoken, pwdTokenDate, isvalid, email FROM user WHERE email=:email";
+        $values=[
+            ':email'=>$email
+        ];
+        try{
+            $result=$this->db->prepare($query,null,$values,true);
+            return $result;
+        }
+        catch(DbException $e){
+           return false;
+        }
+
+    }
+
     public function setResetCode(int $id, string $code)
     {
         $mysql_date_now = new DateTime('now',new DateTimeZone('Europe/Paris')); 
@@ -161,6 +177,21 @@ class UserManager extends Manager //implements ManagerInterface
             return $this->db->exec($query,$values);
         }catch(DbException $e){
             var_dump($e->getdbMessage());
+            return false;
+        }
+    }
+
+    public function resetPassword(int $id, string $newPass)
+    {
+        $query="UPDATE user SET passwd=:pass, pwdtoken=null, pwdTokenDate=null WHERE id=:id";
+        $values=[
+            ':pass'=>$newPass,
+            ':id'=>$id
+        ];
+        try{
+            $test=$this->db->exec($query,$values);
+            return $test;
+        }catch(DbException $e){
             return false;
         }
     }

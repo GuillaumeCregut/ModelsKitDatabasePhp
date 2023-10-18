@@ -67,6 +67,9 @@ class App{
             case'profil':
                 $this->route='Profil';
                 break;
+            case 'recover':
+                $this->route='Recover';
+                break;
             case 'rgpd':
                 $this->route='rgpd';
                 break;

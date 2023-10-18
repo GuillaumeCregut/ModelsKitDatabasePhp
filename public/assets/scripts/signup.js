@@ -50,7 +50,6 @@ login.addEventListener('keyup',function (e){
 })
 
 login.addEventListener('focus',function (e){
-    console.log(e.target.value);
     const result=USER_REGEX.test(e.target.value);
     if(result){
         loginMessage.classList.remove('signup-instruction');
@@ -102,7 +101,6 @@ pass.addEventListener('blur',function (e){
 })
 
 pass2.addEventListener('keyup',function (e){
-    console.log(e.target.value,pass.value);
     const result=e.target.value===pass.value;
     if(result){
         passMessage.classList.add('signup-err-off');
@@ -127,7 +125,6 @@ pass2.addEventListener('keyup',function (e){
 })
 
 function evalButton(){
-    console.log(enableLogin,enablePass,enablePassEqual,enableRgpd);
     const isEnable=enableLogin&&enablePass&&enablePassEqual&&enableRgpd;
     SubmitButton.disabled=!isEnable;
     if(isEnable){

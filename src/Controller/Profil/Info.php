@@ -189,6 +189,9 @@ class Info extends Controller
                     $ext=explode('/',$type)[1];
                     if($image['size']<=500*1000){
                         $uploadDir=dirname(dirname(dirname(__DIR__))) . $baseDir;
+                        if(!is_dir($uploadDir)){
+                            mkdir($uploadDir,0777,true);
+                        }
                         $destFile=$uploadDir . 'avatar.' . $ext;
                         $fileOK=move_uploaded_file($image['tmp_name'],$destFile);
                         if($fileOK){

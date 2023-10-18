@@ -49,6 +49,9 @@ class App{
             case 'api':
                 $this->route='Api';
                 break;
+            case 'forgot':
+                $this->route='Forgot';
+                break;
             case 'kit':
                 $this->route='Kit';
                 break;

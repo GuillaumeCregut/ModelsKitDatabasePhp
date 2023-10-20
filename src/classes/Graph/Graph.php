@@ -83,7 +83,7 @@ class Graph
      * @param float|null $y : vertical position of the pie in the picture
      * @return \PiePlot : object representing the drawn pie
      */
-    private function drawPie(array $DataValues, string $title, ?float $size=0.3, ?float $x=0.3, ?float $y=0.5): \PiePlot
+    private function drawPie(array $DataValues, string $title, ?float $size=0.3, ?float $x=0.3, ?float $y=0.55): \PiePlot
     {
         $values=[];
         $names=[];
@@ -97,6 +97,7 @@ class Graph
         $p1->SetCenter($x,$y);
         $p1->SetLegends($names);
         $p1->title->Set($title);
+        $p1->title->SetMargin(10);
         return $p1;
     }
 }

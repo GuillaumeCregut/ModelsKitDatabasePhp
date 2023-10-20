@@ -1,0 +1,25 @@
+h2{
+    text-align: center;
+    margin: 20px 0;
+}
+
+.stat-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.picture-constainer{
+    padding: 5px;  
+}
+
+@media screen and (max-width: 768px) {
+    .picture-constainer{
+        width: 80vw;
+        margin: 0 auto;
+    }
+    .img-stat{
+        width: 90%;
+        height: auto;
+    }
+}

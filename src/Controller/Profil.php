@@ -23,7 +23,7 @@ class Profil extends Controller
                     $className = 'Invoice';
                     break;
                 case 'stats':
-                    $className = '';
+                    $className = 'Stats';
                     break;
                 case 'statpdf':
                     $className = '';

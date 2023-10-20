@@ -1,7 +1,7 @@
 <?php
 namespace Editiel98\Manager;
 
-use App\Controller\Error as ControllerError;
+
 use Editiel98\DbException;
 use Editiel98\Entity\Entity;
 use Editiel98\Event\Emitter;

@@ -26,7 +26,7 @@ class Profil extends Controller
                     $className = 'Stats';
                     break;
                 case 'statpdf':
-                    $className = '';
+                    $className = 'PdfController';
                     break;
                 case 'social':
                     $className = '';

@@ -1,0 +1,305 @@
+h2{
+    text-align: center;
+    margin: 20px 0;
+}
+
+.social-container {
+    display: grid;
+    padding: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px 10px;
+    grid-template-areas:
+        "new-social list"
+        "my-friends my-friends";
+}
+
+.social-block {
+    padding: 10px;
+}
+
+.container-boxes{
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.list {
+    grid-area: list;
+}
+
+.my-friends {
+    grid-area: my-friends;
+}
+
+.list-users-container {
+    width: 50vw;
+    margin: 0 auto;
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
+.all-users-title{
+    text-align: center;
+    margin: 10px 0;
+}
+
+.action-user {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.action-user:active {
+    transform: scale(70%);
+}
+
+.action-user-unknown {
+    color: gray;
+}
+
+.action-user-waiting {
+    color: rgb(247, 247, 51);
+}
+
+.action-user-friend {
+    color: rgb(19, 202, 19);
+}
+
+.action-user-refused {
+    color: red;
+}
+
+.all-users-table{
+    width: 100%;
+}
+
+.all-user-row{
+    height: 3rem;
+    border-bottom: 1px solid rgba(224, 224, 224, 1);;
+}
+
+.btn-friend-state{
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+}
+
+.avatar-container{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    user-select: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(229, 191, 236);
+}
+
+.avatar-img{
+    width: 40px;
+    height: 40px;
+}
+
+.my-friends-container{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    gap: 15px;
+}
+
+.friend-card {
+    border: 1px solid black;
+    width: 250px;
+    height: 100px;
+    border-radius: 10px;
+    display: grid;
+    padding: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "avatar name-user"
+    "buttons buttons";
+    -webkit-box-shadow: 14px 16px 12px -3px rgba(71,71,71,0.29); 
+    box-shadow: 14px 16px 12px -3px rgba(71,71,71,0.29);
+}
+
+.friend-avatar-container{
+    grid-area: avatar;
+}
+
+.friend-name-container{
+    grid-area: name-user;
+}
+
+.friend-social-container{
+    grid-area: buttons;
+    display: flex;
+    justify-content: space-between;
+   margin: 7px;
+}
+
+.friend-icon{
+    width: 30px;
+    height: 30px;
+}
+
+.heart-container{
+    position: relative;
+    background-color: transparent;
+    width:32px;
+    height: 32px;
+    border: none;
+    cursor: pointer;
+}
+
+.heart-container:active{
+    transform: scale(80%);
+}
+
+.is-ok{
+    position : absolute;
+    color: rgb(19, 202, 19);
+    top: 0;
+    left :0;
+}
+
+.stop{
+    position: absolute;
+    color: red;
+    z-index: 2;
+    top: 0;
+    left :0;
+    transform:scale(70%);
+}
+
+.message-icon-friend{
+    position: relative;
+}
+
+.message-count-bubble{
+    position: absolute;
+    top: -5px;
+    z-index: 2;
+    border-radius: 50%;
+    background-color: #1976d2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -10px;
+    color: white;
+    padding: 2px;
+    height: 20px;
+    width: 20px;
+}
+.friend-demand-card-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.demand-title {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.demand-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 5px;
+    width: 200px;
+}
+
+.name-user-demand{
+    font-size: 15px;
+}
+
+.avatar-demand-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.demand-choice {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.label-radio {
+    width: 20%;
+    font-size: 0.8rem;
+}
+
+.button-demand-container {
+    display: flex;
+    justify-content: center;
+}
+
+.demand-card-btn{
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    text-decoration: none;
+    color: inherit;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 500;
+    font-size: 0.625rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-width: 64px;
+    padding: 6px 16px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #1976d2;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+}
+
+@media screen and (max-width: 768px) {
+    .social-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .list-users-container{
+        width: 100%;
+    }
+    
+    .social-block{
+        margin: 10px 0;
+    }
+
+    .friend-demand-card-container {
+        justify-content: center;  
+    }
+}

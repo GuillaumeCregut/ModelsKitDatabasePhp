@@ -97,8 +97,9 @@
         <div class="my-friends container-boxes">
             <h3>Liste de mes amis</h3>
             <div class="my-friends-container">
-                <form action="profil_social" method="post">
+                <form action="profil_social" method="post" id="process-friend">
                     <input type="hidden" name="action" value="remove-friend">
+                    <input type="hidden" name="idFriend" value="0" id="idFriend">
                 </form>
                 {if isset($allFriends)}
                     {foreach from=$allFriends item=friend}

@@ -124,16 +124,6 @@
     }
 }
 
-@media screen and (max-with=768px){
-    .toast_notifications{
-        width: 95%;
-    }
-    .toast_notifications.toast{
-        width: 100%;
-        font-size: 1rem;
-        margin-left: 20px;
-    }
-}
 
 .toast_buttons .toast_btn{
     border : none;
@@ -144,4 +134,17 @@
     border-radius: 4px;
     margin: 0 5px;
     font-size: 1.2rem;
+}
+
+@media screen and (max-width:768px){
+    .toast_notifications{
+        width: 80vw;
+        right: 20px;
+    }
+    
+    .toast_notifications .toast{
+        width: 80vw;
+        font-size: 1rem;
+        margin-left: 20px;
+    }
 }

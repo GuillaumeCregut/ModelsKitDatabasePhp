@@ -103,7 +103,6 @@ class Social extends Controller
 
     private function usePost()
     {
-        var_dump($_POST);
         if(!isset($_POST['action'])){
             return;
         }
@@ -111,7 +110,20 @@ class Social extends Controller
             case 'accept':
                 $this->processDemand();
                 break;
+            case 'remove-friend':
+                $this->removeFriend();
+                break;
+            default: return;
         }
+    }
+
+    private function removeFriend()
+    {
+        if(!isset($_POST['idFriend']) || intval($_POST['idFriend'])===0){
+            return;
+        }
+        $friendId=intval($_POST['idFriend']);
+        $result=$this->socialManager->changeStatusFriend($this->userId, $friendId,SocialManager::USER_UNKNOWN);
     }
 
     private function processDemand()

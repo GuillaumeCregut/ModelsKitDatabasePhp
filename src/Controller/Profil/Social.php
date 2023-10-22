@@ -21,6 +21,9 @@ class Social extends Controller
             die();
         }
         $this->socialManager = new SocialManager($this->dbConnection);
+        if(!empty($_POST)){
+            $this->usePost();
+        }
         $this->getAllVisibleUsers();
         $this->getFriends();
         $this->getDemands();
@@ -96,5 +99,35 @@ class Social extends Controller
             $list[]=$friend;
         }
         $this->friends=$list;
+    }
+
+    private function usePost()
+    {
+        var_dump($_POST);
+        if(!isset($_POST['action'])){
+            return;
+        }
+        switch($_POST['action']){
+            case 'accept':
+                $this->processDemand();
+                break;
+        }
+    }
+
+    private function processDemand()
+    {
+        if(!isset($_POST['user']) || intval($_POST['user'])===0 || !isset($_POST['choice']) || intval($_POST['choice'])===0){
+            return;
+        }
+        $friendId=intval($_POST['user']);
+        $choice=intval($_POST['choice']);
+        if($choice===1){
+            $result=$this->socialManager->changeStatusFriend($this->userId, $friendId,SocialManager::USER_REFUSED);
+        }elseif($choice===2){
+            $result=$this->socialManager->changeStatusFriend($this->userId, $friendId,SocialManager::USER_FRIEND);
+        }else{
+            return;
+        }
+        return;
     }
 }

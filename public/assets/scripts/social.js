@@ -1,4 +1,6 @@
 const likeBtns=document.querySelectorAll('.btn-friend-state');
+const removeFriendBtns=document.querySelectorAll('.heart-container');
+
 const USER_UNKNOWN=0;
 let sentFlash=false;
 let activeLikeBtn=null;
@@ -14,6 +16,22 @@ const toastDetails = {
         classname: "toast_error"
     }
 }
+
+const removeFriend=(id)=>{
+    console.log(id);
+    const form=document.getElementById('process-friend');
+    const idFriend=document.getElementById('idFriend');
+    idFriend.value=id;
+    form.submit();
+
+}
+
+removeFriendBtns.forEach((btn)=>{
+    const id=btn.dataset.id;
+    btn.addEventListener('click',()=>{
+        removeFriend(id);
+    })
+})
 
 const userChangeState=(id, status)=>{
     if(status!==USER_UNKNOWN){

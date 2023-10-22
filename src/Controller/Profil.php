@@ -29,7 +29,7 @@ class Profil extends Controller
                     $className = 'PdfController';
                     break;
                 case 'social':
-                    $className = '';
+                    $className = 'Social';
                     break;
                 case 'popup':
                     $className ='PopupDetail';

@@ -53,7 +53,7 @@ class PdfController extends Controller
         $isStock=$this->drawGraph($statsStock, 'Répartition par état', 'stategraph');
 
         $fullname= $this->session->getKey(Session::SESSION_FULLNAME);
-        $this->pdf= new PDFCreator('',$fullname);
+        $this->pdf= new PDFCreator($this->subDir . 'stats.pdf',$fullname);
         $this->pdf->AliasNbPages();
         $this->pdf->addToSummary(1,'Données chiffrées');
         $this->pdf->addToSummary(2,'Liste des modèles');
@@ -118,9 +118,13 @@ class PdfController extends Controller
             while(!file_exists($this->subDir . 'stategraph.png'));
             $this->addStatraph('stategraph');
         }        
-        
         //ouput
-        $this->pdf->Output();
+        $result=$this->pdf->storePdf();
+        if($result){
+            $this->displayPage('assets/uploads/users/' . $this->userId .'/stats/stats.pdf');
+        }else{
+            $this->displayPage('');
+        }
     }
 
     private function addBlocs(array $infos, string $title)
@@ -205,5 +209,14 @@ class PdfController extends Controller
                 }
             }
         }
+    }
+
+    private function displayPage($filename){
+        $this->smarty->assign('profil',true);
+        $this->smarty->assign('pdf_menu',true);
+        if($filename!==''){
+            $this->smarty->assign('filepath',$filename);
+        }
+        $this->smarty->display('profil/statspdf.tpl');
     }
 }

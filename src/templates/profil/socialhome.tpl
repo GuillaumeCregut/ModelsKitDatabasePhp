@@ -32,11 +32,11 @@
                         </div>
                         <div class="demand-choice">
                             <label for="radio-refuse-{$demand->id}" class="label-demand">
-                                <input type="radio" name="" id="radio-refuse-{$demand->id}" value="0">
+                                <input type="radio" name="choice" id="radio-refuse-{$demand->id}" value="1">
                                 Refuser
                             </label>
                             <label for="radio-accept-{$demand->id}"  class="label-demand">
-                                <input type="radio" name="" id="radio-accept-{$demand->id}" value="1">
+                                <input type="radio" name="choice" id="radio-accept-{$demand->id}" value="2">
                                 Accepter
                             </label>
                         </div>

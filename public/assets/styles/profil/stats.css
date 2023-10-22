@@ -13,13 +13,35 @@ h2{
     padding: 5px;  
 }
 
+.pdf-object-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.pdf-object {
+    width: 800px;
+     height: 800px;
+}
+
 @media screen and (max-width: 768px) {
     .picture-constainer{
         width: 80vw;
         margin: 0 auto;
     }
+    
     .img-stat{
         width: 90%;
         height: auto;
+    }
+
+    .pdf-object {
+        width: 450px;
+    }
+
+    .pdf-object-container{
+        width: 100vw;
     }
 }

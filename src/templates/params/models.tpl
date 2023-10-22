@@ -1,5 +1,5 @@
 {extends file="../_params_template.tpl"}
-{block name=title}Paramètres - Modèles{/block}
+{block name=title}Models Kit Database - Paramètres - Modèles{/block}
 {block name=styles}
 <link rel="stylesheet" href="assets/styles/params/model.css">
 <link rel="stylesheet" href="assets/styles/params/modelfilter.css">

@@ -41,7 +41,7 @@ class Graph
      * @param integer|null $width : width of picture
      * @param integer|null $height : height of picture
      */
-    public function __construct(string $filename, ?int $width=400, ?int $height=200)
+    public function __construct(string $filename, ?int $width=400, ?int $height=200, ?bool $frame=true)
     {
         $this->height=$height;
         $this->width=$width;
@@ -50,6 +50,9 @@ class Graph
         $graph->clearTheme();
         $graph->SetAlphaBlending();
         $graph->SetMarginColor('white@0.99');
+        if(!$frame){
+            $graph->SetFrame(false);
+        }
         $this->graph=$graph;
     }
 

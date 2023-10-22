@@ -1,5 +1,5 @@
 {extends file="../_params_template.tpl"}
-{block name=title}Paramètres - Périodes{/block}
+{block name=title}Models Kit Database - Paramètres - Périodes{/block}
 {block name=styles}
 <link rel="stylesheet" href="assets/styles/params/period.css">
 <link rel="stylesheet" href="assets/styles/params/single.css">

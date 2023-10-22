@@ -147,5 +147,11 @@ class App{
             $mail=new Mailer();
             $mail->sendHTMLMailToUser($userMail,'Votre compte est validé',$values,'validate' );
         });
+        $this->emitter->on(Emitter::PDF_CREATOR,function($message){
+            $logger=new ErrorLogger();
+            if($logger->storeToFile($message)){
+                $logger=null;
+            }
+        });
     }
 }

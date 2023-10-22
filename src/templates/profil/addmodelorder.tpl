@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/styles/profil/addmodel.css">
     <script src="assets/scripts/addmodelorder.js" defer></script>
-    <title>Ajouter un modèle</title>
+    <title>Models Kit Database - Ajouter un modèle</title>
 </head>
 <body>
     <div class="models-lists-container">

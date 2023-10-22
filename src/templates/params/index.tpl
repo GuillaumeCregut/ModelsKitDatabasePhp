@@ -1,5 +1,5 @@
 {extends file="../_params_template.tpl"}
-{block name=title} {/block}
+{block name=title}Models Kit Database - Paramètres{/block}
 {block name=styles}{/block}
 {block name=script}{/block}
 {block name=innerMenu}

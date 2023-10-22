@@ -1,5 +1,5 @@
 {extends file="../_params_template.tpl"}
-{block name=title}Paramètres - Pays{/block}
+{block name=title}Models Kit Database - Paramètres - Pays{/block}
 {block name=styles}
 <link rel="stylesheet" href="assets/styles/params/country.css">
 <link rel="stylesheet" href="assets/styles/params/single.css">

@@ -1,5 +1,5 @@
 {extends file="../_params_template.tpl"}
-{block name=title}Paramètres - Marques{/block}
+{block name=title}Models Kit Database - Paramètres - Marques{/block}
 {block name=styles}
 <link rel="stylesheet" href="assets/styles/params/brand.css">
 <link rel="stylesheet" href="assets/styles/params/single.css">

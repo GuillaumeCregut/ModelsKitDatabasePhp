@@ -1,6 +1,7 @@
 <?php
 namespace Editiel98\Manager;
 
+use Editiel98\App;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
 
@@ -13,9 +14,10 @@ class StatsManager extends Manager
 
     public function getStatPeriod(int $user)
     {
-        $query='SELECT count(*) as count, periodName as name FROM all_info_model WHERE owner=:user GROUP BY periodName';
+        $query='SELECT count(*) as count, periodName as name FROM all_info_model WHERE owner=:user AND state<>:state GROUP BY periodName';
         $values=[
-            ':user'=>$user
+            ':user'=>$user,
+            ':state'=>App::STATE_LIKED
         ];
         try{
             return $this->db->prepare($query,null,$values);
@@ -39,9 +41,10 @@ class StatsManager extends Manager
 
     public function getStatCategory(int $user)
     {
-        $query='SELECT count(*) as count, categoryName as name FROM all_info_model WHERE owner=:user GROUP BY categoryName;';
+        $query='SELECT count(*) as count, categoryName as name FROM all_info_model WHERE owner=:user AND state<>:state GROUP BY categoryName;';
         $values=[
-            ':user'=>$user
+            ':user'=>$user,
+            ':state'=>App::STATE_LIKED
         ];
         try{
             return $this->db->prepare($query,null,$values);
@@ -52,9 +55,10 @@ class StatsManager extends Manager
 
     public function getStatScale(int $user)
     {
-        $query='SELECT count(*) as count, scaleName as name FROM all_info_model WHERE owner=:user GROUP BY scaleName;';
+        $query='SELECT count(*) as count, scaleName as name FROM all_info_model WHERE owner=:user AND state<>:state GROUP BY scaleName;';
         $values=[
-            ':user'=>$user
+            ':user'=>$user,
+            ':state'=>App::STATE_LIKED
         ];
         try{
             return $this->db->prepare($query,null,$values);
@@ -78,9 +82,10 @@ class StatsManager extends Manager
 
     public function getStatBrand(int $user)
     {
-        $query='SELECT count(*) as count, brandName as name FROM all_info_model WHERE owner=:user GROUP BY brandName';
+        $query='SELECT count(*) as count, brandName as name FROM all_info_model WHERE owner=:user AND state<>:state GROUP BY brandName';
         $values=[
-            ':user'=>$user
+            ':user'=>$user,
+            ':state'=>App::STATE_LIKED
         ];
         try{
             return $this->db->prepare($query,null,$values);
@@ -102,21 +107,19 @@ class StatsManager extends Manager
         }
     }
 
+    public function getStatModels(int $user)
+    {
+        $query="SELECT boxPicture, modelName, reference, brandName, scaleName, stateName, builderName 
+        FROM mymodels WHERE owner=:owner ORDER BY state";
+        $values=[
+            ':owner'=>$user
+        ];
+        try{
+            return $this->db->prepare($query,null,$values);
+        }catch(DbException $e){
+            return [];
+        }
+    }
+
 }
 
-/*
-//Period
-SELECT count(*) as count, periodName as name FROM all_info_model WHERE owner=? GROUP BY periodName
-//state
-'SELECT count(*) as count, s.name FROM all_info_model ai  INNER JOIN state s on ai.state=s.id WHERE ai.owner=? GROUP BY ai.state;
-//type
-SELECT count(*) as count, categoryName as name FROM all_info_model WHERE owner=? GROUP BY categoryName;
-//Provider
-SELECT count(*) as count, providerName as name FROM all_info_model WHERE owner=? GROUP BY provider;
-//Scale
-SELECT count(*) as count, scaleName as name FROM all_info_model WHERE owner=? GROUP BY scaleName;
-//Price
-SELECT SUM(price) as sum FROM `all_info_model` WHERE owner=?
-//Brand
-SELECT count(*) as count, brandName as name FROM all_info_model WHERE owner=? GROUP BY brandName
-*/

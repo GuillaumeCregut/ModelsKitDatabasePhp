@@ -1,5 +1,5 @@
 {extends file="../_profil_template.tpl"}
-{block name=title}Profil{/block}
+{block name=title}Models Kit Database - Statistiques{/block}
 {block name=styles}
     <link rel="stylesheet" href="assets/styles/profil_general.css">
     <link rel="stylesheet" href="assets/styles/profil/stats.css">

@@ -1,5 +1,5 @@
 {extends file="../_profil_template.tpl"}
-{block name=title}Fournisseurs{/block}
+{block name=title}Models Kit Database - Fournisseurs{/block}
 {block name=styles}
 <link rel="stylesheet" href="assets/styles/profil_general.css">
 <link rel="stylesheet" href="assets/styles/profil/provider.css">

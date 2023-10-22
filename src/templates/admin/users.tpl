@@ -1,5 +1,5 @@
 {extends file="../_admin_template.tpl"}
-{block name=title}Administration - Utilisateurs {/block}
+{block name=title}Models Kit Database - Admin - Utilisateurs {/block}
 {block name=styles}
 <link rel="stylesheet" href="assets/styles/admin/users.css">
 {/block}

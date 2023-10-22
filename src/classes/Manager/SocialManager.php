@@ -114,4 +114,19 @@ class SocialManager extends Manager
             return [];
         }
     }
+    
+    public function changeStatusFriend(int $user, int $friend, int $status)
+    {
+        $query="UPDATE friend SET is_ok=:status WHERE (id_friend1=:user AND id_friend2=:friend) OR (id_friend1=:friend AND id_friend2=:user)";
+        $values=[
+            ':user'=>$user,
+            ':friend'=>$friend,
+            ':status'=>$status
+        ];
+        try{
+            return $this->db->exec($query,$values);
+        }catch(DbException $e){
+           return $e->getDbCode();
+        }
+    }
 }

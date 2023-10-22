@@ -2,6 +2,8 @@
 namespace Editiel98\Pdf;
 
 use DateTime;
+use Editiel98\Event\Emitter;
+use Exception;
 
 require_once 'fpdf.php';
 
@@ -16,6 +18,9 @@ class PDFCreator extends \FPDF
         parent::__construct();
         $this->filename=$filename;
         $this->userName=$userName;
+        $this->SetAuthor('Editiel98',true);
+        $this->SetSubject('Catalogue de collection de maquettes', true);
+        $this->SetCreator('Models Kit Database', true);
         $this->AddFont('Pacifico-Regular','');
         $this->CreateFirstPage();
         $this->SetFont('Times','',12);      
@@ -31,14 +36,7 @@ class PDFCreator extends \FPDF
         $this->SetFont('','');
         $this->setXY(0,$this->GetY()+20);
         foreach($this->myLinks as $page=>$pageInfo){
-            $y=$this->GetY();
-            $this->Newcell(0,10,"{$pageInfo->pageName}",10);
-            $newY=$this->GetY();
-            $this->SetY($y);
-           
-            $this->SetX( $this->GetPageWidth()-20-$this->GetStringWidth('Page 200'));
-            $this->Newcell(0,10,'Page 1');
-            $this->SetXY(0,$newY);
+            $this->Newcell(0,10,"{$pageInfo->pageName}",10,10);
         }
     }
 
@@ -87,6 +85,11 @@ class PDFCreator extends \FPDF
         $this->SetFontSize(12);
         $this->SetFont('','');
         $this->setXY(0,$this->GetY()+20);
+        foreach($this->myLinks as $link){
+            if ($idPage===$link->numPage){
+                $this->SetLink($link->link,0,$this->pageNo());
+            }
+        }
     }
 
     public function Newcell(int $w, int $h=0, $txt='', ?int $offset=0,?int $space=10 ,?string $align='', ?int $border=0, ?int $ln=0,  ?bool $fill=false,?string $link='')
@@ -143,5 +146,16 @@ class PDFCreator extends \FPDF
         $this->Image($filename,null,null,40);
         $this->SetY($lastY);
         $this->ln(30);
+    }
+
+    public function storePdf(){
+        try{
+            $this->Output('F',$this->filename);
+            return true;
+        } catch(Exception $e){
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::PDF_CREATOR,'pdf creation : ' .$e->getMessage());
+            return false;
+        }
     }
 }

@@ -1,5 +1,5 @@
 {extends file="../_admin_template.tpl"}
-{block name=title} {/block}
+{block name=title}Models Kit Database - Admin{/block}
 {block name=styles}
 <link rel="stylesheet" href="admin_general.css">
 {/block}

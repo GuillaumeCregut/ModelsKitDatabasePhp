@@ -31,6 +31,9 @@ class Api extends Controller
                 case 'addPictures':
                         $className='Kit\\AddPictures';
                         break;
+                case 'friend':
+                        $className='Profil\\Friend';
+                        break;
                 default :
                     header("HTTP/1.1 404 Not Found");
                     die();

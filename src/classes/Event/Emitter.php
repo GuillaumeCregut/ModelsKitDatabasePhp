@@ -13,6 +13,7 @@ class Emitter
     const USER_SUBSCRIBED='user.subscribed';
     const MAIL_ERROR='mail.error';
     const USER_VALIDATED="user.validated";
+    const PDF_CREATOR="pdf.error";
 
     /**
      * Get Emitter instance (singleton)

@@ -2,6 +2,7 @@
 
 namespace Editiel98\Manager;
 
+use Editiel98\App;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
 
@@ -111,7 +112,6 @@ class SocialManager extends Manager
         try {
             return $this->db->prepare($query, null, $values);
         } catch (DbException $e) {
-            echo "crash";
             return [];
         }
     }
@@ -141,7 +141,6 @@ class SocialManager extends Manager
         try {
             return $this->db->prepare($query, null, $values);
         } catch (DbException $e) {
-            echo "crash";
             return [];
         }
     }
@@ -172,6 +171,48 @@ class SocialManager extends Manager
             return $this->db->exec($query, $values);
         } catch (DbException $e) {
             return $e->getDbCode();
+        }
+    }
+
+    public function getFriendModels(int $idFriend)
+    {
+        $query="SELECT id,modelname,pictures, reference,boxPicture,builderName,scaleName,brandName FROM mymodels WHERE owner=:owner AND state=:state";
+        $values=[
+            ':owner'=>$idFriend,
+            ':state'=>App::STATE_FINISHED
+        ];
+        try {
+            return $this->db->prepare($query, null, $values);
+        } catch (DbException $e) {
+            return [];
+        }
+    }
+
+    public function getFriendModelDetails(int $friend, int $model)
+    {
+        $query="SELECT m.id,m.modelname,m.pictures, m.reference,m.boxPicture,m.builderName,m.scaleName,m.brandName,u.allow 
+        FROM mymodels m INNER JOIN user u ON m.owner=u.id WHERE m.id=:model and m.owner=:friend";
+        $values=[
+            ':model'=>$model,
+            ':friend'=>$friend
+        ];
+        try {
+            return $this->db->prepare($query, null, $values);
+        } catch (DbException $e) {
+            return [];
+        }
+    }
+
+    public function getModelMessages(int $id)
+    {
+        
+        $query="SELECT mm.id,DATE_FORMAT(mm.date_message,\"%d %M %Y\") as dateMessage, mm.message,u.firstname,u.lastname,u.id as userId,u.avatar 
+        FROM model_message mm INNER JOIN user u ON mm.fk_author=u.id WHERE fk_model=:id ORDER BY mm.date_message DESC, id DESC";
+        $value=['id'=>$id];
+        try {
+            return $this->db->prepare($query, null, $value);
+        } catch (DbException $e) {
+            return [];
         }
     }
 }

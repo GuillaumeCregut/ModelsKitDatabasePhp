@@ -43,6 +43,9 @@ class Profil extends Controller
                 case 'ami':
                     $className='FriendHomePage';
                     break;
+                case 'montage':
+                    $className='FriendBuild';
+                    break;
                 default:
                     $page = new Error('404');
                     $page->render();

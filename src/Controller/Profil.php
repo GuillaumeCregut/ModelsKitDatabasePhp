@@ -9,7 +9,7 @@ class Profil extends Controller
     public function render()
     {
         if (empty($this->subPages)) {
-            $this->smarty->assign('profil','profil');
+            $this->smarty->assign('profil', 'profil');
             $this->smarty->display('profil/index.tpl');
         } else {
             switch ($this->subPages[0]) {
@@ -32,18 +32,21 @@ class Profil extends Controller
                     $className = 'Social';
                     break;
                 case 'popup':
-                    $className ='PopupDetail';
+                    $className = 'PopupDetail';
                     break;
                 case 'model':
-                    $className='ModelSelector';
+                    $className = 'ModelSelector';
                     break;
-                default: 
-                    $page=new Error('404');
+                case 'messages':
+                    $className = 'PersonnalMessage';
+                    break;
+                default:
+                    $page = new Error('404');
                     $page->render();
                     die();
             }
             $classPage = 'App\\Controller\\Profil\\' . $className;
-            $page=new $classPage([],$this->params);
+            $page = new $classPage([], $this->params);
             $page->render();
         }
     }

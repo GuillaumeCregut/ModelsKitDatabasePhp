@@ -182,9 +182,3 @@ class OrderManager extends Manager implements ManagerInterface
     }
 
 }
-
-
-
-/*
-
-*/

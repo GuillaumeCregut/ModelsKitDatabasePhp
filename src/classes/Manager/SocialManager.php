@@ -159,4 +159,19 @@ class SocialManager extends Manager
             return $e->getDbCode();
         }
     }
+
+    public function addMessage(int $dest, int $exp, string $message)
+    {
+        $query="INSERT INTO private_message (exp,dest,message) VALUES (:exp,:dest,:message)";
+        $values=[
+            ':exp'=>$exp,
+            ':dest'=>$dest,
+            ':message'=>$message
+        ];
+        try {
+            return $this->db->exec($query, $values);
+        } catch (DbException $e) {
+            return $e->getDbCode();
+        }
+    }
 }

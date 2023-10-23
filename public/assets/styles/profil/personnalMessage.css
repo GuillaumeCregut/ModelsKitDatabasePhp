@@ -47,11 +47,51 @@ h2{
     width: 350px;
     justify-content: center;
     margin-bottom: 20px;
+    gap: 15px;
 }
 
 .new-message-text{
     font-size: 1rem;
     padding : 5px;
+    color: black;
+}
+
+.send-btn{
+    display: inline-flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+    margin: 0 auto;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    text-decoration: none;
+    color: inherit;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    width: 100px;
+    padding: 6px 16px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #1976d2;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
 }
 
 .all-messages {
@@ -62,6 +102,7 @@ h2{
     max-height: 450px;
     overflow: scroll;
     padding: 10px;
+    margin-bottom: 50px;
 }
 
 .message {
@@ -95,6 +136,10 @@ h2{
     align-self: flex-start;
 }
 
+.new-message-text{
+    height: 69px;
+}
+
 @media screen and (max-width: 768px) {
     .all-messages {
         width: 340px;
@@ -102,6 +147,7 @@ h2{
 
     .write-private-message{
         margin: 10px auto;
+        width: 80vw;
     }
 
     .message{

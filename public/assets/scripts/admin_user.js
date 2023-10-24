@@ -1,3 +1,5 @@
+const deleteBtns=document.querySelectorAll('.delete-btn');
+
 const toastDetails={
     timer: 5000,
     success:{
@@ -10,6 +12,17 @@ const toastDetails={
     }
 }
 
+deleteBtns.forEach((btn)=>{
+    const id=btn.dataset.id;
+    btn.addEventListener('click',()=>{
+        if(window.confirm('Voulez-vous supprimer cet utilisateur ?')){
+            const form=document.getElementById('form-delete');
+            const inputId=document.getElementById('id-user');
+            inputId.value=id;
+            form.submit();
+        }
+    })
+})
 
 const checkboxes=document.querySelectorAll('input.cb_user_valid');
 checkboxes.forEach((cb)=>{

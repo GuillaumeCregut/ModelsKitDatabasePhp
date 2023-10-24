@@ -23,6 +23,22 @@ h2{
     font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
+.delete-btn{
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+.icon-delete-user{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.icon-delete-user:hover{
+    color: red;
+}
+
 @media screen and (max-width: 768px) {
     .admin-user{
          grid-area: 1/1/2/2;

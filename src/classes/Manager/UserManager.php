@@ -247,15 +247,16 @@ class UserManager extends Manager //implements ManagerInterface
     public function addModelStock(User $user, int $idModel, ?int $provider=null, ?float $price=null): bool
     {
         if (is_null($provider)){
-            $query='INSERT model_user (state,owner,model) VALUES (1,:user,:model)';
-            $values=[':user'=>$user->getId(), ':model'=>$idModel];
+            $query='INSERT model_user (state,owner,model) VALUES (:state,:user,:model)';
+            $values=[':user'=>$user->getId(), ':model'=>$idModel, ':state'=>App::STATE_STOCK];
         }else{
-            $query='INSERT model_user (state,owner,model,provider,price) VALUES (5,:user,:model,:provider,:price)';
+            $query='INSERT model_user (state,owner,model,provider,price) VALUES (:state,:user,:model,:provider,:price)';
             $values=[
                 ':user'=>$user->getId(),
                 ':model'=>$idModel,
                 ':provider'=>$provider,
-                ':price'=>$price
+                ':price'=>$price,
+                ':state'=>App::STATE_BUY
             ];
         }
        

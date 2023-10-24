@@ -147,10 +147,10 @@ class SocialManager extends Manager
 
     public function setRead(int $exp, int $dest)
     {
-        $query="UPDATE private_message SET is_read=1 WHERE (dest=:dest and exp=:exp)";
-        $values=[
-            ':exp'=>$exp,
-            ':dest'=>$dest
+        $query = "UPDATE private_message SET is_read=1 WHERE (dest=:dest and exp=:exp)";
+        $values = [
+            ':exp' => $exp,
+            ':dest' => $dest
         ];
         try {
             return $this->db->exec($query, $values);
@@ -161,11 +161,11 @@ class SocialManager extends Manager
 
     public function addMessage(int $dest, int $exp, string $message)
     {
-        $query="INSERT INTO private_message (exp,dest,message) VALUES (:exp,:dest,:message)";
-        $values=[
-            ':exp'=>$exp,
-            ':dest'=>$dest,
-            ':message'=>$message
+        $query = "INSERT INTO private_message (exp,dest,message) VALUES (:exp,:dest,:message)";
+        $values = [
+            ':exp' => $exp,
+            ':dest' => $dest,
+            ':message' => $message
         ];
         try {
             return $this->db->exec($query, $values);
@@ -176,10 +176,10 @@ class SocialManager extends Manager
 
     public function getFriendModels(int $idFriend)
     {
-        $query="SELECT id,modelname,pictures, reference,boxPicture,builderName,scaleName,brandName FROM mymodels WHERE owner=:owner AND state=:state";
-        $values=[
-            ':owner'=>$idFriend,
-            ':state'=>App::STATE_FINISHED
+        $query = "SELECT id,modelname,pictures, reference,boxPicture,builderName,scaleName,brandName FROM mymodels WHERE owner=:owner AND state=:state";
+        $values = [
+            ':owner' => $idFriend,
+            ':state' => App::STATE_FINISHED
         ];
         try {
             return $this->db->prepare($query, null, $values);
@@ -190,11 +190,11 @@ class SocialManager extends Manager
 
     public function getFriendModelDetails(int $friend, int $model)
     {
-        $query="SELECT m.id,m.modelname,m.pictures, m.reference,m.boxPicture,m.builderName,m.scaleName,m.brandName,u.allow 
+        $query = "SELECT m.id,m.modelname,m.pictures, m.reference,m.boxPicture,m.builderName,m.scaleName,m.brandName,u.allow 
         FROM mymodels m INNER JOIN user u ON m.owner=u.id WHERE m.id=:model and m.owner=:friend";
-        $values=[
-            ':model'=>$model,
-            ':friend'=>$friend
+        $values = [
+            ':model' => $model,
+            ':friend' => $friend
         ];
         try {
             return $this->db->prepare($query, null, $values);
@@ -205,14 +205,28 @@ class SocialManager extends Manager
 
     public function getModelMessages(int $id)
     {
-        
-        $query="SELECT mm.id,DATE_FORMAT(mm.date_message,\"%d %M %Y\") as dateMessage, mm.message,u.firstname,u.lastname,u.id as userId,u.avatar 
+        $query = "SELECT mm.id,DATE_FORMAT(mm.date_message,\"%d %M %Y\") as dateMessage, mm.message,u.firstname,u.lastname,u.id as userId,u.avatar 
         FROM model_message mm INNER JOIN user u ON mm.fk_author=u.id WHERE fk_model=:id ORDER BY mm.date_message DESC, id DESC";
-        $value=['id'=>$id];
+        $value = ['id' => $id];
         try {
             return $this->db->prepare($query, null, $value);
         } catch (DbException $e) {
             return [];
+        }
+    }
+
+    public function postModelMessage(int $exp, string $message, int $idModel)
+    {
+        $query = "INSERT INTO model_message (fk_model, fk_author, date_message, message) VALUES(:idmodel,:exp,now(),:message)";
+        $values = [
+            ':idmodel' => $idModel,
+            ':exp' => $exp,
+            ':message' => $message
+        ];
+        try {
+            return $this->db->exec($query, $values);
+        } catch (DbException $e) {
+            return $e->getDbCode();
         }
     }
 }

@@ -37,7 +37,10 @@
         <form action="" method="post">
             <section class="new-model-message">
                 <p>Laisser un message :</p>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="id" value="{$model->id}">
+                <input type="hidden" name="friend" value="{$friend}">
+                <textarea name="message" id="" cols="30" rows="10" required class="input-message" placeholder="Votre message"></textarea>
                 <button class="btn-send-model-message">Envoyer</button>
             </section>
             messages :

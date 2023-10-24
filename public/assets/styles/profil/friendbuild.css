@@ -46,6 +46,10 @@ h2{
     gap : 10px;
 }
 
+.input-message{
+    padding: 5px;
+}
+
 .btn-send-model-message{
     width: 90px;
     margin: 0 auto;

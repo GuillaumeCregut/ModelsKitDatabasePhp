@@ -36,13 +36,7 @@ class FriendHomePage extends Controller
             die();
         }
         //Get All finisehed Kits
-
-        //For debug only
-        $friendId = 5;
-
-        
         $models = $socialManager->getFriendModels($friendId);
-        var_dump($models);
         $this->displayPage($models, $friendId);
     }
 

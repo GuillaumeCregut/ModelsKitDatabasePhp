@@ -55,7 +55,7 @@
 .head-orders{
     position: sticky;
     top: 0;
-    background-color: rgb(206, 206, 238);
+    background-color: var(--menu-color);
     z-index: 2;
 }
 

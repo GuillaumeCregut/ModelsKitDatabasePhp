@@ -51,7 +51,7 @@
                         <td class="table-cell">{$data->brandName} - {$data->scaleName}</td>
                         <td class="table-cell">{$data->reference}</td>
                         <td class="table-cell">
-                            <img src="{$data->boxPicture}" alt="{$data->modelName}" class="box-picture"> 
+                            <img src="{if $data->boxPicture==null||$data->boxPicture==''}assets/uploads/models/no_image.jpg{else}{$data->boxPicture}{/if}" alt="{$data->modelName}" class="box-picture"> 
                         </td>
                         <td class="table-cell">
                             <button class="delete-btn" data-id="{$data->id}">

@@ -1,5 +1,5 @@
 {extends file="../_profil_template.tpl"}
-{block name=title}Models Kit Database - Profil{/block}
+{block name=title}Models Kit Database - Réseau social{/block}
 {block name=styles}
 <link rel="stylesheet" href="assets/styles/profil_general.css">
 <link rel="stylesheet" href="assets/styles/profil/socialhome.css">

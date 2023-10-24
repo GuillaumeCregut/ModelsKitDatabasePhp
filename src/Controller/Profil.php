@@ -40,6 +40,12 @@ class Profil extends Controller
                 case 'messages':
                     $className = 'PersonnalMessage';
                     break;
+                case 'ami':
+                    $className='FriendHomePage';
+                    break;
+                case 'montage':
+                    $className='FriendBuild';
+                    break;
                 default:
                     $page = new Error('404');
                     $page->render();

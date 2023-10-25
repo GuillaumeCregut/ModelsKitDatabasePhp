@@ -112,7 +112,7 @@
                         id="password2"
                         required />
                 </label>
-                <p class="signup_form_info">Nous n'utilisons que les cookies nécessaire au fonctionnement du système (cookies de session). Aucun autre cookie n'est installer sur votre navigateur.</p>
+                <p class="signup_form_info">Nous n'utilisons que les cookies nécessaire au fonctionnement du système (cookies de session). Aucun autre cookie n'est installé sur votre navigateur.</p>
                 <p class="signup_form_info">Vos données personnelles ne sont utiles que pour le fonctionnement du système et ne sont transmises à personne. Vous pouvez à tout moment demander à les supprimer en contactant l'administrateur.</p>
                 <label for="cbRGPD"><input type="checkbox" id="cbRGPD">  J'ai compris les règles RGPD (<a href="/rgpd" target="_blank">en savoir plus</a>)</label>
                 <button id="submitButton" class="form-signup-btn" disabled>Valider</button>

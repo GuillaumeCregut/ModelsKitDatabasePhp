@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Bonjour {$firstname} {$lastname}</h2>
-    <p>Votre inscription sur le site <a href="http://192.168.1.94">ModelsKitDatabase</a> est bien validée.</p>
+    <p>Votre inscription sur le site <a href="https://{$server}">ModelsKitDatabase</a> est bien validée.</p>
     <p>Vous souhaitant une bonne journée.</p>
     <p>L'équipe de ModelsKitDatabase</p>
 </body>

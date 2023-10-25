@@ -77,9 +77,11 @@ class ChangeValidUser extends ApiController
             $result=!!$result;
             if($newStatus && $result){
                 $emitter=Emitter::getInstance();
+                $serverAdress=$_SERVER['SERVER_NAME'];
                 $mailValues=[
                     'firstname'=>$user->getFirstname(),
-                    'lastname'=>$user->getLastname()
+                    'lastname'=>$user->getLastname(),
+                    'server'=>$serverAdress
                 ];
                 $emitter->emit(Emitter::USER_VALIDATED,$user->getEmail(),$mailValues );
             }

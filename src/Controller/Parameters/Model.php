@@ -18,6 +18,7 @@ class Model extends Controller
 {
     private ?User $user=null;
     private array $models=[];
+    private array $filters=[];
 
     public function render()
     {
@@ -46,6 +47,12 @@ class Model extends Controller
         if($this->hasFlash){
             $flashes=$this->flash->getFlash();
             $this->smarty->assign('flash',$flashes);
+        }
+        //If filters arre sets
+        if(!empty($this->filters)){
+            foreach($this->filters as $k=>$v){
+                $this->smarty->assign($k,$v);
+            }
         }
         //Get all needed datas for create a model
         $builderManager=new BuilderManager($this->dbConnection);
@@ -191,38 +198,52 @@ class Model extends Controller
         $request=[];
         if(isset($_POST['filter-category'])){
             $category=intval($_POST['filter-category']);
-            if($category!==0)
+            if($category!==0){
                 $request['category']=$category;
+                $this->filters['fCategory']=$category;
+            }
         }
         if(isset($_POST['filter-scale'])){
             $scale=intval($_POST['filter-scale']);
-            if($scale!==0)
+            if($scale!==0){
                 $request['scale']=$scale;
+                $this->filters['fScale']=$scale;
+            }
         }
         if(isset($_POST['filter-period'])){
             $period=intval($_POST['filter-period']);
-            if($period!==0)
+            if($period!==0){
                 $request['period']=$period;
+                $this->filters['fPeriod']=$period;
+            }
         }
         if(isset($_POST['filter-builder'])){
             $builder=intval($_POST['filter-builder']);
-            if($builder!==0)
+            if($builder!==0){
                 $request['builder']=$builder;
+                $this->filters['fBuilder']=$builder;
+            }
         }
         if(isset($_POST['filter-country'])){
             $country=intval($_POST['filter-country']);
-            if($country!==0)
+            if($country!==0){
                 $request['countryid']=$country;
+                $this->filters['fCountry']=$country;
+            }
         }
         if(isset($_POST['filter-brand'])){
             $brand=intval($_POST['filter-brand']);
-            if($brand!==0)
+            if($brand!==0){
                 $request['brand']=$brand;
+                $this->filters['fBrand']=$brand;
+            }
         }
         if(isset($_POST['filter-name'])){
             $name=htmlspecialchars($_POST['filter-name'], ENT_NOQUOTES, 'UTF-8');
-            if($name!=='')
+            if($name!==''){
                 $request['name']=$name;
+                $this->filters['fName']=$name;
+            }
         }
         return $request;
     }

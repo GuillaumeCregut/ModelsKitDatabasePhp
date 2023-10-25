@@ -16,9 +16,9 @@ class ChangeValidUser extends ApiController
             if(App::ADMIN==$this->userRank){
                 $method=$_SERVER['REQUEST_METHOD'];
                 switch ($method){
-                    case 'GET':$this->updateUser();
-                        // header("HTTP/1.1 405 Method Not Allowed");
-                        // die();
+                    case 'GET':
+                        header("HTTP/1.1 405 Method Not Allowed");
+                        die();
                         break;
                     case 'POST': 
                         header("HTTP/1.1 405 Method Not Allowed");

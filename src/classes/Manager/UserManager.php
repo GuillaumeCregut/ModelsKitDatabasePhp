@@ -25,7 +25,7 @@ class UserManager extends Manager //implements ManagerInterface
             $query = "SELECT firstname, lastname, email, login,isVisible, avatar, allow, rankUser, id, isvalid FROM " . $this->table . " WHERE id=:id";
             $classname = 'Editiel98\Entity\User';
             $values = [':id' => $id];
-            $result = $this->db->prepare($query, $classname, $values, true);
+            $result = $this->db->prepare($query, null, $values, true);
             if ($result) {
                 $user = new User();
                 $user->setFirstname($result->firstname);

@@ -1,13 +1,13 @@
 START TRANSACTION;
 
-DROP TABLE IF EXISTS `system`;
-CREATE TABLE IF NOT EXISTS `system` (
+DROP TABLE IF EXISTS `system_mkd`;
+CREATE TABLE IF NOT EXISTS `system_mkd` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-INSERT INTO `system` (`id`, `name`, `value`) VALUES
+INSERT INTO `system_mkd` (`id`, `name`, `value`) VALUES
 (1, 'init', '0'),
 (2, 'version', '1.3a');
 

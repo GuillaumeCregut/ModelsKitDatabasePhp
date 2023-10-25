@@ -1,3 +1,16 @@
+START TRANSACTION;
+
+DROP TABLE IF EXISTS `system`;
+CREATE TABLE IF NOT EXISTS `system` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `system` (`id`, `name`, `value`) VALUES
+(1, 'init', '0'),
+(2, 'version', '1.3a');
+
 CREATE TABLE IF NOT EXISTS `brand` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -14,7 +27,7 @@ INSERT INTO `brand` (`id`, `name`) VALUES
 (7, 'Hasegawa'),
 (8, 'Italeri'),
 (9, 'Heller'),
-(10, 'Fujimi'),
+(10, 'Fujimi');
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
@@ -43,7 +56,7 @@ INSERT INTO `country` (`id`, `name`) VALUES
 (3, 'U.S.A'),
 (4, 'URSS'),
 (5, 'Japon'),
-(6, 'Angleterre'),
+(6, 'Angleterre');
 
 DROP TABLE IF EXISTS `period`;
 CREATE TABLE IF NOT EXISTS `period` (
@@ -264,3 +277,5 @@ CREATE VIEW `model_fullwithcountry`  AS SELECT `mu`.`id` AS `id`, `mu`.`model` A
 
 DROP VIEW IF EXISTS `mymodels`;
 CREATE VIEW `mymodels`  AS SELECT `mu`.`id` AS `id`, `mu`.`model` AS `idModel`, `mu`.`state` AS `state`, `mu`.`pictures` AS `pictures`, `mu`.`price` AS `price`, `mu`.`owner` AS `owner`, `s`.`name` AS `stateName`, `m`.`name` AS `modelName`, `m`.`reference` AS `reference`, `m`.`picture` AS `boxPicture`, `bu`.`name` AS `builderName`, `st`.`name` AS `scaleName`, `br`.`name` AS `brandName`, `p`.`name` AS `providerName` FROM ((((((`model_user` `mu` join `state` `s` on((`mu`.`state` = `s`.`id`))) join `model` `m` on((`mu`.`model` = `m`.`id`))) join `builders` `bu` on((`m`.`builder` = `bu`.`id`))) join `scale` `st` on((`m`.`scale` = `st`.`id`))) join `brand` `br` on((`m`.`brand` = `br`.`id`))) left join `provider` `p` on((`mu`.`provider` = `p`.`id`))) ;
+
+COMMIT;

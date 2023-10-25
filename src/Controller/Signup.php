@@ -49,9 +49,11 @@ class  Signup extends Controller
                         $emitter=Emitter::getInstance();
                         $emitter->emit(Emitter::USER_SUBSCRIBED,"Un nouvel utilisateur s'est inscrit");
                         $mailer=new Mailer(); 
+                        $serverAdress=$_SERVER['SERVER_NAME'];
                         $values=[
                             'firstname'=>$firstname,
-                            'lastname'=>$lastname
+                            'lastname'=>$lastname,
+                            'server'=>$serverAdress
                         ];
                         $mailer->sendHTMLMailToUser($email,'votre inscription à Model Kits Database',$values,'signup');
                     }

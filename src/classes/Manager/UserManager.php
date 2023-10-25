@@ -25,9 +25,23 @@ class UserManager extends Manager //implements ManagerInterface
             $query = "SELECT firstname, lastname, email, login,isVisible, avatar, allow, rankUser, id, isvalid FROM " . $this->table . " WHERE id=:id";
             $classname = 'Editiel98\Entity\User';
             $values = [':id' => $id];
-            $result = $this->db->prepare($query, $classname, $values, true);
+            $result = $this->db->prepare($query, null, $values, true);
             if ($result) {
-                return $result;
+                $user = new User();
+                $user->setFirstname($result->firstname);
+                $user->setLastname($result->lastname);
+                $user->setEmail($result->email);
+                $user->setlogin($result->login);
+                $user->setId($result->id);
+                $user->setValid($result->isvalid);
+                $user->setAllow($result->allow);
+                $user->setVisible($result->isVisible);
+                if (is_null($result->avatar)) {
+                    $avatar = '';
+                } else  $avatar = $result->avatar;
+                $user->setAvatar($avatar);
+                $user->setRankUser($result->rankUser);
+                return $user;
             } else return null;
         } catch (DbException $e) {
             throw new Exception($e->getdbMessage());
@@ -41,7 +55,21 @@ class UserManager extends Manager //implements ManagerInterface
             $values = [':email' => $mail];
             $result = $this->db->prepare($query, null, $values, true);
             if ($result) {
-                return $result;
+                $user = new User();
+                $user->setFirstname($result->firstname);
+                $user->setLastname($result->lastname);
+                $user->setEmail($result->email);
+                $user->setlogin($result->login);
+                $user->setId($result->id);
+                $user->setValid($result->isvalid);
+                $user->setAllow($result->allow);
+                $user->setVisible($result->isVisible);
+                if (is_null($result->avatar)) {
+                    $avatar = '';
+                } else  $avatar = $result->avatar;
+                $user->setAvatar($avatar);
+                $user->setRankUser($result->rankUser);
+                return $user;
             } else return null;
         } catch (DbException $e) {
             return false;

@@ -29,7 +29,7 @@
                             <select name="filter-category" id="category-select" class="select-filter">
                                 <option value="0">--</option>
                                 {foreach from=$categories item=category}
-                                <option value="{$category->getId()}">{$category->getName()}</option>
+                                <option value="{$category->getId()}" {if isset($fCategory) && $category->getId()==$fCategory}selected{/if}>{$category->getName()}</option>
                                 {/foreach}
                             </select>
                             {/if}
@@ -39,7 +39,7 @@
                             <select name="filter-scale" id="scale-select" class="select-filter">
                                 <option value="0">--</option>
                                 {foreach from=$scales item=scale}
-                                <option value="{$scale->getId()}">{$scale->getName()}</option>
+                                <option value="{$scale->getId()}" {if isset($fScale) && $scale->getId()==$fScale}selected{/if}>{$scale->getName()}</option>
                                 {/foreach}
                             </select>
                             {/if}
@@ -51,7 +51,7 @@
                             <select name="filter-period" id="period-select" class="select-filter">
                                 <option value="0">--</option>
                                 {foreach from=$periods item=period}
-                                <option value="{$period->getId()}">{$period->getName()}</option>
+                                <option value="{$period->getId()}" {if isset($fPeriod) && $period->getId()==$fPeriod}selected{/if}>{$period->getName()}</option>
                                 {/foreach}
                             </select>
                             {/if}
@@ -61,7 +61,7 @@
                             <select name="filter-builder" id="builder-select" class="select-filter">
                                 <option value="0">--</option>
                                 {foreach from=$builders item=builder}
-                                <option value="{$builder->getId()}">{$builder->getName()}</option>
+                                <option value="{$builder->getId()}" {if isset($fBuilder) && $builder->getId()==$fBuilder}selected{/if}>{$builder->getName()}</option>
                                 {/foreach}
                             </select>
                             {/if}
@@ -73,7 +73,7 @@
                             <select name="filter-country" id="country-select" class="select-filter">
                                 <option value="0">--</option>
                                 {foreach from=$countries item=country}
-                                <option value="{$country->getId()}">{$country->getName()}</option>
+                                <option value="{$country->getId()}" {if isset($fCountry) && $country->getId()==$fCountry}selected{/if}>{$country->getName()}</option>
                                 {/foreach}
                             </select>
                             {/if}
@@ -83,14 +83,14 @@
                             <select name="filter-brand" id="brand-select" class="select-filter">
                                 <option value="0">--</option>
                                 {foreach from=$brands item=brand}
-                                <option value="{$brand->getId()}">{$brand->getName()}</option>
+                                <option value="{$brand->getId()}" {if isset($fBrand) && $brand->getId()==$fBrand}selected{/if}>{$brand->getName()}</option>
                                 {/foreach}
                             </select>
                             {/if}
                         </label>
                     </div>
                     <label for="name-filter" class='model-filter-label'>par nom :
-                        <input type="text" name="filter-name" id="name-filter" class="filter-name-input">
+                        <input type="text" name="filter-name" id="name-filter" class="filter-name-input" {if isset($fName)}value="{$fName}" {/if}>
                     </label>
                 </div>
                 <button class='btn-filter' type="submit">

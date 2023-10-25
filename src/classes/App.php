@@ -52,6 +52,9 @@ class App{
             case 'forgot':
                 $this->route='Forgot';
                 break;
+            case 'init':
+                $this->route='Init';
+                break;
             case 'kit':
                 $this->route='Kit';
                 break;

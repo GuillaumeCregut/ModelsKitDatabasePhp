@@ -1,7 +1,4 @@
-START TRANSACTION;
-
-DROP TABLE IF EXISTS `system_mkd`;
-CREATE TABLE IF NOT EXISTS `system_mkd` (
+CREATE TABLE  `system_mkd` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL,
@@ -11,7 +8,7 @@ INSERT INTO `system_mkd` (`id`, `name`, `value`) VALUES
 (1, 'init', '0'),
 (2, 'version', '1.3a');
 
-CREATE TABLE IF NOT EXISTS `brand` (
+CREATE TABLE  `brand` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
@@ -29,8 +26,8 @@ INSERT INTO `brand` (`id`, `name`) VALUES
 (9, 'Heller'),
 (10, 'Fujimi');
 
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE IF NOT EXISTS `category` (
+
+CREATE TABLE `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
@@ -43,8 +40,8 @@ INSERT INTO `category` (`id`, `name`) VALUES
 (4, 'Navires'),
 (5, 'Hélicoptères');
 
-DROP TABLE IF EXISTS `country`;
-CREATE TABLE IF NOT EXISTS `country` (
+
+CREATE TABLE `country` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
@@ -58,8 +55,8 @@ INSERT INTO `country` (`id`, `name`) VALUES
 (5, 'Japon'),
 (6, 'Angleterre');
 
-DROP TABLE IF EXISTS `period`;
-CREATE TABLE IF NOT EXISTS `period` (
+
+CREATE TABLE `period` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
@@ -72,8 +69,8 @@ INSERT INTO `period` (`id`, `name`) VALUES
 (4, 'Entre guerres'),
 (5, 'Moderne');
 
-DROP TABLE IF EXISTS `scale`;
-CREATE TABLE IF NOT EXISTS `scale` (
+
+CREATE TABLE `scale` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -86,8 +83,8 @@ INSERT INTO `scale` (`id`, `name`) VALUES
 (4, '1/32'),
 (5, '1/35');
 
-DROP TABLE IF EXISTS `builders`;
-CREATE TABLE IF NOT EXISTS `builders` (
+
+CREATE TABLE `builders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `country` int NOT NULL,
   `name` varchar(200) NOT NULL,
@@ -97,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `builders` (
 ALTER TABLE `builders`
   ADD CONSTRAINT `c_country_family` FOREIGN KEY (`country`) REFERENCES `country` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-DROP TABLE IF EXISTS `model`;
-CREATE TABLE IF NOT EXISTS `model` (
+
+CREATE TABLE `model` (
   `id` int NOT NULL AUTO_INCREMENT,
   `builder` int NOT NULL,
   `category` int NOT NULL,
@@ -123,8 +120,8 @@ ALTER TABLE `model`
   ADD CONSTRAINT `c_period_model` FOREIGN KEY (`period`) REFERENCES `period` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `c_scale_model` FOREIGN KEY (`scale`) REFERENCES `scale` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+
+CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `rankUser` int NOT NULL DEFAULT '1',
   `firstname` varchar(200) NOT NULL,
@@ -144,8 +141,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `state`;
-CREATE TABLE IF NOT EXISTS `state` (
+
+CREATE TABLE `state` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
@@ -157,8 +154,8 @@ INSERT INTO `state` (`id`, `name`) VALUES
 (4, 'Liste de souhaits'),
 (5, 'Commandé');
 
-DROP TABLE IF EXISTS `provider`;
-CREATE TABLE IF NOT EXISTS `provider` (
+
+CREATE TABLE `provider` (
   `id` int NOT NULL AUTO_INCREMENT,
   `owner` int NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -169,8 +166,8 @@ CREATE TABLE IF NOT EXISTS `provider` (
 ALTER TABLE `provider`
   ADD CONSTRAINT `c_user_provider` FOREIGN KEY (`owner`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-DROP TABLE IF EXISTS `orders`;
-CREATE TABLE IF NOT EXISTS `orders` (
+
+CREATE TABLE `orders` (
   `owner` int NOT NULL,
   `provider` int NOT NULL,
   `reference` varchar(50) NOT NULL,
@@ -184,8 +181,8 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `c_order_owner` FOREIGN KEY (`owner`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `c_order_provider` FOREIGN KEY (`provider`) REFERENCES `provider` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-DROP TABLE IF EXISTS `model_order`;
-CREATE TABLE IF NOT EXISTS `model_order` (
+
+CREATE TABLE `model_order` (
   `id` int NOT NULL AUTO_INCREMENT,
   `model_id` int NOT NULL,
   `order_id` varchar(50) NOT NULL,
@@ -200,8 +197,8 @@ ALTER TABLE `model_order`
   ADD CONSTRAINT `model_order` FOREIGN KEY (`model_id`) REFERENCES `model` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `oder_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`reference`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-DROP TABLE IF EXISTS `model_user`;
-CREATE TABLE IF NOT EXISTS `model_user` (
+
+CREATE TABLE `model_user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `owner` int NOT NULL,
   `model` int NOT NULL,
@@ -220,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `model_user` (
   ADD CONSTRAINT `c_model_owner` FOREIGN KEY (`owner`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `c_model_state` FOREIGN KEY (`state`) REFERENCES `state` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-  CREATE TABLE IF NOT EXISTS `friend` (
+  CREATE TABLE `friend` (
   `id_friend1` int NOT NULL,
   `id_friend2` int NOT NULL,
   `is_ok` smallint NOT NULL DEFAULT '0',
@@ -231,8 +228,8 @@ ALTER TABLE `friend`
   ADD CONSTRAINT `id1_friend` FOREIGN KEY (`id_friend1`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `id2_friend` FOREIGN KEY (`id_friend2`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-DROP TABLE IF EXISTS `model_message`;
-CREATE TABLE IF NOT EXISTS `model_message` (
+
+CREATE TABLE `model_message` (
   `id` int NOT NULL AUTO_INCREMENT,
   `fk_model` int NOT NULL,
   `fk_author` int NOT NULL,
@@ -247,8 +244,8 @@ ALTER TABLE `model_message`
   ADD CONSTRAINT `c_author_com` FOREIGN KEY (`fk_author`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `c_model_com` FOREIGN KEY (`fk_model`) REFERENCES `model_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
-DROP TABLE IF EXISTS `private_message`;
-CREATE TABLE IF NOT EXISTS `private_message` (
+
+CREATE TABLE `private_message` (
   `id` int NOT NULL AUTO_INCREMENT,
   `exp` int NOT NULL,
   `dest` int NOT NULL,
@@ -278,4 +275,3 @@ CREATE VIEW `model_fullwithcountry`  AS SELECT `mu`.`id` AS `id`, `mu`.`model` A
 DROP VIEW IF EXISTS `mymodels`;
 CREATE VIEW `mymodels`  AS SELECT `mu`.`id` AS `id`, `mu`.`model` AS `idModel`, `mu`.`state` AS `state`, `mu`.`pictures` AS `pictures`, `mu`.`price` AS `price`, `mu`.`owner` AS `owner`, `s`.`name` AS `stateName`, `m`.`name` AS `modelName`, `m`.`reference` AS `reference`, `m`.`picture` AS `boxPicture`, `bu`.`name` AS `builderName`, `st`.`name` AS `scaleName`, `br`.`name` AS `brandName`, `p`.`name` AS `providerName` FROM ((((((`model_user` `mu` join `state` `s` on((`mu`.`state` = `s`.`id`))) join `model` `m` on((`mu`.`model` = `m`.`id`))) join `builders` `bu` on((`m`.`builder` = `bu`.`id`))) join `scale` `st` on((`m`.`scale` = `st`.`id`))) join `brand` `br` on((`m`.`brand` = `br`.`id`))) left join `provider` `p` on((`mu`.`provider` = `p`.`id`))) ;
 
-COMMIT;

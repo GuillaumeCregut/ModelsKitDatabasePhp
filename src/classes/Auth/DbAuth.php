@@ -1,6 +1,7 @@
 <?php
 namespace Editiel98\Auth;
 
+use Editiel98\App;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
 use Editiel98\Entity\User;
@@ -31,6 +32,9 @@ class DbAuth
         $query='SELECT firstname,id,lastname,rankUser,passwd,avatar,isvalid FROM user WHERE login=:login';
         try{
             $userDb=$this->db->prepare($query,null,[':login'=>$login],true);
+            if(is_null($userDb->avatar)){
+                $userDb->avatar='';
+            }
             $isValid=password_verify( $password,  $userDb->passwd)&&($userDb->isvalid===1);
             if($isValid){
                 $user=new User();
@@ -63,18 +67,20 @@ class DbAuth
      * @param string $pass
      * @return boolean : user is stored
      */
-    public function signUp(string $login, string $mail, string $firstname, string $lastname, string $pass): bool
+    public function signUp(string $login, string $mail, string $firstname, string $lastname, string $pass, ?bool $init=false,?int $rank=App::USER): bool
     {
         $hashedPassword=password_hash($pass,PASSWORD_DEFAULT);
         $query="INSERT INTO user 
             (firstname, lastname, login,passwd,rankUser, email, isvalid) 
-            VALUES(:firstname,:lastname,:login,:pass,1,:email,0)";
+            VALUES(:firstname,:lastname,:login,:pass,:rank,:email,:valid)";
         $values=[
             ':firstname'=>$firstname,
             ':lastname'=>$lastname,
             ':email'=>$mail,
             ':login'=>$login,
-            'pass'=>$hashedPassword
+            'pass'=>$hashedPassword,
+            ':valid'=>$init,
+            ':rank'=>$rank
         ];
         try{
             $result=$this->db->exec($query,$values);

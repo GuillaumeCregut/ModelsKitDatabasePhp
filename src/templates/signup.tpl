@@ -41,7 +41,7 @@
                     <input
                         type="text"
                         class='form-signup-input'
-                        id="lastanme"
+                        id="lastname"
                         name="lastname"
                         autoComplete='off'
                         placeholder="nom"
@@ -49,7 +49,7 @@
                 </label>
                 <label for="email" class='form-signup-label'>Adresse mail :
                     <input
-                        type="text"
+                        type="email"
                         class='form-signup-input'
                         id="email"
                         name="email"

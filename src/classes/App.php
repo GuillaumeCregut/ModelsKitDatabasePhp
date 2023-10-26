@@ -13,7 +13,7 @@ class App{
     const USER=1;
     const MODERATE=2;
     //default admin ID
-    const DEFAULT_ADMIN=5;
+    const DEFAULT_ADMIN=1;
     const VERSION='1.3a';
     //Model States
     const STATE_STOCK=1;
@@ -51,6 +51,9 @@ class App{
                 break;
             case 'forgot':
                 $this->route='Forgot';
+                break;
+            case 'init':
+                $this->route='Init';
                 break;
             case 'kit':
                 $this->route='Kit';

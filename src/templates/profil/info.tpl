@@ -16,7 +16,7 @@
             <div class="user-info-avatar-container">
                 Avatar : 
                 <div class="avatar-container">
-                {if $baseUrl==''}
+                {if $baseUrl==null || $baseUrl==''}
                     {$user->getFirstname()|truncate:1:""|upper}{$user->getLastname()|truncate:1:""|upper}
                 {else}
                     <img src="{$baseUrl}" alt="{$user->getAvatar()}" class="avatar-img">

@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap');
+
+* {
+    list-style-type: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* colors */
+    --menu-color: #BBFDC9;
+    --title-color: #912C51;
+    --back-menu-color: #4C57AA;
+    /* Fonts */
+    --main-font: 'Kanit', sans-serif;
+    ;
+    --title-font: 'Pacifico', cursive;
+    ;
+}
+
+body {
+    font-family: var(--main-font);
+}
+
+.main-font-20 {
+    font-family: var(--main-font);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.App {
+    margin-bottom: 150px;
+
+}
+
+.right-page {
+    grid-area: 1 / 2 / 2 / 3;
+
+    @media screen and (max-width: 768px) {
+        grid-area: 1/1/2/2;
+    }
+
+}
+
+.left-menu{
+    grid-area: 1 / 1 / 2 / 2;
+    width: 250px;
+    min-height: 450px;
+    background-color: var(--menu-color);
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.left-links-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.link-param-item{
+    height: 100%;
+}
+
+.nav-item{
+    font-size: 20px;
+    font-family: var(--main-font);
+    color :var(--title-color);
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+}
+
+  .nav-item::after {
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: var(--back-menu-color);
+    display: block;
+    transition: 0.5s;
+    margin: 0 auto;
+  }
+  
+  .nav-item:hover::after {
+    width: 80%;
+  }
+
+.active{
+    color: var(--menu-color);
+    background-color: var(--back-menu-color);
+}
+
+.success{
+    background-color: rgb(58, 197, 36);
+}
+
+.error{
+    background-color: rgb(244, 99, 66);
+    color : white;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-item{
+        font-size: 9px;
+        font-family: var(--main-font);
+    }
+    
+    .left-links-container{
+        flex-direction: row;
+        justify-content: space-around;
+        height: 40px;
+    }
+
+    .left-menu{
+        font-size: 11px;
+        position: relative;
+        top : -40px;
+        min-height: 20px;
+        height: 40px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid black;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-font-20 {
+        font-size: 16px;
+        line-height: 20px;
+    }
+}

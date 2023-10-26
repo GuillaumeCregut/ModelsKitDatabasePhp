@@ -1,0 +1,150 @@
+.main-profil-container{
+    margin-bottom: 50px;
+}
+
+h2{
+    text-align: center;
+    margin: 20px 0;
+}
+
+.back-link{
+    margin: 20px 0;
+}
+
+.img-box-detail{
+    width: 250px;
+}
+
+.title-friend-pictures{
+    margin: 10px 0;
+}
+
+.picture-model-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap : 10px;
+}
+
+.message-zone-model{
+    margin: 20px 0;
+}
+
+.img-built-model{
+    width: 350px;
+}
+
+.new-message-text{
+    padding : 5px;
+}
+
+.new-model-message{
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    margin: 0 auto;
+    gap : 10px;
+}
+
+.input-message{
+    padding: 5px;
+}
+
+.btn-send-model-message{
+    width: 90px;
+    margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    text-decoration: none;
+    color: inherit;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #1976d2;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+}
+
+
+.message-model-container{
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    max-height: 350px ;
+    overflow-y: scroll;
+}
+
+
+.friend-build-message-container{
+    border: 1px solid rgb(157, 157, 157);
+    border-radius: 15px;
+    padding: 10px;
+    margin : 10px;
+    -webkit-box-shadow: 5px 5px 16px 2px #8A8A8A; 
+    box-shadow: 5px 5px 16px 2px #8A8A8A;
+}
+
+.friend-identity-message-container{
+    display: flex;
+    gap : 20px;
+    align-items: center;
+    margin-bottom: 10px;    
+}
+
+.avatar-container{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    user-select: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(229, 191, 236);
+}
+
+.avatar-img{
+    width: 40px;
+    height: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .details-friend-kit{
+        margin : 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .picture-model-container{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .message-model-container{
+        width: 90vw;
+        margin: 10px auto;
+    }
+}

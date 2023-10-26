@@ -1,0 +1,122 @@
+.update-model-container-title {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.label-update {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.add-model-form-input {
+    margin-left: 5px;
+    line-height: 1.2rem;
+    padding: 2px;
+    font-size: 1.1rem;
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid black;
+}
+
+#scalemates {
+    width: 500px;
+    font-size: smaller;
+}
+
+.select-filter {
+    border-radius: 3px;
+    padding: 3px;
+    margin-left: 5px;
+    outline: 0;
+}
+
+/*File drop*/
+.input-file-add {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+
+.box-input {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.box-inner {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.box-dragndrop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+}
+
+.innerHighlighted {
+    -webkit-box-shadow: inset 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+    box-shadow: inset 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+}
+
+.outerHiglighted {
+    border: 1px solid rgb(3, 247, 3);
+    -webkit-box-shadow: 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+    box-shadow: 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+}
+
+.new-picture-display {
+    position: absolute;
+    top: 3px;
+    left: 10px;
+    width: auto;
+    height: calc(100% - 6px);
+    display: none;
+}
+
+.display-image {
+    display: block;
+}
+
+.form-add-model-btn {
+    margin: 5px;
+    padding: 7px;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    border: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-width: 64px;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(25, 118, 210);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .params-container {
+        grid-area: 1/1/2/2;
+    }
+}

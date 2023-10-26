@@ -1,0 +1,40 @@
+.footer-page{
+    background-color: var(--menu-color);
+    padding-left: 20px;
+    font-family: var(--title-font);
+    color : var(--title-color);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    position :fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+.footer-mentions{
+    
+    margin-left: 50px;
+}
+
+.footer-mentions a{
+    color: black;
+}
+
+.footer-mentions a:hover{
+    color : blue;
+}
+
+.copyright{
+    padding-left: 20px;
+}
+
+    
+@media screen and (max-width:768px){
+    .footer-page{
+    font-size: 12px;
+    }
+
+    .footer_image{
+        height: 15px;
+    }
+}

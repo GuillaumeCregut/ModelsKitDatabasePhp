@@ -1,0 +1,128 @@
+h2{
+    text-align: center;
+    margin: 20px 0;
+}
+
+.form-search{
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.search-input{
+    margin-left: 5px;
+    line-height: 1.2rem;
+    padding: 2px;
+    font-size: 1.1rem;
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid black;
+}
+
+.btn-search{
+    display: flex;
+    background-color: rgb(25, 118, 210);
+    outline: 0px;
+    border: 0px;
+    margin-top: 20px;
+    max-width: 40px;
+    padding: 7px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-model-icon{
+    height: 30px;
+    width:  30px;
+}
+
+.tableContainer{
+    max-height: 400px;
+    overflow-y: scroll;
+    margin-bottom: 50px;
+}
+
+.list-table{
+    width: 100%;
+}
+
+.table-cell{
+    text-align: center;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    padding: 16px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.head-table{
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    background-color: var(--menu-color);
+    z-index: 2;
+}
+
+.name-details{
+    cursor: zoom-in;
+    color : black;
+}
+
+.name-details:hover{
+    text-decoration: underline;
+}
+
+.box-picture{
+    width: 230px;
+}
+
+.delete-btn{
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+.icon-delete-kit{
+    width: 30px;
+    height: 30px;
+}
+
+.icon-delete-kit:hover{
+    color: red;
+}
+
+@media screen and (max-width: 768px) {
+    .icon-delete-kit{
+        width: 20px;
+        height: 20px;
+    }
+
+    .search-model-icon{
+        height: 20px;
+        width:  20px;
+    }
+
+    .btn-search{
+        max-width: 30px;
+    }
+
+    .tableContainer{
+        margin: 0 auto;
+        width: 90vw;
+        overflow-x: scroll;
+    }
+
+    .table-cell{
+        padding: 8px;
+        font-size: 0.7rem;
+    }
+
+    .box-picture{
+        width: 100px;
+    }
+}

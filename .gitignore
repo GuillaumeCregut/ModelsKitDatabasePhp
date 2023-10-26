@@ -1,1 +1,14 @@
-templates_c/*
+src/templates_c/*
+skeleton.sample
+src/templates/skeletons*.tpl
+test.php
+config.xml
+notes.txt
+src/logs/*
+!.gitkeep
+/public/assets/uploads/models/*
+!/public/assets/uploads/models/no_image.jpg
+!public/assets/uploads/models/index.html
+src/Controller/Profil/template.php
+/public/assets/uploads/users/*
+!/public/assets/uploads/users/index.html

@@ -49,7 +49,7 @@
                 </label>
                 <label for="email" class='form-signup-label'>Adresse mail :
                     <input
-                        type="text"
+                        type="email"
                         class='form-signup-input'
                         id="email"
                         name="email"

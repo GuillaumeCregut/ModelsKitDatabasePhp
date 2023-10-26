@@ -33,7 +33,7 @@ class  Signup extends Controller
                 $login='';
             }
             if(isset($_POST['password'])){
-                $pass=htmlspecialchars($_POST['password'], ENT_NOQUOTES, 'UTF-8');
+                $pass=$_POST['password'];
             }else{
                 $pass='';
             }

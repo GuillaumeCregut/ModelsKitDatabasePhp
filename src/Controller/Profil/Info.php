@@ -166,8 +166,9 @@ class Info extends Controller
     private function displayPage(string $template)
     {
         $baseUrl='';
-        if(!is_null($this->user->getAvatar())){
+        if(!is_null($this->user->getAvatar()) && $this->user->getAvatar()!=='' ){
             $id=$this->user->getId();
+            echo "toto";
             $baseUrl='assets/uploads/users/'. $id . '/' . $this->user->getAvatar();
         }
         $this->smarty->assign('profil','profil');

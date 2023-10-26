@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use Editiel98\Database\DatabaseMake;
 use Editiel98\Session;
 use Editiel98\SmartyMKD;
 use Exception;
 use PDO;
 use PDOException;
+
 
 class Init
 {
@@ -15,62 +17,81 @@ class Init
     private string $host;
     private string $name;
     private string $pass;
+    private array $messages;
     private $pdo;
+    private array $subPages;
+
+    public function __construct(array $subPages = [], array $params = [])
+    {
+        $this->subPages = $subPages;
+        $this->smarty = new SmartyMKD();
+    }
+
 
     public function render()
     {
+        if (!empty($this->subPages)) {
+            $classPage = 'App\\Controller\\Init\\Start';
+            $page = new $classPage([], []);
+            $page->render();
+        }
         $this->loadCredentials();
         $init = false;
-        //vérifie si la base est initialisée
         try {
             $this->pdo = new PDO('mysql:dbname=' . $this->name . ';host=' . $this->host, $this->user, $this->pass);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "<p>Connexion base OK</p>";
+            $this->messages[] = "Connexion base OK";
         } catch (PDOException $e) {
-            echo "Erreur à la connexion à la base de données, vérifiez vos informations";
+            $this->messages[] = "Erreur à la connexion à la base de données, vérifiez vos informations";
+            $this->displayPage();
             die();
         }
-        //si non, initialise la base
         $query = "SELECT * FROM system_mkd";
         try {
-            $st =$this->pdo->query($query);
-            $init=true;
+            $st = $this->pdo->query($query);
+            $init = true;
         } catch (PDOException $e) {
             $errCode = intVal($e->getCode());
             if ($errCode === 42) {
                 $init = false;
-            } else{
-                echo $e->getMessage();
+            } else {
+                $this->messages[] = $e->getMessage();
+                $this->displayPage();
                 die();
-            } 
+            }
         }
-        if($init){
+        if ($init) {
             $datas = $st->fetchAll(PDO::FETCH_OBJ);
-            $dbInit=$datas[0];
-            if($dbInit->value===1){
-                echo "<p>Le système a déja été initialisé</p>";
-                die();
-            }
-            //Ici on a la base de créée, mais init vaut 0.
-            if(empty($_POST)){
-                $this->smarty=new SmartyMKD();
-                $this->smarty->display('init.tpl');
-                die();
-            }
-            //ici le post est rempli, on vérifie si les informations sont bien rentrées
-            if(!isset($_POST[''])){
-                echo "<p>Veuillez remplir le formulaire</p>";
+            $dbInit = $datas[0];
+            if ($dbInit->value === "1") {
+                $this->messages[] = "Le système a déja été initialisé";
+                $this->displayPage();
                 die();
             }
         }
+        $this->smarty->assign('display_form', true);
         //Ici, la base n'est pas crée, on la créée.
-        echo "<p>Base non initialisée</p>";
+        $this->messages[] = "Base non initialisée";
+        $databaseMake=new DatabaseMake();
+        $makeQueries=$databaseMake->getQueries();
+        try {
+            $this->messages[] = "Création de la base de données.";
+            $this->pdo->exec('DROP DATABASE IF EXISTS ' . $this->name);
+            $this->pdo->exec('CREATE DATABASE ' . $this->name);
+            $this->pdo->exec('USE ' . $this->name);
+            foreach($makeQueries as $query){
+                $statement = $this->pdo->prepare($query);
+                $statement->execute();
+            } 
+            //Create database
+            $this->messages[] = "Création de la base de données effectuée.";
+        } catch (PDOException $e) {
+            $this->messages[] = "Echec de création de la base : " . $e->getMessage();
+        }
         //Une fois la base crée avec succès
 
         //On affiche un lien pour recharger la page et afficher le formulaire
-
-        
-
+        $this->displayPage();
     }
 
     private function loadCredentials()
@@ -86,7 +107,15 @@ class Init
             $this->host = $config->database->host;
         } catch (Exception $e) {
             //Echec de lecture du fichier init
-            echo "erreur init";
+            $this->messages[] = "erreur de lecture du fichier init";
+        }
+    }
+
+    private function displayPage()
+    {
+        if (!empty($this->messages)) {
+            $this->smarty->assign('messages', $this->messages);
+            $this->smarty->display('init.tpl');
         }
     }
 }

@@ -24,6 +24,11 @@
     color : blue;
 }
 
+.footer_image{
+    height: 30px;
+    vertical-align: bottom;
+}
+
 .copyright{
     padding-left: 20px;
 }
@@ -36,5 +41,9 @@
 
     .footer_image{
         height: 15px;
+    }
+
+    .copyright{
+        padding-left: 10px;
     }
 }

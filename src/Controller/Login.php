@@ -34,7 +34,6 @@ class Login extends Controller
                     $this->smarty->display('login.tpl');
                     die();
                 }
-                header('Status: 200');
                 header('Location: /');
             } catch (Exception $e) {
                 $errPage=new Error('500',$e->getMessage());

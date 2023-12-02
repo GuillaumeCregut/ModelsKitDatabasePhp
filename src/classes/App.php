@@ -65,7 +65,7 @@ class App{
                 $this->route='Logout';
                 break;
             case 'parametres': //parameters
-                $this->route='parameters';
+                $this->route='Parameters';
                 break;
             case'profil':
                 $this->route='Profil';
@@ -74,7 +74,7 @@ class App{
                 $this->route='Recover';
                 break;
             case 'rgpd':
-                $this->route='rgpd';
+                $this->route='Rgpd';
                 break;
             case 'signup':
                 $this->route='Signup';

@@ -58,10 +58,10 @@ class Builder extends Controller
                 case "add" :
                     if(isset($_POST['name'])){
                         $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
-                        if($name='') return false;
+                        if($name==='') return false;
                         if(isset($_POST['countryId'])){
                             $countryId=intval($_POST['countryId']);
-                            if($countryId=0) return false;
+                            if($countryId===0) return false;
                             return $this->add($name, $countryId);
                         }
                         else
@@ -81,19 +81,19 @@ class Builder extends Controller
                 case "update":
                     if(isset($_POST['name'])){
                         $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
-                        if($name='') return false;
+                        if($name==='') return false;
                     }
                     else
                         return false;
                     if(isset($_POST['id'])){
                         $id=intval($_POST['id']);
-                        if($id=0) return false;
+                        if($id===0) return false;
                     }
                     else
                         return false;
                     if(isset($_POST['countryId'])){
                         $countryId=intval($_POST['countryId']);
-                        if($countryId=0) return false;
+                        if($countryId===0) return false;
                     }
                     else
                         return false; 

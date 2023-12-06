@@ -8,7 +8,7 @@
     <main class='home-section'>
       <h1 class="home-title">Models Kit Database</h1>
       <section class='hero-section'>
-        <img src="assets/pictures/home-hero.png" alt="toto" class='hero-picture'/>
+        <img src="assets/pictures/home-hero.png" alt="home hero" class='hero-picture'/>
         <p class="hero-text">
           Notre solution simple et intuitive vous facilitera la gestion de votre stock de maquettes.<br />
           Laissez votre création s'envoler, Models kit database vous permettra de connaitre à tout moment l'état de votre stock, planifier vos achats et vous garderez une trace de vos investissements.<br />

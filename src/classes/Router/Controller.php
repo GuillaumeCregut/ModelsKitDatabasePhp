@@ -110,6 +110,9 @@ abstract class Controller
                 }
             }
         }
+        else{
+            $this->userRank=0;
+        }
     }
 
 }

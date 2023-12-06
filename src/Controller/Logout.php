@@ -9,7 +9,6 @@ class Logout extends Controller
     {
         //Empty $_Session
         $this->session->destroy();
-        header('Status: 200');
         header('Location: /');
     }
 }

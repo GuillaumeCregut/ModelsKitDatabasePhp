@@ -1,12 +1,15 @@
 <?php
 namespace App\Controller\Kit;
 
+use Editiel98\App;
 use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
 
 class WipKit extends Controller
 {
+    use TraitStock;
+
     private string $search='';
     public function render()
     {
@@ -30,12 +33,17 @@ class WipKit extends Controller
         }
         $kits=$user->getWipKit($this->search);
         $kitCount=count($kits);
-        $page='kit_stock';
+        $page='kit_wip';
         $this->displayPage($kitCount, $page, $kits, $this->search);  //search : search from $_POST
     }
 
     private function displayPage(int $count, string $page, array $list, ?string $search='')
     {
+        $stocks=[
+            App::STATE_FINISHED=>'terminé',
+            App::STATE_STOCK=>'En Stock'
+        ];
+        $this->smarty->assign('listStock',$stocks);
         $this->smarty->assign('dataList',$list);
         $this->smarty->assign('kits', true);
         $this->smarty->assign('wip_menu', true);
@@ -54,16 +62,28 @@ class WipKit extends Controller
         if(!isset($_POST['action'])){
             return;
         }
-        $action =$_POST['action'];
-        if($action !=='delete'){
-           return;
-        }
+       
         if(isset($_POST['id'])){
             $id=intval($_POST['id']);       
         }
-        if($id!==0){
-            $kitManager=new UserManager($this->dbConnection);
-            return $kitManager->deleteModelFromStock($id,$this->userId);
+        if($id===0) {
+            return;
         }
+        $action =$_POST['action'];
+        switch($action) {
+            case 'delete' : 
+                return $this->deleteModel($id);
+                break;
+            case 'move' : 
+                return $this->moveStock($id,$_POST['newStock'],$this->userId);
+                break;
+            default :return;
+        }
+    }
+
+    private function deleteModel(int $id)
+    {
+        $kitManager=new UserManager($this->dbConnection);
+        return $kitManager->deleteModelFromStock($id,$this->userId);
     }
 }

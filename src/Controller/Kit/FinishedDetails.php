@@ -15,12 +15,6 @@ class FinishedDetails extends Controller
 
     public function render()
     {
-        if (!$this->isConnected || !isset($_GET['id'])) {
-            //Render antoher page and die
-            $this->smarty->assign('profil', 'profil');
-            $this->smarty->display('profil/notconnected.tpl');
-            die();
-        }
         //get id from GET
         if (!$this->isConnected || !isset($_GET['id'])) {
             //Render antoher page and die

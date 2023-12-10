@@ -245,7 +245,7 @@ class ModelManager extends Manager implements ManagerInterface
     }
 
     public function getOneFullById(int $id, int $user){
-        $query='SELECT * FROM model_fullwithCountry WHERE id=:id AND owner=:owner';
+        $query='SELECT * FROM model_fullwithcountry WHERE id=:id AND owner=:owner';
         $values=[
             ':id'=>$id,
             ':owner'=>$user

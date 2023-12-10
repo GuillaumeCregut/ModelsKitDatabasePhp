@@ -32,7 +32,6 @@ class App{
         $this->setEmitter();
         $uri=$_SERVER['REQUEST_URI'];
         if(strlen($uri)>1&& $uri[-1]=='/'){
-            var_dump(substr($uri,0,-1));
             header('Location: ' . substr($uri,0,-1));
             header('HTTP/1.1 301 Moved Permanently');
             exit();

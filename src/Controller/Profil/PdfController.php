@@ -82,7 +82,6 @@ class PdfController extends Controller
         
         $this->addBlocs($brands,"Répartition par marques");
         $price=$statsManager->getStatPrice($this->userId);
-        // var_dump($price);
         $this->pdf->Newcell(0,0,"Coût total du stock (suivant les informations fournies) {$price[0]->sum} euros");
         $this->pdf->addPageDoc();
         $this->pdf->setTitlePage("Liste des modèles",2);

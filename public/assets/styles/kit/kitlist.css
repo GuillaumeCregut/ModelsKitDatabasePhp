@@ -60,6 +60,27 @@ h2{
     font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
+.cell-action {
+    display: flex;
+    flex-direction: column;
+}
+
+.action-move {
+    margin-top: 20px;
+}
+
+.btn-move {
+    background-color: rgb(25, 118, 210);
+    padding: 3px;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .head-table{
     font-weight: bold;
     position: sticky;
@@ -85,6 +106,7 @@ h2{
     border: 0;
     outline: 0;
     cursor: pointer;
+    background-color: transparent;
 }
 
 .icon-delete-kit{

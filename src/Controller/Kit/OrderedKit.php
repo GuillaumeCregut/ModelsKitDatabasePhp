@@ -1,12 +1,15 @@
 <?php
 namespace App\Controller\Kit;
 
+use Editiel98\App;
 use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
 
 class OrderedKit extends Controller
 {
+    use TraitStock;
+    
     private string $search='';
     public function render()
     {
@@ -36,6 +39,12 @@ class OrderedKit extends Controller
 
     private function displayPage(int $count, string $page, array $list, ?string $search='')
     {
+        $stocks=[
+            App::STATE_FINISHED=>'terminé',
+            App::STATE_WIP=>'En cours',
+            App::STATE_STOCK=>'En Stock'
+        ];
+        $this->smarty->assign('listStock',$stocks);
         $this->smarty->assign('dataList',$list);
         $this->smarty->assign('kits', true);
         $this->smarty->assign('commandes_menu', true);
@@ -55,12 +64,22 @@ class OrderedKit extends Controller
             return;
         }
         $action =$_POST['action'];
-        if($action !=='delete'){
-           return;
-        }
         if(isset($_POST['id'])){
             $id=intval($_POST['id']);       
         }
+        switch($action) {
+            case 'delete' : 
+                return $this->deleteModel($id);
+                break;
+            case 'move' : 
+                return $this->moveStock($id,$_POST['newStock'],$this->userId);
+                break;
+            default :return;
+        }
+    }
+
+    private function deleteModel(int $id)
+    {
         if($id!==0){
             $kitManager=new UserManager($this->dbConnection);
             return $kitManager->deleteModelFromStock($id,$this->userId);

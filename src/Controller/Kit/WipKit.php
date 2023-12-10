@@ -30,7 +30,7 @@ class WipKit extends Controller
         }
         $kits=$user->getWipKit($this->search);
         $kitCount=count($kits);
-        $page='kit_stock';
+        $page='kit_wip';
         $this->displayPage($kitCount, $page, $kits, $this->search);  //search : search from $_POST
     }
 

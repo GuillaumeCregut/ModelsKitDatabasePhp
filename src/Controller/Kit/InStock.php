@@ -8,6 +8,8 @@ use Editiel98\Router\Controller;
 
 class InStock extends Controller
 {
+    use TraitStock;
+    
     private string $search='';
     public function render()
     {
@@ -72,7 +74,7 @@ class InStock extends Controller
             case 'delete' : 
                 return $this->deleteModel($id);
                 break;
-            case 'move' : return $this->moveStock($id,$_POST['newStock']);
+            case 'move' : return $this->moveStock($id,$_POST['newStock'],$this->userId);
                 break;
             default :return;
         }
@@ -82,11 +84,5 @@ class InStock extends Controller
     {
         $kitManager=new UserManager($this->dbConnection);
         return $kitManager->deleteModelFromStock($id,$this->userId);
-    }
-
-    private function moveStock(int $id, int $newStock)
-    {
-        //check if newStock is OK, then move
-        var_dump($_POST);
     }
 }

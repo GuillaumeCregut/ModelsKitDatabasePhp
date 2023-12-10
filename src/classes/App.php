@@ -14,7 +14,7 @@ class App{
     const MODERATE=2;
     //default admin ID
     const DEFAULT_ADMIN=1;
-    const VERSION='1.3a';
+    const VERSION='1.4a';
     //Model States
     const STATE_STOCK=1;
     const STATE_WIP=2;

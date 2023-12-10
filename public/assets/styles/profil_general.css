@@ -7,6 +7,10 @@
     height: 100%;
 }
 
+.main-profil-container{
+    padding-left: 20px;
+}
+
 
 @media screen and (max-width: 768px) {
     .profil {

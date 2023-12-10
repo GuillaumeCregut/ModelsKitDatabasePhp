@@ -280,6 +280,8 @@ class Model extends Controller
     private function storeFile(string $name): string
     {
         $filename='';
+        $name=str_replace('/','_',$name);
+        $name=str_replace(' ','_',$name);
         $baseDir='assets/uploads/models/';
         if(isset($_FILES['new-picture'])){
             $image=$_FILES['new-picture'];

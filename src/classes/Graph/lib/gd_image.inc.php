@@ -1813,9 +1813,7 @@ class Image {
 
         } else {
 
-            var_dump($x1, $x2, $y1, $y2);
             $length = sqrt(pow($x2 - $x1, 2) + pow($y2 - $y1, 2));
-            var_dump($length);exit;
             exit;
 
 /*
@@ -1863,9 +1861,6 @@ class Image {
         $red   = $color >> 16 & 0xFF;
         $green = $color >> 8 & 0xFF;
         $blue  = $color & 0xFF;
-
-//var_dump($alpha, $red, $green, $blue);exit;
-
         return array($red, $green, $blue, $alpha);
     }
 

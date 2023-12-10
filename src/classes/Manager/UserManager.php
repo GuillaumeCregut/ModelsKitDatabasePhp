@@ -195,7 +195,6 @@ class UserManager extends Manager //implements ManagerInterface
         try {
             return $this->db->exec($query, $values);
         } catch (DbException $e) {
-            var_dump($e->getdbMessage());
             return false;
         }
     }

@@ -67,6 +67,9 @@ class OrderedKit extends Controller
         if(isset($_POST['id'])){
             $id=intval($_POST['id']);       
         }
+        if($id===0) {
+            return;
+        }
         switch($action) {
             case 'delete' : 
                 return $this->deleteModel($id);
@@ -80,9 +83,7 @@ class OrderedKit extends Controller
 
     private function deleteModel(int $id)
     {
-        if($id!==0){
-            $kitManager=new UserManager($this->dbConnection);
-            return $kitManager->deleteModelFromStock($id,$this->userId);
-        }
+        $kitManager=new UserManager($this->dbConnection);
+        return $kitManager->deleteModelFromStock($id,$this->userId);
     }
 }

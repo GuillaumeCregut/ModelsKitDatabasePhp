@@ -20,6 +20,9 @@ class Admin extends Controller
                     case 'users':
                             $className='Users';
                             break;
+                    case 'database':
+                            $className='DBMgmt';
+                            break;
                     default :
                         $page=new Error('404');
                         $page->render();

@@ -3,6 +3,9 @@
     text-align: center;
 }
 
+.bad-version {
+    color : red;
+}
 
 @media screen and (max-width: 768px) {
     .db-admin{

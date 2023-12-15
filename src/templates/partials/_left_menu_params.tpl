@@ -7,5 +7,6 @@
             <li class="link-param-item"><a href="parametres_scales" class="nav-item {if isset($scale_menu)}active{/if}">Echelles</a></li>
             <li class="link-param-item"><a href="parametres_countries" class="nav-item {if isset($country_menu)}active{/if}">Pays</a></li>
             <li class="link-param-item"><a href="parametres_models" class="nav-item {if isset($model_menu)}active{/if}">Modèles</a></li>
+            <li class="link-param-item"><a href="parametres_converter" class="nav-item {if isset($converter_menu)}active{/if}">Convertisseur d'échelles</a></li>
         </ul>
     </div>

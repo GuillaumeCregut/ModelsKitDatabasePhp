@@ -312,6 +312,22 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    public function getUserItemForCSV(int $state,string $order, int $user)
+    {
+        $query="SELECT stateName, providerName, price, modelName, reference, periodName, brandName, 
+        builderName, countryName, scaleName, categoryName,scalemates FROM model_fullwithcountry WHERE owner=:owner AND state=:state ORDER BY " . $order;
+        $values=[
+            ':state'=>$state,
+            ':owner'=>$user
+        ];
+        try {
+            return $this->db->prepare($query,null,$values);
+        } catch (DbException $e) {
+            return [];
+        }
+
+    }
+
     /**
      * Exec the query
      *

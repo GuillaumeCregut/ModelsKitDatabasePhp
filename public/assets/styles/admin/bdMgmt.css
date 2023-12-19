@@ -1,0 +1,31 @@
+
+.db-title{
+    text-align: center;
+}
+
+.bad-version {
+    color : red;
+}
+
+.result-line {
+    margin: 5px 0;
+}
+
+.wrong{
+    height: 1.5ch;
+    width: 20px;
+}
+
+.checkmark {
+    color: rgb(57, 243, 104);
+    vertical-align: baseline;
+    height: 1.5ch;
+    width: 20px;
+  }
+
+
+@media screen and (max-width: 768px) {
+    .db-admin{
+        grid-area: 1/1/2/2;
+    }
+}

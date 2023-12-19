@@ -119,6 +119,23 @@ class Database{
         }
     }
 
+    public function execStraight(string $query) : bool
+    {
+        try{
+            $result=$this->getConnect()->exec($query);
+            if($result===false) {
+                return false;
+            }
+            return true;
+        } catch (Exception $e){
+            $errCode=intVal($e->getCode());
+            $errMessage=$e->getMessage();
+            $emitter=Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR,'database : ' .$e->getMessage());
+            throw new DbException('Erreur Exec',$errCode,$errMessage);
+        }
+    }
+
     public function exec(string $statement,array $values) :bool | int
     {
         try{

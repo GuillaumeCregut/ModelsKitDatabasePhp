@@ -10,6 +10,24 @@ const previewContainer=document.querySelector('.preview-list');
 const nbFiles=document.getElementById('count-files').value;
 const uploadBtn=document.getElementById('UpLoadBtn');
 
+/*For answering messages */
+const btnAnswer=document.querySelectorAll('.btn-response');
+
+const toggleBox=(id)=>{
+    console.log(id)
+    const box=document.getElementById(id);
+    box.classList.toggle('message-answer-show');
+}
+
+btnAnswer.forEach((btn)=>{
+    const id=btn.dataset.id;
+    btn.addEventListener('click',()=>{
+        toggleBox(id);
+    })
+    
+})
+
+/*End answering */
 
 const MaxFileCount=4-nbFiles;
 let countFiles=0;

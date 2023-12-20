@@ -98,14 +98,14 @@
             <h3 class="kit-detail-message">Messages</h3>
             <div class="kit-details-messages-container">
                 {foreach from=$messages item=message}
-                <!--Debut de changement-->
                 <div class="friend-build-message-container">
                     <div class="friend-identity-message-container">
                         <div class="avatar">
                             {if $message.message->avatar=='' || $message.message->avatar==null}
                             {$message.message->firstname|truncate:1:""|upper}{$message.message->lastname|truncate:1:""|upper}
                             {else}
-                            <img src="{$message.message->avatar}" alt="{$message.message->firstname}" class="avatar-img">
+                            <img src="{$message.message->avatar}" alt="{$message.message->firstname}"
+                                class="avatar-img">
                             {/if}
                         </div>
                         <div class="right-identity-message">
@@ -118,8 +118,9 @@
                     </article>
                     <section class="reply-container">
                         {foreach from=$message.replies item=reply}
-                            <article class="friend-build-message-container">
-                                <div class="friend-identity-message-container">
+                        <article class="friend-build-message-container-reply">
+                            <div class="friend-identity-message-container-reply">
+                                <div class="identity-reply">
                                     <div class="avatar">
                                         {if $reply->avatar=='' || $reply->avatar==null}
                                         {$reply->firstname|truncate:1:""|upper}{$reply->lastname|truncate:1:""|upper}
@@ -127,28 +128,29 @@
                                         <img src="{$reply->avatar}" alt="{$reply->firstname}" class="avatar-img">
                                         {/if}
                                     </div>
-                                    <div class="right-identity-message">
+                                    <div class="right-identity-message-reply">
                                         <p>{$reply->firstname} {$reply->lastname}</p>
                                         <p>Le : {$reply->dateMessage}</p>
                                     </div>
-                                    <article>
-                                        {$reply->message}
-                                    </article>
-                            </article>
+                                </div>
+                                <article class="message-reply">
+                                    {$reply->message}
+                                </article>
+                        </article>
                         {/foreach}
                     </section>
-                    <button data-id="msg-{$model->id}" class="btn-response">Répondre au message</button>
-                    <div id="msg-{$model->id}">
+                    <button data-id="msg-{$message.message->id}" class="btn-response">Répondre au message</button>
+                    <div id="msg-{$message.message->id}" class="answer-container">
                         <form action="kit_finishedDetails?id={$model->id}" method="post">
                             <input type="hidden" name="action" value="reply">
                             <input type="hidden" name="messageId" value="{$message.message->id}">
                             <label for="response{$message.message->id}">Votre réponse : </label>
-                            <textarea name="response" id="response{$message.message->id}" cols="30" rows="10"></textarea>
+                            <textarea name="response" id="response{$message.message->id}" cols="30"
+                                rows="10" class="answer-text"></textarea>
                             <button type="submit">Répondre</button>
                         </form>
                     </div>
                 </div>
-                <!--Fin de changement-->
                 {/foreach}
             </div>
         </section>

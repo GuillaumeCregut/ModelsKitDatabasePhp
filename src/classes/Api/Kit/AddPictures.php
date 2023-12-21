@@ -4,6 +4,7 @@ namespace Editiel98\Api\Kit;
 
 use Editiel98\Manager\ModelManager;
 use Editiel98\Router\ApiController;
+use Exception;
 
 class AddPictures extends ApiController
 {
@@ -58,35 +59,38 @@ class AddPictures extends ApiController
         if (!$resultFile) {
             return '';
         }
-        //Return le resultat de la fonction
-        return $this->convertPicture($destFile, $filename, $ext, $destFile);
+        return $this->convertPicture($destFile, $filename, $ext, $uploadDir);
     }
 
     private function convertPicture(string $picture, string $filename, string $ext, string $destFolder): string
     {
-        //Ouvre en mémoire l'image
-        if ($ext === 'jpeg') {
-            $img = imagecreatefromjpeg($picture);
-        } else if ($ext === 'png') {
-            $img = imagecreatefrompng($picture);
+        try {
+            //Ouvre en mémoire l'image
+            if ($ext === 'jpeg') {
+                $img = imagecreatefromjpeg($picture);
+            } else if ($ext === 'png') {
+                $img = imagecreatefrompng($picture);
+            }
+            if (!$img) {
+                return $filename  . '.' . $ext;
+            }
+            //Convertir en webp
+            imagepalettetotruecolor($img);
+            imagealphablending($img, true);
+            imagesavealpha($img, true);
+            //sauvegarde
+            $fullName = $filename . '.webp';
+            $fullPathFile = $destFolder . $fullName;
+            $result = imagewebp($img, $fullPathFile, 80);
+            imagedestroy($img);
+            //Supprime le fichier originel si tout est OK
+            if (file_exists($fullPathFile)  && $result) {
+                unlink($picture);
+                return $fullName;
+            }   
+            return $filename  . '.' . $ext;;
+        } catch (Exception $e) {
+            header($_SERVER['SERVER_PROTOCOL'] . $e->getMessage(), true, 500);
         }
-        if (!$img) {
-            return $filename  . '.' . $ext;
-        }
-        //Convertir en webp
-        imagepalettetotruecolor($img);
-        imagealphablending($img, true);
-        imagesavealpha($img, true);
-        //sauvegarde
-        $fullName= $filename . '.webp';
-        $fullPathFile=$destFolder . $fullName;
-        $result=imagewebp($img,$fullPathFile,80);
-        imagedestroy($img);
-        //Supprime le fichier originel si tout est OK
-        if(file_exists($fullPathFile  && $result)) {
-            unlink($picture);
-            return $fullName;
-        }
-        return $filename  . '.' . $ext;;
     }
 }

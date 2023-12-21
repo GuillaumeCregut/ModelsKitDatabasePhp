@@ -205,8 +205,8 @@ class SocialManager extends Manager
 
     public function getModelMessages(int $id)
     {
-        $query = "SELECT mm.id,DATE_FORMAT(mm.date_message,\"%d %M %Y\") as dateMessage, mm.message,u.firstname,u.lastname,u.id as userId,u.avatar 
-        FROM model_message mm INNER JOIN user u ON mm.fk_author=u.id WHERE fk_model=:id ORDER BY mm.date_message DESC, id DESC";
+        $query = "SELECT mm.id,DATE_FORMAT(mm.date_message,\"%d %M %Y\") as dateMessage, mm.message,mm.reply_id as replyId,u.firstname,u.lastname,u.id as userId,u.avatar 
+        FROM model_message mm INNER JOIN user u ON mm.fk_author=u.id WHERE fk_model=:id ORDER BY mm.date_message ASC, id ASC";
         $value = ['id' => $id];
         try {
             return $this->db->prepare($query, null, $value);

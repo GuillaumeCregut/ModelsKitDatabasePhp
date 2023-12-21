@@ -65,10 +65,10 @@
                         </div>
                     </div>
                     <article>{$message.message->message|nl2br}</article>
-                    <section class="reponse-msg">
+                    <section class="response-container">
                         {foreach from=$message.replies item=reply}
-                        <article style="background-color: red; margin-bottom: 5px;">
-                            <div>
+                        <article class="response-body">
+                            <div class="response-identity">
                                 <div class="avatar-container">
                                     {if $reply->avatar==null || $reply->avatar==''}
                                     {$reply->firstname|truncate:1:""|upper}{$reply->lastname|truncate:1:""|upper}

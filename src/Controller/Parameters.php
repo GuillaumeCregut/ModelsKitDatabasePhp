@@ -37,6 +37,9 @@ class Parameters extends Controller
                 case 'modelUpdate':
                     $className="UpdateModel";
                     break;
+                case 'converter':
+                    $className="ScaleConverter";
+                    break;
                 default: 
                     $page=new Error('404');
                     $page->render();

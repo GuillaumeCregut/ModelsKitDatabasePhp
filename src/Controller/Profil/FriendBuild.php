@@ -62,7 +62,7 @@ class FriendBuild extends Controller
             }
         }
         //get messages
-        $messages = $this->socialManager->getModelMessages($idModel);
+        $messages = $this->getMessages($idModel);
         if (!empty($files)) {
             $this->smarty->assign('pictures', $files);
         }
@@ -77,6 +77,27 @@ class FriendBuild extends Controller
         $this->smarty->assign('profil', true);
         $this->smarty->assign('social_menu', true);
         $this->smarty->display('profil/friendbuild.tpl');
+    }
+
+    private function getMessages($idModel)
+    {
+        $messages = $this->socialManager->getModelMessages($idModel);
+        //Organise les messages comme dans finishedModel
+        
+        $allMessages=[];
+        foreach($messages as $message) {
+            if(is_null($message->replyId)) {
+                $newMessage=[
+                    'message'=>$message,
+                    'replies'=>[]
+                ];
+                $allMessages[$message->id]=$newMessage;
+               
+            } else {
+                $allMessages[$message->replyId]['replies'][]=$message;
+            }
+        }
+        return $allMessages;
     }
 
     private function storeMessage()

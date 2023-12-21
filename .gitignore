@@ -12,3 +12,4 @@ src/logs/*
 src/Controller/Profil/template.php
 /public/assets/uploads/users/*
 !/public/assets/uploads/users/index.html
+

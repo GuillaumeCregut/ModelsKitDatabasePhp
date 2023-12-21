@@ -1,0 +1,14 @@
+{
+    "version": "1.4",
+    "description": "Modification de la gestion des messages sur modèles finis.",
+    "code":[ 
+        {
+            "description":"Modification table messages",
+            "SQL":"ALTER TABLE `model_message` ADD `reply_id` INT NULL AFTER `message`;"
+        },
+        {
+            "description":"Mise à jour de la version.",
+            "SQL":"UPDATE system_mkd SET `value`='1.4' WHERE name='version';"
+        }
+    ]
+}

@@ -4,6 +4,23 @@ The aim of this project is to have a multi users management tool for managing pl
 
 The original project is developped with React and Node, this one is full PHP but is the same.
 
+### V1.4a
+
+New Features
+==
+
+Admin : upgrade DB following version in admin panel.
+
+Social network and finished model : Modeler can answer to friends messages.
+
+Parameters : Add a scale converter
+
+My Profil : export your datas in CSV file.
+
+My Stock : transfer models states from all pages.
+
+User : personnal pictures are converted to webp
+
 
 ### V1.3a
 
@@ -29,3 +46,7 @@ Copy config.xml.sample or rename it config.xml and fill it with your infos (DB c
 
 Then, go to {yourSite}/init to initialize database and create admin account. If all is right, then you can use the site.
 
+Update from older version
+==
+
+Upload files in your server. Log as admin and go to panel admin. Update database with v1.4 file.

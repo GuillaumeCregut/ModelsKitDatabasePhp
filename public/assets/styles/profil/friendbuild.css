@@ -130,6 +130,37 @@ h2{
     height: 40px;
 }
 
+.response-container  {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.response-body {
+    margin : 7px;
+    border: 1px solid rgb(157, 157, 157);
+    border-radius: 15px;
+    padding: 10px;
+    margin : 10px;
+    -webkit-box-shadow: 5px 5px 16px 2px #8A8A8A; 
+    box-shadow: 5px 5px 16px 2px #8A8A8A;
+    width: 60%;
+    display: flex;
+}
+
+.message-reply {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.response-identity {
+    margin-right: 7px;
+    padding-right: 10px;
+    border-right: 1px solid #8A8A8A;
+}
+
+
 @media screen and (max-width: 768px) {
     .details-friend-kit{
         margin : 0 auto;
@@ -146,5 +177,21 @@ h2{
     .message-model-container{
         width: 90vw;
         margin: 10px auto;
+    }
+
+    .response-body {
+        width: 90%;
+    }
+
+    .response-body {
+        flex-direction: column;
+    }
+
+    .response-identity {
+        border: 0;
+        border-bottom: 1px solid #8A8A8A;
+        margin:0;
+        margin-bottom: 5px;
+        display: flex;
     }
 }

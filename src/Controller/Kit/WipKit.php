@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Kit;
 
 use Editiel98\App;
@@ -10,80 +11,80 @@ class WipKit extends Controller
 {
     use TraitStock;
 
-    private string $search='';
+    private string $search = '';
     public function render()
     {
-        if(!$this->isConnected){
-        //Render antoher page and die
-            $this->smarty->assign('profil','profil');
-            $this->smarty->display('profil/notconnected.tpl');
+        if (!$this->isConnected) {
+            //Render antoher page and die
+            $this->smarty->assign('kits', 'kits');
+            $this->smarty->display('kit/notconnected.tpl');
             die();
         }
-        $user=new User();
+        $user = new User();
         $user->setId($this->userId);
-        if(!empty($_GET)){
-            if(isset($_GET['name'])){
-                $this->search=htmlspecialchars($_GET['name'], ENT_NOQUOTES, 'UTF-8');
-            }
-            else $this->search=false;
-        }
-        else $this->search='';
-        if(!empty($_POST)){
+        if (!empty($_GET)) {
+            if (isset($_GET['name'])) {
+                $this->search = htmlspecialchars($_GET['name'], ENT_NOQUOTES, 'UTF-8');
+            } else $this->search = false;
+        } else $this->search = '';
+        if (!empty($_POST)) {
             $this->usePost();
         }
-        $kits=$user->getWipKit($this->search);
-        $kitCount=count($kits);
-        $page='kit_wip';
+        $kits = $user->getWipKit($this->search);
+        $kitCount = count($kits);
+        $page = 'kit_wip';
         $this->displayPage($kitCount, $page, $kits, $this->search);  //search : search from $_POST
     }
 
-    private function displayPage(int $count, string $page, array $list, ?string $search='')
+    private function displayPage(int $count, string $page, array $list, ?string $search = '')
     {
-        $stocks=[
-            App::STATE_FINISHED=>'terminé',
-            App::STATE_STOCK=>'En Stock'
+        $stocks = [
+            App::STATE_FINISHED => 'terminé',
+            App::STATE_STOCK => 'En Stock'
         ];
-        $this->smarty->assign('listStock',$stocks);
-        $this->smarty->assign('dataList',$list);
+        $this->smarty->assign('listStock', $stocks);
+        $this->smarty->assign('dataList', $list);
         $this->smarty->assign('kits', true);
         $this->smarty->assign('wip_menu', true);
-        $this->smarty->assign('title','Kit en cours');
-        $this->smarty->assign('titleDisplay','en cours');
-        $this->smarty->assign('actionPage',$page);
-        $this->smarty->assign('countKit',$count);
-        $this->smarty->assign('searchValue',$search);
+        $this->smarty->assign('title', 'Kit en cours');
+        $this->smarty->assign('titleDisplay', 'en cours');
+        $this->smarty->assign('actionPage', $page);
+        $this->smarty->assign('countKit', $count);
+        $this->smarty->assign('searchValue', $search);
         $this->smarty->display('kit/kitlist.tpl');
     }
 
-    private function usePost(){
-        if(isset($_POST['search'])){
-            $this->search=htmlspecialchars($_POST['search'], ENT_NOQUOTES, 'UTF-8');
+    private function usePost()
+    {
+        if (isset($_POST['search'])) {
+            $this->search = htmlspecialchars($_POST['search'], ENT_NOQUOTES, 'UTF-8');
         }
-        if(!isset($_POST['action'])){
+        if (!isset($_POST['action'])) {
             return;
         }
-       
-        if(isset($_POST['id'])){
-            $id=intval($_POST['id']);       
+
+        if (isset($_POST['id'])) {
+            $id = intval($_POST['id']);
         }
-        if($id===0) {
+        if ($id === 0) {
             return;
         }
-        $action =$_POST['action'];
-        switch($action) {
-            case 'delete' : 
+        $action = $_POST['action'];
+        switch ($action) {
+            case 'delete':
                 return $this->deleteModel($id);
                 break;
-            case 'move' : 
-                return $this->moveStock($id,$_POST['newStock'],$this->userId);
+            case 'move':
+                return $this->moveStock($id, $_POST['newStock'], $this->userId);
                 break;
-            default :return;
+            default:
+                return;
         }
     }
 
     private function deleteModel(int $id)
     {
-        $kitManager=new UserManager($this->dbConnection);
-        return $kitManager->deleteModelFromStock($id,$this->userId);
+        $kitManager = new UserManager($this->dbConnection);
+        return $kitManager->deleteModelFromStock($id, $this->userId);
     }
 }

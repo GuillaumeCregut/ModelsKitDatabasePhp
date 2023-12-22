@@ -12,8 +12,8 @@ class FinishedKit extends Controller
     {
         if (!$this->isConnected) {
             //Render antoher page and die
-            $this->smarty->assign('profil', 'profil');
-            $this->smarty->display('profil/notconnected.tpl');
+            $this->smarty->assign('kits', 'kits');
+            $this->smarty->display('kit/notconnected.tpl');
             die();
         }
         $modelManager=new ModelManager($this->dbConnection);

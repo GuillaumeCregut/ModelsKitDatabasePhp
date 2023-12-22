@@ -11,6 +11,12 @@ class ExportCSV extends Controller
 {
     public function render()
     {
+        if (!$this->isConnected) {
+            //Render antoher page and die
+            $this->smarty->assign('profil', 'profil');
+            $this->smarty->display('profil/notconnected.tpl');
+            die();
+        }
         if ($_SERVER['REQUEST_METHOD']==='POST') {
             $this->usePost();
         }

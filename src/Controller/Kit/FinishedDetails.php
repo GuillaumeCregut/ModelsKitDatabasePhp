@@ -22,8 +22,8 @@ class FinishedDetails extends Controller
         //get id from GET
         if (!$this->isConnected || !isset($_GET['id'])) {
             //Render antoher page and die
-            $this->smarty->assign('profil', 'profil');
-            $this->smarty->display('profil/notconnected.tpl');
+            $this->smarty->assign('kits', 'kits');
+            $this->smarty->display('kit/notconnected.tpl');
             die();
         }
         $id = intval($_GET['id']);

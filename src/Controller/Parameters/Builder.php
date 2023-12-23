@@ -152,7 +152,7 @@ class Builder extends Controller
 
     private function update(int $id, string $name, int $countryId): bool 
     {
-        if(App::ADMIN!==$this->userRank || App::MODERATE===$this->userRank){
+        if(App::ADMIN!==$this->userRank || App::MODERATE!==$this->userRank){
             return false;
         }
         if(($id===0) || ($name==='') ||($countryId===0)){

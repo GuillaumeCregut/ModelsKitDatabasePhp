@@ -103,7 +103,7 @@ class Period extends Controller
 
     private function update(int $id, string $name): bool 
     {
-        if(App::ADMIN!==$this->userRank || App::MODERATE===$this->userRank){
+        if(App::ADMIN!==$this->userRank || App::MODERATE!=$this->userRank){
             return false;
         }
         $period=new EntityPeriod();

@@ -107,7 +107,7 @@ class Model extends Controller
 
     private function update(): bool
     {
-        if(App::ADMIN!==$this->userRank || App::MODERATE===$this->userRank){
+        if(App::ADMIN!==$this->userRank || App::MODERATE!==$this->userRank){
             return false;
         }
         if(!$this->checkForm()){

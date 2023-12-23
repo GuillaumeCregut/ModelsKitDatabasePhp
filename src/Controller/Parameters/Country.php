@@ -25,7 +25,7 @@ class Country extends Controller
         $countries = $countryManager->getAll();
         if ($this->isConnected) {
             $this->smarty->assign('connected', true);
-            if (App::ADMIN === $this->userRank) {
+            if (App::ADMIN === $this->userRank || App::MODERATE===$this->userRank) {
                 $this->smarty->assign('isAdmin', true);
             }
         }
@@ -99,7 +99,7 @@ class Country extends Controller
 
     private function update(int $id, string $name): bool
     {
-        if (App::ADMIN !== $this->userRank) {
+        if (App::ADMIN !== $this->userRank || App::MODERATE===$this->userRank) {
             return false;
         }
         $country = new EntityCountry();

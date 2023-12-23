@@ -32,7 +32,7 @@ class Builder extends Controller
         $this->smarty->assign('list',$this->builders);
         if($this->isConnected){
             $this->smarty->assign('connected',true);
-            if(App::ADMIN===$this->userRank){
+            if(App::ADMIN===$this->userRank || App::MODERATE===$this->userRank){
                 $this->smarty->assign('isAdmin',true);
             }
         }
@@ -152,7 +152,7 @@ class Builder extends Controller
 
     private function update(int $id, string $name, int $countryId): bool 
     {
-        if(App::ADMIN!==$this->userRank){
+        if(!(App::ADMIN===$this->userRank || App::MODERATE==$this->userRank)){
             return false;
         }
         if(($id===0) || ($name==='') ||($countryId===0)){

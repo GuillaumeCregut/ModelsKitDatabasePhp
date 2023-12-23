@@ -26,7 +26,7 @@ class Brand extends Controller
         $brands= $brandManager->getAll();
         if($this->isConnected){
             $this->smarty->assign('connected',true);
-            if(App::ADMIN===$this->userRank){
+            if(App::ADMIN===$this->userRank || App::MODERATE===$this->userRank){
                 $this->smarty->assign('isAdmin',true);
             }
         }
@@ -104,7 +104,7 @@ class Brand extends Controller
 
     private function update(int $id, string $name): bool 
     {
-        if(App::ADMIN!==$this->userRank){
+        if(!(App::ADMIN===$this->userRank || App::MODERATE==$this->userRank)){
             return false;
         }
         $brand=new EntityBrand();

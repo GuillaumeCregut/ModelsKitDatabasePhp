@@ -27,7 +27,7 @@ class Model extends Controller
             $userId=$this->session->getKey(Session::SESSION_USER_ID);
             $this->user=new User();
             $this->user->setId($userId);
-            if(App::ADMIN===$this->userRank){
+            if(App::ADMIN===$this->userRank || App::MODERATE===$this->userRank){
                 $this->smarty->assign('isAdmin',true);
             }
         }
@@ -107,7 +107,7 @@ class Model extends Controller
 
     private function update(): bool
     {
-        if(App::ADMIN!==$this->userRank){
+        if(!(App::ADMIN===$this->userRank || App::MODERATE==$this->userRank)){
             return false;
         }
         if(!$this->checkForm()){

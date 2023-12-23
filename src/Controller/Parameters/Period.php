@@ -25,7 +25,7 @@ class Period extends Controller
         $periods= $periodManager->getAll();
         if($this->isConnected){
             $this->smarty->assign('connected',true);
-            if(App::ADMIN===$this->userRank){
+            if(App::ADMIN===$this->userRank || App::MODERATE===$this->userRank){
                 $this->smarty->assign('isAdmin',true);
             }
         }
@@ -103,7 +103,7 @@ class Period extends Controller
 
     private function update(int $id, string $name): bool 
     {
-        if(App::ADMIN!==$this->userRank){
+        if(!(App::ADMIN===$this->userRank || App::MODERATE==$this->userRank)){
             return false;
         }
         $period=new EntityPeriod();

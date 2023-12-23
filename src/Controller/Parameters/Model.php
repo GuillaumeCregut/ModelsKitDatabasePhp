@@ -168,9 +168,9 @@ class Model extends Controller
 
     private function add() : bool
     {
-        if(App::ADMIN!==$this->userRank){
-            return false;
-        }
+        // if(App::ADMIN!==$this->userRank){
+        //     return false;
+        // }
         if(!$this->checkForm()){
             return false;
         }

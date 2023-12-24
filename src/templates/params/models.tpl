@@ -162,7 +162,7 @@
                                 </svg>
                                 <span class="addtip tooltip">Ajouter à mon stock</span>
                             </button>
-                            <a href="" class="contact"><svg 
+                            <a href="/contactowner?id={$model->getId()}" class="contact"><svg 
                                 stroke="currentColor" 
                                 fill="currentColor" 
                                 stroke-width="0" 

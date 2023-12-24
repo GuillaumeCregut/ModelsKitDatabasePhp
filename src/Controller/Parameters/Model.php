@@ -245,6 +245,13 @@ class Model extends Controller
                 $this->filters['fName']=$name;
             }
         }
+        if(isset($_POST['filter-ref'])) {
+            $ref=htmlspecialchars($_POST['filter-ref'],ENT_NOQUOTES,'UTF-8');
+            if($ref!=='') {
+                $request['reference']=$ref;
+                $this->filters['fRef']=$ref;
+            }
+        }
         return $request;
     }
 

@@ -32,6 +32,9 @@ class DbAuth
         $query='SELECT firstname,id,lastname,rankUser,passwd,avatar,isvalid FROM user WHERE login=:login';
         try{
             $userDb=$this->db->prepare($query,null,[':login'=>$login],true);
+            if(!$userDb){
+                return false;
+            }
             if(is_null($userDb->avatar)){
                 $userDb->avatar='';
             }

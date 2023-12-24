@@ -1,124 +1,124 @@
 .models_title {
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .model-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 15px;
-    padding: 0 10px;
-    min-height: 100px;
-    max-height: 300px;
-    border: 1px solid black;
-    margin: 0 20px;
-    padding: 20px;
-    overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 15px;
+  padding: 0 10px;
+  min-height: 100px;
+  max-height: 300px;
+  border: 1px solid black;
+  margin: 0 20px;
+  padding: 20px;
+  overflow: auto;
 }
 
 /*Formulaire*/
 
 
-.model-add-form{
-    margin-bottom: 50px;
-    margin-top: 20px;
+.model-add-form {
+  margin-bottom: 50px;
+  margin-top: 20px;
 }
 
-.model-add-form h2{
-    text-align: center;
+.model-add-form h2 {
+  text-align: center;
 }
 
 .form-add-model {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .form-add-model-inputs-container {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
 }
 
 .form-add-model-inputs-container label {
-    margin: 10px;
+  margin: 10px;
 }
 
 .form-add-model-bottom {
-    width: 60%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  width: 60%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .add-model-form-input {
-    margin-left: 5px;
-    line-height: 1.2rem;
-    padding: 2px;
-    font-size: 1.1rem;
-    border: none;
-    outline: 0;
-    border-bottom: 1px solid black;
+  margin-left: 5px;
+  line-height: 1.2rem;
+  padding: 2px;
+  font-size: 1.1rem;
+  border: none;
+  outline: 0;
+  border-bottom: 1px solid black;
 }
 
 .drop-zone-file {
-    border: 1px solid black;
-    width: 350px;
-    color: black;
-    padding: 20px;
-    margin: 10px;
+  border: 1px solid black;
+  width: 350px;
+  color: black;
+  padding: 20px;
+  margin: 10px;
 }
 
-   .form-add-model-img {
-    width: 150px;
-  }
-
-  .form-add-model-btn{
-    margin: 5px;
-    padding: 7px;
-    display: inline-flex;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    position: relative;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    outline: 0px;
-    border: 0px;
-    cursor: pointer;
-    user-select: none;
-    vertical-align: middle;
-    appearance: none;
-    text-decoration: none;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.75;
-    letter-spacing: 0.02857em;
-    text-transform: uppercase;
-    min-width: 64px;
-    border-radius: 4px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(25, 118, 210);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
-  }
-
-  .icon-add-model{
-    margin : 0 10px;
-    min-height: 25px;
-    min-width: 25px;
+.form-add-model-img {
+  width: 150px;
 }
 
-.wrong{
+.form-add-model-btn {
+  margin: 5px;
+  padding: 7px;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0px;
+  border: 0px;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  min-width: 64px;
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(25, 118, 210);
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+}
+
+.icon-add-model {
+  margin: 0 10px;
+  min-height: 25px;
+  min-width: 25px;
+}
+
+.wrong {
   border-color: red;
 }
 
 /*File drop*/
-.input-file-add{
+.input-file-add {
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -126,53 +126,55 @@
 
 
 .box-input {
-    position: relative;
-    height: 150px;
-    width: 100%;
-    border: 1px solid black;
-  }
+  position: relative;
+  height: 150px;
+  width: 100%;
+  border: 1px solid black;
+}
 
-  .box-inner{
-    height: 100%;
-    width: 100%;
-    position : relative;
-  }
+.box-inner {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
 
-  .box-dragndrop{
-    position : absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%);
-  }
+.box-dragndrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+}
 
-  .innerHighlighted{
-    -webkit-box-shadow: inset 2px 2px 22px 10px rgba(102,255,103,0.77); 
-    box-shadow: inset 2px 2px 22px 10px rgba(102,255,103,0.77);
-  }
+.innerHighlighted {
+  -webkit-box-shadow: inset 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+  box-shadow: inset 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+}
 
-  .outerHiglighted{
-    border : 1px solid rgb(3, 247, 3);
-    -webkit-box-shadow: 2px 2px 22px 10px rgba(102,255,103,0.77); 
-    box-shadow: 2px 2px 22px 10px rgba(102,255,103,0.77);
-  }
+.outerHiglighted {
+  border: 1px solid rgb(3, 247, 3);
+  -webkit-box-shadow: 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+  box-shadow: 2px 2px 22px 10px rgba(102, 255, 103, 0.77);
+}
 
-  .new-picture-display{
-    position: absolute;
-    top: 3px;
-    left: 10px;
-    width: auto;
-    height: calc(100% - 6px);
-    display: none;
-  }
+.new-picture-display {
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  width: auto;
+  height: calc(100% - 6px);
+  display: none;
+}
 
-  .display-image{
-    display: block;
-  }
+.display-image {
+  display: block;
+}
+
+
 
 /**/
 
 @media screen and (max-width: 768px) {
-    .params-container {
-        grid-area: 1/1/2/2;
-    }
+  .params-container {
+    grid-area: 1/1/2/2;
+  }
 }

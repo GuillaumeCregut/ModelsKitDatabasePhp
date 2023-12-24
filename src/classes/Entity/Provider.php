@@ -9,6 +9,7 @@ class Provider extends Entity
     private int $id;
     private string $name;
     private int $owner;
+    private string $url='';
     private ProviderManager $manager;
     public function __construct()
     {
@@ -61,5 +62,16 @@ class Provider extends Entity
     public function delete(): bool
     {
         return $this->manager->delete($this);
+    }
+
+    public function setURL(string $url): self
+    {
+        $this->url=$url;
+        return $this;
+    }
+
+    public function getURL():string
+    {
+        return $this->url;
     }
 }

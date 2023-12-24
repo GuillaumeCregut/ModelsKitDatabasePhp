@@ -44,7 +44,7 @@
                                     </svg>
                                 </button>
                             </td>
-                            <td class="provider-cell">{$provider->getName()}</td>
+                            <td class="provider-cell">{if $provider->getURL()!=''}<a href="{$provider->getURL()}" target="_blank"  rel="noreferrer">{$provider->getName()}</a>{else}{$provider->getName()}{/if}</td>
                             <td class="provider-cell">
                                 <button 
                                 class="provider-update-btn provider-btn"

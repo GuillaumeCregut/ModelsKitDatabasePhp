@@ -81,6 +81,9 @@ class App{
             case 'test':
                 $this->route="Test";
                 break;
+            case 'contactowner':
+                $this->route="ContactOwner";
+                break;
             
             default : //home
                $page=new Error('404');

@@ -92,6 +92,9 @@
                     <label for="name-filter" class='model-filter-label'>par nom :
                         <input type="text" name="filter-name" id="name-filter" class="filter-name-input" {if isset($fName)}value="{$fName}" {/if}>
                     </label>
+                    <label for="ref-filter" class='model-filter-label'>par référence :
+                        <input type="text" name="filter-ref" id="ref-filter" class="filter-name-input" {if isset($fRef)}value="{$fRef}" {/if}>
+                    </label>
                 </div>
                 <button class='btn-filter' type="submit">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"

@@ -249,19 +249,19 @@ class User extends Entity
         return $this->models;
     }
 
-    public function getOrderedKit(?string $filter=''): array
+    public function getOrderedKit(?string $filter='',?array $sorted=[]): array
     {
-        return $this->manager->getKitByState(App::STATE_BUY,$this->id,$filter);
+        return $this->manager->getKitByState(App::STATE_BUY,$this->id,$filter,$sorted);
     }
 
-    public function getStockKit(?string $filter=''): array
+    public function getStockKit(?string $filter='',?array $sorted=[]): array
     {
-        return $this->manager->getKitByState(App::STATE_STOCK,$this->id,$filter);
+        return $this->manager->getKitByState(App::STATE_STOCK,$this->id,$filter,$sorted);
     }
 
-    public function getWipKit(?string $filter=''): array
+    public function getWipKit(?string $filter='',?array $sorted=[]): array
     {
-        return $this->manager->getKitByState(App::STATE_WIP,$this->id,$filter);
+        return $this->manager->getKitByState(App::STATE_WIP,$this->id,$filter,$sorted);
     }
 
     public function getFinishedKit(?string $filter=''): array

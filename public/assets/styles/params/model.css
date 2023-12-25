@@ -175,4 +175,8 @@
     .params-container {
         grid-area: 1/1/2/2;
     }
+
+    .add-model-form-input {
+      font-size: 0.65rem;
+    }
 }

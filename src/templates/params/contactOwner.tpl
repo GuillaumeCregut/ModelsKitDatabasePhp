@@ -6,6 +6,9 @@
 {block name=script}{/block}
 {block name=innerMenu}
 <div class="params-container">
-    <h1>Contacter les proprio</h1>
+    <h1>Contacter les propiétaires de ce kit</h1>
+    <form action="?id={$modelId}" method="post">
+        <button type="submit">Envoyer le message</button>
+    </form>
 </div>
 {/block}

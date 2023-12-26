@@ -33,7 +33,7 @@ class ModelManager extends Manager implements ManagerInterface
     {
         $query = "SELECT id,name, builder, category, brand, period, scale, reference, picture, scalemates,
         buildername, countryid, categoryname, brandname, periodname, scalename, countryname  
-        FROM model_full";
+        FROM model_full ORDER BY id DESC";
         try {
             $result = $this->db->query($query, $this->className);
             return $result;

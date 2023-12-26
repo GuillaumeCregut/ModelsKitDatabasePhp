@@ -3,10 +3,6 @@
     "description": "Unification des modèles.",
     "code":[ 
         {
-            "description":"Table modele, ajout unicité entre référence et marque",
-            "SQL":"ALTER TABLE `model` ADD UNIQUE(`brand`, `reference`);"
-        },
-        {
             "description":"Mise à jour de la version.",
             "SQL":"UPDATE system_mkd SET `value`='1.5' WHERE name='version';"
         }

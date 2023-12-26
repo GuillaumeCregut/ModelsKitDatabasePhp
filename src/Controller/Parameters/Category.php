@@ -40,7 +40,7 @@ class Category extends Controller
             switch ($_POST['action']){
                 case "add" :
                     if(isset($_POST['name'])){
-                        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+                        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
                         return $this->add($name);
                     }
                     else
@@ -57,7 +57,7 @@ class Category extends Controller
                     break;
                 case "update":
                     if(isset($_POST['name'])){
-                        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+                        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
                     }
                     else
                         return false;
@@ -91,7 +91,7 @@ class Category extends Controller
 
     private function remove(int $id): bool 
     {
-        if(App::ADMIN!==$this->userRank){
+        if(App::ADMIN!==$this->userRank  || App::MODERATE==$this->userRank){
             return false;
         }
         $category=new EntityCategory();

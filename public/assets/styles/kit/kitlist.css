@@ -1,16 +1,16 @@
-h2{
+h2 {
     text-align: center;
     margin: 20px 0;
 }
 
-.form-search{
+.form-search {
     margin: 20px 0;
     display: flex;
     flex-direction: column;
     justify-content: start;
 }
 
-.search-input{
+.search-input {
     margin-left: 5px;
     line-height: 1.2rem;
     padding: 2px;
@@ -20,7 +20,7 @@ h2{
     border-bottom: 1px solid black;
 }
 
-.btn-search{
+.btn-search {
     display: flex;
     background-color: rgb(25, 118, 210);
     outline: 0px;
@@ -38,22 +38,34 @@ h2{
     cursor: pointer;
 }
 
-.search-model-icon{
+.search-model-icon {
     height: 30px;
-    width:  30px;
+    width: 30px;
 }
 
-.tableContainer{
+.tableContainer {
     max-height: 400px;
     overflow-y: scroll;
     margin-bottom: 50px;
 }
 
-.list-table{
+.list-table {
     width: 100%;
 }
 
-.table-cell{
+.sort-by {
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    margin-right: 10px;
+}
+
+.sorted {
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+}
+
+.table-cell {
     text-align: center;
     border-bottom: 1px solid rgb(224, 224, 224);
     padding: 16px;
@@ -81,7 +93,7 @@ h2{
     cursor: pointer;
 }
 
-.head-table{
+.head-table {
     font-weight: bold;
     position: sticky;
     top: 0;
@@ -89,62 +101,62 @@ h2{
     z-index: 2;
 }
 
-.name-details{
+.name-details {
     cursor: zoom-in;
-    color : black;
+    color: black;
 }
 
-.name-details:hover{
+.name-details:hover {
     text-decoration: underline;
 }
 
-.box-picture{
+.box-picture {
     width: 230px;
 }
 
-.delete-btn{
+.delete-btn {
     border: 0;
     outline: 0;
     cursor: pointer;
     background-color: transparent;
 }
 
-.icon-delete-kit{
+.icon-delete-kit {
     width: 30px;
     height: 30px;
 }
 
-.icon-delete-kit:hover{
+.icon-delete-kit:hover {
     color: red;
 }
 
 @media screen and (max-width: 768px) {
-    .icon-delete-kit{
+    .icon-delete-kit {
         width: 20px;
         height: 20px;
     }
 
-    .search-model-icon{
+    .search-model-icon {
         height: 20px;
-        width:  20px;
+        width: 20px;
     }
 
-    .btn-search{
+    .btn-search {
         max-width: 30px;
     }
 
-    .tableContainer{
+    .tableContainer {
         margin: 0 auto;
         width: 90vw;
         overflow-x: scroll;
     }
 
-    .table-cell{
+    .table-cell {
         padding: 8px;
         font-size: 0.7rem;
     }
 
-    .box-picture{
+    .box-picture {
         width: 100px;
     }
 }

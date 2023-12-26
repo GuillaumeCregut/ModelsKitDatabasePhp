@@ -5,6 +5,7 @@ h2{
 
 .social-container {
     display: grid;
+    margin-bottom: 50px;
     padding: 10px;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -114,6 +115,7 @@ h2{
     flex-wrap: wrap;
     padding: 5px;
     gap: 15px;
+    
 }
 
 .friend-card {

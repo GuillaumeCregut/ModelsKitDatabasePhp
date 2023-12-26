@@ -59,6 +59,8 @@
     justify-content: space-between;
 }
 
+
+
 .user-buttons{
     display: flex;
     justify-content: space-between;
@@ -77,6 +79,10 @@
     cursor: pointer;
     width: 30px;
     height: 30px;
+}
+
+.cart-add-card:hover .addtip {
+    visibility: visible;
 }
 
 .valid-mod-btn:hover{
@@ -104,9 +110,42 @@
     outline: 0;
     background-color: transparent;
     cursor: pointer;
+    position: relative;
+}
+
+.like-card-btn:hover .liketip {
+    visibility: visible;
 }
 
 .update-rm-btn{
     width: 30px;
     height: 30px;
 }
+
+.contact {
+    position: relative;
+  }
+  
+  .contact:hover .message-tip {
+    visibility: visible;
+  }
+
+  .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  
+  
+  .contact-icon {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+  }

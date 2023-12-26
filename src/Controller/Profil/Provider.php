@@ -118,7 +118,6 @@ class Provider extends Controller
 
     private function displayPage()
     {
-        var_dump($this->providers);
         $this->smarty->assign('providers',$this->providers);
         $this->smarty->assign('profil','profil');
         $this->smarty->assign('provider_menu','profil');
@@ -130,7 +129,6 @@ class Provider extends Controller
         foreach($this->providers as $key=> $provider) {
             
             $url=parse_url($provider->getName());
-            var_dump($url);
            if(!empty($url['scheme'])) {
                 $provider->setUrl($provider->getName());
                 $provider->setName($url['host']);

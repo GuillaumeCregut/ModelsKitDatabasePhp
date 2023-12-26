@@ -12,7 +12,7 @@ class Login extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['login'])) {
-                $login = htmlspecialchars($_POST['login'], ENT_NOQUOTES, 'UTF-8');
+                $login = trim(htmlspecialchars($_POST['login'], ENT_NOQUOTES, 'UTF-8'));
             } else {
                 $login = '';
             }

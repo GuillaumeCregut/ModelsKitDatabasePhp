@@ -38,7 +38,7 @@
                                     </span>
                                 </td>
                                 <td class="single-cell">
-                                    {if isset($connected) &&  isset(isAdmin)}
+                                    {if isset($connected) &&  isset($isAdmin)}
                                     <button 
                                         class="single-delete-btn single-btn" 
                                         data-id="{$brand->getId()}"

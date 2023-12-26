@@ -18,6 +18,7 @@
     <section class="list">
         <h2 class="models_title">Gestion des modèles</h2>
         {if isset($list)}
+        <p>Nombre de kit en stock : {$nbKits}</p>
         <section class="filter-models">
             <h3>Filtrage des modèles</h3>
             <form action="parametres_models" method="post">

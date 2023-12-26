@@ -6,7 +6,7 @@ use App\Controller\Error;
 use Editiel98\Manager\MessageManager;
 use Editiel98\Manager\ModelManager;
 use Editiel98\Router\Controller;
-
+use Exception;
 
 class FinishedDetails extends Controller
 {
@@ -132,8 +132,49 @@ class FinishedDetails extends Controller
             case 'reply':
                 $this->replyMessage();
                 break;
+            case 'removeKit':
+                $this->removeKit();
+                break;
             default:
                 return;
+        }
+    }
+
+    private function removeKit()
+    {
+        //Vérifier si le kit existe et Vérifier si l'utilisateur est bien le possesseur du kit
+        $model =  $this->modelManager->getOneFullById($this->modelId, $this->userId);
+        if (!$model) {
+            return;
+        }
+        try{
+            //Supprimer tous les messages liés au kit
+            $this->messageManager->removeMessagesFromKit($this->modelId);
+            //Supprimer toutes les photos liées au kit
+            $picturesdir=$model->pictures;
+            if(!is_null($picturesdir)) {
+                //Récupérer toutes les photos et les supprimer
+                $baseDir = dirname(dirname(dirname(__DIR__))) . '/public/';
+                $fullDir=$baseDir . $picturesdir;
+                $files=[];
+                if(is_dir($fullDir)) {
+                    $files=scandir($fullDir);
+                }
+                if(!empty($files)) {
+                    foreach($files as $file) {
+                        
+                        if(($file!=='.' && $file!=='..')&&is_file($fullDir . $file)) {
+                            $this->deletePicture($picturesdir . $file);
+                        }
+                    }
+                }
+            }
+            $this->modelManager->deleteStraight($this->modelId);
+            header('Location: /kit_finis');
+            die();
+
+        } catch(Exception $e) {
+
         }
     }
 

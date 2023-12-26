@@ -113,6 +113,7 @@ class Provider extends Controller
         $this->user=$user;
         $providers=$this->user->getProviders();
         $this->providers=$providers;
+        $this->stringToLink();
     }
 
     private function displayPage()
@@ -121,6 +122,18 @@ class Provider extends Controller
         $this->smarty->assign('profil','profil');
         $this->smarty->assign('provider_menu','profil');
         $this->smarty->display('profil/provider.tpl');
+    }
+
+    private function stringToLink()
+    {
+        foreach($this->providers as $key=> $provider) {
+            
+            $url=parse_url($provider->getName());
+           if(!empty($url['scheme'])) {
+                $provider->setUrl($provider->getName());
+                $provider->setName($url['host']);
+           }
+        }
     }
 
 }

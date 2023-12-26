@@ -67,6 +67,7 @@ class Model extends Controller
         $periods=$periodManager->getAll();
         $countryManager=new CountryManager($this->dbConnection);
         $countries=$countryManager->getAll();
+        $this->smarty->assign('nbKits',count($this->models));
         $this->smarty->assign('list',$this->models);
         $this->smarty->assign('countries',$countries);
         $this->smarty->assign('categories',$categories);
@@ -151,7 +152,7 @@ class Model extends Controller
 
     private function remove(): bool
     {
-        if(App::ADMIN!==$this->userRank){
+        if(App::ADMIN!==$this->userRank || App::MODERATE==$this->userRank){
             return false;
         }
         if(!isset($_POST['id'])){
@@ -239,10 +240,17 @@ class Model extends Controller
             }
         }
         if(isset($_POST['filter-name'])){
-            $name=htmlspecialchars($_POST['filter-name'], ENT_NOQUOTES, 'UTF-8');
+            $name=trim(htmlspecialchars($_POST['filter-name'], ENT_NOQUOTES, 'UTF-8'));
             if($name!==''){
                 $request['name']=$name;
                 $this->filters['fName']=$name;
+            }
+        }
+        if(isset($_POST['filter-ref'])) {
+            $ref=trim(htmlspecialchars($_POST['filter-ref'],ENT_NOQUOTES,'UTF-8'));
+            if($ref!=='') {
+                $request['reference']=$ref;
+                $this->filters['fRef']=$ref;
             }
         }
         return $request;
@@ -282,6 +290,16 @@ class Model extends Controller
         $filename='';
         $name=str_replace('/','_',$name);
         $name=str_replace(' ','_',$name);
+        $name=str_replace("'",'_',$name);
+        $name=str_replace("&",'_',$name);
+        $name=str_replace('(','_',$name);
+        $name=str_replace(')','_',$name);
+        $name=str_replace('.','_',$name);
+        $name=str_replace('+','_',$name);
+        $name=str_replace(',','_',$name);
+        $name=str_replace('"','_',$name);
+        $name=str_replace('=','_',$name);
+
         $baseDir='assets/uploads/models/';
         if(isset($_FILES['new-picture'])){
             $image=$_FILES['new-picture'];
@@ -334,13 +352,13 @@ class Model extends Controller
     {
         $scalemates='';
         if(isset($_POST['new-scalemates'])){
-            $scalemates=htmlspecialchars($_POST['new-scalemates'], ENT_NOQUOTES, 'UTF-8');
+            $scalemates=trim(htmlspecialchars($_POST['new-scalemates'], ENT_NOQUOTES, 'UTF-8'));
         }
-        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
         if($name===''){
             return false;
         }
-        $reference=htmlspecialchars($_POST['reference'], ENT_NOQUOTES, 'UTF-8');
+        $reference=trim(htmlspecialchars($_POST['reference'], ENT_NOQUOTES, 'UTF-8'));
         if($reference===''){
             return false;
         }

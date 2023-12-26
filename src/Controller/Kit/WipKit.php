@@ -10,8 +10,10 @@ use Editiel98\Router\Controller;
 class WipKit extends Controller
 {
     use TraitStock;
+    use TraitListKit;
 
     private string $search = '';
+    private array $sorted = [];
     public function render()
     {
         if (!$this->isConnected) {
@@ -26,11 +28,14 @@ class WipKit extends Controller
             if (isset($_GET['name'])) {
                 $this->search = htmlspecialchars($_GET['name'], ENT_NOQUOTES, 'UTF-8');
             } else $this->search = false;
+            if (!empty ($_GET['sort'])) {
+                $this->sorted=$this->makeSearch($_GET['sort']);
+            }
         } else $this->search = '';
         if (!empty($_POST)) {
             $this->usePost();
         }
-        $kits = $user->getWipKit($this->search);
+        $kits = $user->getWipKit($this->search,$this->sorted);
         $kitCount = count($kits);
         $page = 'kit_wip';
         $this->displayPage($kitCount, $page, $kits, $this->search);  //search : search from $_POST
@@ -42,6 +47,15 @@ class WipKit extends Controller
             App::STATE_FINISHED => 'terminé',
             App::STATE_STOCK => 'En Stock'
         ];
+        if(!empty($this->sorted)) {
+            $sortDisplay=$this->sorted[1];
+            $sortBy=$this->sorted[0];
+        } else {
+            $sortDisplay='asc';
+            $sortBy='';
+        }
+        $this->smarty->assign('sortBy',$sortBy);
+        $this->smarty->assign('orderBy',$sortDisplay);
         $this->smarty->assign('listStock', $stocks);
         $this->smarty->assign('dataList', $list);
         $this->smarty->assign('kits', true);

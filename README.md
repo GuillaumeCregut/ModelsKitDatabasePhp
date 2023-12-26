@@ -1,13 +1,47 @@
-## What is ModelsKit Database
+# What is ModelsKit Database
 
 The aim of this project is to have a multi users management tool for managing plastik models kits.
 
 The original project is developped with React and Node, this one is full PHP but is the same.
 
-### V1.4a
+## V1.5
 
-New Features
-==
+### Fixed Bugs: 
+
+- specials chars in model name are not used to make picture filename.
+
+- Fixed bug on display portrayed picture
+
+### New Features
+
+#### Models Page :
+
+- Search kit by reference
+
+- Display kits count in DataBase
+
+- Contact owners of a kit (by mail)
+
+- Display kits ordered by most recently added
+
+#### Parameters Page :
+
+- Moderator can update or delete infos
+
+#### User Stock :
+
+- User can sort models by differents cretiria
+
+- User can delete a finished model
+
+#### Profil Page :
+
+- If provider name is URL, a link is generated to the URL.
+
+
+## V1.4a
+
+### New Features
 
 Admin : upgrade DB following version in admin panel.
 
@@ -22,10 +56,9 @@ My Stock : transfer models states from all pages.
 User : personnal pictures are converted to webp
 
 
-### V1.3a
+## V1.3a
 
-Features
-==
+### Features
 
 List of Models : You can add new models, countries, builders, kits brands, scale, etc... in order to have a list of all models on the market.
 
@@ -36,9 +69,7 @@ Social network : you can see others users (if they allow to be seen), use messag
 Your stock : You can manage your models' kit stock (liked, ordered, on shell, on workbench or finished). You have also a random kit chooser. For finished kits, you can upload up to 4 pictures.
 
 
-
-Install
-==
+## Install
 
 Copy all files in the www directory of your web server (which must be apache in order to work well).
 
@@ -46,7 +77,7 @@ Copy config.xml.sample or rename it config.xml and fill it with your infos (DB c
 
 Then, go to {yourSite}/init to initialize database and create admin account. If all is right, then you can use the site.
 
-Update from older version
-==
 
-Upload files in your server. Log as admin and go to panel admin. Update database with v1.4 file.
+## Update from older version
+
+Upload files in your server. Log as admin and go to panel admin. Update database with v1.4 file, then V1.5 file.

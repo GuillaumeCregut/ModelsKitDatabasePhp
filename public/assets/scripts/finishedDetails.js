@@ -29,6 +29,18 @@ btnAnswer.forEach((btn)=>{
 
 /*End answering */
 
+
+//For deleting kit
+
+const btnDeleteKit=document.getElementById('delete-kit-btn');
+
+btnDeleteKit.addEventListener('click',()=>{
+    if(window.confirm("Etes vous vraiment sur de supprimer ce kit ? Cette action est irréversible")) {
+        const formDeleteKit=document.getElementById('deleteKitForm');
+        formDeleteKit.submit();
+    }
+})
+
 const MaxFileCount=4-nbFiles;
 let countFiles=0;
 let filesArray=[];

@@ -40,7 +40,7 @@ class Period extends Controller
             switch ($_POST['action']){
                 case "add" :
                     if(isset($_POST['name'])){
-                        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+                        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
                         if($name==='') return false;
                         return $this->add($name);
                     }
@@ -58,7 +58,7 @@ class Period extends Controller
                     break;
                 case "update":
                     if(isset($_POST['name'])){
-                        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+                        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
                         if($name==='') return false;
                     }
                     else

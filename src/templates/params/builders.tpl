@@ -23,7 +23,7 @@
     <section class="list">
         {if isset($list)}
             <div class="items-container">
-                {if isset($connected) &&  isset(isAdmin)}
+                {if isset($connected) &&  isset($isAdmin)}
                     <form action="parametres_builders" method="post" id="form-delete-builder">
                         <input type="hidden" name="action" value="remove">
                         <input type="hidden" name="id" value="0" id="id_hidden">

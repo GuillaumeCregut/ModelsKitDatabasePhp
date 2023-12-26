@@ -16,7 +16,7 @@
         <h2 class="periods_title">Gestion des périodes</h2>
         {if isset($list)}
             <div class="items-container">
-                {if isset($connected) &&  isset(isAdmin)}
+                {if isset($connected) &&  isset($isAdmin)}
                     <form action="parametres_periods" method="post" id="form-delete-period">
                         <input type="hidden" name="action" value="remove">
                         <input type="hidden" name="id" value="0" id="id_hidden">

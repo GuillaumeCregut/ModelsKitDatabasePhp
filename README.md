@@ -1,11 +1,10 @@
-## What is ModelsKit Database
+# What is ModelsKit Database
 
 The aim of this project is to have a multi users management tool for managing plastik models kits.
 
 The original project is developped with React and Node, this one is full PHP but is the same.
 
 ## V1.5
-==
 
 ### Fixed Bugs: 
 

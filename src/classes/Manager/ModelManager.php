@@ -9,6 +9,7 @@ use Editiel98\Entity\Entity;
 use Editiel98\Entity\Model;
 use Editiel98\Event\Emitter;
 use Editiel98\Flash;
+use Exception;
 
 /**
  * Manage single entity to DB
@@ -347,6 +348,16 @@ class ModelManager extends Manager implements ManagerInterface
             
         } catch(DbException $e) {
             return false;
+        }
+    }
+
+    public function deleteStraight(int $idKit) 
+    {
+        $query="DELETE FROM model_user WHERE id=:id";
+        try {
+            return $this->db->exec($query, [':id'=>$idKit]);
+        } catch (DbException $e) {
+            throw new Exception('Error in remove');
         }
     }
 

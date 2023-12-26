@@ -338,9 +338,10 @@ class ModelManager extends Manager implements ManagerInterface
     public function findOwner(int $id): array|false
     {
         try{
-            $query='SELECT DISTINCT user.email FROM `model_user` inner join user on model_user.owner=user.id WHERE model_user.model=:id; ';
+            $query='SELECT DISTINCT user.email FROM `model_user` inner join user on model_user.owner=user.id WHERE model_user.model=:id AND model_user.state<>:isLiked; ';
             $value=[
-                ':id'=>$id
+                ':id'=>$id,
+                'isLiked'=>App::STATE_LIKED
             ];
             return $this->db->prepare($query, null, $value);
             

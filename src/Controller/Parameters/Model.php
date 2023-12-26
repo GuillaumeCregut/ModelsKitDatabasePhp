@@ -67,6 +67,7 @@ class Model extends Controller
         $periods=$periodManager->getAll();
         $countryManager=new CountryManager($this->dbConnection);
         $countries=$countryManager->getAll();
+        $this->smarty->assign('nbKits',count($this->models));
         $this->smarty->assign('list',$this->models);
         $this->smarty->assign('countries',$countries);
         $this->smarty->assign('categories',$categories);

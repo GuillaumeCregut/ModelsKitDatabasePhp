@@ -24,7 +24,7 @@ class PersonnalMessage extends Controller
             if (!isset($_POST['idFriend']) || intval($_POST['idFriend']) === 0 || !isset($_POST['message'])) {
                 $this->displayError();
             }
-            $message=htmlspecialchars($_POST['message'], ENT_QUOTES,'UTF-8');
+            $message=trim(htmlspecialchars($_POST['message'], ENT_QUOTES,'UTF-8'));
             $friendId = intval($_POST['idFriend']);
             $socialManager->addMessage($friendId,$this->userId,$message);
             header("location: profil_messages?id={$friendId}");

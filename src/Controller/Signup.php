@@ -13,22 +13,22 @@ class  Signup extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($_POST['firstname'])){
-                $firstname= htmlspecialchars($_POST['firstname'], ENT_NOQUOTES, 'UTF-8');
+                $firstname= trim(htmlspecialchars($_POST['firstname'], ENT_NOQUOTES, 'UTF-8'));
             }else{
                 $firstname='';
             }
             if(isset($_POST['lastname'])){
-                $lastname= htmlspecialchars($_POST['lastname'], ENT_NOQUOTES, 'UTF-8');
+                $lastname= trim(htmlspecialchars($_POST['lastname'], ENT_NOQUOTES, 'UTF-8'));
             }else{
                 $lastname='';
             }
             if(isset($_POST['email'])){
-                $email=htmlspecialchars($_POST['email'], ENT_NOQUOTES, 'UTF-8');
+                $email=trim(htmlspecialchars($_POST['email'], ENT_NOQUOTES, 'UTF-8'));
             }else{
                 $email='';
             }
             if(isset($_POST['login'])){
-                $login=htmlspecialchars($_POST['login'], ENT_NOQUOTES, 'UTF-8');
+                $login=trim(htmlspecialchars($_POST['login'], ENT_NOQUOTES, 'UTF-8'));
             }else{
                 $login='';
             }

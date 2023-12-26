@@ -239,14 +239,14 @@ class Model extends Controller
             }
         }
         if(isset($_POST['filter-name'])){
-            $name=htmlspecialchars($_POST['filter-name'], ENT_NOQUOTES, 'UTF-8');
+            $name=trim(htmlspecialchars($_POST['filter-name'], ENT_NOQUOTES, 'UTF-8'));
             if($name!==''){
                 $request['name']=$name;
                 $this->filters['fName']=$name;
             }
         }
         if(isset($_POST['filter-ref'])) {
-            $ref=htmlspecialchars($_POST['filter-ref'],ENT_NOQUOTES,'UTF-8');
+            $ref=trim(htmlspecialchars($_POST['filter-ref'],ENT_NOQUOTES,'UTF-8'));
             if($ref!=='') {
                 $request['reference']=$ref;
                 $this->filters['fRef']=$ref;
@@ -351,13 +351,13 @@ class Model extends Controller
     {
         $scalemates='';
         if(isset($_POST['new-scalemates'])){
-            $scalemates=htmlspecialchars($_POST['new-scalemates'], ENT_NOQUOTES, 'UTF-8');
+            $scalemates=trim(htmlspecialchars($_POST['new-scalemates'], ENT_NOQUOTES, 'UTF-8'));
         }
-        $name=htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8');
+        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
         if($name===''){
             return false;
         }
-        $reference=htmlspecialchars($_POST['reference'], ENT_NOQUOTES, 'UTF-8');
+        $reference=trim(htmlspecialchars($_POST['reference'], ENT_NOQUOTES, 'UTF-8'));
         if($reference===''){
             return false;
         }

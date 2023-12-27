@@ -212,7 +212,7 @@
     <section class="model-add-form">
         <h2>Ajouter un nouveau modèle</h2>
         <p class="model-warning">Avant d'ajouter un modèle, vérifiez avec la référence qu'il n'existe pas.</p>
-        <p class="model-warning">Vérifiez bien votre saisie avant envoie <span class="warn">Attention, pas de fichier image avif</span>.</p>
+        <p class="model-warning">Vérifiez bien votre saisie avant envoi <span class="warn">Attention, pas de fichier image avif</span>.</p>
         <form action="parametres_models" class="form-add-model" method="post" enctype="multipart/form-data"
             id="form-add">
             <div class="form-add-model-inputs-container">

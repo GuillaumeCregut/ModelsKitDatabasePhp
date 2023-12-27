@@ -138,6 +138,18 @@
   position: relative;
 }
 
+.model-warning {
+  color : red;
+  font-weight: bold;
+  text-align: center;
+}
+
+.warn {
+  text-decoration: underline;
+  font-weight: bolder;
+  text-align: center;
+}
+
 .box-dragndrop {
   position: absolute;
   top: 50%;

@@ -146,6 +146,11 @@ class PdfController extends Controller
         } else{
             $pictureDir=$baseDir .'/public/' .$model->boxPicture;
         }
+        $mime=mime_content_type( $pictureDir);
+        //Fix temporary bug with wep or avif pictures
+        if(str_contains($mime,'avif') || str_contains($mime,'webp')) {
+            $pictureDir=$subDir . 'no_image.jpg';
+        } 
         $this->pdf->setModelBock($model,$pictureDir);
     }
 

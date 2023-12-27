@@ -152,7 +152,7 @@ class Model extends Controller
 
     private function remove(): bool
     {
-        if(App::ADMIN!==$this->userRank || App::MODERATE==$this->userRank){
+        if(!(App::ADMIN===$this->userRank || App::MODERATE===$this->userRank)){
             return false;
         }
         if(!isset($_POST['id'])){

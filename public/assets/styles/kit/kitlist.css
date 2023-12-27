@@ -130,6 +130,18 @@ h2 {
     color: red;
 }
 
+@media screen and (max-width:1180px){
+    .main-kit-container {
+        padding-left: 10px;
+    }
+
+    .tableContainer {
+        overflow-x: scroll;
+        max-width: 65vw;
+    }
+
+}
+
 @media screen and (max-width: 768px) {
     .icon-delete-kit {
         width: 20px;

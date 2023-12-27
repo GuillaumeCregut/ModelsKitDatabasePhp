@@ -93,6 +93,16 @@ width: 440px;
         padding-top: 30px;
         font-size: 0.9rem;
     }
+
+    .picture-item{
+        width: 160px;
+        padding: 10px;
+    }
+
+    .screen-picture{
+        width: 200px;
+    }
+
 }
 
 @media screen and (max-width:768px) {
@@ -118,6 +128,7 @@ width: 440px;
 
     .step-item{
         width: 100%;
+        gap: 6px;
     }
 
     .text-item{
@@ -130,6 +141,6 @@ width: 440px;
     }
 
     .screen-picture{
-        width: 150px;
+        width: 140px;
     }
 }

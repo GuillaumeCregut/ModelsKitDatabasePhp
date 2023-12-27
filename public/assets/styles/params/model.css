@@ -169,9 +169,15 @@
   display: block;
 }
 
+@media screen and (max-width:1180px){
+  .params-container {
+    padding-bottom: 350px;
+  }
 
-
-/**/
+  .add-model-form-input {
+    font-size: 0.65rem;
+  }
+}
 
 @media screen and (max-width: 768px) {
     .params-container {

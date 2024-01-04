@@ -20,7 +20,7 @@ const sendLike=(id,value,btn, btnState)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-        body:JSON.stringify({idModel:id, newLike:value})
+        body:JSON.stringify({idModel:id, newLike:value,token:token})
       };
     
     fetch('api_likemodel',myInit)

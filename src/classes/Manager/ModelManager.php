@@ -194,7 +194,7 @@ class ModelManager extends Manager implements ManagerInterface
         $image = $oldModel->getImage();
         $result = $this->execSQL($query, ['id' => $id]);
         if ($result) {
-            if (!is_null($image) || ($image !== '')) {
+            if (!(is_null($image) || ($image === ''))) {
                 //Delete image file 
                 $baseDirectory = dirname(dirname(dirname(__DIR__))) . '/public/';
                 $fileName = $baseDirectory . $image;

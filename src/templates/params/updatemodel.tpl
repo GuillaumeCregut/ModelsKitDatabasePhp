@@ -17,6 +17,7 @@
                 {* parametre_models *}
                 <form action="parametres_models" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="token" value="{$token}">
                     <input type="hidden" name="id" value="{$model->getId()}">
                     <input type="hidden" name="oldPicture" value="{$model->getImage()}">
                     <label for="name" class="label-update">Nom du modèle :

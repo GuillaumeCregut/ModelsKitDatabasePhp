@@ -11,12 +11,16 @@ use Editiel98\Manager\ModelManager;
 use Editiel98\Manager\PeriodManager;
 use Editiel98\Manager\ScaleManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class UpdateModel extends Controller
 {
     private Model $model;
+    private CSRFCheck $csfrCheck;
+
     public function render()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
         if($this->isConnected){
             $this->smarty->assign('connected',true);
             if(App::ADMIN===$this->userRank){
@@ -44,6 +48,8 @@ class UpdateModel extends Controller
         $categories=$categoryManager->getAll();
         $periodManager=new PeriodManager($this->dbConnection);
         $periods=$periodManager->getAll();
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('categories',$categories);
         $this->smarty->assign('periods',$periods);
         $this->smarty->assign('builders',$builders);

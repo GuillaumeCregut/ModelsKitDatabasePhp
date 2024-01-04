@@ -22,6 +22,7 @@
         <section class="filter-models">
             <h3>Filtrage des modèles</h3>
             <form action="parametres_models" method="post">
+                <input type="hidden" name="token" value="{$token}">
                 <input type="hidden" name="action" value="search">
                 <div class="filters-list">
                     <div class='filter-element-container'>
@@ -115,6 +116,7 @@
             {if isset($connected) && isset(isAdmin)}
             <form action="parametres_models" method="post" id="form-delete-model">
                 <input type="hidden" name="action" value="remove">
+                <input type="hidden" name="token" value="{$token}">
                 <input type="hidden" name="id" value="0" id="id_hidden">
             </form>
             {/if}
@@ -217,6 +219,7 @@
             id="form-add">
             <div class="form-add-model-inputs-container">
                 <input type="hidden" name="action" value="add">
+                <input type="hidden" name="token" value="{$token}">
                 <label for="new-name">Nom du nouvel élément :
                     <input type="text" name="name" id="new-name" class="add-model-form-input" placeholder="Nom"
                         autocomplete="off">

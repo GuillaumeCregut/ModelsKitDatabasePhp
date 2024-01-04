@@ -12,6 +12,7 @@ use Editiel98\Manager\ModelManager;
 use Editiel98\Manager\PeriodManager;
 use Editiel98\Manager\ScaleManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
 class Model extends Controller
@@ -19,9 +20,11 @@ class Model extends Controller
     private ?User $user=null;
     private array $models=[];
     private array $filters=[];
+    private CSRFCheck $csfrCheck;
 
     public function render()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
         if($this->isConnected){
             $this->smarty->assign('connected',true);
             $userId=$this->session->getKey(Session::SESSION_USER_ID);
@@ -67,6 +70,8 @@ class Model extends Controller
         $periods=$periodManager->getAll();
         $countryManager=new CountryManager($this->dbConnection);
         $countries=$countryManager->getAll();
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('nbKits',count($this->models));
         $this->smarty->assign('list',$this->models);
         $this->smarty->assign('countries',$countries);
@@ -82,6 +87,13 @@ class Model extends Controller
 
     function usePost() : bool
     {
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csfrCheck->checkToken($token)){
+           return false;
+        }
         if(!isset($_POST['action'])){
             return false;
         }

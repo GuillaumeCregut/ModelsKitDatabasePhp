@@ -27,6 +27,7 @@
             <p  class="signup-err" aria-live="assertive">{$errMsg}</p>
             {/if}
             <form class='form-signup' method="post" action="/signup">
+                <input type="hidden" name="token" value="{$token}">
                 <label for="firstname" class='form-signup-label'>Prénom :
                     <input
                         type="text"

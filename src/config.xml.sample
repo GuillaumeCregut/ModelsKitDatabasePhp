@@ -13,4 +13,7 @@
    <mail>
       <admin>MAIL_ADMIN</admin>
    </mail>
+   <security>
+      <token>YOUR TOKEN</token>
+   </security>
 </config>

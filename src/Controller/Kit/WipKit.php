@@ -6,11 +6,14 @@ use Editiel98\App;
 use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class WipKit extends Controller
 {
     use TraitStock;
     use TraitListKit;
+
+    private CSRFCheck $csrfCheck;
 
     private string $search = '';
     private array $sorted = [];
@@ -22,6 +25,7 @@ class WipKit extends Controller
             $this->smarty->display('kit/notconnected.tpl');
             die();
         }
+        $this->csrfCheck=new CSRFCheck($this->session);
         $user = new User();
         $user->setId($this->userId);
         if (!empty($_GET)) {
@@ -54,6 +58,8 @@ class WipKit extends Controller
             $sortDisplay='asc';
             $sortBy='';
         }
+        $token=$this->csrfCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('sortBy',$sortBy);
         $this->smarty->assign('orderBy',$sortDisplay);
         $this->smarty->assign('listStock', $stocks);
@@ -71,10 +77,17 @@ class WipKit extends Controller
     private function usePost()
     {
         if (isset($_POST['search'])) {
-            $this->search = htmlspecialchars($_POST['search'], ENT_NOQUOTES, 'UTF-8');
+            $this->search = trim(htmlspecialchars($_POST['search'], ENT_NOQUOTES, 'UTF-8'));
         }
         if (!isset($_POST['action'])) {
             return;
+        }
+        if(empty($_POST['token'])) {
+            return;
+        }
+        $token=$_POST['token'];
+        if(!$this->csrfCheck->checkToken($token)){
+           return;
         }
 
         if (isset($_POST['id'])) {

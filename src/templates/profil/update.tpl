@@ -193,6 +193,7 @@
                     </label>
                 </div>
                 <input type="hidden" name="action" value="update">
+                <input type="hidden" name="token" value="{$token}">
                 <button class="user-modif-btn" type="submit">
                     Modifier les valeurs
                 </button>

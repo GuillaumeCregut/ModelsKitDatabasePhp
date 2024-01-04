@@ -4,13 +4,17 @@ namespace App\Controller\Profil;
 use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
 class Info extends Controller
 {
     private User $user;
+    private CSRFCheck $csfrCheck;
+
     public function render()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
         if(!$this->isConnected){
         //Render antoher page and die
             $this->smarty->assign('profil','profil');
@@ -45,6 +49,13 @@ class Info extends Controller
 
     private function updateUser(): bool
     {
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csfrCheck->checkToken($token)){
+           return false;
+        }
         $this->getUser();
         $changeUser=false;
         //Check POST values
@@ -170,6 +181,8 @@ class Info extends Controller
             $id=$this->user->getId();
             $baseUrl='assets/uploads/users/'. $id . '/' . $this->user->getAvatar();
         }
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('profil','profil');
         $this->smarty->assign('baseUrl',$baseUrl);
         $this->smarty->assign('info_menu','profil');

@@ -12,8 +12,8 @@ class AddCart extends ApiController
 
     public function manage()
     {
-        $this->csfrCheck=new CSRFCheck($this->session);
         error_reporting(0);
+        $this->csfrCheck=new CSRFCheck($this->session);
        if($this->isConnected){
                 $method=$_SERVER['REQUEST_METHOD'];
                 switch ($method){

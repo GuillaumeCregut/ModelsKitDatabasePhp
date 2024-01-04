@@ -1,17 +1,20 @@
 <?php
 namespace App\Controller\Profil;
 
-use Editiel98\App;
+
 use Editiel98\Entity\Provider as EntityProvider;
 use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
 class Provider extends Controller
 {
     private User $user;
     private array $providers;
+    private CSRFCheck $csfrCheck;
+
     public function render()
     {
         if(!$this->isConnected){
@@ -20,6 +23,7 @@ class Provider extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
+        $this->csfrCheck=new CSRFCheck($this->session);
         if(!empty($_POST)){
             $this->usePost();
         }
@@ -35,6 +39,13 @@ class Provider extends Controller
     }
 
     private function usePost(){
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csfrCheck->checkToken($token)){
+           return false;
+        }
         if(!isset($_POST['action'])){
             return;
         }
@@ -118,6 +129,8 @@ class Provider extends Controller
 
     private function displayPage()
     {
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('providers',$this->providers);
         $this->smarty->assign('profil','profil');
         $this->smarty->assign('provider_menu','profil');

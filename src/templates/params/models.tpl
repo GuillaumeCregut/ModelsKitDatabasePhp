@@ -22,7 +22,7 @@
         <section class="filter-models">
             <h3>Filtrage des modèles</h3>
             <form action="parametres_models" method="post">
-                <input type="hidden" name="token" value="{$token}">
+                <input type="hidden" name="token" value="{$token}" id="token">
                 <input type="hidden" name="action" value="search">
                 <div class="filters-list">
                     <div class='filter-element-container'>

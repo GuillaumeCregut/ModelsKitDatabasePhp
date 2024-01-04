@@ -9,6 +9,7 @@ const fileField=document.getElementById('files-field');
 const previewContainer=document.querySelector('.preview-list');
 const nbFiles=document.getElementById('count-files').value;
 const uploadBtn=document.getElementById('UpLoadBtn');
+const token=document.getElementById('token').value;
 
 /*For answering messages */
 const btnAnswer=document.querySelectorAll('.btn-response');
@@ -234,6 +235,7 @@ uploadBtn.addEventListener('click',()=>{
     });
     const idModel=document.getElementById('id_add').value;
     formData.append('id',idModel);
+    formData.append('token',token);
     const myInit = {
         method: "POST",
         headers: {

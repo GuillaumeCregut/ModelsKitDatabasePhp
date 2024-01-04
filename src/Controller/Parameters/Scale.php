@@ -5,11 +5,15 @@ use Editiel98\App;
 use Editiel98\Entity\Scale as EntityScale;
 use Editiel98\Manager\ScaleManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class Scale extends Controller
 {
+    private CSRFCheck $csfrCheck;
+
     public function render()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
         if(!empty($_POST)){
             if(!$this->usePost())
             {
@@ -29,6 +33,8 @@ class Scale extends Controller
                 $this->smarty->assign('isAdmin',true);
             }
         }
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('list',$scales);
         $this->smarty->assign('params','params');
         $this->smarty->assign('scale_menu','params');
@@ -36,6 +42,13 @@ class Scale extends Controller
     }
 
     private function usePost(): bool{
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csfrCheck->checkToken($token)){
+           return false;
+        }
         if(isset($_POST['action'])){
             switch ($_POST['action']){
                 case "add" :

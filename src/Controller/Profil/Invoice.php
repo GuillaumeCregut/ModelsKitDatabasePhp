@@ -6,12 +6,15 @@ use Editiel98\Entity\User;
 use Editiel98\Flash;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
 class Invoice extends Controller
 {
     private User $user;
     private array $providers;
+    private CSRFCheck $csfrCheck;
+
     public  function render()
     {
         if(!$this->isConnected){
@@ -20,6 +23,7 @@ class Invoice extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
+        $this->csfrCheck=new CSRFCheck($this->session);
         $this->getUser();
         if(!empty($_POST)){
             $this->usePost();
@@ -46,6 +50,13 @@ class Invoice extends Controller
     }
 
     private function usePost(){
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csfrCheck->checkToken($token)){
+           return false;
+        }
         if(isset($_POST['newRef'])){
             $newRef=trim(htmlspecialchars($_POST['newRef'], ENT_NOQUOTES, 'UTF-8'));
         }else return;
@@ -70,6 +81,8 @@ class Invoice extends Controller
     private function displayPage()
     {
         $orders=$this->user->getOrders();
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('providers',$this->providers);
         $this->smarty->assign('orders',$orders);
         $this->smarty->assign('profil','profil');

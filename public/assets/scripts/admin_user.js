@@ -1,4 +1,5 @@
 const deleteBtns=document.querySelectorAll('.delete-btn');
+const token=document.getElementById('token').value;
 
 const toastDetails={
     timer: 5000,
@@ -48,7 +49,7 @@ const changeUserStatus=(id,status,caller)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-        body:JSON.stringify({idUser:idUser, newStatus:status})
+        body:JSON.stringify({idUser:idUser, newStatus:status, token:token})
       };
     fetch('api_userValid',myInit)
     .then((response)=>{
@@ -86,7 +87,7 @@ const changeUserRole=(list)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-        body:JSON.stringify({idUser:id, newRole:newRole})
+        body:JSON.stringify({idUser:id, newRole:newRole, token: token})
       };
     //   list.value=oldRole;
     fetch('api_userRole',myInit)

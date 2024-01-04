@@ -3,14 +3,18 @@ namespace Editiel98\Api\Params;
 
 use Editiel98\Entity\User;
 use Editiel98\Router\ApiController;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
 
 class LikeModel extends ApiController
 {
+    private CSRFCheck $csfrCheck;
+
     public function manage()
     {
         error_reporting(0);
+        $this->csfrCheck=new CSRFCheck($this->session);
        if($this->isConnected){
                 $method=$_SERVER['REQUEST_METHOD'];
                 switch ($method){
@@ -51,7 +55,25 @@ class LikeModel extends ApiController
             echo json_encode($return);
             die();
         }
+        if(!isset($datas->token)){
+            header("HTTP/1.1 422 Unprocessable entity");
 
+            $return=[
+                "result"=>false,
+            ];
+            echo json_encode($return);
+            die();
+        }
+        $token=$datas->token;
+        if(!$this->csfrCheck->checkToken($token)){
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return=[
+                "result"=>false,
+            ];
+            echo json_encode($return);
+            die();
+         }
         if(($modelLike===0) || !is_bool($datas->newLike)){
             header("HTTP/1.1 422 Unprocessable entity");
             $return=[

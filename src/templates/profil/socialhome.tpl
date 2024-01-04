@@ -10,6 +10,7 @@
 {block name=innerMenu}
 <div class="main-profil-container">
     <h2>Mon réseau social</h2>
+    <input type="hidden" name="token" value="{$token}" id="token">
     <section class="social-container">
         <div class="new-social social-block  container-boxes">
             <h3 class="demand-title">Demandes d'amis reçues</h3>
@@ -17,6 +18,7 @@
                 {if isset($demandList)}
                 {foreach from=$demandList item=demand }
                 <form action="profil_social" method="post">
+                    <input type="hidden" name="token" value="{$token}">
                     <input type="hidden" name="action" value="accept">
                     <input type="hidden" name="user" value="{$demand->id}">
                     <div class="demand-container">
@@ -96,9 +98,11 @@
         </div>
         <div class="my-friends container-boxes">
             <h3>Liste de mes amis</h3>
+            
             <div class="my-friends-container">
                 <form action="profil_social" method="post" id="process-friend">
                     <input type="hidden" name="action" value="remove-friend">
+                    <input type="hidden" name="token" value="{$token}">
                     <input type="hidden" name="idFriend" value="0" id="idFriend">
                 </form>
                 {if isset($allFriends)}

@@ -5,11 +5,16 @@ use Editiel98\App;
 use Editiel98\Entity\Category as EntityCategory;
 use Editiel98\Manager\CategoryManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class Category extends Controller
 {
+    private CSRFCheck $csfrCheck;
+    
     public function render()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
+        
         if(!empty($_POST)){
             if(!$this->usePost())
             {
@@ -29,6 +34,8 @@ class Category extends Controller
                 $this->smarty->assign('isAdmin',true);
             }
         }
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('list',$categories);
         $this->smarty->assign('params','params');
         $this->smarty->assign('cat_menu','params');
@@ -36,6 +43,14 @@ class Category extends Controller
     }
 
     private function usePost(): bool{
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csfrCheck->checkToken($token)){
+           return false;
+        }
+        //then
         if(isset($_POST['action'])){
             switch ($_POST['action']){
                 case "add" :

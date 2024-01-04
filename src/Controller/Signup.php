@@ -5,13 +5,25 @@ use Editiel98\Auth\DbAuth;
 use Editiel98\Event\Emitter;
 use Editiel98\Mailer;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Exception;
 
 class  Signup extends Controller
 {
+    private CSRFCheck $csfrCheck;
+
     public function render()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if(empty($_POST['token'])) {
+                return false;
+            }
+            $token=$_POST['token'];
+            if(!$this->csfrCheck->checkToken($token)){
+               return false;
+            }
             if(isset($_POST['firstname'])){
                 $firstname= trim(htmlspecialchars($_POST['firstname'], ENT_NOQUOTES, 'UTF-8'));
             }else{
@@ -68,6 +80,8 @@ class  Signup extends Controller
                 }
             }
         }
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->display('signup.tpl');
     }
 }

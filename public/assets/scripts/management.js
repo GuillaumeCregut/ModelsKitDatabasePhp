@@ -1,6 +1,7 @@
 const modelsCards = document.querySelectorAll('.draggable');
 const dropZones = document.querySelectorAll('.dropzone');
 const dropAllow = ['liked-kits', 'ordered', 'stock', 'wip', 'finished'];
+const token=document.getElementById('token').value;
 
 const toastDetails = {
     timer: 5000,
@@ -84,7 +85,7 @@ const sendUpdateState = async (id, state) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ idModel: id, newState: state })
+        body: JSON.stringify({ idModel: id, newState: state, token: token })
     };
 
     await fetch('api_updateState', myInit)

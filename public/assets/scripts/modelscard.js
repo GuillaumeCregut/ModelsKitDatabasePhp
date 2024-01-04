@@ -3,7 +3,8 @@ const likeButtons=document.querySelectorAll('.like-card-btn');
 const addCartButtons=document.querySelectorAll('.cart-add-card');
 const removeButtons=document.querySelectorAll('.delete-card');
 const updateButtons=document.querySelectorAll('.update-card');
-
+const token=document.getElementById('token').value;
+console.log(token)
 //Redirect to update page
 const updateCart=(id)=>{
     location.href = `/parametres_modelUpdate?model=${id}`;
@@ -19,7 +20,7 @@ const sendLike=(id,value,btn, btnState)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-        body:JSON.stringify({idModel:id, newLike:value})
+        body:JSON.stringify({idModel:id, newLike:value,token:token})
       };
     
     fetch('api_likemodel',myInit)
@@ -53,7 +54,7 @@ const sendCart=(id)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-        body:JSON.stringify({idModel:id})
+        body:JSON.stringify({idModel:id,token:token})
       };
       fetch('api_addCart',myInit)
       .then((response)=>{

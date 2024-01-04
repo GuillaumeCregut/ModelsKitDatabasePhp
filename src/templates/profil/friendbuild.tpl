@@ -36,6 +36,7 @@
     {if isset($allow)}
     <div class="message-zone-model">
         <form action="" method="post">
+            <input type="hidden" name="token" value="{$token}">
             <section class="new-model-message">
                 <p>Laisser un message :</p>
                 <input type="hidden" name="action" value="add">

@@ -5,11 +5,14 @@ use Editiel98\App;
 use Editiel98\Entity\Brand as EntityBrand;
 use Editiel98\Manager\BrandManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class Brand extends Controller
 {
+    private CSRFCheck $csfrCheck;
     public function render()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
         if(!empty($_POST)){
             if(!$this->usePost())
             {
@@ -30,6 +33,8 @@ class Brand extends Controller
                 $this->smarty->assign('isAdmin',true);
             }
         }
+        $token=$this->csfrCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('list',$brands);
         $this->smarty->assign('params','params');
         $this->smarty->assign('brand_menu','params');
@@ -37,6 +42,13 @@ class Brand extends Controller
     }
 
     private function usePost(): bool{
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csfrCheck->checkToken($token)){
+           return false;
+        }
         if(isset($_POST['action'])){
             switch ($_POST['action']){
                 case "add" :

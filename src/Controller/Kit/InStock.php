@@ -6,6 +6,7 @@ use Editiel98\App;
 use Editiel98\Entity\User;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class InStock extends Controller
 {
@@ -13,6 +14,8 @@ class InStock extends Controller
     use TraitListKit;
     private string $search = '';
     private array $sorted=[];
+    private CSRFCheck $csrfCheck;
+
     public function render()
     {
         if (!$this->isConnected) {
@@ -21,6 +24,7 @@ class InStock extends Controller
             $this->smarty->display('kit/notconnected.tpl');
             die();
         }
+        $this->csrfCheck=new CSRFCheck($this->session);
         $user = new User();
         $user->setId($this->userId);
         if (!empty($_GET)) {
@@ -55,6 +59,8 @@ class InStock extends Controller
             $sortDisplay='asc';
             $sortBy='';
         }
+        $token=$this->csrfCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('sortBy',$sortBy);
         $this->smarty->assign('orderBy',$sortDisplay);
         $this->smarty->assign('listStock', $stocks);
@@ -72,7 +78,7 @@ class InStock extends Controller
     private function usePost()
     {
         if (isset($_POST['search'])) {
-            $this->search = htmlspecialchars($_POST['search'], ENT_NOQUOTES, 'UTF-8');
+            $this->search = trim(htmlspecialchars($_POST['search'], ENT_NOQUOTES, 'UTF-8'));
         }
         if (!isset($_POST['action'])) {
             return;
@@ -82,6 +88,13 @@ class InStock extends Controller
         }
         if ($id === 0) {
             return;
+        }
+        if(empty($_POST['token'])) {
+            return;
+        }
+        $token=$_POST['token'];
+        if(!$this->csrfCheck->checkToken($token)){
+           return;
         }
         $action = $_POST['action'];
         switch ($action) {

@@ -22,6 +22,7 @@
         <tbody>
             <form action="admin_users" method="post" id="form-delete">
                 <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="token" value="{$token}" id="token">
                 <input type="hidden" name="id" value="0" id="id-user">
             </form>
             {if isset($users)}

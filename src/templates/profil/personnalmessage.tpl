@@ -26,6 +26,7 @@
     </div>
     <form action="profil_messages" method="post">
         <input type="hidden" name="idFriend" value="{$friend->id}">
+        <input type="hidden" name="token" value="{$token}">
         <div class="write-private-message">
             <p>Nouveau message : </p>
             <textarea name="message" id="message" cols="30" rows="10" class="new-message-text"

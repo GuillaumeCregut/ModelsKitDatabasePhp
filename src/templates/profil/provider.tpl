@@ -77,6 +77,7 @@
         </table>
         <form action="profil_fournisseurs" method="post" id="delete-provider">
             <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="token" value="{$token}">
             <input type="hidden" name="id" value="0" id="deleteId">
         </form>
     </div>
@@ -84,6 +85,7 @@
         <h3>Ajouter un fournisseur</h3>
         <form action="profil_fournisseurs" method="post" class="form-add-provider">
             <input type="hidden" name="action" value="add">
+            <input type="hidden" name="token" value="{$token}">
             <label for="name">
                 Nom du fournisseur : 
                 <input 
@@ -130,6 +132,7 @@
                  class="input_provider">    
             </label>
             <input type="hidden" name="action" value="update">
+            <input type="hidden" name="token" value="{$token}">
             <input type="hidden" name="id" value="0" id="mod-provider">
                 <button type="submit" class="provider-form-btn">Modifier</button>
         </form>

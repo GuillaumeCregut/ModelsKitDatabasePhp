@@ -5,14 +5,18 @@ namespace App\Controller\Admin;
 use Editiel98\App;
 use Editiel98\Manager\DBManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Exception;
 
 class DBMgmt extends Controller
 {
     private array $updateFiles = [];
+    private CSRFCheck $csrfCheck;
+
     public function render()
     {
         if (App::ADMIN === $this->userRank) {
+            $this->csrfCheck = new CSRFCheck($this->session);
             $this->smarty->assign('adminDB_menu', 'true');
             $this->loadUpdateFiles();
             //If form, do
@@ -37,6 +41,8 @@ class DBMgmt extends Controller
         $dbManager = new DBManager($this->dbConnection);
         $dbVersion = $dbManager->getCurrentVersion();
         $appVersion = App::VERSION;
+        $token=$this->csrfCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('arrayResult',$done);
         $this->smarty->assign('listUpdate', $this->updateFiles);
         $this->smarty->assign('appVersion', $appVersion);
@@ -94,6 +100,13 @@ class DBMgmt extends Controller
 
     private function updateDb()
     {
+        if(empty($_POST['token'])) {
+            return false;
+        }
+        $token=$_POST['token'];
+        if(!$this->csrfCheck->checkToken($token)){
+           return false;
+        }
         $file = $this->session->getKey('fileVersion');
         $updates = $this->loadUpdates($file);
         if (!$updates) {

@@ -5,10 +5,13 @@ use Editiel98\App;
 use Editiel98\Event\Emitter;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\ApiController;
+use Editiel98\Services\CSRFCheck;
 use Exception;
 
 class ChangeValidUser extends ApiController
 {
+    private CSRFCheck $csrfCheck;
+
     public function manage()
     {
         error_reporting(0);
@@ -46,6 +49,7 @@ class ChangeValidUser extends ApiController
 
     private function updateUser()
     {
+        $this->csrfCheck = new CSRFCheck($this->session);
         $rawData = file_get_contents("php://input");
         $datas=json_decode($rawData);
         $arrayData=[
@@ -64,6 +68,25 @@ class ChangeValidUser extends ApiController
             echo json_encode($return);
             die();
         }
+        if(!isset($datas->token)){
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return=[
+                "result"=>false,
+            ];
+            echo json_encode($return);
+            die();
+        }
+        $token=$datas->token;
+        if(!$this->csrfCheck->checkToken($token)){
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return=[
+                "result"=>false,
+            ];
+            echo json_encode($return);
+            die();
+         }
         $userManager=new UserManager($this->dbConnection);
         try{
             $user=$userManager->findById($idUser);

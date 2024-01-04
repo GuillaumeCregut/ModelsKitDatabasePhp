@@ -5,6 +5,7 @@ namespace App\Controller\Kit;
 use Editiel98\App;
 use Editiel98\Entity\User;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
 class Management extends Controller
@@ -14,6 +15,7 @@ class Management extends Controller
     private array $stock = [];
     private array $wip = [];
     private array $finished = [];
+    private CSRFCheck $csrfCheck;
 
     public function render()
     {
@@ -23,6 +25,7 @@ class Management extends Controller
             $this->smarty->display('kit/notconnected.tpl');
             die();
         }
+        $this->csrfCheck=new CSRFCheck($this->session);
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
         $user = new User();
         $user->setId($userId);
@@ -33,6 +36,8 @@ class Management extends Controller
 
     private function displayPage()
     {
+        $token=$this->csrfCheck->createToken();
+        $this->smarty->assign('token',$token);
         $this->smarty->assign('likeModels', $this->liked);
         $this->smarty->assign('buyModels', $this->buy);
         $this->smarty->assign('stockedModels', $this->stock);

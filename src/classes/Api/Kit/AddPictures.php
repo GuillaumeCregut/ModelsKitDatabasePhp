@@ -4,18 +4,31 @@ namespace Editiel98\Api\Kit;
 
 use Editiel98\Manager\ModelManager;
 use Editiel98\Router\ApiController;
+use Editiel98\Services\CSRFCheck;
 use Exception;
 
 class AddPictures extends ApiController
 {
+    private CSRFCheck $csrfCheck;
+
     public function manage()
     {
         if (!$this->isConnected) {
             http_response_code(401);
             die();
         }
+        $this->csrfCheck=new CSRFCheck($this->session);
         header('Content-Type: application/json');
         if (!isset($_POST['id']) || intval($_POST['id'] === 0)) {
+            http_response_code(422);
+            die();
+        }
+        if(empty($_POST['token'])) {
+            http_response_code(422);
+            die();
+        }
+        $token=$_POST['token'];
+        if(!$this->csrfCheck->checkToken($token)){
             http_response_code(422);
             die();
         }

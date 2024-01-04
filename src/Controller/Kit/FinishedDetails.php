@@ -6,6 +6,7 @@ use App\Controller\Error;
 use Editiel98\Manager\MessageManager;
 use Editiel98\Manager\ModelManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 use Exception;
 
 class FinishedDetails extends Controller
@@ -16,6 +17,7 @@ class FinishedDetails extends Controller
     private int $modelId;
     private ModelManager $modelManager;
     private MessageManager $messageManager;
+    private CSRFCheck $csrfCheck;
 
     public function render()
     {
@@ -32,6 +34,7 @@ class FinishedDetails extends Controller
             $page->render();
             die();
         }
+        $this->csrfCheck = new CSRFCheck($this->session);
         $this->modelManager = new ModelManager($this->dbConnection);
         $this->messageManager = new MessageManager($this->dbConnection);
         $this->modelId = $id;
@@ -69,29 +72,30 @@ class FinishedDetails extends Controller
     {
         $messages = $this->messageManager->getMessagesForModel($id);
         if (!empty($messages)) {
-            $formattedMessages=$this->formatAvatar($messages);
-            $allMessages=[];
+            $formattedMessages = $this->formatAvatar($messages);
+            $allMessages = [];
             //Reconstruire proprement le tableau de messages
-            foreach($formattedMessages as $message) {
-                if(is_null($message->replyId)) {
-                    $newMessage=[
-                        'message'=>$message,
-                        'replies'=>[]
+            foreach ($formattedMessages as $message) {
+                if (is_null($message->replyId)) {
+                    $newMessage = [
+                        'message' => $message,
+                        'replies' => []
                     ];
-                    $allMessages[$message->id]=$newMessage;
-                   
+                    $allMessages[$message->id] = $newMessage;
                 } else {
-                    $allMessages[$message->replyId]['replies'][]=$message;
+                    $allMessages[$message->replyId]['replies'][] = $message;
                 }
             }
-            $this->messages=$allMessages;
+            $this->messages = $allMessages;
         }
     }
 
-    
+
 
     private function displayPage()
     {
+        $token = $this->csrfCheck->createToken();
+        $this->smarty->assign('token', $token);
         $this->smarty->assign('kits', true);
         $this->smarty->assign('model', $this->model);
         if (!empty($this->messages)) {
@@ -107,7 +111,7 @@ class FinishedDetails extends Controller
 
     private function formatAvatar(array $messages): array
     {
-        $formatted=[];
+        $formatted = [];
         foreach ($messages as $message) {
             $id = $message->userId;
             if ($message->avatar) {
@@ -122,6 +126,13 @@ class FinishedDetails extends Controller
     private function usePost()
     {
         if (!isset($_POST['action'])) {
+            return;
+        }
+        if (empty($_POST['token'])) {
+            return;
+        }
+        $token = $_POST['token'];
+        if (!$this->csrfCheck->checkToken($token)) {
             return;
         }
         switch ($_POST['action']) {
@@ -147,23 +158,23 @@ class FinishedDetails extends Controller
         if (!$model) {
             return;
         }
-        try{
+        try {
             //Supprimer tous les messages liés au kit
             $this->messageManager->removeMessagesFromKit($this->modelId);
             //Supprimer toutes les photos liées au kit
-            $picturesdir=$model->pictures;
-            if(!is_null($picturesdir)) {
+            $picturesdir = $model->pictures;
+            if (!is_null($picturesdir)) {
                 //Récupérer toutes les photos et les supprimer
                 $baseDir = dirname(dirname(dirname(__DIR__))) . '/public/';
-                $fullDir=$baseDir . $picturesdir;
-                $files=[];
-                if(is_dir($fullDir)) {
-                    $files=scandir($fullDir);
+                $fullDir = $baseDir . $picturesdir;
+                $files = [];
+                if (is_dir($fullDir)) {
+                    $files = scandir($fullDir);
                 }
-                if(!empty($files)) {
-                    foreach($files as $file) {
-                        
-                        if(($file!=='.' && $file!=='..')&&is_file($fullDir . $file)) {
+                if (!empty($files)) {
+                    foreach ($files as $file) {
+
+                        if (($file !== '.' && $file !== '..') && is_file($fullDir . $file)) {
                             $this->deletePicture($picturesdir . $file);
                         }
                     }
@@ -172,9 +183,7 @@ class FinishedDetails extends Controller
             $this->modelManager->deleteStraight($this->modelId);
             header('Location: /kit_finis');
             die();
-
-        } catch(Exception $e) {
-
+        } catch (Exception $e) {
         }
     }
 

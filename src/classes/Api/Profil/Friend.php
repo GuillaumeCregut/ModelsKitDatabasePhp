@@ -4,10 +4,13 @@ namespace Editiel98\Api\Profil;
 
 use Editiel98\Manager\SocialManager;
 use Editiel98\Router\ApiController;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
 class Friend extends ApiController
 {
+    private CSRFCheck $csfrCheck;
+
     public function manage()
     {
         //error_reporting(0);
@@ -40,6 +43,7 @@ class Friend extends ApiController
 
     private function changeState()
     {
+        $this->csfrCheck=new CSRFCheck($this->session);
         $userId=$this->session->getKey(Session::SESSION_USER_ID);
         $datas=$this->datas;
         if(is_null($datas)|| is_null($datas->idUser) || intval($datas->idUser)===0){ 
@@ -51,6 +55,26 @@ class Friend extends ApiController
             echo json_encode($return);
             die();
         }
+        //token here
+        if(!isset($datas->token)){
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return=[
+                "result"=>false,
+            ];
+            echo json_encode($return);
+            die();
+        }
+        $token=$datas->token;
+        if(!$this->csfrCheck->checkToken($token)){
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return=[
+                "result"=>false,
+            ];
+            echo json_encode($return);
+            die();
+         }
         $friendId=intval($datas->idUser);
         $socialManager=new SocialManager($this->dbConnection);
         $result=$socialManager->getFriendVisibility($friendId);

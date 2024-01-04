@@ -10,6 +10,7 @@
 {block name=innerMenu}
     <div class="main-kit-container">
         <h2>Gestion de mes kits</h2>
+        <input type="hidden" name="token" value="{$token}" id="token">
         <div class="kits-management-container">
             <section class="kits-container">
                 <h3>Modèles likés</h3>

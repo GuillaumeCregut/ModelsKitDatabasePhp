@@ -72,6 +72,7 @@
         </ul>
         <form action="admin_database" method="post">
             <input type="hidden" name="action" value="update">
+            <input type="hidden" name="token" value="{$token}">
             <button type="submit">Mettre à jour</button>
         </form>
     </div>

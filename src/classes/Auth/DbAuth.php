@@ -10,7 +10,10 @@ use Editiel98\Factory;
 use Editiel98\Session;
 use Exception;
 
-
+/**
+ * DBAuth
+ * manage user connection
+ */
 class DbAuth
 {
     private Database $db;
@@ -22,6 +25,7 @@ class DbAuth
     }
 
     /**
+     * login
      * Get user and credentials from DB
      *
      * @param string $login
@@ -61,6 +65,7 @@ class DbAuth
     }
 
     /**
+     * signUp
      * Store new user id DB
      *
      * @param string $login

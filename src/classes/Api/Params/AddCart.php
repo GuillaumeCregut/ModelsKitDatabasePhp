@@ -6,10 +6,18 @@ use Editiel98\Router\ApiController;
 use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
+/**
+ * AddCart : Add kit to user stock
+ */
 class AddCart extends ApiController
 {
     private CSRFCheck $csfrCheck;
 
+    /**
+     * Manage : dispatch request
+     *
+     * @return void
+     */
     public function manage()
     {
         error_reporting(0);
@@ -41,6 +49,14 @@ class AddCart extends ApiController
         }
     }
 
+    /**
+     * AddCart
+     * 
+     * Add kit to user stock
+     * Return JSON response
+     *
+     * @return void
+     */
     private function addCart()
     {
         $datas=$this->datas;

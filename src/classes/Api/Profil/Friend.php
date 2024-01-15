@@ -7,10 +7,19 @@ use Editiel98\Router\ApiController;
 use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
+/**
+ * Friend
+ * Change relation state between users
+ */
 class Friend extends ApiController
 {
     private CSRFCheck $csfrCheck;
 
+    /**
+     * Manage : dispatch request
+     *
+     * @return void
+     */
     public function manage()
     {
         //error_reporting(0);
@@ -40,7 +49,13 @@ class Friend extends ApiController
             header("HTTP/1.1 401 Unauthorized");
         }
     }
-
+    /**
+     * changeState
+     * Change state relation between users
+     * Return JSON response
+     *
+     * @return void
+     */
     private function changeState()
     {
         $this->csfrCheck = new CSRFCheck($this->session);

@@ -8,6 +8,10 @@ use Exception;
 use \PDO;
 use PDOException;
 
+/**
+ * Database
+ * Manage connection with database
+ */
 class Database
 {
     private string $user;
@@ -21,7 +25,12 @@ class Database
     {
         $this->loadCredentials();
     }
-
+    /**
+     * getInstance
+     * create singleton for database connection
+     *
+     * @return instance of pdo connection
+     */
     public static function getInstance()
     {
         if (is_null(self::$_instance)) {
@@ -30,6 +39,12 @@ class Database
         return self::$_instance;
     }
 
+    /**
+     * getConnect
+     * create pdo Connection
+     *
+     * @return pdo 
+     */
     public function getConnect()
     {
         if ($this->pdo === null) {
@@ -50,6 +65,12 @@ class Database
         return $this->pdo;
     }
 
+    /**
+     * loadCredentials
+     * Load credentials from config file
+     *
+     * @return void
+     */
     private function loadCredentials()
     {
         try {
@@ -68,6 +89,14 @@ class Database
         }
     }
 
+    /**
+     * query
+     * Make a PDO query
+     *
+     * @param string $statement : SQL query
+     * @param string|null $className : class type of result if exists
+     * @return array
+     */
     public function query(string $statement, ?string $className = null): array
     {
         try {
@@ -89,6 +118,17 @@ class Database
         }
     }
 
+    /**
+     * prepare
+     *
+     * prepare a PDO request and execute it
+     * 
+     * @param string $statement : SQL query
+     * @param string|null $className : class of result if exist
+     * @param array|null $values : array of bind values
+     * @param boolean|null $single : return unique data or set of datas
+     * @return mixed : array or object
+     */
     public function prepare(string $statement, ?string $className, ?array $values = [], ?bool $single = false)
     {
         try {
@@ -114,6 +154,13 @@ class Database
         }
     }
 
+    /**
+     * execStraight
+     * Execute query directly without binding or result needed
+     *
+     * @param string $query : Query to execute
+     * @return boolean : result of query
+     */
     public function execStraight(string $query): bool
     {
         try {
@@ -131,6 +178,14 @@ class Database
         }
     }
 
+    /**
+     * exec
+     * execute a prepared PDO request
+     *
+     * @param string $statement : SQL query
+     * @param array $values : binding values
+     * @return mixed : bool or int 
+     */
     public function exec(string $statement, array $values): bool | int
     {
         try {
@@ -150,16 +205,35 @@ class Database
             throw new DbException('Erreur Exec', $errCode, $errMessage);
         }
     }
+
+    /**
+     * startTransction
+     * init a SQL transaction
+     *
+     * @return void
+     */
     public function startTransac(): void
     {
         $this->getConnect()->beginTransaction();
     }
 
+    /**
+     * commitTransac
+     * commit the current transaction
+     *
+     * @return void
+     */
     public function commitTransc(): void
     {
         $this->getConnect()->commit();
     }
 
+    /**
+     * rollBack
+     * rollback the current transaction
+     *
+     * @return void
+     */
     public function rollBack(): void
     {
         $this->getConnect()->rollBack();

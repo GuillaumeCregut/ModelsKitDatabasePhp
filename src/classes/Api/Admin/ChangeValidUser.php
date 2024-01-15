@@ -9,10 +9,18 @@ use Editiel98\Router\ApiController;
 use Editiel98\Services\CSRFCheck;
 use Exception;
 
+/**
+ * ChangeValidUser : Api manage user status
+ */
 class ChangeValidUser extends ApiController
 {
     private CSRFCheck $csrfCheck;
 
+    /**
+     * Manage : dispatch request
+     *
+     * @return void
+     */
     public function manage()
     {
         error_reporting(0);
@@ -47,6 +55,13 @@ class ChangeValidUser extends ApiController
         }
     }
 
+    /**
+     * updateUser
+     *
+     * Change user state. return JSON response
+     * 
+     * @return void
+     */
     private function updateUser()
     {
         $this->csrfCheck = new CSRFCheck($this->session);

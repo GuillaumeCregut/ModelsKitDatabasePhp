@@ -7,11 +7,18 @@ use Editiel98\Router\ApiController;
 use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
-
+/**
+ * LikeModel : change like status between user and model
+ */
 class LikeModel extends ApiController
 {
     private CSRFCheck $csfrCheck;
 
+    /**
+     * Manage : dispatch request
+     *
+     * @return void
+     */
     public function manage()
     {
         error_reporting(0);
@@ -43,6 +50,14 @@ class LikeModel extends ApiController
         }
     }
 
+    /**
+     * updateLike
+     * 
+     * Change like state between user and kit
+     * Return JSON response
+     *
+     * @return void
+     */
     private function updateLike()
     {
         $datas = $this->datas;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Api\Admin;
 
 use Editiel98\App;
@@ -15,19 +16,20 @@ class ChangeValidUser extends ApiController
     public function manage()
     {
         error_reporting(0);
-        if($this->isConnected){
-            if(App::ADMIN==$this->userRank){
-                $method=$_SERVER['REQUEST_METHOD'];
-                switch ($method){
+        if ($this->isConnected) {
+            if (App::ADMIN == $this->userRank) {
+                $method = $_SERVER['REQUEST_METHOD'];
+                switch ($method) {
                     case 'GET':
                         header("HTTP/1.1 405 Method Not Allowed");
                         die();
                         break;
-                    case 'POST': 
+                    case 'POST':
                         header("HTTP/1.1 405 Method Not Allowed");
                         die();
                         break;
-                    case 'PUT': $this->updateUser();
+                    case 'PUT':
+                        $this->updateUser();
                         break;
                     case 'DELETE':
                         header("HTTP/1.1 405 Method Not Allowed");
@@ -37,12 +39,10 @@ class ChangeValidUser extends ApiController
                         header("HTTP/1.1 405 Method Not Allowed");
                         die();
                 }
-            }
-            else{
+            } else {
                 header("HTTP/1.1 403 Forbidden");
             }
-        }
-        else{
+        } else {
             header("HTTP/1.1 401 Unauthorized");
         }
     }
@@ -51,71 +51,69 @@ class ChangeValidUser extends ApiController
     {
         $this->csrfCheck = new CSRFCheck($this->session);
         $rawData = file_get_contents("php://input");
-        $datas=json_decode($rawData);
-        $arrayData=[
-            'Utilisateur'=>$datas->idUser,
-            'NewValue'=>$datas->newStatus
+        $datas = json_decode($rawData);
+        $arrayData = [
+            'Utilisateur' => $datas->idUser,
+            'NewValue' => $datas->newStatus
         ];
-        $idUser=$datas->idUser;
-        $newStatus=$datas->newStatus;
-        if(!is_int($idUser) ||!is_bool($newStatus)){
-            $return=[
-                "result"=>false,
-                'Utilisateur'=>$idUser,
-                'NewValue'=>$newStatus,
+        $idUser = $datas->idUser;
+        $newStatus = $datas->newStatus;
+        if (!is_int($idUser) || !is_bool($newStatus)) {
+            $return = [
+                "result" => false,
+                'Utilisateur' => $idUser,
+                'NewValue' => $newStatus,
             ];
             header("HTTP/1.1 422 Unprocessable entity");
             echo json_encode($return);
             die();
         }
-        if(!isset($datas->token)){
-            header("HTTP/1.1 422 Unprocessable entity");
-
-            $return=[
-                "result"=>false,
-            ];
-            echo json_encode($return);
-            die();
-        }
-        $token=$datas->token;
-        if(!$this->csrfCheck->checkToken($token)){
+        if (!isset($datas->token)) {
             header("HTTP/1.1 422 Unprocessable entity");
 
-            $return=[
-                "result"=>false,
+            $return = [
+                "result" => false,
             ];
             echo json_encode($return);
             die();
-         }
-        $userManager=new UserManager($this->dbConnection);
-        try{
-            $user=$userManager->findById($idUser);
         }
-        catch(Exception $e){
+        $token = $datas->token;
+        if (!$this->csrfCheck->checkToken($token)) {
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return = [
+                "result" => false,
+            ];
+            echo json_encode($return);
+            die();
+        }
+        $userManager = new UserManager($this->dbConnection);
+        try {
+            $user = $userManager->findById($idUser);
+        } catch (Exception $e) {
             header("HTTP/1.1 500 Unprocessable entity");
             die();
         }
-        try{
-            $result=$userManager->setNewStatus($idUser,$newStatus);
-            $result=!!$result;
-            if($newStatus && $result){
-                $emitter=Emitter::getInstance();
-                $serverAdress=$_SERVER['SERVER_NAME'];
-                $mailValues=[
-                    'firstname'=>$user->getFirstname(),
-                    'lastname'=>$user->getLastname(),
-                    'server'=>$serverAdress
+        try {
+            $result = $userManager->setNewStatus($idUser, $newStatus);
+            $result = !!$result;
+            if ($newStatus && $result) {
+                $emitter = Emitter::getInstance();
+                $serverAdress = $_SERVER['SERVER_NAME'];
+                $mailValues = [
+                    'firstname' => $user->getFirstname(),
+                    'lastname' => $user->getLastname(),
+                    'server' => $serverAdress
                 ];
-                $emitter->emit(Emitter::USER_VALIDATED,$user->getEmail(),$mailValues );
+                $emitter->emit(Emitter::USER_VALIDATED, $user->getEmail(), $mailValues);
             }
-            $arrayData=[
-                'Utilisateur'=>$idUser,
-                'NewValue'=>$newStatus,
-                'result'=>$result
+            $arrayData = [
+                'Utilisateur' => $idUser,
+                'NewValue' => $newStatus,
+                'result' => $result
             ];
             echo (json_encode($arrayData));
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             header("HTTP/1.1 500 Unprocessable entity");
             die();
         }

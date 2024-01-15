@@ -17,18 +17,18 @@ class AddPictures extends ApiController
             http_response_code(401);
             die();
         }
-        $this->csrfCheck=new CSRFCheck($this->session);
+        $this->csrfCheck = new CSRFCheck($this->session);
         header('Content-Type: application/json');
         if (!isset($_POST['id']) || intval($_POST['id'] === 0)) {
             http_response_code(422);
             die();
         }
-        if(empty($_POST['token'])) {
+        if (empty($_POST['token'])) {
             http_response_code(422);
             die();
         }
-        $token=$_POST['token'];
-        if(!$this->csrfCheck->checkToken($token)){
+        $token = $_POST['token'];
+        if (!$this->csrfCheck->checkToken($token)) {
             http_response_code(422);
             die();
         }
@@ -100,7 +100,7 @@ class AddPictures extends ApiController
             if (file_exists($fullPathFile)  && $result) {
                 unlink($picture);
                 return $fullName;
-            }   
+            }
             return $filename  . '.' . $ext;;
         } catch (Exception $e) {
             header($_SERVER['SERVER_PROTOCOL'] . $e->getMessage(), true, 500);

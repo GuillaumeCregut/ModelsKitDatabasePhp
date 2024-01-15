@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Interfaces;
 
 interface SessionInterface

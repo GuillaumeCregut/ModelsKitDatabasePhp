@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Entity;
 
 use DateTime;
@@ -13,10 +14,10 @@ class Order extends Entity
     private int $provider;
     private $dateOrder;
     private string $name;
-    private array $lines=[];
+    private array $lines = [];
     public function __construct()
     {
-        $this->manager=Factory::getManager('orderManager');
+        $this->manager = Factory::getManager('orderManager');
     }
 
     public function getOwner(): int
@@ -24,9 +25,9 @@ class Order extends Entity
         return $this->owner;
     }
 
-    public function setOwner(int $owner) : self
+    public function setOwner(int $owner): self
     {
-        $this->owner=$owner;
+        $this->owner = $owner;
         return $this;
     }
 
@@ -37,7 +38,7 @@ class Order extends Entity
 
     public function setRef(string $ref): self
     {
-        $this->reference=$ref;
+        $this->reference = $ref;
         return $this;
     }
 
@@ -48,7 +49,7 @@ class Order extends Entity
 
     public function setProvider(int $provider): self
     {
-        $this->provider=$provider;
+        $this->provider = $provider;
         return $this;
     }
 
@@ -59,7 +60,7 @@ class Order extends Entity
 
     public function getDateOrder(): string
     {
-        if(is_null($this->dateOrder)){
+        if (is_null($this->dateOrder)) {
             return '';
         }
         return $this->dateOrder;
@@ -67,17 +68,17 @@ class Order extends Entity
 
     public function setDate(string $date): self
     {
-        $this->dateOrder=$date;
+        $this->dateOrder = $date;
         return $this;
     }
-    public function addLines(int $id, float $price,int $qty):self
+    public function addLines(int $id, float $price, int $qty): self
     {
-        $newLine=[
-            'price'=>$price,
-            'id'=>$id,
-            'qty'=>$qty
+        $newLine = [
+            'price' => $price,
+            'id' => $id,
+            'qty' => $qty
         ];
-        $this->lines[]=$newLine;
+        $this->lines[] = $newLine;
         return $this;
     }
 
@@ -85,7 +86,7 @@ class Order extends Entity
     {
         return $this->lines;
     }
-    
+
     public function save(): bool
     {
         return $this->manager->save($this);

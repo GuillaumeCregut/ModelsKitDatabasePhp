@@ -1,17 +1,19 @@
 <?php
+
 namespace Editiel98\Entity;
 
 use Editiel98\Factory;
 use Editiel98\Manager\PeriodManager;
 
-class Period extends Entity{
+class Period extends Entity
+{
     private string $name;
     private int $id;
     private PeriodManager $manager;
 
     public function __construct()
     {
-        $this->manager=Factory::getManager('periodManager');
+        $this->manager = Factory::getManager('periodManager');
     }
 
     public function getId(): int
@@ -21,7 +23,7 @@ class Period extends Entity{
 
     public function setId(int $id): self
     {
-        $this->id=$id;
+        $this->id = $id;
         return $this;
     }
 
@@ -32,13 +34,13 @@ class Period extends Entity{
 
     public function setName(string $name): self
     {
-        $this->name=$name;
+        $this->name = $name;
         return $this;
     }
 
     public function save(): bool|int
     {
-       return $this->manager->save($this);
+        return $this->manager->save($this);
     }
 
     public function delete(): bool|int

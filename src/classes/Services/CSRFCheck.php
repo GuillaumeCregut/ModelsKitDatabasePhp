@@ -9,8 +9,9 @@ class CSRFCheck
 {
     private Session $session;
 
-    public function __construct(Session $session){
-        $this->session=$session;
+    public function __construct(Session $session)
+    {
+        $this->session = $session;
     }
 
     /**

@@ -1,22 +1,23 @@
 <?php
+
 namespace Editiel98;
 
 use Editiel98\Interfaces\SessionInterface;
 
 class Session implements SessionInterface
 {
-    const SESSION_CONNECTED='isConnected';
-    const SESSION_FULLNAME='fullName';
-    const SESSION_RANK_USER='rankUser';
-    const SESSION_USER_ID='userId';
-    
-    
+    const SESSION_CONNECTED = 'isConnected';
+    const SESSION_FULLNAME = 'fullName';
+    const SESSION_RANK_USER = 'rankUser';
+    const SESSION_USER_ID = 'userId';
+
+
     public function __construct()
     {
-        if(session_status()===PHP_SESSION_NONE)
-        session_start();
+        if (session_status() === PHP_SESSION_NONE)
+            session_start();
     }
-    
+
     /**
      * Get a Key in Session
      *
@@ -25,9 +26,9 @@ class Session implements SessionInterface
      */
     public function getKey(string $key): mixed
     {
-        if(isset( $_SESSION[$key])){
+        if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
-        }else {
+        } else {
             return null;
         }
     }
@@ -41,7 +42,7 @@ class Session implements SessionInterface
      */
     public function setKey(string $key, mixed $value)
     {
-        $_SESSION[$key]=$value;
+        $_SESSION[$key] = $value;
     }
 
     /**
@@ -51,8 +52,9 @@ class Session implements SessionInterface
      * @param mixed $value : values to store for the key
      * @return void
      */
-    public function setMultipleKey(string $key, mixed $value){
-        $_SESSION[$key][]=$value;
+    public function setMultipleKey(string $key, mixed $value)
+    {
+        $_SESSION[$key][] = $value;
     }
 
     /**

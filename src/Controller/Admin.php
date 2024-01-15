@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Editiel98\App;
@@ -8,36 +9,34 @@ class Admin extends Controller
 {
     public function render()
     {
-        if(App::ADMIN===$this->userRank){
+        if (App::ADMIN === $this->userRank) {
             if (empty($this->subPages)) {
-                $this->smarty->assign('admin','params');
+                $this->smarty->assign('admin', 'params');
                 $this->smarty->display('admin/index.tpl');
-            } else{
+            } else {
                 switch ($this->subPages[0]) {
                     case 'logs':
-                            $className='Logs';
-                            break;
+                        $className = 'Logs';
+                        break;
                     case 'users':
-                            $className='Users';
-                            break;
+                        $className = 'Users';
+                        break;
                     case 'database':
-                            $className='DBMgmt';
-                            break;
-                    default :
-                        $page=new Error('404');
+                        $className = 'DBMgmt';
+                        break;
+                    default:
+                        $page = new Error('404');
                         $page->render();
                         die();
                 }
-                if(isset($className))
-                {
+                if (isset($className)) {
                     $classPage = 'App\\Controller\\Admin\\' . $className;
-                    $page=new $classPage($this->params);
+                    $page = new $classPage($this->params);
                     $page->render();
                 }
             }
-        }
-        else{
-            $this->smarty->assign('accueil','accueil');
+        } else {
+            $this->smarty->assign('accueil', 'accueil');
             $this->smarty->display('index.tpl');
         }
     }

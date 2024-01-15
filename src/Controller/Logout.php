@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Editiel98\Router\Controller;

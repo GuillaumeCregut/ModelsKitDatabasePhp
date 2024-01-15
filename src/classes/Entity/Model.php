@@ -1,10 +1,12 @@
 <?php
+
 namespace Editiel98\Entity;
 
 use Editiel98\Factory;
 use Editiel98\Manager\ModelManager;
 
-class Model extends Entity{
+class Model extends Entity
+{
     private string $name;
     private int $id;
     private string $buildername;
@@ -15,7 +17,7 @@ class Model extends Entity{
     private string $reference;
     private string $scalename;
     private string $brandname;
-    private bool $liked=false;
+    private bool $liked = false;
     private string | null $picture;
 
     private int $builder;
@@ -29,7 +31,7 @@ class Model extends Entity{
 
     public function __construct()
     {
-        $this->manager=Factory::getManager('modelManager');
+        $this->manager = Factory::getManager('modelManager');
     }
 
     public function getId(): int
@@ -39,7 +41,7 @@ class Model extends Entity{
 
     public function setId(int $id): self
     {
-        $this->id=$id;
+        $this->id = $id;
         return $this;
     }
 
@@ -50,7 +52,7 @@ class Model extends Entity{
 
     public function setName(string $name): self
     {
-        $this->name=$name;
+        $this->name = $name;
         return $this;
     }
     public function getBrand(): string
@@ -64,7 +66,7 @@ class Model extends Entity{
     //     return $this;
     // }
 
-    public function getBuilder():  string
+    public function getBuilder(): string
     {
         return $this->buildername;
     }
@@ -86,7 +88,7 @@ class Model extends Entity{
     //     return $this;
     // }
 
-    public function getCategory(): string 
+    public function getCategory(): string
     {
         return $this->categoryname;
     }
@@ -97,7 +99,7 @@ class Model extends Entity{
     //     return $this;
     // }
 
-    public function getPeriod(): string 
+    public function getPeriod(): string
     {
         return $this->periodname;
     }
@@ -115,22 +117,22 @@ class Model extends Entity{
 
     public function setScalemates(string $link): self
     {
-        $this->scalemates=$link;
+        $this->scalemates = $link;
         return $this;
     }
 
-    public function getRef(): string 
+    public function getRef(): string
     {
         return $this->reference;
     }
 
     public function setRef(string $ref): self
     {
-        $this->reference=$ref;
+        $this->reference = $ref;
         return $this;
     }
 
-    public function getScale(): string 
+    public function getScale(): string
     {
         return $this->scalename;
     }
@@ -150,7 +152,7 @@ class Model extends Entity{
 
     public function setliked(bool $liked): self
     {
-        $this->liked=$liked;
+        $this->liked = $liked;
         return $this;
     }
 
@@ -162,7 +164,7 @@ class Model extends Entity{
 
     public function setImage(string $image): self
     {
-        $this->picture=$image;
+        $this->picture = $image;
         return $this;
     }
 
@@ -170,7 +172,7 @@ class Model extends Entity{
 
     public function save(): bool|int
     {
-       return $this->manager->save($this);
+        return $this->manager->save($this);
     }
 
     public function delete(): bool|int
@@ -190,7 +192,7 @@ class Model extends Entity{
 
     public function setBrandId(int $id): self
     {
-        $this->brand=$id;
+        $this->brand = $id;
         return $this;
     }
 
@@ -201,7 +203,7 @@ class Model extends Entity{
 
     public function setScaleId(int $id): self
     {
-        $this->scale=$id;
+        $this->scale = $id;
         return $this;
     }
 
@@ -212,7 +214,7 @@ class Model extends Entity{
 
     public function setBuilderId(int $id): self
     {
-        $this->builder=$id;
+        $this->builder = $id;
         return $this;
     }
 
@@ -223,7 +225,7 @@ class Model extends Entity{
 
     public function setCategoryId(int $id): self
     {
-        $this->category=$id;
+        $this->category = $id;
         return $this;
     }
 
@@ -234,7 +236,7 @@ class Model extends Entity{
 
     public function setPeriodId(int $id): self
     {
-        $this->period=$id;
+        $this->period = $id;
         return $this;
     }
 }

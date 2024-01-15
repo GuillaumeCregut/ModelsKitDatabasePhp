@@ -22,7 +22,7 @@ class Social extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
-        $this->csfrCheck=new CSRFCheck($this->session);
+        $this->csfrCheck = new CSRFCheck($this->session);
         $this->socialManager = new SocialManager($this->dbConnection);
         if (!empty($_POST)) {
             $this->usePost();
@@ -44,8 +44,8 @@ class Social extends Controller
         if (!empty($this->demands)) {
             $this->smarty->assign('demandList', $this->demands);
         }
-        $token=$this->csfrCheck->createToken();
-        $this->smarty->assign('token',$token);
+        $token = $this->csfrCheck->createToken();
+        $this->smarty->assign('token', $token);
         $this->smarty->assign('profil', true);
         $this->smarty->assign('social_menu', true);
         $this->smarty->display('profil/socialhome.tpl');
@@ -112,12 +112,12 @@ class Social extends Controller
 
     private function usePost()
     {
-        if(empty($_POST['token'])) {
+        if (empty($_POST['token'])) {
             return false;
         }
-        $token=$_POST['token'];
-        if(!$this->csfrCheck->checkToken($token)){
-           return false;
+        $token = $_POST['token'];
+        if (!$this->csfrCheck->checkToken($token)) {
+            return false;
         }
         if (!isset($_POST['action'])) {
             return;

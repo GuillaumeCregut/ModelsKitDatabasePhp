@@ -55,11 +55,11 @@ class AddCart extends ApiController
             die();
         }
         //test token
-        if(!isset($datas->token)){
+        if (!isset($datas->token)) {
             header("HTTP/1.1 422 Unprocessable entity");
 
-            $return=[
-                "result"=>false,
+            $return = [
+                "result" => false,
             ];
             echo json_encode($return);
             die();

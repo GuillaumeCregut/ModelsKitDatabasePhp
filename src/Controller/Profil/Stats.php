@@ -107,10 +107,10 @@ class Stats extends Controller
             if ($v->count < self::LIMIT_NUMBER) {
                 $count += $v->count;
             } else {
-                $tempArray[]=$v;
+                $tempArray[] = $v;
             }
         }
-        $tempArray[]=(object)['count'=>$count,'name'=>'autres'];
+        $tempArray[] = (object)['count' => $count, 'name' => 'autres'];
         return $tempArray;
     }
 }

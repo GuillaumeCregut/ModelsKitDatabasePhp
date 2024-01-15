@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Profil;
 
 
@@ -17,64 +18,65 @@ class Provider extends Controller
 
     public function render()
     {
-        if(!$this->isConnected){
-        //Render antoher page and die
-            $this->smarty->assign('profil','profil');
+        if (!$this->isConnected) {
+            //Render antoher page and die
+            $this->smarty->assign('profil', 'profil');
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
-        $this->csfrCheck=new CSRFCheck($this->session);
-        if(!empty($_POST)){
+        $this->csfrCheck = new CSRFCheck($this->session);
+        if (!empty($_POST)) {
             $this->usePost();
         }
-        $this->hasFlash=$this->flash->hasFlash();
+        $this->hasFlash = $this->flash->hasFlash();
         /* Render flashes messages */
-        if($this->hasFlash){
-            $flashes=$this->flash->getFlash();
-            $this->smarty->assign('flash',$flashes);
+        if ($this->hasFlash) {
+            $flashes = $this->flash->getFlash();
+            $this->smarty->assign('flash', $flashes);
         }
         $this->getUser();
         //todo 
         $this->displayPage();
     }
 
-    private function usePost(){
-        if(empty($_POST['token'])) {
+    private function usePost()
+    {
+        if (empty($_POST['token'])) {
             return false;
         }
-        $token=$_POST['token'];
-        if(!$this->csfrCheck->checkToken($token)){
-           return false;
+        $token = $_POST['token'];
+        if (!$this->csfrCheck->checkToken($token)) {
+            return false;
         }
-        if(!isset($_POST['action'])){
+        if (!isset($_POST['action'])) {
             return;
         }
-        switch($_POST['action']){
-            case 'add' :
+        switch ($_POST['action']) {
+            case 'add':
                 $this->addProvider();
                 break;
-            case 'update': 
+            case 'update':
                 $this->updateProvider();
                 break;
-            case 'delete': 
+            case 'delete':
                 $this->deleteProvider();
                 break;
-            default: return;
+            default:
+                return;
         }
-
     }
 
     private function addProvider()
     {
-        if(!isset($_POST['name'])){
+        if (!isset($_POST['name'])) {
             return;
         }
-        $name=trim(htmlspecialchars($_POST['name']));
-        if($name===''){
+        $name = trim(htmlspecialchars($_POST['name']));
+        if ($name === '') {
             return;
         }
-        $userId=$this->session->getKey(Session::SESSION_USER_ID);
-        $provider=new EntityProvider();
+        $userId = $this->session->getKey(Session::SESSION_USER_ID);
+        $provider = new EntityProvider();
         $provider->setName($name);
         $provider->setOwner($userId);
         $provider->save();
@@ -82,21 +84,21 @@ class Provider extends Controller
 
     private function updateProvider()
     {
-        if(!isset($_POST['name'])){
+        if (!isset($_POST['name'])) {
             return;
         }
-        $name=trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
-        if($name===''){
+        $name = trim(htmlspecialchars($_POST['name'], ENT_NOQUOTES, 'UTF-8'));
+        if ($name === '') {
             return;
         }
-        if(!isset($_POST['id'])){
+        if (!isset($_POST['id'])) {
             return;
         }
-        $id=intval($_POST['id']);
-        if($id===0){
+        $id = intval($_POST['id']);
+        if ($id === 0) {
             return;
         }
-        $provider=new EntityProvider();
+        $provider = new EntityProvider();
         $provider->setName($name);
         $provider->setId($id);
         $provider->update();
@@ -104,49 +106,48 @@ class Provider extends Controller
 
     private function deleteProvider()
     {
-        if(!isset($_POST['id'])){
+        if (!isset($_POST['id'])) {
             return;
         }
-        $id=intval($_POST['id']);
-        if($id===0){
+        $id = intval($_POST['id']);
+        if ($id === 0) {
             return;
         }
-        $provider=new EntityProvider();
+        $provider = new EntityProvider();
         $provider->setId($id);
         $provider->delete();
     }
 
     private function getUser()
     {
-        $userId=$this->session->getKey(Session::SESSION_USER_ID);
-        $userManager=new UserManager($this->dbConnection);
-        $user=$userManager->findById($userId);
-        $this->user=$user;
-        $providers=$this->user->getProviders();
-        $this->providers=$providers;
+        $userId = $this->session->getKey(Session::SESSION_USER_ID);
+        $userManager = new UserManager($this->dbConnection);
+        $user = $userManager->findById($userId);
+        $this->user = $user;
+        $providers = $this->user->getProviders();
+        $this->providers = $providers;
         $this->stringToLink();
     }
 
     private function displayPage()
     {
-        $token=$this->csfrCheck->createToken();
-        $this->smarty->assign('token',$token);
-        $this->smarty->assign('providers',$this->providers);
-        $this->smarty->assign('profil','profil');
-        $this->smarty->assign('provider_menu','profil');
+        $token = $this->csfrCheck->createToken();
+        $this->smarty->assign('token', $token);
+        $this->smarty->assign('providers', $this->providers);
+        $this->smarty->assign('profil', 'profil');
+        $this->smarty->assign('provider_menu', 'profil');
         $this->smarty->display('profil/provider.tpl');
     }
 
     private function stringToLink()
     {
-        foreach($this->providers as $key=> $provider) {
-            
-            $url=parse_url($provider->getName());
-           if(!empty($url['scheme'])) {
+        foreach ($this->providers as $key => $provider) {
+
+            $url = parse_url($provider->getName());
+            if (!empty($url['scheme'])) {
                 $provider->setUrl($provider->getName());
                 $provider->setName($url['host']);
-           }
+            }
         }
     }
-
 }

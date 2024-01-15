@@ -332,7 +332,7 @@ class UserManager extends Manager //implements ManagerInterface
         return false;
     }
 
-    public function getKitByState(int $state, int $user, ?string $filter = '',?array $sorted=[]): array
+    public function getKitByState(int $state, int $user, ?string $filter = '', ?array $sorted = []): array
     {
         $query = "SELECT id, pictures, modelName, reference, boxPicture,builderName, scaleName, brandName 
         FROM mymodels WHERE state=:state AND owner=:owner";
@@ -344,8 +344,8 @@ class UserManager extends Manager //implements ManagerInterface
             $query .= ' AND modelName like :name';
             $values[':name'] = "%{$filter}%";
         }
-        if(!empty($sorted)) {
-            $query.=' ORDER BY '.$sorted[0] . ' ' . $sorted[1];
+        if (!empty($sorted)) {
+            $query .= ' ORDER BY ' . $sorted[0] . ' ' . $sorted[1];
         }
         try {
             return $this->db->prepare($query, null, $values);

@@ -21,7 +21,7 @@ class FriendBuild extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
-        $this->csfrCheck=new CSRFCheck($this->session);
+        $this->csfrCheck = new CSRFCheck($this->session);
         if (empty($_POST) || !isset($_POST['action'])) {
             $this->displayError();
         }
@@ -75,8 +75,8 @@ class FriendBuild extends Controller
         if (!empty($messages)) {
             $this->smarty->assign('messages', $messages);
         }
-        $token=$this->csfrCheck->createToken();
-        $this->smarty->assign('token',$token);
+        $token = $this->csfrCheck->createToken();
+        $this->smarty->assign('token', $token);
         $this->smarty->assign('model', $model);
         $this->smarty->assign('friend', $idFriend);
         $this->smarty->assign('profil', true);
@@ -89,18 +89,17 @@ class FriendBuild extends Controller
     {
         $messages = $this->socialManager->getModelMessages($idModel);
         //Organise les messages comme dans finishedModel
-        
-        $allMessages=[];
-        foreach($messages as $message) {
-            if(is_null($message->replyId)) {
-                $newMessage=[
-                    'message'=>$message,
-                    'replies'=>[]
+
+        $allMessages = [];
+        foreach ($messages as $message) {
+            if (is_null($message->replyId)) {
+                $newMessage = [
+                    'message' => $message,
+                    'replies' => []
                 ];
-                $allMessages[$message->id]=$newMessage;
-               
+                $allMessages[$message->id] = $newMessage;
             } else {
-                $allMessages[$message->replyId]['replies'][]=$message;
+                $allMessages[$message->replyId]['replies'][] = $message;
             }
         }
         return $allMessages;
@@ -109,11 +108,11 @@ class FriendBuild extends Controller
     private function storeMessage()
     {
         //Check token
-        if(empty($_POST['token'])) {
+        if (empty($_POST['token'])) {
             $this->displayPage();
         }
-        $token=$_POST['token'];
-        if(!$this->csfrCheck->checkToken($token)){
+        $token = $_POST['token'];
+        if (!$this->csfrCheck->checkToken($token)) {
             $this->displayPage();
         }
         if (!isset($_POST['id']) || intval($_POST['id']) === 0 || !isset($_POST['message']) || $_POST['message'] === '' || !isset($_POST['friend']) || intval($_POST['friend']) === 0) {

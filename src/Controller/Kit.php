@@ -1,48 +1,50 @@
 <?php
+
 namespace App\Controller;
 
 use Editiel98\Router\Controller;
 
-class Kit extends Controller{
+class Kit extends Controller
+{
 
     public function render()
     {
         if (empty($this->subPages)) {
-            $this->smarty->assign('kits','kits');
+            $this->smarty->assign('kits', 'kits');
             $this->smarty->display('kit/index.tpl');
-        }else{
+        } else {
             switch ($this->subPages[0]) {
-                case'general':
-                    $className='Management';
+                case 'general':
+                    $className = 'Management';
                     break;
                 case 'commandes':
-                    $className='OrderedKit';
+                    $className = 'OrderedKit';
                     break;
                 case 'stock':
-                    $className='InStock';
+                    $className = 'InStock';
                     break;
                 case 'wip':
-                    $className='WipKit';
+                    $className = 'WipKit';
                     break;
                 case 'choose':
-                    $className='ChooseKit';
+                    $className = 'ChooseKit';
                     break;
                 case 'details':
-                    $className="DetailsKit";
+                    $className = "DetailsKit";
                     break;
                 case 'finis':
-                    $className='FinishedKit';
+                    $className = 'FinishedKit';
                     break;
                 case 'finishedDetails':
-                    $className='FinishedDetails';
+                    $className = 'FinishedDetails';
                     break;
-                default: 
-                    $page=new Error('404');
+                default:
+                    $page = new Error('404');
                     $page->render();
                     die();
             }
             $classPage = 'App\\Controller\\Kit\\' . $className;
-            $page=new $classPage([],$this->params);
+            $page = new $classPage([], $this->params);
             $page->render();
         }
     }

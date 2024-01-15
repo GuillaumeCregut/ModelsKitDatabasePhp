@@ -27,8 +27,8 @@ class Users extends Controller
                 $this->smarty->assign('flash', $flashes);
             }
             $users = $this->userManager->getAll();
-            $token=$this->csrfCheck->createToken();
-            $this->smarty->assign('token',$token);
+            $token = $this->csrfCheck->createToken();
+            $this->smarty->assign('token', $token);
             $this->smarty->assign('defaultUser', App::DEFAULT_ADMIN);
             $this->smarty->assign('users', $users);
             $this->smarty->display('admin/users.tpl');
@@ -46,12 +46,12 @@ class Users extends Controller
         if (!isset($_POST['id']) || intval($_POST['id']) === 0) {
             return;
         }
-        if(empty($_POST['token'])) {
+        if (empty($_POST['token'])) {
             return;
         }
-        $token=$_POST['token'];
-        if(!$this->csrfCheck->checkToken($token)){
-           return;
+        $token = $_POST['token'];
+        if (!$this->csrfCheck->checkToken($token)) {
+            return;
         }
         $id = intval($_POST['id']);
         $result = $this->userManager->removeUser($id);

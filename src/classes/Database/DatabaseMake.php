@@ -4,7 +4,7 @@ namespace Editiel98\Database;
 
 class DatabaseMake
 {
-  private array $queries;
+    private array $queries;
 
     public function __construct()
     {

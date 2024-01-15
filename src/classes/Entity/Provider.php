@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Entity;
 
 use Editiel98\Factory;
@@ -9,11 +10,11 @@ class Provider extends Entity
     private int $id;
     private string $name;
     private int $owner;
-    private string $url='';
+    private string $url = '';
     private ProviderManager $manager;
     public function __construct()
     {
-        $this->manager=Factory::getManager('providerManager');
+        $this->manager = Factory::getManager('providerManager');
     }
 
     public function getId(): int
@@ -21,9 +22,9 @@ class Provider extends Entity
         return $this->id;
     }
 
-    public function setId(int $id) : self
+    public function setId(int $id): self
     {
-        $this->id=$id;
+        $this->id = $id;
         return $this;
     }
 
@@ -34,7 +35,7 @@ class Provider extends Entity
 
     public function setName(string $name): self
     {
-        $this->name=$name;
+        $this->name = $name;
         return $this;
     }
 
@@ -45,7 +46,7 @@ class Provider extends Entity
 
     public function setOwner(int $owner): self
     {
-        $this->owner=$owner;
+        $this->owner = $owner;
         return $this;
     }
 
@@ -66,11 +67,11 @@ class Provider extends Entity
 
     public function setURL(string $url): self
     {
-        $this->url=$url;
+        $this->url = $url;
         return $this;
     }
 
-    public function getURL():string
+    public function getURL(): string
     {
         return $this->url;
     }

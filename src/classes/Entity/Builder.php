@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Entity;
 
 use Editiel98\Factory;
@@ -14,7 +15,7 @@ class Builder extends Entity
 
     public function __construct()
     {
-        $this->manager=Factory::getManager('builderManager');
+        $this->manager = Factory::getManager('builderManager');
     }
 
     public function getId(): int
@@ -24,7 +25,7 @@ class Builder extends Entity
 
     public function setId(int $id): self
     {
-        $this->id=$id;
+        $this->id = $id;
         return $this;
     }
 
@@ -35,7 +36,7 @@ class Builder extends Entity
 
     public function setName(string $name): self
     {
-        $this->name=$name;
+        $this->name = $name;
         return $this;
     }
 
@@ -55,12 +56,12 @@ class Builder extends Entity
 
     public function setCountryId(int $countryId): self
     {
-        $this->country=$countryId;
+        $this->country = $countryId;
         return $this;
     }
     public function save(): bool|int
     {
-       return $this->manager->save($this);
+        return $this->manager->save($this);
     }
 
     public function delete(): bool|int
@@ -72,6 +73,4 @@ class Builder extends Entity
     {
         return $this->manager->update($this);
     }
-
-   
 }

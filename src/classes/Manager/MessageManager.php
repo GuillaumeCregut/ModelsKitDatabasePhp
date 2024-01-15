@@ -83,9 +83,9 @@ class MessageManager extends Manager implements ManagerInterface
 
     public function removeMessagesFromKit(int $idKit)
     {
-        $query="DELETE FROM model_message WHERE fk_model=:id";
+        $query = "DELETE FROM model_message WHERE fk_model=:id";
         try {
-            return $this->db->exec($query, [':id'=>$idKit]);
+            return $this->db->exec($query, [':id' => $idKit]);
         } catch (DbException $e) {
             throw new Exception($e->getDbCode());
         }

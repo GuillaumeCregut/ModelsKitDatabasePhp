@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Profil;
 
 use Editiel98\Entity\User;
@@ -9,56 +10,56 @@ use Editiel98\Session;
 class ModelSelector extends Controller
 {
     private array $models;
-    public function render(){
-        if(!$this->isConnected){
+    public function render()
+    {
+        if (!$this->isConnected) {
             //Render antoher page and die
-            $this->smarty->assign('profil','profil');
+            $this->smarty->assign('profil', 'profil');
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
         //Get user
-        $userId=$this->session->getKey(Session::SESSION_USER_ID);
+        $userId = $this->session->getKey(Session::SESSION_USER_ID);
         //Get user fav
-        $user=new User();
+        $user = new User();
         $user->setId($userId);
-        $favorites=$user->getFavorite();
-        $filter=null;
-        if(!empty($_GET)){
-            if(isset($_GET['name'])){
-                $filter=trim(htmlspecialchars($_GET['name'], ENT_NOQUOTES, 'UTF-8'));
+        $favorites = $user->getFavorite();
+        $filter = null;
+        if (!empty($_GET)) {
+            if (isset($_GET['name'])) {
+                $filter = trim(htmlspecialchars($_GET['name'], ENT_NOQUOTES, 'UTF-8'));
             }
         }
         $this->getModels($filter);
-        $modelsDisplay=[];
-        $favoriteDisplay=[];
+        $modelsDisplay = [];
+        $favoriteDisplay = [];
         //filter all models and remove fav
-        foreach($this->models as $model){
-            if(in_array($model->getId(), $favorites)){
-                $favoriteDisplay[]=$model;
-            }
-            else{
-                $modelsDisplay[]=$model;
+        foreach ($this->models as $model) {
+            if (in_array($model->getId(), $favorites)) {
+                $favoriteDisplay[] = $model;
+            } else {
+                $modelsDisplay[] = $model;
             }
         }
-        if($filter){
-            $this->smarty->assign('filterName',$filter);
+        if ($filter) {
+            $this->smarty->assign('filterName', $filter);
         }
-        $this->smarty->assign('favorites',$favoriteDisplay);
-        $this->smarty->assign('models',$modelsDisplay);
+        $this->smarty->assign('favorites', $favoriteDisplay);
+        $this->smarty->assign('models', $modelsDisplay);
         $this->smarty->display('profil/addmodelorder.tpl');
     }
 
-    private function getModels(?string $filter=null){
+    private function getModels(?string $filter = null)
+    {
         //Get all models
 
-        $modelManager=new ModelManager($this->dbConnection);
-        if(is_null($filter)){
-            $models=$modelManager->getAll();
+        $modelManager = new ModelManager($this->dbConnection);
+        if (is_null($filter)) {
+            $models = $modelManager->getAll();
+        } else {
+            $values = ['name' => $filter];
+            $models = $modelManager->getFiltered($values);
         }
-        else{
-            $values=['name'=>$filter];
-            $models=$modelManager->getFiltered($values);
-        }
-        $this->models=$models;
+        $this->models = $models;
     }
 }

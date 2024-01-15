@@ -338,24 +338,23 @@ class ModelManager extends Manager implements ManagerInterface
 
     public function findOwner(int $id): array|false
     {
-        try{
-            $query='SELECT DISTINCT user.email FROM `model_user` inner join user on model_user.owner=user.id WHERE model_user.model=:id AND model_user.state<>:isLiked; ';
-            $value=[
-                ':id'=>$id,
-                'isLiked'=>App::STATE_LIKED
+        try {
+            $query = 'SELECT DISTINCT user.email FROM `model_user` inner join user on model_user.owner=user.id WHERE model_user.model=:id AND model_user.state<>:isLiked; ';
+            $value = [
+                ':id' => $id,
+                'isLiked' => App::STATE_LIKED
             ];
             return $this->db->prepare($query, null, $value);
-            
-        } catch(DbException $e) {
+        } catch (DbException $e) {
             return false;
         }
     }
 
-    public function deleteStraight(int $idKit) 
+    public function deleteStraight(int $idKit)
     {
-        $query="DELETE FROM model_user WHERE id=:id";
+        $query = "DELETE FROM model_user WHERE id=:id";
         try {
-            return $this->db->exec($query, [':id'=>$idKit]);
+            return $this->db->exec($query, [':id' => $idKit]);
         } catch (DbException $e) {
             throw new Exception('Error in remove');
         }
@@ -406,6 +405,4 @@ class ModelManager extends Manager implements ManagerInterface
             $this->loadErrorPage($e->getMessage());
         }
     }
-
-   
 }

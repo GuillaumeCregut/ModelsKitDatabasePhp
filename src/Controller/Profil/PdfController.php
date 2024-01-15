@@ -119,7 +119,6 @@ class PdfController extends Controller
         } else {
             $this->displayPage('');
         }
-
     }
 
     private function addBlocs(array $infos, string $title)
@@ -142,7 +141,7 @@ class PdfController extends Controller
         } else {
             $pictureDir = $baseDir . '/public/' . $model->boxPicture;
         }
-        $pictureConvert=$this->convertFile($pictureDir, $subDir . 'no_image.jpg');
+        $pictureConvert = $this->convertFile($pictureDir, $subDir . 'no_image.jpg');
         $this->pdf->setModelBock($model, $pictureConvert);
     }
 
@@ -224,10 +223,10 @@ class PdfController extends Controller
             $destDir = $this->subDir . 'temp/';
             $this->manageDir($destDir);
             //Convert webp or avif to jpg in temporary file
-            try{
+            try {
                 if (str_contains($mime, 'avif')) { //Works, but OVH does not support avif
-                   // $img = \imagecreatefromavif($filename);
-                   return $defaultImage;
+                    // $img = \imagecreatefromavif($filename);
+                    return $defaultImage;
                 } else {
                     $img = \imagecreatefromwebp($filename);
                 }
@@ -246,15 +245,15 @@ class PdfController extends Controller
                     return $destFile;
                 }
                 return $defaultImage;
-            } catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 return $defaultImage;
             }
         }
         return $filename;
     }
 
-    private function freeDir(string $folder) {
+    private function freeDir(string $folder)
+    {
         $files = glob($folder . '*');
         foreach ($files as $file) {
             if (is_file($file)) {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Entity;
 
 use Editiel98\App;
@@ -18,16 +19,16 @@ class User extends Entity
     private string $login;
     private bool $allow;
     private bool $isVisible;
-    private array $favorites=[];
+    private array $favorites = [];
     private UserManager $manager;
-    private string $password='';
+    private string $password = '';
     private array $providers;
     private array $orders;
-    private array $models=[];
+    private array $models = [];
 
     public function __construct()
     {
-        $this->manager=Factory::getManager('userManager');
+        $this->manager = Factory::getManager('userManager');
     }
 
     public function getFirstname(): string
@@ -37,7 +38,7 @@ class User extends Entity
 
     public function setFirstname(string $firstname): self
     {
-        $this->firstname=$firstname;
+        $this->firstname = $firstname;
         return $this;
     }
 
@@ -48,7 +49,7 @@ class User extends Entity
 
     public function setLastname(string $lastname): self
     {
-        $this->lastname=$lastname;
+        $this->lastname = $lastname;
         return $this;
     }
 
@@ -62,9 +63,9 @@ class User extends Entity
         return $this->id;
     }
 
-    public function setId(int $id) : self
+    public function setId(int $id): self
     {
-        $this->id=$id;
+        $this->id = $id;
         return $this;
     }
 
@@ -75,7 +76,7 @@ class User extends Entity
 
     public function setRankUser(int $rank): self
     {
-        $this->rankUser=$rank;
+        $this->rankUser = $rank;
         return $this;
     }
 
@@ -87,13 +88,13 @@ class User extends Entity
     //Revoir la méthode, car ce sera un fichier !
     public function setAvatar(string $avatar): self
     {
-        $this->avatar=$avatar;
+        $this->avatar = $avatar;
         return $this;
     }
 
     public function save(): bool|int
     {
-       return $this->manager->save($this);
+        return $this->manager->save($this);
     }
 
     public function delete(): bool|int
@@ -105,10 +106,10 @@ class User extends Entity
     {
         return $this->manager->update($this);
     }
-    
+
     public function setValid(bool $newState): self
     {
-        $this->isvalid=$newState;
+        $this->isvalid = $newState;
         return $this;
     }
 
@@ -119,7 +120,7 @@ class User extends Entity
 
     public function setEmail(string $email): self
     {
-        $this->email=$email;
+        $this->email = $email;
         return $this;
     }
 
@@ -130,39 +131,37 @@ class User extends Entity
 
     public function getFavorite(): array
     {
-        $this->favorites=[];
-        $favorites=$this->manager->getFavorites($this);
-        foreach($favorites as $favorite){
-            $this->favorites[]=$favorite->idModel;
+        $this->favorites = [];
+        $favorites = $this->manager->getFavorites($this);
+        foreach ($favorites as $favorite) {
+            $this->favorites[] = $favorite->idModel;
         }
         return $this->favorites;
-        
     }
 
     public function addFavorite(int $id): bool
     {
         $this->getFavorite();
-        if(in_array($id,$this->favorites)){
+        if (in_array($id, $this->favorites)) {
             return false;
         }
-        $addFavorite=$this->manager->addFavorite($this, $id);
-        if($addFavorite){
-            $this->favorites[]=$id;
+        $addFavorite = $this->manager->addFavorite($this, $id);
+        if ($addFavorite) {
+            $this->favorites[] = $id;
             return true;
         }
         return false;
-
     }
 
     public function removeFavorite(int $id): bool
     {
         $this->getFavorite();
-        if(!in_array($id,$this->favorites)){
+        if (!in_array($id, $this->favorites)) {
             return false;
         }
-        $removeFavorite=$this->manager->removeFavorite($this,$id);
-        if($removeFavorite){
-            $this->favorites[]=$id;
+        $removeFavorite = $this->manager->removeFavorite($this, $id);
+        if ($removeFavorite) {
+            $this->favorites[] = $id;
             return true;
             if (($key = array_search($id,  $this->favorites)) !== false) {
                 unset($this->favorites[$key]);
@@ -172,9 +171,9 @@ class User extends Entity
         return false;
     }
 
-    public function addModelStock(int $idModel, ?int $provider=null, ?float $price=null): bool
+    public function addModelStock(int $idModel, ?int $provider = null, ?float $price = null): bool
     {
-        $result=$this->manager->addModelStock($this,$idModel,$provider,$price);
+        $result = $this->manager->addModelStock($this, $idModel, $provider, $price);
         return $result;
     }
 
@@ -185,7 +184,7 @@ class User extends Entity
 
     public function setLogin(string $login): self
     {
-        $this->login=$login;
+        $this->login = $login;
         return $this;
     }
 
@@ -196,7 +195,7 @@ class User extends Entity
 
     public function setVisible(bool $visibility): self
     {
-        $this->isVisible=$visibility;
+        $this->isVisible = $visibility;
         return $this;
     }
 
@@ -207,65 +206,65 @@ class User extends Entity
 
     public function setAllow(bool $allow): self
     {
-        $this->allow=$allow;
+        $this->allow = $allow;
         return $this;
     }
 
     public function setPassword($pass)
     {
         //Encrypt password
-        $hashedPassword=password_hash($pass,PASSWORD_DEFAULT);
-        $this->password=$hashedPassword;
+        $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+        $this->password = $hashedPassword;
     }
 
-    public function getPassword(): string{
+    public function getPassword(): string
+    {
         return $this->password;
     }
 
     public function getProviders(): array
     {
         //Fetch providers
-        $this->providers=$this->manager->getProviders($this);
+        $this->providers = $this->manager->getProviders($this);
         return $this->providers;
     }
 
     public function getOrders(): array
     {
-        try{
-            $this->orders=$this->manager->getOrders($this);
-        }
-        catch(Exception $e){
-            $this->orders=[];
+        try {
+            $this->orders = $this->manager->getOrders($this);
+        } catch (Exception $e) {
+            $this->orders = [];
         }
         return $this->orders;
     }
 
     public function getModels(): array
     {
-        if(empty($this->models)){
-            $models=$this->manager->getMyModels($this);
-            $this->models=$models;
+        if (empty($this->models)) {
+            $models = $this->manager->getMyModels($this);
+            $this->models = $models;
         }
         return $this->models;
     }
 
-    public function getOrderedKit(?string $filter='',?array $sorted=[]): array
+    public function getOrderedKit(?string $filter = '', ?array $sorted = []): array
     {
-        return $this->manager->getKitByState(App::STATE_BUY,$this->id,$filter,$sorted);
+        return $this->manager->getKitByState(App::STATE_BUY, $this->id, $filter, $sorted);
     }
 
-    public function getStockKit(?string $filter='',?array $sorted=[]): array
+    public function getStockKit(?string $filter = '', ?array $sorted = []): array
     {
-        return $this->manager->getKitByState(App::STATE_STOCK,$this->id,$filter,$sorted);
+        return $this->manager->getKitByState(App::STATE_STOCK, $this->id, $filter, $sorted);
     }
 
-    public function getWipKit(?string $filter='',?array $sorted=[]): array
+    public function getWipKit(?string $filter = '', ?array $sorted = []): array
     {
-        return $this->manager->getKitByState(App::STATE_WIP,$this->id,$filter,$sorted);
+        return $this->manager->getKitByState(App::STATE_WIP, $this->id, $filter, $sorted);
     }
 
-    public function getFinishedKit(?string $filter=''): array
+    public function getFinishedKit(?string $filter = ''): array
     {
-        return $this->manager->getKitByState(App::STATE_FINISHED,$this->id,$filter);
+        return $this->manager->getKitByState(App::STATE_FINISHED, $this->id, $filter);
     }
 }

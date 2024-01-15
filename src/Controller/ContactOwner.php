@@ -104,16 +104,16 @@ class ContactOwner extends Controller
                     continue;
                 }
                 //send mail to dest
-                $values=[
-                    'userName'=>$identity,
-                    'modelName'=>$this->model->getName(),
-                    'modelBrand'=>$this->model->getBrand(),
-                    'modelScale'=>$this->model->getScale(),
-                    'modelReference'=>$this->model->getRef(),
-                    'message'=>$message,
-                    'userMail'=>$sender,
+                $values = [
+                    'userName' => $identity,
+                    'modelName' => $this->model->getName(),
+                    'modelBrand' => $this->model->getBrand(),
+                    'modelScale' => $this->model->getScale(),
+                    'modelReference' => $this->model->getRef(),
+                    'message' => $message,
+                    'userMail' => $sender,
                 ];
-                $mailer->sendHTMLMailToUser($userOnwer->email,'Model Kits Database : demande d\information sur un kit',$values,'contactOwner');
+                $mailer->sendHTMLMailToUser($userOnwer->email, 'Model Kits Database : demande d\information sur un kit', $values, 'contactOwner');
             }
             return true;
         } catch (Exception $e) {

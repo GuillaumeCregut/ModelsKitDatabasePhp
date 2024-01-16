@@ -4,7 +4,6 @@ const addCartButtons=document.querySelectorAll('.cart-add-card');
 const removeButtons=document.querySelectorAll('.delete-card');
 const updateButtons=document.querySelectorAll('.update-card');
 const token=document.getElementById('token').value;
-console.log(token)
 //Redirect to update page
 const updateCart=(id)=>{
     location.href = `/parametres_modelUpdate?model=${id}`;

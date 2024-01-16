@@ -61,7 +61,7 @@ class UserManager extends Manager
     public function findByMail(string $mail)
     {
         try {
-            $query = "SELECT id, firstname, lastname, isvalid FROM " . $this->table . " WHERE email=:email";
+            $query = "SELECT id, firstname, lastname, isvalid, email,allow,isVisible,login,avatar,rankUser FROM " . $this->table . " WHERE email=:email";
             $values = [':email' => $mail];
             $result = $this->db->prepare($query, null, $values, true);
             if ($result) {

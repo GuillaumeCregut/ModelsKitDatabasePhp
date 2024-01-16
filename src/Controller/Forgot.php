@@ -34,7 +34,7 @@ class Forgot extends Controller
         $email = htmlentities($_POST['email']);
         $userManager = new UserManager($this->dbConnection);
         $user = $userManager->findByMail($email);
-        if ($user->isvalid === 0) {
+        if ($user->getValid() === 0) {
             return false;
         }
         if (is_null($user)) {
@@ -46,14 +46,14 @@ class Forgot extends Controller
             $code[] = $j;
         }
         $codemail = implode('', $code);
-        $result = $userManager->setResetCode($user->id, $codemail);
+        $result = $userManager->setResetCode($user->getId(), $codemail);
         if (!$result) {
             return false;
         }
         $mailer = new Mailer();
         $serverAdress = $_SERVER['SERVER_NAME'] . '/recover';
         $values = [
-            'firstname' => $user->firstname,
+            'firstname' => $user->getFirstname(),
             'code' => $codemail,
             'server' => $serverAdress
         ];

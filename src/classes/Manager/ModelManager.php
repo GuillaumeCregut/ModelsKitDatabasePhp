@@ -35,8 +35,38 @@ class ModelManager extends Manager implements ManagerInterface
         buildername, countryid, categoryname, brandname, periodname, scalename, countryname  
         FROM model_full ORDER BY id DESC";
         try {
-            $result = $this->db->query($query, $this->className);
-            return $result;
+            $result = $this->db->query($query, null);
+            $arrayModels=[];
+            foreach($result as $model) {
+                $newModel=new Model();
+                $newModel->setId($model->id);
+                $newModel->setName($model->name);
+                $newModel->setBuilderName($model->buildername);
+                $newModel->setBuilderId($model->builder);
+                $newModel->setBrandId($model->brand);
+                $newModel->setBrandName($model->brandname);
+                $newModel->setRef($model->reference);
+                if(is_null($model->scalemates)) {
+                    $model->scalemates='';
+                }
+                $newModel->setScalemates($model->scalemates);
+                if(is_null($model->picture)) {
+                    $model->picture='';
+                }
+                $newModel->setImage($model->picture);
+                $newModel->setCategoryId($model->category);
+                $newModel->setCategoryName($model->categoryname);
+                $newModel->setPeriodId($model->period);
+                $newModel->setPeriodName($model->periodname);
+                $newModel->setScaleId($model->scale);
+                $newModel->setScaleName($model->scalename);
+                $newModel->setCountryName($model->countryname);
+
+
+                $arrayModels[]=$newModel;
+            }
+            // return $result;
+            return $arrayModels;
         } catch (DbException $e) {
             $this->loadErrorPage($e->getdbMessage());
         }
@@ -449,8 +479,31 @@ class ModelManager extends Manager implements ManagerInterface
     private function prepareSQL(string $query, array $vars, bool $single): mixed
     {
         try {
-            $result = $this->db->prepare($query, $this->className, $vars, $single);
-            return $result;
+            $model = $this->db->prepare($query, null, $vars, $single);
+                $newModel=new Model();
+                $newModel->setId($model->id);
+                $newModel->setName($model->name);
+                $newModel->setBuilderName($model->buildername);
+                $newModel->setBuilderId($model->builder);
+                $newModel->setBrandId($model->brand);
+                $newModel->setBrandName($model->brandname);
+                $newModel->setRef($model->reference);
+                if(is_null($model->scalemates)) {
+                    $model->scalemates='';
+                }
+                $newModel->setScalemates($model->scalemates);
+                if(is_null($model->picture)) {
+                    $model->picture='';
+                }
+                $newModel->setImage($model->picture);
+                $newModel->setCategoryId($model->category);
+                $newModel->setCategoryName($model->categoryname);
+                $newModel->setPeriodId($model->period);
+                $newModel->setPeriodName($model->periodname);
+                $newModel->setScaleId($model->scale);
+                $newModel->setScaleName($model->scalename);
+                $newModel->setCountryName($model->countryname);
+            return $newModel;
         } catch (DbException $e) {
             $message = 'SQL : ' . $query . 'a poser problème';
             $emitter = Emitter::getInstance();

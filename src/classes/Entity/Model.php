@@ -82,6 +82,17 @@ class Model extends Entity
         return $this->brandname;
     }
 
+    /**
+     * @param string $name
+     * 
+     * @return self
+     */
+    public function setBrandName(string $name): self
+    {
+        $this->brandname=$name;
+        return $this;
+    }
+
 
     /**
      * @return string
@@ -89,6 +100,17 @@ class Model extends Entity
     public function getBuilder(): string
     {
         return $this->buildername;
+    }
+
+    /**
+     * @param string $name
+     * 
+     * @return self
+     */
+    public function setBuilderName(string $name): self
+    {
+        $this->buildername=$name;
+        return $this;
     }
 
 
@@ -100,6 +122,16 @@ class Model extends Entity
         return $this->countryname;
     }
 
+    /**
+     * @param string $name
+     * 
+     * @return self
+     */
+    public function setCountryName(string $name): self
+    {
+        $this->countryname=$name;
+        return $this;
+    }
 
     /**
      * @return string
@@ -107,6 +139,17 @@ class Model extends Entity
     public function getCategory(): string
     {
         return $this->categoryname;
+    }
+
+    /**
+     * @param string $name
+     * 
+     * @return self
+     */
+    public function setCategoryName(string $name): self
+    {
+        $this->categoryname=$name;
+        return $this;
     }
 
 
@@ -118,6 +161,16 @@ class Model extends Entity
         return $this->periodname;
     }
 
+    /**
+     * @param string $name
+     * 
+     * @return self
+     */
+    public function setPeriodName(string $name): self
+    {
+        $this->periodname=$name;
+        return $this;
+    }
 
     /**
      * @return string
@@ -163,6 +216,17 @@ class Model extends Entity
     public function getScale(): string
     {
         return $this->scalename;
+    }
+
+    /**
+     * @param string $name
+     * 
+     * @return self
+     */
+    public function setScaleName(string $name): self
+    {
+        $this->scalename = $name;
+        return $this;
     }
 
     /**

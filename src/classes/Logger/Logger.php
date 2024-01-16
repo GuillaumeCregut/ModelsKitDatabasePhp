@@ -6,6 +6,9 @@ use App\Controller\Error;
 use DateTime;
 use Exception;
 
+/**
+ * Abstract class for loggers
+ */
 abstract class Logger implements LoggerInterface
 {
     private string $filename;
@@ -16,6 +19,12 @@ abstract class Logger implements LoggerInterface
         $this->filename = $directory . $filename . '.log';
     }
 
+    /**
+     * Log a message in the log file
+     * @param string $value : message
+     * 
+     * @return bool
+     */
     public function storeToFile(string $value): bool
     {
         date_default_timezone_set('Europe/Paris');
@@ -38,6 +47,10 @@ abstract class Logger implements LoggerInterface
         }
     }
 
+    /**
+     * Load logs from files and return them
+     * @return array
+     */
     public function loadFromFile(): array|bool
     {
         $logs = [];

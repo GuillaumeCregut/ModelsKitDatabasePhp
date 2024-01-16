@@ -2,6 +2,9 @@
 
 namespace Editiel98\Event;
 
+/**
+ * Message system for application
+ */
 class Emitter
 {
 

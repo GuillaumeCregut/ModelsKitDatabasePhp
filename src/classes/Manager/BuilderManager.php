@@ -41,6 +41,12 @@ class BuilderManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * Get list of filtered builders
+     * @param string $filter : filter to apply
+     * 
+     * @return array
+     */
     public function getAllFiltered(string $filter): array
     {
         $query = 'SELECT b.id,b.name,b.country,c.name as countryName FROM '

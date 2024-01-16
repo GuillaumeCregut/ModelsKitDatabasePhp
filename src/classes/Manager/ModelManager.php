@@ -42,6 +42,12 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * get filtered list of models
+     * @param array $filter : array of filters as
+     * [column=>value]
+     * @return array
+     */
     public function getFiltered(array $filter): array
     {
         $values = [];
@@ -205,6 +211,14 @@ class ModelManager extends Manager implements ManagerInterface
         return $result;
     }
 
+    /**
+     * Change user model state
+     * @param int $id : id of model
+     * @param int $state : new state
+     * @param int $user : id of owner 
+     * 
+     * @return bool
+     */
     public function changeUserModelState(int $id, int $state, int $user): bool
     {
         //get model
@@ -221,7 +235,6 @@ class ModelManager extends Manager implements ManagerInterface
         } catch (DbException $e) {
             return false;
         }
-
         //Check if model is already user favorite
         if ($state == App::STATE_LIKED) {
             $idModel = $modelResult->model;
@@ -240,7 +253,6 @@ class ModelManager extends Manager implements ManagerInterface
                 return false;
             }
         }
-
         $query = "UPDATE model_user SET state=:newState WHERE id=:id";
         $values = [
             ':id' => $id,
@@ -254,6 +266,13 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * Get all information of a user's model
+     * @param int $id : id of model
+     * @param int $user: id of kit
+     * 
+     * @return [type] : arry with kit informations or null
+     */
     public function getOneFullById(int $id, int $user)
     {
         $query = 'SELECT * FROM model_fullwithcountry WHERE id=:id AND owner=:owner';
@@ -268,6 +287,12 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * Get all user's finished models with messages
+     * @param int $user : user id
+     * 
+     * @return array
+     */
     public function getFinishedModels(int $user): array
     {
         //Get array of messages by kit
@@ -302,6 +327,14 @@ class ModelManager extends Manager implements ManagerInterface
         return $models;
     }
 
+    /**
+     * add path to pictures in DB
+     * @param int $idModel : id model
+     * @param int $idUser : id owner
+     * @param mixed $link : path to pictures
+     * 
+     * @return bool
+     */
     public function updatelinkModelUser(int $idModel, int $idUser, mixed $link): bool
     {
         $query = "UPDATE model_user SET pictures=:link WHERE id=:id AND owner=:owner";
@@ -321,6 +354,14 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * return informations for CSV export
+     * @param int $state : state of model
+     * @param string $order : column to order
+     * @param int $user : id of user
+     * 
+     * @return [type] : array of result
+     */
     public function getUserItemForCSV(int $state, string $order, int $user)
     {
         $query = "SELECT stateName, providerName, price, modelName, reference, periodName, brandName, 
@@ -336,6 +377,12 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * return email list of users who own a kit
+     * @param int $id : kit id
+     * 
+     * @return array
+     */
     public function findOwner(int $id): array|false
     {
         try {
@@ -350,6 +397,12 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * delete a model by id
+     * @param int $idKit : id to remove
+     * 
+     * @return [type] : result of operation
+     */
     public function deleteStraight(int $idKit)
     {
         $query = "DELETE FROM model_user WHERE id=:id";

@@ -7,6 +7,9 @@ use Editiel98\DbException;
 use Editiel98\Entity\Entity;
 use Exception;
 
+/**
+ * Manage users messages with DB
+ */
 class MessageManager extends Manager implements ManagerInterface
 {
     public function __construct(Database $db)
@@ -14,31 +17,64 @@ class MessageManager extends Manager implements ManagerInterface
         $this->db = $db;
     }
 
+    /**
+     * Unused method
+     * @return array
+     */
     public function getAll(): array
     {
         return [];
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return Entity|null
+     */
     public function findById(int $id): ?Entity
     {
         return null;
     }
 
+    /**
+     * Unused method
+     * @param string $name
+     * 
+     * @return Entity|null
+     */
     public function findByName(string $name): ?Entity
     {
         return null;
     }
 
+    /**
+     * Unused method
+     * @param Entity $entity
+     * 
+     * @return bool
+     */
     public function save(Entity $entity): bool
     {
         return false;
     }
 
+    /**
+     * Unused method
+     * @param Entity $entity
+     * 
+     * @return bool
+     */
     public function update(Entity $entity): bool
     {
         return false;
     }
 
+    /**
+     * Unused method
+     * @param Entity $entity
+     * 
+     * @return bool
+     */
     public function delete(Entity $entity): bool
     {
         return false;
@@ -57,12 +93,12 @@ class MessageManager extends Manager implements ManagerInterface
     }
 
     /**
-     * Undocumented function
+     * Store an user message in DB
      *
-     * @param integer $author
-     * @param string $message
-     * @param integer $model
-     * @param integer $replyId
+     * @param integer $author : author of message
+     * @param string $message 
+     * @param integer $model : model Id linked with message
+     * @param integer $replyId : id of answered message
      * @return void
      */
     public function postAnswerMessage(int $author, string $message, int $model, int $replyId)
@@ -81,6 +117,12 @@ class MessageManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * Remove all messages for a kit
+     * @param int $idKit : id of the kit
+     * 
+     * @return mixed : result
+     */
     public function removeMessagesFromKit(int $idKit)
     {
         $query = "DELETE FROM model_message WHERE fk_model=:id";

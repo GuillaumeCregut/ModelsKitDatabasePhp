@@ -91,25 +91,4 @@ class ProviderManager extends SingleManager
             $this->loadErrorPage($e->getdbMessage());
         }
     }
-
-    /**
-     * Execute a prepared query
-     *
-     * @param string $query : query to execute
-     * @param array $vars : vars for the query
-     * @param boolean $single : return one result or not
-     * @return mixed
-     */
-    private function prepareSQL(string $query, array $vars, bool $single): mixed
-    {
-        try {
-            $result = $this->db->prepare($query, $this->className, $vars, $single);
-            return $result;
-        } catch (DbException $e) {
-            $message = 'SQL : ' . $query . 'a poser problème';
-            $emitter = Emitter::getInstance();
-            $emitter->emit(Emitter::DATABASE_ERROR, $message);
-            $this->loadErrorPage($e->getMessage());
-        }
-    }
 }

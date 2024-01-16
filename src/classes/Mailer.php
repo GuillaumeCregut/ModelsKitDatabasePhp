@@ -19,7 +19,12 @@ class Mailer
         $this->smarty = new SmartyMKD();
     }
 
-    private function loadParams()
+    
+    /**
+     * Load config file
+     * @return void
+     */
+    private function loadParams(): void
     {
         try {
             $config = simplexml_load_file(__DIR__ . '/../config.xml');

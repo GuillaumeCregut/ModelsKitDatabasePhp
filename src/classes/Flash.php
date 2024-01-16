@@ -45,6 +45,10 @@ class Flash
         return $flash;
     }
 
+    /**
+     * check if there is flash in session
+     * @return bool
+     */
     public function hasFlash(): bool
     {
         return !is_null($this->session->getKey(self::KEY));

@@ -29,6 +29,12 @@ class App
     private array $subPages;
     private Emitter $emitter;
 
+    /**
+     * run
+     * Parse the URL and get the controller
+     *
+     * @return void
+     */
     public function run()
     {
         $this->setEmitter();
@@ -97,6 +103,12 @@ class App
         $page->render();
     }
 
+    /**
+     * get the URL info without query string
+     *
+     * @param [type] $uri
+     * @return string
+     */
     private function decodeURI($uri): string
     {
         //remove first /
@@ -113,6 +125,11 @@ class App
         return $subPages[0];
     }
 
+    /**
+     * get env information from config file
+     *
+     * @return string
+     */
     public static function getEnv(): string
     {
         try {
@@ -126,7 +143,11 @@ class App
         }
     }
 
-    private function setEmitter()
+    /**
+     * Loads emitters
+     * @return void
+     */
+    private function setEmitter(): void
     {
         $this->emitter = Emitter::getInstance();
         $this->emitter->on(Emitter::DATABASE_ERROR, function ($message) {

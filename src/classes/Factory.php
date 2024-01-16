@@ -13,6 +13,10 @@ class Factory
     private static $smarty;
     private static $session;
 
+    /**
+     * create a singleton of Factory
+     * @return [type] Factory
+     */
     public static function getInstance()
     {
         if (is_null(self::$_instance)) {
@@ -21,12 +25,23 @@ class Factory
         return self::$_instance;
     }
 
+    /**
+     * return a new Entity 
+     * @param string $name : name of entity to create
+     * 
+     * @return Entity
+     */
     public static function getEntity(string $name): Entity
     {
         $className = 'Editiel98\\Entity\\' . ucFirst($name);
         return new $className;
     }
 
+    
+    /**
+     * return instance of Database
+     * @return Database
+     */
     public static function getdB(): Database
     {
         if (is_null(self::$db)) {
@@ -35,6 +50,12 @@ class Factory
         return self::$db;
     }
 
+    /**
+     * Return an instance of manager
+     * @param string $name
+     * 
+     * @return Manager
+     */
     public static function getManager(string $name): Manager
     {
         if (is_null(self::$db)) {
@@ -44,6 +65,10 @@ class Factory
         return new $className(self::$db);
     }
 
+    /**
+     * Return an instance of smarty
+     * @return SmartyMKD
+     */
     public static function getSmarty(): SmartyMKD
     {
         if (is_null(self::$smarty)) {
@@ -52,6 +77,10 @@ class Factory
         return self::$smarty;
     }
 
+    /**
+     * return an instance of session
+     * @return Session
+     */
     public static function getSession(): Session
     {
         if (is_null(self::$session)) {

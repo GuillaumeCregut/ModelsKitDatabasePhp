@@ -85,6 +85,9 @@ class Model extends Controller
         $this->smarty->display('params/models.tpl');
     }
 
+    /**
+     * @return bool
+     */
     function usePost(): bool
     {
         if (empty($_POST['token'])) {
@@ -119,6 +122,9 @@ class Model extends Controller
         return $result;
     }
 
+    /**
+     * @return bool
+     */
     private function update(): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE == $this->userRank)) {
@@ -162,6 +168,9 @@ class Model extends Controller
         return $result;
     }
 
+    /**
+     * @return bool
+     */
     private function remove(): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE === $this->userRank)) {
@@ -179,6 +188,9 @@ class Model extends Controller
         return $model->delete();
     }
 
+    /**
+     * @return bool
+     */
     private function add(): bool
     {
         // if(App::ADMIN!==$this->userRank){
@@ -207,6 +219,10 @@ class Model extends Controller
         return $result;
     }
 
+    /**
+     * Create filter from POST input
+     * @return array
+     */
     private function makeFilters(): array
     {
         $request = [];
@@ -269,7 +285,13 @@ class Model extends Controller
         return $request;
     }
 
-    function getModels(?array $filter = null)
+    /**
+     * Get models and filter them
+     * @param array|null $filter
+     * 
+     * @return void
+     */
+    function getModels(?array $filter = null): void
     {
         $modelManager = new ModelManager($this->dbConnection);
         if (is_null($filter) || empty($filter)) {
@@ -290,6 +312,11 @@ class Model extends Controller
         $this->models = $models;
     }
 
+    /**
+     * @param string $filename : filename to remove
+     * 
+     * @return bool
+     */
     function removeFile(string $filename): bool
     {
         $uploadDir = dirname(dirname(dirname(__DIR__))) . '/public/';
@@ -297,6 +324,12 @@ class Model extends Controller
         return unlink($destFile);
     }
 
+    /**
+     * Store a picture linked with a model
+     * @param string $name : model name
+     * 
+     * @return string : path to picture
+     */
     private function storeFile(string $name): string
     {
         $filename = '';
@@ -334,6 +367,10 @@ class Model extends Controller
         return $filename;
     }
 
+    /**
+     * check input from form
+     * @return bool
+     */
     private function checkForm(): bool
     {
         if (!isset($_POST['name'])) {
@@ -360,6 +397,10 @@ class Model extends Controller
         return true;
     }
 
+    /**
+     * Get datas from POST
+     * @return array
+     */
     private function getDatasFromPOST(): array | bool
     {
         $scalemates = '';

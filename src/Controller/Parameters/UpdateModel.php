@@ -61,7 +61,10 @@ class UpdateModel extends Controller
         $this->smarty->display('params/updatemodel.tpl');
     }
 
-    private function getModel()
+    /**
+     * @return void
+     */
+    private function getModel(): void
     {
         $paramModel = explode('=', $this->params[0]);
         if ($paramModel[0] !== 'model') {

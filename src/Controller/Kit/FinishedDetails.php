@@ -68,7 +68,13 @@ class FinishedDetails extends Controller
         $this->displayPage();
     }
 
-    private function getMessages(int $id)
+    /**
+     * get user messages in finished kit
+     * @param int $id : id of model
+     * 
+     * @return void
+     */
+    private function getMessages(int $id): void
     {
         $messages = $this->messageManager->getMessagesForModel($id);
         if (!empty($messages)) {
@@ -90,8 +96,6 @@ class FinishedDetails extends Controller
         }
     }
 
-
-
     private function displayPage()
     {
         $token = $this->csrfCheck->createToken();
@@ -109,6 +113,12 @@ class FinishedDetails extends Controller
         $this->smarty->display('kit/finishedDetails.tpl');
     }
 
+    /**
+     * format path for avatar of messages
+     * @param array $messages
+     * 
+     * @return array
+     */
     private function formatAvatar(array $messages): array
     {
         $formatted = [];
@@ -151,20 +161,20 @@ class FinishedDetails extends Controller
         }
     }
 
-    private function removeKit()
+    /**
+     * Remove a kit from user finished stock
+     * @return void
+     */
+    private function removeKit(): void
     {
-        //Vérifier si le kit existe et Vérifier si l'utilisateur est bien le possesseur du kit
         $model =  $this->modelManager->getOneFullById($this->modelId, $this->userId);
         if (!$model) {
             return;
         }
         try {
-            //Supprimer tous les messages liés au kit
             $this->messageManager->removeMessagesFromKit($this->modelId);
-            //Supprimer toutes les photos liées au kit
             $picturesdir = $model->pictures;
             if (!is_null($picturesdir)) {
-                //Récupérer toutes les photos et les supprimer
                 $baseDir = dirname(dirname(dirname(__DIR__))) . '/public/';
                 $fullDir = $baseDir . $picturesdir;
                 $files = [];
@@ -187,7 +197,11 @@ class FinishedDetails extends Controller
         }
     }
 
-    private function replyMessage()
+    /**
+     * Create a message in DB
+     * @return void
+     */
+    private function replyMessage(): void
     {
         $model =  $this->modelManager->getOneFullById($this->modelId, $this->userId);
         if (!$model) {
@@ -204,10 +218,15 @@ class FinishedDetails extends Controller
         if ($response === '' || $messageId === 0) {
             return;
         }
-        //Send message to DB
         $this->messageManager->postAnswerMessage($this->userId, $response, $this->modelId, $messageId);
     }
 
+    /**
+     * Delete a picture
+     * @param string $filename
+     * 
+     * @return [type]
+     */
     private function deletePicture(string $filename)
     {
         if (!isset($_POST['id']) || intval($_POST['id']) === 0) return;
@@ -222,8 +241,6 @@ class FinishedDetails extends Controller
             return;
         }
         if (unlink($fileToDelete)) {
-            /*Check if there are more files.
-            If not, delete from DB pictures */
             $path = explode('/', $filename);
             array_pop($path);
             $fileDirectory = implode('/', $path);
@@ -239,7 +256,6 @@ class FinishedDetails extends Controller
                     $dirRemoved = rmdir($baseDir . $fileDirectory);
                     if ($dirRemoved) {
                         $modelManager = new ModelManager($this->dbConnection);
-                        //update field in DB, with picture=null;
                         $modelManager->updatelinkModelUser($idModel, $this->userId, null);
                     }
                 }

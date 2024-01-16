@@ -13,9 +13,9 @@ class OrderedKit extends Controller
     use TraitStock;
     use TraitListKit;
     private CSRFCheck $csrfCheck;
-
     private string $search = '';
     private array $sorted = [];
+
     public function render()
     {
         if (!$this->isConnected) {

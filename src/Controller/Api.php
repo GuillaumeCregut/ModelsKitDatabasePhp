@@ -7,7 +7,11 @@ use Editiel98\Router\Controller;
 
 class Api extends Controller
 {
-        public function render()
+        /**
+         * Select controller for api from URL
+         * @return void
+         */
+        public function render():void
         {
                 if (empty($this->subPages)) {
                         $this->smarty->assign('admin', 'params');

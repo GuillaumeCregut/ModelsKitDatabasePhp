@@ -41,6 +41,9 @@ class Period extends Controller
         $this->smarty->display('params/periods.tpl');
     }
 
+    /**
+     * @return bool
+     */
     private function usePost(): bool
     {
         if (empty($_POST['token'])) {
@@ -89,6 +92,11 @@ class Period extends Controller
         }
     }
 
+    /**
+     * @param string $name
+     * 
+     * @return bool
+     */
     private function add(string $name): bool
     {
         if (!$this->isConnected) {
@@ -100,6 +108,11 @@ class Period extends Controller
         return !!$result;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return bool
+     */
     private function remove(int $id): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE === $this->userRank)) {
@@ -110,6 +123,12 @@ class Period extends Controller
         return $period->delete();
     }
 
+    /**
+     * @param int $id
+     * @param string $name
+     * 
+     * @return bool
+     */
     private function update(int $id, string $name): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE == $this->userRank)) {

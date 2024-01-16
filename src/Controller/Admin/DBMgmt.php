@@ -51,7 +51,12 @@ class DBMgmt extends Controller
         die();
     }
 
-    private function loadUpdateFiles()
+    
+    /**
+     * load update DB files list
+     * @return void
+     */
+    private function loadUpdateFiles(): void
     {
         $baseDir = __DIR__ . '/../../upgrade/';
         $scandir = scandir($baseDir);
@@ -63,7 +68,11 @@ class DBMgmt extends Controller
         }
     }
 
-    private function doPost()
+    /**
+     * process post values
+     * @return void
+     */
+    private function doPost(): void
     {
         if (!empty($_POST['action'])) {
             switch ($_POST['action']) {
@@ -83,6 +92,12 @@ class DBMgmt extends Controller
         die();
     }
 
+    /**
+     * Load updates from filename
+     * @param string $fileName
+     * 
+     * @return mixed
+     */
     private function loadUpdates(string $fileName): mixed
     {
         try {
@@ -98,6 +113,10 @@ class DBMgmt extends Controller
         }
     }
 
+    /**
+     * Execute updates to database
+     * @return [type] return false if error, nothing if ok
+     */
     private function updateDb()
     {
         if (empty($_POST['token'])) {

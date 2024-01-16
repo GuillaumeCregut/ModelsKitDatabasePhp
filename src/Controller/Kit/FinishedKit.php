@@ -9,6 +9,7 @@ class FinishedKit extends Controller
 {
     private int $count = 0;
     private array $models = [];
+    
     public function render()
     {
         if (!$this->isConnected) {

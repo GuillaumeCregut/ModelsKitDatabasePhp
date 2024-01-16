@@ -7,7 +7,12 @@ use Editiel98\Router\Controller;
 
 class Admin extends Controller
 {
-    public function render()
+ 
+    /**
+     * Select controller for admin pages from URL
+     * @return void
+     */
+    public function render(): void
     {
         if (App::ADMIN === $this->userRank) {
             if (empty($this->subPages)) {

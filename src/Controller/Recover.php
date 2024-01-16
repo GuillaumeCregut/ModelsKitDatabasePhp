@@ -7,6 +7,9 @@ use DateTimeZone;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
 
+/**
+ * Controller for recovery password reset
+ */
 class Recover extends Controller
 {
     public function render()

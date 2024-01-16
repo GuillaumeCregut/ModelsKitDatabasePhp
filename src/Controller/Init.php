@@ -10,6 +10,9 @@ use PDO;
 use PDOException;
 
 
+/**
+ * Controller for init app
+ */
 class Init
 {
     private SmartyMKD $smarty;

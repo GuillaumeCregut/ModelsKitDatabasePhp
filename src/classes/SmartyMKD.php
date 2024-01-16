@@ -17,9 +17,6 @@ class SmartyMKD extends \Smarty
       $baseDir = __DIR__ . '/../';
       $this->template_dir = $baseDir . 'templates/';
       $this->compile_dir = $baseDir . 'templates_c/';
-      // $this->config_dir='configs';
-      //$this->cache_dir='cache/';
-      // $this->caching=true;
       $this->assign('app_name', 'Models Kit Database');
    }
 }

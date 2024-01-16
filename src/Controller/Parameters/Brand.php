@@ -11,6 +11,7 @@ use Editiel98\Services\CSRFCheck;
 class Brand extends Controller
 {
     private CSRFCheck $csfrCheck;
+
     public function render()
     {
         $this->csfrCheck = new CSRFCheck($this->session);
@@ -41,6 +42,9 @@ class Brand extends Controller
         $this->smarty->display('params/brands.tpl');
     }
 
+    /**
+     * @return bool
+     */
     private function usePost(): bool
     {
         if (empty($_POST['token'])) {
@@ -89,6 +93,11 @@ class Brand extends Controller
         }
     }
 
+    /**
+     * @param string $name
+     * 
+     * @return bool
+     */
     private function add(string $name): bool
     {
         if (!$this->isConnected) {
@@ -100,6 +109,11 @@ class Brand extends Controller
         return !!$result;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return bool
+     */
     private function remove(int $id): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE === $this->userRank)) {
@@ -110,6 +124,12 @@ class Brand extends Controller
         return $brand->delete();
     }
 
+    /**
+     * @param int $id
+     * @param string $name
+     * 
+     * @return bool
+     */
     private function update(int $id, string $name): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE == $this->userRank)) {

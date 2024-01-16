@@ -11,6 +11,7 @@ use Editiel98\Router\Controller;
 class ChooseKit extends Controller
 {
     private $model = null;
+    
     public function render()
     {
         if (!$this->isConnected) {
@@ -55,13 +56,20 @@ class ChooseKit extends Controller
         }
     }
 
-    private function getModel()
+    /**
+     * 
+     * @return void
+     */
+    private function getModel(): void
     {
         $userManager = new UserManager($this->dbConnection);
         $this->model = $userManager->getRandomKit($this->userId);
     }
 
-    private function changeStateModel()
+    /**
+     * @return void
+     */
+    private function changeStateModel(): void
     {
         if (!isset($_POST['id']) || intval($_POST['id']) === 0) {
             return;

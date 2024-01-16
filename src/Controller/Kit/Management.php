@@ -53,6 +53,12 @@ class Management extends Controller
         $this->smarty->display('kit/management.tpl');
     }
 
+    /**
+     * Parse models by state
+     * @param array $models
+     * 
+     * @return void
+     */
     private function parseModels(array $models): void
     {
         foreach ($models as $model) {

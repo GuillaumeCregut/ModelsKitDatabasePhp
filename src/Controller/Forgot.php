@@ -8,7 +8,11 @@ use Editiel98\Router\Controller;
 
 class Forgot extends Controller
 {
-    public function render()
+    /**
+     * manage display page
+     * @return void
+     */
+    public function render():void
     {
         $template = 'forgot.tpl';
         if (!empty($_POST)) {
@@ -19,7 +23,11 @@ class Forgot extends Controller
         $this->displayPage($template);
     }
 
-    private function usePost()
+    /**
+     * Process form datas
+     * @return bool
+     */
+    private function usePost(): bool
     {
         if (!isset($_POST['action'])) {
             return false;
@@ -62,7 +70,13 @@ class Forgot extends Controller
         } else return false;
     }
 
-    private function displayPage($template)
+    /**
+     * render page
+     * @param string $template
+     * 
+     * @return void
+     */
+    private function displayPage(string $template): void
     {
         $this->smarty->display($template);
     }

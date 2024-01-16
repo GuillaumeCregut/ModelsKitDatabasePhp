@@ -15,7 +15,12 @@ class ContactOwner extends Controller
     private array $errors = [];
     private array $owners = [];
     private Model $model;
-    public function render()
+
+    /**
+     * manage the page rendering
+     * @return void
+     */
+    public function render():void
     {
         if (!$this->isConnected) {
             $this->smarty->assign('connected', true);
@@ -46,6 +51,12 @@ class ContactOwner extends Controller
         $this->displayPage($done);
     }
 
+    /**
+     * get a model in DB
+     * @param int $id
+     * 
+     * @return [type] Entity or null
+     */
     private function getModel(int $id)
     {
         $modelManager = new ModelManager($this->dbConnection);
@@ -53,6 +64,12 @@ class ContactOwner extends Controller
         return $model;
     }
 
+    /**
+     * Return list of model's owners
+     * @param int $id : id of model
+     * 
+     * @return array
+     */
     private function getOwners(int $id): array
     {
         $modelManager = new ModelManager($this->dbConnection);
@@ -63,6 +80,12 @@ class ContactOwner extends Controller
         return $owners;
     }
 
+    /**
+     * render the page
+     * @param bool $done : if error or not
+     * 
+     * @return void
+     */
     private function displaypage(bool $done): void
     {
         $this->smarty->assign('params', 'params');
@@ -72,10 +95,15 @@ class ContactOwner extends Controller
             $this->smarty->display('params/contactOwner.tpl');
             die();
         }
-        $this->smarty->display('params/contactOwnerOK.tpl'); //changer le template
+        $this->smarty->display('params/contactOwnerOK.tpl'); 
         die();
     }
 
+    /**
+     * Process POST values
+     * 
+     * @return [type] boolean if OK or not
+     */
     private function doPost()
     {
         if (empty($_POST['message'])) {
@@ -95,6 +123,15 @@ class ContactOwner extends Controller
         }
     }
 
+    /**
+     * Send a mail to owners
+     * @param string $sender sender mail
+     * @param array $dest recpient mail
+     * @param string $message
+     * @param string $identity sender name
+     * 
+     * @return bool
+     */
     private function sendMessage(string $sender, array $dest, string $message, string $identity): bool
     {
         $mailer = new Mailer();

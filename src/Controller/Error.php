@@ -5,6 +5,9 @@ namespace App\Controller;
 use Editiel98\App;
 use Editiel98\Router\Controller;
 
+/**
+ * Controller for errors pages
+ */
 class Error extends Controller
 {
     private string $error;
@@ -24,7 +27,11 @@ class Error extends Controller
         }
     }
 
-    public function render()
+    /**
+     * render page
+     * @return void
+     */
+    public function render(): void
     {
         //$this->smarty->assign('accueil','accueil');
         $template = $this->error . '.tpl';

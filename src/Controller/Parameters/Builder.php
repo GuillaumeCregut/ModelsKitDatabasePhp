@@ -46,7 +46,13 @@ class Builder extends Controller
         $this->smarty->display('params/builders.tpl');
     }
 
-    private function getBuilders(?string $filter = null)
+    /**
+     * Get builder list and filter it if needed
+     * @param string|null $filter
+     * 
+     * @return void
+     */
+    private function getBuilders(?string $filter = null): void
     {
         $builderManager = new BuilderManager($this->dbConnection);
         if (is_null($filter)) {
@@ -117,6 +123,10 @@ class Builder extends Controller
         }
     }
 
+    /**
+     * Check if POST has filter
+     * @return bool
+     */
     private function search(): bool
     {
         if (isset($_POST['searchName'])) {
@@ -126,6 +136,13 @@ class Builder extends Controller
         return true;
     }
 
+    /**
+     * Create new Builder
+     * @param string $name
+     * @param int $countryId
+     * 
+     * @return bool
+     */
     private function add(string $name, int $countryId): bool
     {
         if (!$this->isConnected) {
@@ -142,6 +159,11 @@ class Builder extends Controller
         return !!$result;
     }
 
+    /**
+     * @param int $id : id to remove
+     * 
+     * @return bool
+     */
     private function remove(int $id): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE == $this->userRank)) {
@@ -155,6 +177,13 @@ class Builder extends Controller
         return $builder->delete();
     }
 
+    /**
+     * @param int $id : id to update
+     * @param string $name : new name
+     * @param int $countryId :new Id country
+     * 
+     * @return bool
+     */
     private function update(int $id, string $name, int $countryId): bool
     {
         if (!(App::ADMIN === $this->userRank || App::MODERATE == $this->userRank)) {

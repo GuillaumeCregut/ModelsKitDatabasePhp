@@ -5,6 +5,9 @@ namespace Editiel98\Entity;
 use Editiel98\Factory;
 use Editiel98\Manager\ModelManager;
 
+/**
+ * Manage Model entity
+ */
 class Model extends Entity
 {
     private string $name;
@@ -21,7 +24,6 @@ class Model extends Entity
     private string | null $picture;
 
     private int $builder;
-    private int $countryid;
     private int $category;
     private int $period;
     private int $scale;
@@ -34,206 +36,290 @@ class Model extends Entity
         $this->manager = Factory::getManager('modelManager');
     }
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return self
+     */
     public function setId(int $id): self
     {
         $this->id = $id;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * 
+     * @return self
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
     }
+
+    /**
+     * @return string
+     */
     public function getBrand(): string
     {
         return $this->brandname;
     }
 
-    // public function set(string $name): self
-    // {
-    //     $this->=$name;
-    //     return $this;
-    // }
 
+    /**
+     * @return string
+     */
     public function getBuilder(): string
     {
         return $this->buildername;
     }
 
-    // public function setBuilder(): self
-    // {
-    //     $this->=;
-    //     return $this;
-    // }
 
+    /**
+     * @return string
+     */
     public function getCountryName(): string
     {
         return $this->countryname;
     }
 
-    // public function set(): self
-    // {
-    //     $this->=;
-    //     return $this;
-    // }
 
+    /**
+     * @return string
+     */
     public function getCategory(): string
     {
         return $this->categoryname;
     }
 
-    // public function set(): self
-    // {
-    //     $this->=;
-    //     return $this;
-    // }
 
+    /**
+     * @return string
+     */
     public function getPeriod(): string
     {
         return $this->periodname;
     }
 
-    // public function set(): self
-    // {
-    //     $this->=;
-    //     return $this;
-    // }
 
+    /**
+     * @return string
+     */
     public function getScalemates(): string |null
     {
         return $this->scalemates;
     }
 
+    /**
+     * @param string $link
+     * 
+     * @return self
+     */
     public function setScalemates(string $link): self
     {
         $this->scalemates = $link;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getRef(): string
     {
         return $this->reference;
     }
 
+    /**
+     * @param string $ref
+     * 
+     * @return self
+     */
     public function setRef(string $ref): self
     {
         $this->reference = $ref;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getScale(): string
     {
         return $this->scalename;
     }
 
-
-    // public function set(): self
-    // {
-    //     $this->=;
-    //     return $this;
-    // }
-
+    /**
+     * @return bool
+     */
     public function getLiked(): bool | null
     {
         return $this->liked;
     }
 
 
+    /**
+     * @param bool $liked
+     * 
+     * @return self
+     */
     public function setliked(bool $liked): self
     {
         $this->liked = $liked;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getImage(): string |null
     {
         return $this->picture;
     }
 
 
+    /**
+     * @param string $image
+     * 
+     * @return self
+     */
     public function setImage(string $image): self
     {
         $this->picture = $image;
         return $this;
     }
 
-    //Have to do getter/setter or ids
+    
 
+    /**
+     * @return bool
+     */
     public function save(): bool|int
     {
         return $this->manager->save($this);
     }
 
+    /**
+     * @return bool
+     */
     public function delete(): bool|int
     {
         return $this->manager->delete($this);
     }
 
+    /**
+     * @return bool
+     */
     public function update(): bool|int
     {
         return $this->manager->update($this);
     }
 
+    /**
+     * @return int
+     */
     public function getBrandId(): int
     {
         return $this->brand;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return self
+     */
     public function setBrandId(int $id): self
     {
         $this->brand = $id;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getScaleId(): int
     {
         return $this->scale;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return self
+     */
     public function setScaleId(int $id): self
     {
         $this->scale = $id;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getBuilderId(): int
     {
         return $this->builder;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return self
+     */
     public function setBuilderId(int $id): self
     {
         $this->builder = $id;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getCategoryId(): int
     {
         return $this->category;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return self
+     */
     public function setCategoryId(int $id): self
     {
         $this->category = $id;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getPeriodId(): int
     {
         return $this->period;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return self
+     */
     public function setPeriodId(int $id): self
     {
         $this->period = $id;

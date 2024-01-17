@@ -7,20 +7,20 @@ use Editiel98\Manager\ModelManager;
 use Editiel98\Router\Controller;
 use Editiel98\Session;
 
+/**
+ * Controller for display page of model to add in order
+ */
 class ModelSelector extends Controller
 {
     private array $models;
     public function render()
     {
         if (!$this->isConnected) {
-            //Render antoher page and die
             $this->smarty->assign('profil', 'profil');
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
-        //Get user
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
-        //Get user fav
         $user = new User();
         $user->setId($userId);
         $favorites = $user->getFavorite();
@@ -33,7 +33,6 @@ class ModelSelector extends Controller
         $this->getModels($filter);
         $modelsDisplay = [];
         $favoriteDisplay = [];
-        //filter all models and remove fav
         foreach ($this->models as $model) {
             if (in_array($model->getId(), $favorites)) {
                 $favoriteDisplay[] = $model;
@@ -49,10 +48,13 @@ class ModelSelector extends Controller
         $this->smarty->display('profil/addmodelorder.tpl');
     }
 
-    private function getModels(?string $filter = null)
+    /**
+     * @param string|null $filter
+     * 
+     * @return void
+     */
+    private function getModels(?string $filter = null): void
     {
-        //Get all models
-
         $modelManager = new ModelManager($this->dbConnection);
         if (is_null($filter)) {
             $models = $modelManager->getAll();

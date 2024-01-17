@@ -85,7 +85,14 @@ class FriendBuild extends Controller
         die();
     }
 
-    private function getMessages($idModel)
+    
+    /**
+     * Get all messages from db for a model
+     * @param int $idModel
+     * 
+     * @return array
+     */
+    private function getMessages(int $idModel): array
     {
         $messages = $this->socialManager->getModelMessages($idModel);
         //Organise les messages comme dans finishedModel
@@ -105,7 +112,11 @@ class FriendBuild extends Controller
         return $allMessages;
     }
 
-    private function storeMessage()
+    /**
+     * Store a message in DB
+     * @return void
+     */
+    private function storeMessage(): void
     {
         //Check token
         if (empty($_POST['token'])) {

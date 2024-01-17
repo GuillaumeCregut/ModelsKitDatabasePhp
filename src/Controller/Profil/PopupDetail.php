@@ -2,10 +2,8 @@
 
 namespace App\Controller\Profil;
 
-use App\Controller\Error;
-use Editiel98\Entity\User;
+
 use Editiel98\Manager\OrderManager;
-use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
 use Editiel98\Session;
 
@@ -31,6 +29,11 @@ class PopUpDetail extends Controller
         $this->smarty->assign('orderDetails', $details);
         $this->smarty->display('profil/orderdetails.tpl');
     }
+
+    /**
+     * Check queryString
+     * @return bool
+     */
     private function checkParams(): bool
     {
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
@@ -52,6 +55,12 @@ class PopUpDetail extends Controller
         return true;
     }
 
+    /**
+     * Decode query String
+     * @param string $param
+     * 
+     * @return array
+     */
     private function decodeParams(string $param): array
     {
         $urldecode = str_replace('%20', ' ', $param);

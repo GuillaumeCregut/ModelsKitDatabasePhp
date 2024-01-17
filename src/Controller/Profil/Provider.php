@@ -66,7 +66,7 @@ class Provider extends Controller
         }
     }
 
-    private function addProvider()
+    private function addProvider(): void
     {
         if (!isset($_POST['name'])) {
             return;
@@ -82,7 +82,7 @@ class Provider extends Controller
         $provider->save();
     }
 
-    private function updateProvider()
+    private function updateProvider(): void
     {
         if (!isset($_POST['name'])) {
             return;
@@ -104,7 +104,7 @@ class Provider extends Controller
         $provider->update();
     }
 
-    private function deleteProvider()
+    private function deleteProvider(): void
     {
         if (!isset($_POST['id'])) {
             return;
@@ -118,7 +118,10 @@ class Provider extends Controller
         $provider->delete();
     }
 
-    private function getUser()
+    /**
+     * @return void
+     */
+    private function getUser(): void
     {
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
         $userManager = new UserManager($this->dbConnection);
@@ -129,7 +132,10 @@ class Provider extends Controller
         $this->stringToLink();
     }
 
-    private function displayPage()
+    /**
+     * @return void
+     */
+    private function displayPage(): void
     {
         $token = $this->csfrCheck->createToken();
         $this->smarty->assign('token', $token);
@@ -139,7 +145,11 @@ class Provider extends Controller
         $this->smarty->display('profil/provider.tpl');
     }
 
-    private function stringToLink()
+    /**
+     * convert string to URL if it is.
+     * @return void
+     */
+    private function stringToLink(): void
     {
         foreach ($this->providers as $key => $provider) {
 

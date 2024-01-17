@@ -48,6 +48,10 @@ class Info extends Controller
         }
     }
 
+    /**
+     * Update user in DB
+     * @return bool
+     */
     private function updateUser(): bool
     {
         if (empty($_POST['token'])) {
@@ -158,7 +162,11 @@ class Info extends Controller
         return false;
     }
 
-    private function getUser()
+    /**
+     * Get user's information from DB
+     * @return void
+     */
+    private function getUser(): void
     {
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
         $userManager = new UserManager($this->dbConnection);
@@ -182,6 +190,12 @@ class Info extends Controller
         $this->smarty->display($template);
     }
 
+    /**
+     * Store avatar picture
+     * @param int $idUser
+     * 
+     * @return string : path to avatar
+     */
     private function storeFile(int $idUser): string
     {
         $filename = '';

@@ -39,7 +39,11 @@ class Invoice extends Controller
         $this->displayPage();
     }
 
-    private function getUser()
+    /**
+     * get user  and user's provider from DB
+     * @return void
+     */
+    private function getUser(): void
     {
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
         $userManager = new UserManager($this->dbConnection);
@@ -49,6 +53,9 @@ class Invoice extends Controller
         $this->providers = $providers;
     }
 
+    /**
+     * @return [type]
+     */
     private function usePost()
     {
         if (empty($_POST['token'])) {
@@ -89,7 +96,16 @@ class Invoice extends Controller
         $this->smarty->display('profil/invoice.tpl');
     }
 
-    private function createOrder(string $RefOrder, string $dateOrder, int $provider, array $linesOrder)
+    /**
+     * Create new order in DB
+     * @param string $RefOrder
+     * @param string $dateOrder
+     * @param int $provider
+     * @param array $linesOrder
+     * 
+     * @return void
+     */
+    private function createOrder(string $RefOrder, string $dateOrder, int $provider, array $linesOrder): void
     {
         $order = new Order();
         $order->setOwner($this->user->getId());

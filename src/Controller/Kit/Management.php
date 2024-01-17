@@ -25,7 +25,7 @@ class Management extends Controller
             $this->smarty->display('kit/notconnected.tpl');
             die();
         }
-        $this->csrfCheck=new CSRFCheck($this->session);
+        $this->csrfCheck = new CSRFCheck($this->session);
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
         $user = new User();
         $user->setId($userId);
@@ -36,8 +36,8 @@ class Management extends Controller
 
     private function displayPage()
     {
-        $token=$this->csrfCheck->createToken();
-        $this->smarty->assign('token',$token);
+        $token = $this->csrfCheck->createToken();
+        $this->smarty->assign('token', $token);
         $this->smarty->assign('likeModels', $this->liked);
         $this->smarty->assign('buyModels', $this->buy);
         $this->smarty->assign('stockedModels', $this->stock);
@@ -53,6 +53,12 @@ class Management extends Controller
         $this->smarty->display('kit/management.tpl');
     }
 
+    /**
+     * Parse models by state
+     * @param array $models
+     * 
+     * @return void
+     */
     private function parseModels(array $models): void
     {
         foreach ($models as $model) {

@@ -31,7 +31,7 @@ class DBMgmt extends Controller
         }
     }
 
-    private function displayPage(mixed $details = null,?array $done=[])
+    private function displayPage(mixed $details = null, ?array $done = [])
     {
         if (!is_null($details)) {
             $this->smarty->assign('versionFile', $details->version);
@@ -41,9 +41,9 @@ class DBMgmt extends Controller
         $dbManager = new DBManager($this->dbConnection);
         $dbVersion = $dbManager->getCurrentVersion();
         $appVersion = App::VERSION;
-        $token=$this->csrfCheck->createToken();
-        $this->smarty->assign('token',$token);
-        $this->smarty->assign('arrayResult',$done);
+        $token = $this->csrfCheck->createToken();
+        $this->smarty->assign('token', $token);
+        $this->smarty->assign('arrayResult', $done);
         $this->smarty->assign('listUpdate', $this->updateFiles);
         $this->smarty->assign('appVersion', $appVersion);
         $this->smarty->assign('dbVersion', $dbVersion);
@@ -51,7 +51,12 @@ class DBMgmt extends Controller
         die();
     }
 
-    private function loadUpdateFiles()
+    
+    /**
+     * load update DB files list
+     * @return void
+     */
+    private function loadUpdateFiles(): void
     {
         $baseDir = __DIR__ . '/../../upgrade/';
         $scandir = scandir($baseDir);
@@ -63,7 +68,11 @@ class DBMgmt extends Controller
         }
     }
 
-    private function doPost()
+    /**
+     * process post values
+     * @return void
+     */
+    private function doPost(): void
     {
         if (!empty($_POST['action'])) {
             switch ($_POST['action']) {
@@ -80,9 +89,15 @@ class DBMgmt extends Controller
             }
         }
         header('Location: /admin_database');
-         die();
+        die();
     }
 
+    /**
+     * Load updates from filename
+     * @param string $fileName
+     * 
+     * @return mixed
+     */
     private function loadUpdates(string $fileName): mixed
     {
         try {
@@ -98,14 +113,18 @@ class DBMgmt extends Controller
         }
     }
 
+    /**
+     * Execute updates to database
+     * @return [type] return false if error, nothing if ok
+     */
     private function updateDb()
     {
-        if(empty($_POST['token'])) {
+        if (empty($_POST['token'])) {
             return false;
         }
-        $token=$_POST['token'];
-        if(!$this->csrfCheck->checkToken($token)){
-           return false;
+        $token = $_POST['token'];
+        if (!$this->csrfCheck->checkToken($token)) {
+            return false;
         }
         $file = $this->session->getKey('fileVersion');
         $updates = $this->loadUpdates($file);
@@ -114,21 +133,21 @@ class DBMgmt extends Controller
         }
         $dbManager = new DBManager($this->dbConnection);
         $sqlStrings = $updates->code;
-        $result=[];
+        $result = [];
         foreach ($sqlStrings as $line) {
             try {
-                $sql=$line->SQL;
-                $desc=$line->description;
-                $status="ERROR";
-                $resulstDb=$dbManager->updateDb($sql);
-                if($resulstDb){
-                    $status='OK';
+                $sql = $line->SQL;
+                $desc = $line->description;
+                $status = "ERROR";
+                $resulstDb = $dbManager->updateDb($sql);
+                if ($resulstDb) {
+                    $status = 'OK';
                 }
-                $result[]=array('desc'=>$desc,'status'=>$status);
+                $result[] = array('desc' => $desc, 'status' => $status);
             } catch (Exception $e) {
-                $result[]=array('desc'=>$desc,'status'=>$e->getMessage());
+                $result[] = array('desc' => $desc, 'status' => $e->getMessage());
             }
         }
-        $this->displayPage(done:$result);
+        $this->displayPage(done: $result);
     }
 }

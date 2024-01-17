@@ -10,6 +10,9 @@ use PDO;
 use PDOException;
 
 
+/**
+ * Controller for init app
+ */
 class Init
 {
     private SmartyMKD $smarty;
@@ -72,17 +75,17 @@ class Init
         $this->smarty->assign('display_form', true);
         //Ici, la base n'est pas crée, on la créée.
         $this->messages[] = "Base non initialisée";
-        $databaseMake=new DatabaseMake();
-        $makeQueries=$databaseMake->getQueries();
+        $databaseMake = new DatabaseMake();
+        $makeQueries = $databaseMake->getQueries();
         try {
             $this->messages[] = "Création de la base de données.";
             $this->pdo->exec('DROP DATABASE IF EXISTS ' . $this->name);
             $this->pdo->exec('CREATE DATABASE ' . $this->name);
             $this->pdo->exec('USE ' . $this->name);
-            foreach($makeQueries as $query){
+            foreach ($makeQueries as $query) {
                 $statement = $this->pdo->prepare($query);
                 $statement->execute();
-            } 
+            }
             //Create database
             $this->messages[] = "Création de la base de données effectuée.";
         } catch (PDOException $e) {

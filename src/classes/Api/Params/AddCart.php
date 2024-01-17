@@ -6,10 +6,18 @@ use Editiel98\Router\ApiController;
 use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
+/**
+ * AddCart : Add kit to user stock
+ */
 class AddCart extends ApiController
 {
     private CSRFCheck $csfrCheck;
 
+    /**
+     * Manage : dispatch request
+     *
+     * @return void
+     */
     public function manage()
     {
         error_reporting(0);
@@ -41,6 +49,14 @@ class AddCart extends ApiController
         }
     }
 
+    /**
+     * AddCart
+     * 
+     * Add kit to user stock
+     * Return JSON response
+     *
+     * @return void
+     */
     private function addCart()
     {
         $datas=$this->datas;
@@ -55,11 +71,11 @@ class AddCart extends ApiController
             die();
         }
         //test token
-        if(!isset($datas->token)){
+        if (!isset($datas->token)) {
             header("HTTP/1.1 422 Unprocessable entity");
 
-            $return=[
-                "result"=>false,
+            $return = [
+                "result" => false,
             ];
             echo json_encode($return);
             die();

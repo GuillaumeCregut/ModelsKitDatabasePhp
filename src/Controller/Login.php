@@ -36,7 +36,7 @@ class Login extends Controller
                 }
                 header('Location: /');
             } catch (Exception $e) {
-                $errPage=new Error('500',$e->getMessage());
+                $errPage = new Error('500', $e->getMessage());
                 $errPage->render();
                 die();
             }

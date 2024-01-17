@@ -17,7 +17,7 @@ class ExportCSV extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
-        if ($_SERVER['REQUEST_METHOD']==='POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->usePost();
         }
         $this->displayPage();
@@ -40,20 +40,26 @@ class ExportCSV extends Controller
         }
         $orderChoice = intval($_POST['order']);
         switch ($orderChoice) {
-            case 1: $order='brandName';
+            case 1:
+                $order = 'brandName';
                 break;
-            case 2:  $order='builderName';
+            case 2:
+                $order = 'builderName';
                 break;
-            case 3:  $order='ScaleName';
+            case 3:
+                $order = 'ScaleName';
                 break;
-            case 4:  $order='categoryName';
+            case 4:
+                $order = 'categoryName';
                 break;
-            case 5:  $order='countryName';
+            case 5:
+                $order = 'countryName';
                 break;
-            case 6:  $order='periodName';
+            case 6:
+                $order = 'periodName';
                 break;
-            default:  $order='brandName';
-
+            default:
+                $order = 'brandName';
         }
         if (isset($_POST['cb_finished'])) {
             $includesState[] = App::STATE_FINISHED;
@@ -70,13 +76,13 @@ class ExportCSV extends Controller
         if (isset($_POST['cb_wip'])) {
             $includesState[] = App::STATE_WIP;
         }
-        $modelModel=new ModelManager($this->dbConnection);
+        $modelModel = new ModelManager($this->dbConnection);
         try {
             //Create file
-            $dirname=dirname(dirname(dirname(__DIR__))) . '/public/assets/uploads/users/'. $this->userId . '/';
-            $filename=$dirname . 'export.csv';
-            $file=fopen($filename,'w');
-            $header=[
+            $dirname = dirname(dirname(dirname(__DIR__))) . '/public/assets/uploads/users/' . $this->userId . '/';
+            $filename = $dirname . 'export.csv';
+            $file = fopen($filename, 'w');
+            $header = [
                 'Position',
                 'Nom',
                 'Marque',
@@ -89,32 +95,32 @@ class ExportCSV extends Controller
                 'Fournisseur',
                 'Prix',
             ];
-            fputcsv($file, $header,$separator,"\"","\\","\n");
+            fputcsv($file, $header, $separator, "\"", "\\", "\n");
             //Insert header in file
             foreach ($includesState as $state) {
                 //get item
-                $items=$modelModel->getUserItemForCSV($state,$order,$this->userId);
+                $items = $modelModel->getUserItemForCSV($state, $order, $this->userId);
                 //for each item insert item
-                foreach($items as $item) {
-                    $itemArray=[];
-                    $itemArray[]=$item->stateName;
-                    $itemArray[]=$item->builderName . ' '.$item->modelName;
-                    $itemArray[]=$item->brandName;
-                    $itemArray[]=$item->reference;
-                    $itemArray[]=$item->categoryName;
-                    $itemArray[]=$item->countryName;
-                    $itemArray[]=$item->scaleName;
-                    $itemArray[]=$item->periodName;
-                    $itemArray[]=$item->scalemates ?? '-';
-                    $itemArray[]=$item->providerName ?? '-';
-                    $itemArray[]=$item->price ?? '-';
-                    fputcsv($file, $itemArray,$separator,"\"","\\","\n");
+                foreach ($items as $item) {
+                    $itemArray = [];
+                    $itemArray[] = $item->stateName;
+                    $itemArray[] = $item->builderName . ' ' . $item->modelName;
+                    $itemArray[] = $item->brandName;
+                    $itemArray[] = $item->reference;
+                    $itemArray[] = $item->categoryName;
+                    $itemArray[] = $item->countryName;
+                    $itemArray[] = $item->scaleName;
+                    $itemArray[] = $item->periodName;
+                    $itemArray[] = $item->scalemates ?? '-';
+                    $itemArray[] = $item->providerName ?? '-';
+                    $itemArray[] = $item->price ?? '-';
+                    fputcsv($file, $itemArray, $separator, "\"", "\\", "\n");
                 }
             }
             if (file_exists($filename)) {
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename='.basename($filename));
+                header('Content-Disposition: attachment; filename=' . basename($filename));
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -126,8 +132,7 @@ class ExportCSV extends Controller
                 exit;
             }
         } catch (Exception $e) {
-           
-        } finally{
+        } finally {
             fclose($file);
         }
     }

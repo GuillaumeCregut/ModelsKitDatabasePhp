@@ -10,7 +10,7 @@ use Editiel98\DbException;
 use Editiel98\Entity\User;
 use Exception;
 
-class UserManager extends Manager //implements ManagerInterface
+class UserManager extends Manager 
 {
     public function __construct(Database $db)
     {
@@ -19,11 +19,16 @@ class UserManager extends Manager //implements ManagerInterface
         $this->className = 'Editiel98\Entity\User';
     }
 
+    /**
+     * 
+     * @param int $id
+     * 
+     * @return User
+     */
     public function findById(int $id): User|bool
     {
         try {
             $query = "SELECT firstname, lastname, email, login,isVisible, avatar, allow, rankUser, id, isvalid FROM " . $this->table . " WHERE id=:id";
-            $classname = 'Editiel98\Entity\User';
             $values = [':id' => $id];
             $result = $this->db->prepare($query, null, $values, true);
             if ($result) {
@@ -48,10 +53,15 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * @param string $mail
+     * 
+     * @return [type]
+     */
     public function findByMail(string $mail)
     {
         try {
-            $query = "SELECT id, firstname, lastname, isvalid FROM " . $this->table . " WHERE email=:email";
+            $query = "SELECT id, firstname, lastname, isvalid, email,allow,isVisible,login,avatar,rankUser FROM " . $this->table . " WHERE email=:email";
             $values = [':email' => $mail];
             $result = $this->db->prepare($query, null, $values, true);
             if ($result) {
@@ -77,6 +87,9 @@ class UserManager extends Manager //implements ManagerInterface
     }
 
 
+    /**
+     * @return array
+     */
     public function getAll(): array
     {
         try {
@@ -87,12 +100,18 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
-    public function findByName(string $lastname): User|bool
+    /**
+     * 
+     * @param string $login
+     * 
+     * @return User
+     */
+    public function findByName(string $login): User|bool
     {
         try {
             $query = "SELECT firstname, lastname,email, rankUser, id, email, isvalid FROM " . $this->table . " WHERE login=:login";
             $classname = 'Editiel98\Entity\User';
-            $values = [':id' => $lastname];
+            $values = [':login' => $login];
             $result = $this->db->prepare($query, $classname, $values, true);
             return $result;
         } catch (DbException $e) {
@@ -100,6 +119,11 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * @param User $entity
+     * 
+     * @return bool
+     */
     public function update(User $entity): bool
     {
         $query = "UPDATE " . $this->table . " SET 
@@ -133,16 +157,34 @@ class UserManager extends Manager //implements ManagerInterface
         return false;
     }
 
+    /**
+     * unused method
+     * @param User $entity
+     * 
+     * @return bool
+     */
     public function save(User $entity): bool
     {
         return false;
     }
 
+    /**
+     * unused method
+     * @param User $entity
+     * 
+     * @return bool
+     */
     public function delete(User $entity): bool
     {
         return false;
     }
 
+    /**
+     * @param int $user
+     * @param bool $status
+     * 
+     * @return bool
+     */
     public function setNewStatus(int $user, bool $status): bool
     {
         $query = "UPDATE " . $this->table . " SET isvalid=:valid WHERE id=:id";
@@ -155,6 +197,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * @param int $user
+     * @param int $role
+     * 
+     * @return bool
+     */
     public function setNewRole(int $user, int $role): bool
     {
         $query = "UPDATE " . $this->table . " SET rankUser=:rankUser WHERE id=:id";
@@ -167,6 +215,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * get token for reset password for a user
+     * @param string $email
+     * 
+     * @return [type]
+     */
     public function getResetCredentials(string $email)
     {
         $query = "SELECT id, pwdtoken, pwdTokenDate, isvalid, email FROM user WHERE email=:email";
@@ -181,6 +235,13 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * Set reset token for a user to change password
+     * @param int $id : user id
+     * @param string $code : token
+     * 
+     * @return [type]
+     */
     public function setResetCode(int $id, string $code)
     {
         $mysql_date_now = new DateTime('now', new DateTimeZone('Europe/Paris'));
@@ -199,6 +260,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * @param int $id :user id
+     * @param string $newPass
+     * 
+     * @return [type]
+     */
     public function resetPassword(int $id, string $newPass)
     {
         $query = "UPDATE user SET passwd=:pass, pwdtoken=null, pwdTokenDate=null WHERE id=:id";
@@ -214,6 +281,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * get user's favorite models
+     * @param User $user
+     * 
+     * @return array
+     */
     public function getFavorites(User $user): array
     {
         $userId = $user->getId();
@@ -227,6 +300,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * get user's models
+     * @param User $user
+     * 
+     * @return array
+     */
     public function getMyModels(User $user): array
     {
         $userId = $user->getId();
@@ -243,6 +322,13 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * add a favorite model to user
+     * @param User $user
+     * @param int $idModel
+     * 
+     * @return bool
+     */
     public function addFavorite(User $user, int $idModel): bool
     {
         $query = 'INSERT model_user (state,owner,model) VALUES (' . App::STATE_LIKED . ',:user,:model)';
@@ -251,6 +337,12 @@ class UserManager extends Manager //implements ManagerInterface
         return $result;
     }
 
+    /**
+     * @param User $user
+     * @param int $idModel
+     * 
+     * @return bool
+     */
     public function removeFavorite(User $user, int $idModel): bool
     {
         $query = 'DELETE FROM model_user WHERE state=' . App::STATE_LIKED . ' AND owner=:user AND model=:model';
@@ -259,6 +351,15 @@ class UserManager extends Manager //implements ManagerInterface
         return $result;
     }
 
+    /**
+     * Add a model to user's stock
+     * @param User $user
+     * @param int $idModel
+     * @param int|null $provider
+     * @param float|null $price
+     * 
+     * @return bool
+     */
     public function addModelStock(User $user, int $idModel, ?int $provider = null, ?float $price = null): bool
     {
         if (is_null($provider)) {
@@ -274,11 +375,16 @@ class UserManager extends Manager //implements ManagerInterface
                 ':state' => App::STATE_BUY
             ];
         }
-
         $result = $this->db->exec($query, $values);
         return $result;
     }
 
+    /**
+     * get user's providers
+     * @param User $entity
+     * 
+     * @return array
+     */
     public function getProviders(User $entity): array
     {
         $idUser = $entity->getId();
@@ -292,6 +398,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * get user's orders
+     * @param User $entity
+     * 
+     * @return array
+     */
     public function getOrders(User $entity): array
     {
         $query = "SELECT o.provider, o.owner,o.reference,DATE_FORMAT(o.dateOrder,\"%d/%m/%Y\") as dateOrder, p.name 
@@ -305,6 +417,13 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * remove a model in user's stock
+     * @param int $id
+     * @param int $user
+     * 
+     * @return bool
+     */
     public function deleteModelFromStock(int $id, int $user): bool
     {
         //Vérifier si il y a des photos dans le kit, si oui, les supprimer, et supprimer le répertoire qui va bien
@@ -332,7 +451,16 @@ class UserManager extends Manager //implements ManagerInterface
         return false;
     }
 
-    public function getKitByState(int $state, int $user, ?string $filter = '',?array $sorted=[]): array
+    /**
+     * get user's models filtered and by state
+     * @param int $state : state of model
+     * @param int $user
+     * @param string|null $filter
+     * @param array|null $sorted [column,ASC/DESC]
+     * 
+     * @return array
+     */
+    public function getKitByState(int $state, int $user, ?string $filter = '', ?array $sorted = []): array
     {
         $query = "SELECT id, pictures, modelName, reference, boxPicture,builderName, scaleName, brandName 
         FROM mymodels WHERE state=:state AND owner=:owner";
@@ -344,8 +472,8 @@ class UserManager extends Manager //implements ManagerInterface
             $query .= ' AND modelName like :name';
             $values[':name'] = "%{$filter}%";
         }
-        if(!empty($sorted)) {
-            $query.=' ORDER BY '.$sorted[0] . ' ' . $sorted[1];
+        if (!empty($sorted)) {
+            $query .= ' ORDER BY ' . $sorted[0] . ' ' . $sorted[1];
         }
         try {
             return $this->db->prepare($query, null, $values);
@@ -354,6 +482,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * get a random kit from user's stock
+     * @param int $user
+     * 
+     * @return [type] array with model info
+     */
     public function getRandomKit(int $user)
     {
         $query = "SELECT id,modelName,reference,boxPicture,builderName,scaleName,brandName 
@@ -369,42 +503,39 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * @param int $user
+     * 
+     * @return bool
+     */
     public function removeUser(int $user): bool
     {
         try {
             $this->db->startTransac();
-            // 1/ Delete messages
             if (!$this->deleteMessages($user)) {
                 $this->db->rollBack();
                 return false;
             };
-            // 2/ Delete Model Messages
             if (!$this->deleteModelMessages($user)) {
                 $this->db->rollBack();
                 return false;
             };
-            // 3/ Delete Friend
             if (!$this->deleteFriend($user)) {
                 $this->db->rollBack();
                 return false;
             };
-            // 5/ Delete orders
             if (!$this->deleteOrders($user)) {
                 $this->db->rollBack();
                 return false;
             };
-
-            // 6/ delete model user
             if (!$this->deleteModels($user)) {
                 $this->db->rollBack();
                 return false;
             };
-            // 7/ delete provider
             if (!$this->deleteProvider($user)) {
                 $this->db->rollBack();
                 return false;
             };
-            // 8/ Delete user
             $query = "DELETE from user WHERE id=:user";
             $value = [':user' => $user];
             try {
@@ -414,7 +545,6 @@ class UserManager extends Manager //implements ManagerInterface
                 return false;
             }
             $this->db->commitTransc();
-            // 9/ remove folder
             $this->removeDir($user);
             return true;
         } catch (DbException $e) {
@@ -423,13 +553,26 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
-    private function removeDir(int $user)
+   
+    /**
+     * Remove user directory
+     * @param int $user
+     * 
+     * @return void
+     */
+    private function removeDir(int $user): void
     {
         $dir = dirname(dirname(dirname(__DIR__))) . '/public/assets/uploads/users/' . $user . '/';
         $this->rrmdir($dir);
     }
 
-    private function rrmdir($dir)
+    /**
+     * remove a directory
+     * @param mixed $dir
+     * 
+     * @return void
+     */
+    private function rrmdir($dir): void
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);
@@ -445,6 +588,12 @@ class UserManager extends Manager //implements ManagerInterface
         }
     }
 
+    /**
+     * Remove all users' messages
+     * @param int $user
+     * 
+     * @return bool
+     */
     private function deleteMessages(int $user): bool
     {
         $query = "DELETE FROM private_message WHERE exp=:user OR dest=:user";
@@ -456,6 +605,12 @@ class UserManager extends Manager //implements ManagerInterface
             return false;
         }
     }
+
+    /**
+     * @param int $user
+     * 
+     * @return bool
+     */
     private function deleteModelMessages(int $user): bool
     {
         $query = "DELETE FROM model_message WHERE fk_author=:user";
@@ -467,6 +622,12 @@ class UserManager extends Manager //implements ManagerInterface
             return false;
         }
     }
+
+    /**
+     * @param int $user
+     * 
+     * @return bool
+     */
     private function deleteFriend(int $user): bool
     {
         $query = "DELETE FROM friend WHERE id_friend1=:user OR id_friend2=:user";
@@ -478,6 +639,12 @@ class UserManager extends Manager //implements ManagerInterface
             return false;
         }
     }
+
+    /**
+     * @param int $user
+     * 
+     * @return bool
+     */
     private function deleteOrders(int $user): bool
     {
         // 4/ GET ORDERS, deletes all where id orders
@@ -507,6 +674,12 @@ class UserManager extends Manager //implements ManagerInterface
             return false;
         }
     }
+
+    /**
+     * @param int $user
+     * 
+     * @return bool
+     */
     private function deleteModels(int $user): bool
     {
         $query = "DELETE FROM model_user WHERE owner=:user";
@@ -518,6 +691,12 @@ class UserManager extends Manager //implements ManagerInterface
             return false;
         }
     }
+
+    /**
+     * @param int $user
+     * 
+     * @return bool
+     */
     private function deleteProvider(int $user): bool
     {
         $query = "DELETE FROM provider WHERE owner=:user";

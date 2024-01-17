@@ -16,15 +16,15 @@ class DetailsKit extends Controller
             $this->smarty->display('kit/notconnected.tpl');
             die();
         }
-        $id=intval($_GET['id']);
-        if($id===0){
-            $page=new Error('404', 'le kit n\'existe pas');
+        $id = intval($_GET['id']);
+        if ($id === 0) {
+            $page = new Error('404', 'le kit n\'existe pas');
             $page->render();
             die();
         }
-        $modelManager=new ModelManager($this->dbConnection);
-        $modelDetails=$modelManager->getOneFullById($id,$this->userId);
-        if($modelDetails){
+        $modelManager = new ModelManager($this->dbConnection);
+        $modelDetails = $modelManager->getOneFullById($id, $this->userId);
+        if ($modelDetails) {
             $this->smarty->assign('model', $modelDetails);
         }
         $this->smarty->assign('kits', true);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98;
 
 use Exception;
@@ -9,11 +10,11 @@ class DbException extends Exception
     private int $dbCode;
     private string $dBMessage;
 
-    public function __construct(string $message, int $dbCodeError, string $dbMessage,Throwable $previous=null)
+    public function __construct(string $message, int $dbCodeError, string $dbMessage, Throwable $previous = null)
     {
-        parent::__construct($message,0,$previous);
-        $this->dbCode=$dbCodeError;
-        $this->dBMessage=$dbMessage;
+        parent::__construct($message, 0, $previous);
+        $this->dbCode = $dbCodeError;
+        $this->dBMessage = $dbMessage;
     }
 
     public function __toString(): string

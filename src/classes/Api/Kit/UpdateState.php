@@ -6,10 +6,18 @@ use Editiel98\Router\ApiController;
 use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
+/**
+ * UpdateState : change kit's status in DB
+ */
 class UpdateState extends ApiController
 {
     private CSRFCheck $csrfCheck;
 
+    /**
+     * Manage: Dispatch request
+     *
+     * @return void
+     */
     public function manage()
     {
         error_reporting(0);
@@ -40,6 +48,13 @@ class UpdateState extends ApiController
          }
     }
 
+    /**
+     * changeState
+     * Change kit status in DB
+     * Return JSON response
+     *
+     * @return void
+     */
     private function changeState()
     {
         $this->csrfCheck=new CSRFCheck($this->session);
@@ -55,25 +70,25 @@ class UpdateState extends ApiController
             echo json_encode($return);
             die();
         }
-        if(!isset($datas->token)){
+        if (!isset($datas->token)) {
             header("HTTP/1.1 422 Unprocessable entity");
 
-            $return=[
-                "result"=>false,
+            $return = [
+                "result" => false,
             ];
             echo json_encode($return);
             die();
         }
-        $token=$datas->token;
-        if(!$this->csrfCheck->checkToken($token)){
+        $token = $datas->token;
+        if (!$this->csrfCheck->checkToken($token)) {
             header("HTTP/1.1 422 Unprocessable entity");
 
-            $return=[
-                "result"=>false,
+            $return = [
+                "result" => false,
             ];
             echo json_encode($return);
             die();
-         }
+        }
         $modelManager=new ModelManager($this->dbConnection);
         $result=$modelManager->changeUserModelState($idModel,$newState,$userId);
         if(!$result){

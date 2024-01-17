@@ -9,13 +9,20 @@ use Editiel98\Router\Controller;
 use Editiel98\Session;
 use Exception;
 
+/**
+ * controller for PDF page
+ */
 class PdfController extends Controller
 {
     const LIMIT_NUMBER = 5;
     private PDFCreator $pdf;
     private string $subDir;
 
-    public function render()
+    /**
+     * 
+     * @return void
+     */
+    public function render(): void
     {
         if (!$this->isConnected) {
             //Render antoher page and die
@@ -119,10 +126,16 @@ class PdfController extends Controller
         } else {
             $this->displayPage('');
         }
-
     }
 
-    private function addBlocs(array $infos, string $title)
+    /**
+     * Create a PDF block
+     * @param array $infos
+     * @param string $title
+     * 
+     * @return void
+     */
+    private function addBlocs(array $infos, string $title): void
     {
         $this->pdf->SetFont('', 'U');
         $this->pdf->Newcell(0, 0, $title, 15, 7);
@@ -133,7 +146,13 @@ class PdfController extends Controller
         $this->pdf->setY($this->pdf->GetY() + 10);
     }
 
-    private function AddModelBoc(object $model)
+    /**
+     * Create a block in pdf
+     * @param object $model
+     * 
+     * @return void
+     */
+    private function AddModelBoc(object $model): void
     {
         $baseDir = dirname(dirname(dirname(__DIR__)));
         $subDir = $baseDir . '/public/assets/uploads/models/';
@@ -142,17 +161,31 @@ class PdfController extends Controller
         } else {
             $pictureDir = $baseDir . '/public/' . $model->boxPicture;
         }
-        $pictureConvert=$this->convertFile($pictureDir, $subDir . 'no_image.jpg');
+        $pictureConvert = $this->convertFile($pictureDir, $subDir . 'no_image.jpg');
         $this->pdf->setModelBock($model, $pictureConvert);
     }
 
-    public function addStatraph(string $filename)
+    /**
+     * add a stat picture file to pdf
+     * @param string $filename
+     * 
+     * @return void
+     */
+    public function addStatraph(string $filename): void
     {
         $file = $this->subDir . $filename . '.png';
         $this->pdf->Image($file, 15, null, 140);
         $this->pdf->Ln(20);
     }
 
+    /**
+     * Create and save a stat graph
+     * @param array $stat
+     * @param string $title
+     * @param string $filename
+     * 
+     * @return bool
+     */
     private function drawGraph(array $stat, string $title, string $filename): bool
     {
         $file = $this->subDir . $filename . '.png';
@@ -176,6 +209,12 @@ class PdfController extends Controller
         }
     }
 
+    /**
+     * 
+     * @param array $array
+     * 
+     * @return array
+     */
     private function reduceArray(array $array): array
     {
         $tempArray = [];
@@ -191,7 +230,13 @@ class PdfController extends Controller
         return $tempArray;
     }
 
-    private function manageDir(string $folder)
+    /**
+     * Check if folder exist and create it or empty it
+     * @param string $folder
+     * 
+     * @return void
+     */
+    private function manageDir(string $folder): void
     {
         if (!is_dir($folder)) {
             mkdir($folder, 0777, true);
@@ -215,26 +260,29 @@ class PdfController extends Controller
         $this->smarty->display('profil/statspdf.tpl');
     }
 
+    /**
+     * convert image file to jpg file
+     * @param string $filename
+     * @param string $defaultImage
+     * 
+     * @return string
+     */
     private function convertFile(string $filename, string $defaultImage): string
     {
         $mime = mime_content_type($filename);
-        //Fix temporary bug with wep or avif pictures
         if (str_contains($mime, 'avif') || str_contains($mime, 'webp')) {
-            //Create temp directory
             $destDir = $this->subDir . 'temp/';
             $this->manageDir($destDir);
-            //Convert webp or avif to jpg in temporary file
-            try{
+            try {
                 if (str_contains($mime, 'avif')) { //Works, but OVH does not support avif
-                   // $img = \imagecreatefromavif($filename);
-                   return $defaultImage;
+                    // $img = \imagecreatefromavif($filename);
+                    return $defaultImage;
                 } else {
                     $img = \imagecreatefromwebp($filename);
                 }
                 if (!$img) {
                     return $defaultImage;
                 }
-                //Create JPG
                 imagepalettetotruecolor($img);
                 imagealphablending($img, true);
                 imagesavealpha($img, true);
@@ -246,15 +294,21 @@ class PdfController extends Controller
                     return $destFile;
                 }
                 return $defaultImage;
-            } catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 return $defaultImage;
             }
         }
         return $filename;
     }
 
-    private function freeDir(string $folder) {
+    /**
+     * Clean folder
+     * @param string $folder
+     * 
+     * @return void
+     */
+    private function freeDir(string $folder): void
+    {
         $files = glob($folder . '*');
         foreach ($files as $file) {
             if (is_file($file)) {

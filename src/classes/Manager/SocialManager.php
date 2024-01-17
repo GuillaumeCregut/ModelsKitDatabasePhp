@@ -6,6 +6,9 @@ use Editiel98\App;
 use Editiel98\Database\Database;
 use Editiel98\DbException;
 
+/**
+ * Manage users relations and private messages
+ */
 class SocialManager extends Manager
 {
     const USER_UNKNOWN = 0;
@@ -18,6 +21,12 @@ class SocialManager extends Manager
         $this->db = $db;
     }
 
+    /**
+     * Find all visible users
+     * @param int $idUser : id user
+     * 
+     * @return [type] arrray of users
+     */
     public function findVisible(int $idUser)
     {
         $query = "SELECT firstname,id,lastname,avatar FROM user WHERE isVisible=true and id!=:userId";
@@ -31,6 +40,12 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * Get user friend list
+     * @param int $idUser : id user
+     * 
+     * @return [type] : array of users' friends
+     */
     public function getFriendList(int $idUser)
     {
         $query = 'SELECT * FROM `friend` WHERE id_friend1=:idUser or id_friend2=:idUser';
@@ -44,6 +59,11 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * @param int $userId
+     * 
+     * @return [type] : array
+     */
     public function getFriends(int $userId)
     {
         $query = "SELECT u.firstname, u.lastname,u.avatar, u.id FROM user u 
@@ -57,11 +77,16 @@ class SocialManager extends Manager
         try {
             return $this->db->prepare($query, null, $values);
         } catch (DbException $e) {
-            echo $e->getdbMessage();
             return [];
         }
     }
 
+    /**
+     * get messages count group by expeditor
+     * @param int $userId : user id
+     * 
+     * @return [type] :array of result as [user=>count]
+     */
     public function getMessageCount(int $userId)
     {
         $query = "SELECT count(*) as nb, exp FROM `private_message` WHERE is_read=0 and dest=:idUser GROUP BY exp";
@@ -75,6 +100,12 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * Get the user visibility
+     * @param int $user
+     * 
+     * @return [type] array with visibility
+     */
     public function getFriendVisibility(int $user)
     {
         $query = "SELECT isVisible FROM user WHERE id=:user";
@@ -86,6 +117,13 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * Create relationship between users
+     * @param int $user
+     * @param int $friend
+     * 
+     * @return [type]
+     */
     public function addFriendShip(int $user, int $friend)
     {
         $query = "INSERT INTO friend (id_friend1,id_friend2,is_ok) VALUES(:user,:friend,:state)";
@@ -101,6 +139,12 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * Return list of user waiting demand
+     * @param int $user : id of the user
+     * 
+     * @return [type]
+     */
     public function getDemand(int $user)
     {
         $query = "SELECT f.id_friend1 as id,u.firstname, u.lastname, u.avatar FROM 
@@ -116,6 +160,14 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * Change the relationship between users
+     * @param int $user
+     * @param int $friend
+     * @param int $status
+     * 
+     * @return [type]
+     */
     public function changeStatusFriend(int $user, int $friend, int $status)
     {
         $query = "UPDATE friend SET is_ok=:status WHERE (id_friend1=:user AND id_friend2=:friend) OR (id_friend1=:friend AND id_friend2=:user)";
@@ -131,6 +183,13 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * get all messages between 2 users
+     * @param int $friend
+     * @param int $user
+     * 
+     * @return [type] array of messages
+     */
     public function getMessages(int $friend, int $user)
     {
         $query = "SELECT exp,dest,DATE_FORMAT(date_m,\"%d %M %Y\") as date_message,DATE_FORMAT(date_m,\"%H:%i\") as hour_message, message FROM `private_message` WHERE (exp=:user and dest=:friend) OR (exp=:friend and dest=:user) ORDER BY date_m DESC";
@@ -145,6 +204,13 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * 
+     * @param int $exp :id of user who send message
+     * @param int $dest : id of user connected
+     * 
+     * @return [type]
+     */
     public function setRead(int $exp, int $dest)
     {
         $query = "UPDATE private_message SET is_read=1 WHERE (dest=:dest and exp=:exp)";
@@ -159,6 +225,14 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * Store a new message in DB
+     * @param int $dest : id of recipient user
+     * @param int $exp : id of connected user
+     * @param string $message
+     * 
+     * @return [type]
+     */
     public function addMessage(int $dest, int $exp, string $message)
     {
         $query = "INSERT INTO private_message (exp,dest,message) VALUES (:exp,:dest,:message)";
@@ -174,6 +248,12 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * return list of friend's models
+     * @param int $idFriend
+     * 
+     * @return [type]
+     */
     public function getFriendModels(int $idFriend)
     {
         $query = "SELECT id,modelname,pictures, reference,boxPicture,builderName,scaleName,brandName FROM mymodels WHERE owner=:owner AND state=:state";
@@ -188,6 +268,13 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * return details of friend's model
+     * @param int $friend
+     * @param int $model
+     * 
+     * @return [type] array with infos
+     */
     public function getFriendModelDetails(int $friend, int $model)
     {
         $query = "SELECT m.id,m.modelname,m.pictures, m.reference,m.boxPicture,m.builderName,m.scaleName,m.brandName,u.allow 
@@ -203,6 +290,12 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * get messages from a model
+     * @param int $id : id of model
+     * 
+     * @return [type]
+     */
     public function getModelMessages(int $id)
     {
         $query = "SELECT mm.id,DATE_FORMAT(mm.date_message,\"%d %M %Y\") as dateMessage, mm.message,mm.reply_id as replyId,u.firstname,u.lastname,u.id as userId,u.avatar 
@@ -215,6 +308,14 @@ class SocialManager extends Manager
         }
     }
 
+    /**
+     * Send a message to user's model page
+     * @param int $exp : id of expeditor
+     * @param string $message 
+     * @param int $idModel
+     * 
+     * @return [type]
+     */
     public function postModelMessage(int $exp, string $message, int $idModel)
     {
         $query = "INSERT INTO model_message (fk_model, fk_author, date_message, message) VALUES(:idmodel,:exp,now(),:message)";

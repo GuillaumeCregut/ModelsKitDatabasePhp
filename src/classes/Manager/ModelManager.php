@@ -35,13 +35,49 @@ class ModelManager extends Manager implements ManagerInterface
         buildername, countryid, categoryname, brandname, periodname, scalename, countryname  
         FROM model_full ORDER BY id DESC";
         try {
-            $result = $this->db->query($query, $this->className);
-            return $result;
+            $result = $this->db->query($query, null);
+            $arrayModels=[];
+            foreach($result as $model) {
+                $newModel=new Model();
+                $newModel->setId($model->id);
+                $newModel->setName($model->name);
+                $newModel->setBuilderName($model->buildername);
+                $newModel->setBuilderId($model->builder);
+                $newModel->setBrandId($model->brand);
+                $newModel->setBrandName($model->brandname);
+                $newModel->setRef($model->reference);
+                if(is_null($model->scalemates)) {
+                    $model->scalemates='';
+                }
+                $newModel->setScalemates($model->scalemates);
+                if(is_null($model->picture)) {
+                    $model->picture='';
+                }
+                $newModel->setImage($model->picture);
+                $newModel->setCategoryId($model->category);
+                $newModel->setCategoryName($model->categoryname);
+                $newModel->setPeriodId($model->period);
+                $newModel->setPeriodName($model->periodname);
+                $newModel->setScaleId($model->scale);
+                $newModel->setScaleName($model->scalename);
+                $newModel->setCountryName($model->countryname);
+
+
+                $arrayModels[]=$newModel;
+            }
+            // return $result;
+            return $arrayModels;
         } catch (DbException $e) {
             $this->loadErrorPage($e->getdbMessage());
         }
     }
 
+    /**
+     * get filtered list of models
+     * @param array $filter : array of filters as
+     * [column=>value]
+     * @return array
+     */
     public function getFiltered(array $filter): array
     {
         $values = [];
@@ -205,6 +241,14 @@ class ModelManager extends Manager implements ManagerInterface
         return $result;
     }
 
+    /**
+     * Change user model state
+     * @param int $id : id of model
+     * @param int $state : new state
+     * @param int $user : id of owner 
+     * 
+     * @return bool
+     */
     public function changeUserModelState(int $id, int $state, int $user): bool
     {
         //get model
@@ -221,7 +265,6 @@ class ModelManager extends Manager implements ManagerInterface
         } catch (DbException $e) {
             return false;
         }
-
         //Check if model is already user favorite
         if ($state == App::STATE_LIKED) {
             $idModel = $modelResult->model;
@@ -240,7 +283,6 @@ class ModelManager extends Manager implements ManagerInterface
                 return false;
             }
         }
-
         $query = "UPDATE model_user SET state=:newState WHERE id=:id";
         $values = [
             ':id' => $id,
@@ -254,6 +296,13 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * Get all information of a user's model
+     * @param int $id : id of model
+     * @param int $user: id of kit
+     * 
+     * @return [type] : arry with kit informations or null
+     */
     public function getOneFullById(int $id, int $user)
     {
         $query = 'SELECT * FROM model_fullwithcountry WHERE id=:id AND owner=:owner';
@@ -268,6 +317,12 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * Get all user's finished models with messages
+     * @param int $user : user id
+     * 
+     * @return array
+     */
     public function getFinishedModels(int $user): array
     {
         //Get array of messages by kit
@@ -302,6 +357,14 @@ class ModelManager extends Manager implements ManagerInterface
         return $models;
     }
 
+    /**
+     * add path to pictures in DB
+     * @param int $idModel : id model
+     * @param int $idUser : id owner
+     * @param mixed $link : path to pictures
+     * 
+     * @return bool
+     */
     public function updatelinkModelUser(int $idModel, int $idUser, mixed $link): bool
     {
         $query = "UPDATE model_user SET pictures=:link WHERE id=:id AND owner=:owner";
@@ -321,6 +384,14 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * return informations for CSV export
+     * @param int $state : state of model
+     * @param string $order : column to order
+     * @param int $user : id of user
+     * 
+     * @return [type] : array of result
+     */
     public function getUserItemForCSV(int $state, string $order, int $user)
     {
         $query = "SELECT stateName, providerName, price, modelName, reference, periodName, brandName, 
@@ -336,26 +407,37 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * return email list of users who own a kit
+     * @param int $id : kit id
+     * 
+     * @return array
+     */
     public function findOwner(int $id): array|false
     {
-        try{
-            $query='SELECT DISTINCT user.email FROM `model_user` inner join user on model_user.owner=user.id WHERE model_user.model=:id AND model_user.state<>:isLiked; ';
-            $value=[
-                ':id'=>$id,
-                'isLiked'=>App::STATE_LIKED
+        try {
+            $query = 'SELECT DISTINCT user.email FROM `model_user` inner join user on model_user.owner=user.id WHERE model_user.model=:id AND model_user.state<>:isLiked; ';
+            $value = [
+                ':id' => $id,
+                'isLiked' => App::STATE_LIKED
             ];
             return $this->db->prepare($query, null, $value);
-            
-        } catch(DbException $e) {
+        } catch (DbException $e) {
             return false;
         }
     }
 
-    public function deleteStraight(int $idKit) 
+    /**
+     * delete a model by id
+     * @param int $idKit : id to remove
+     * 
+     * @return [type] : result of operation
+     */
+    public function deleteStraight(int $idKit)
     {
-        $query="DELETE FROM model_user WHERE id=:id";
+        $query = "DELETE FROM model_user WHERE id=:id";
         try {
-            return $this->db->exec($query, [':id'=>$idKit]);
+            return $this->db->exec($query, [':id' => $idKit]);
         } catch (DbException $e) {
             throw new Exception('Error in remove');
         }
@@ -397,8 +479,31 @@ class ModelManager extends Manager implements ManagerInterface
     private function prepareSQL(string $query, array $vars, bool $single): mixed
     {
         try {
-            $result = $this->db->prepare($query, $this->className, $vars, $single);
-            return $result;
+            $model = $this->db->prepare($query, null, $vars, $single);
+                $newModel=new Model();
+                $newModel->setId($model->id);
+                $newModel->setName($model->name);
+                $newModel->setBuilderName($model->buildername);
+                $newModel->setBuilderId($model->builder);
+                $newModel->setBrandId($model->brand);
+                $newModel->setBrandName($model->brandname);
+                $newModel->setRef($model->reference);
+                if(is_null($model->scalemates)) {
+                    $model->scalemates='';
+                }
+                $newModel->setScalemates($model->scalemates);
+                if(is_null($model->picture)) {
+                    $model->picture='';
+                }
+                $newModel->setImage($model->picture);
+                $newModel->setCategoryId($model->category);
+                $newModel->setCategoryName($model->categoryname);
+                $newModel->setPeriodId($model->period);
+                $newModel->setPeriodName($model->periodname);
+                $newModel->setScaleId($model->scale);
+                $newModel->setScaleName($model->scalename);
+                $newModel->setCountryName($model->countryname);
+            return $newModel;
         } catch (DbException $e) {
             $message = 'SQL : ' . $query . 'a poser problème';
             $emitter = Emitter::getInstance();
@@ -406,6 +511,4 @@ class ModelManager extends Manager implements ManagerInterface
             $this->loadErrorPage($e->getMessage());
         }
     }
-
-   
 }

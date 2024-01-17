@@ -9,7 +9,7 @@ class Parameters extends Controller
     public function render()
     {
         if (empty($this->subPages)) {
-            $this->smarty->assign('params','params');
+            $this->smarty->assign('params', 'params');
             $this->smarty->display('params/index.tpl');
         } else {
             switch ($this->subPages[0]) {
@@ -35,18 +35,18 @@ class Parameters extends Controller
                     $className = 'Model';
                     break;
                 case 'modelUpdate':
-                    $className="UpdateModel";
+                    $className = "UpdateModel";
                     break;
                 case 'converter':
-                    $className="ScaleConverter";
+                    $className = "ScaleConverter";
                     break;
-                default: 
-                    $page=new Error('404');
+                default:
+                    $page = new Error('404');
                     $page->render();
                     die();
             }
             $classPage = 'App\\Controller\\Parameters\\' . $className;
-            $page=new $classPage([],$this->params);
+            $page = new $classPage([], $this->params);
             $page->render();
         }
     }

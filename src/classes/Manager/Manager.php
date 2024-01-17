@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Manager;
 
 use Editiel98\Database\Database;
@@ -38,7 +39,7 @@ abstract class Manager
      */
     public function __get($name)
     {
-        $method='get' . ucfirst($name);
+        $method = 'get' . ucfirst($name);
         return $this->$method();
     }
 
@@ -52,9 +53,8 @@ abstract class Manager
     {
         //Log to error log
         //display error page
-        $errPage=new ControllerError('500',$message);
+        $errPage = new ControllerError('500', $message);
         $errPage->render();
         die();
     }
-    
-} 
+}

@@ -9,8 +9,9 @@ class CSRFCheck
 {
     private Session $session;
 
-    public function __construct(Session $session){
-        $this->session=$session;
+    public function __construct(Session $session)
+    {
+        $this->session = $session;
     }
 
     /**
@@ -56,6 +57,12 @@ class CSRFCheck
         return hash_equals($this->hashToken($varPart, $secret), $token);
     }
 
+    /**
+     * GetSecret
+     * load secret key form config file
+     *
+     * @return string
+     */
     private function getSecret(): string
     {
         try {
@@ -69,6 +76,13 @@ class CSRFCheck
         }
     }
 
+    /**
+     * hash token
+     *
+     * @param string $varPart : variable part of token
+     * @param string $secret : key
+     * @return string
+     */
     private function hashToken(string $varPart, string $secret): string
     {
         return hash_hmac('sha256', $varPart, $secret);

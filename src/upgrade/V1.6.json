@@ -1,0 +1,22 @@
+{
+    "version": "1.6",
+    "description": "Creation table rate model afin de noter un modèle",
+    "code":[ 
+        {
+            "description": "Creation table rate model",
+            "SQL":"CREATE TABLE `modelskits`.`model_rate` (`user_id` INT NOT NULL , `model_id` INT NOT NULL , `rate_model` SMALLINT NOT NULL , PRIMARY KEY (`user_id`, `model_id`)) ENGINE = InnoDB;"
+        },
+        {
+            "description": "Ajout des contraintes sur user",
+            "SQL": "ALTER TABLE `model_rate` ADD CONSTRAINT `c_user_rate` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;"
+        },
+        {
+            "description": "Ajout des contraintes sur model",
+            "SQL": "ALTER TABLE `model_rate` ADD CONSTRAINT `c_model_rate` FOREIGN KEY (`model_id`) REFERENCES `model`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;"
+        },
+        {
+            "description":"Mise à jour de la version.",
+            "SQL":"UPDATE system_mkd SET `value`='1.6' WHERE name='version';"
+        }
+    ]
+}

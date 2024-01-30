@@ -14,6 +14,8 @@ class Provider extends Entity
     private string $name;
     private int $owner;
     private string $url = '';
+    private array $orders=[];
+    
     private ProviderManager $manager;
 
     public function __construct()
@@ -119,5 +121,29 @@ class Provider extends Entity
     public function getURL(): string
     {
         return $this->url;
+    }
+
+    /**
+     * Get the value of orders
+     */ 
+    public function getOrders(): array
+    {
+        if(empty($this->orders)){
+            $orders=$this->manager->getOrders($this->id);
+            $this->orders=$orders;
+        }
+        return $this->orders;
+    }
+
+    /**
+     * Set the value of orders
+     *
+     * @return  self
+     */ 
+    public function setOrders(array $orders):self
+    {
+        $this->orders = $orders;
+
+        return $this;
     }
 }

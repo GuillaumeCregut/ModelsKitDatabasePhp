@@ -67,6 +67,25 @@ class ProviderManager extends SingleManager
         return $this->execSQL($query, $values);
     }
 
+    public function getOrders(int $providerId): array
+    {
+        $query="SELECT owner, reference,  DATE_FORMAT(dateOrder,\"%d/%m/%Y\") as dateOfOrder FROM orders WHERE provider=:provider";
+        $values =  [
+            ':provider'=>$providerId
+        ];
+        try {
+            $result= $this->db->prepare($query, null, $values);
+            return $result;
+        } catch (DbException $e) {
+            $message = 'SQL : ' . $query . 'a poser problème';
+            $emitter = Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR, $message);
+            return [];
+        }
+        
+       
+    }
+
     /**
      * Exec the query
      *
@@ -91,4 +110,6 @@ class ProviderManager extends SingleManager
             $this->loadErrorPage($e->getdbMessage());
         }
     }
+
+   
 }

@@ -33,6 +33,19 @@ h2{
     z-index: 2;
 }
 
+.sort-by {
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    margin-right: 10px;
+}
+
+.sorted {
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+}
+
+
 .name-details{
     cursor: zoom-in;
     color : black;

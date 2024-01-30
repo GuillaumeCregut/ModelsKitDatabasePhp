@@ -36,9 +36,9 @@ class ModelManager extends Manager implements ManagerInterface
         FROM model_full ORDER BY id DESC";
         try {
             $result = $this->db->query($query, null);
-            $arrayModels=[];
-            foreach($result as $model) {
-                $newModel=new Model();
+            $arrayModels = [];
+            foreach ($result as $model) {
+                $newModel = new Model();
                 $newModel->setId($model->id);
                 $newModel->setName($model->name);
                 $newModel->setBuilderName($model->buildername);
@@ -46,12 +46,12 @@ class ModelManager extends Manager implements ManagerInterface
                 $newModel->setBrandId($model->brand);
                 $newModel->setBrandName($model->brandname);
                 $newModel->setRef($model->reference);
-                if(is_null($model->scalemates)) {
-                    $model->scalemates='';
+                if (is_null($model->scalemates)) {
+                    $model->scalemates = '';
                 }
                 $newModel->setScalemates($model->scalemates);
-                if(is_null($model->picture)) {
-                    $model->picture='';
+                if (is_null($model->picture)) {
+                    $model->picture = '';
                 }
                 $newModel->setImage($model->picture);
                 $newModel->setCategoryId($model->category);
@@ -63,7 +63,7 @@ class ModelManager extends Manager implements ManagerInterface
                 $newModel->setCountryName($model->countryname);
 
 
-                $arrayModels[]=$newModel;
+                $arrayModels[] = $newModel;
             }
             // return $result;
             return $arrayModels;
@@ -320,10 +320,12 @@ class ModelManager extends Manager implements ManagerInterface
     /**
      * Get all user's finished models with messages
      * @param int $user : user id
+     * @param array|null $params filter params
      * 
      * @return array
      */
-    public function getFinishedModels(int $user): array
+
+    public function getFinishedModels(int $user, ?array $params = []): array
     {
         //Get array of messages by kit
         $messageError = false;
@@ -337,6 +339,10 @@ class ModelManager extends Manager implements ManagerInterface
             $messageError = true;
         }
         $query = "SELECT * FROM mymodels WHERE owner=:owner AND state=:state";
+        if (!empty($params)) {
+            
+            $query .= ' ORDER BY '.$params[0] .' '.$params[1];
+        }
         $value[':state'] = App::STATE_FINISHED;
         try {
             $models = $this->db->prepare($query, null, $value);
@@ -480,29 +486,29 @@ class ModelManager extends Manager implements ManagerInterface
     {
         try {
             $model = $this->db->prepare($query, null, $vars, $single);
-                $newModel=new Model();
-                $newModel->setId($model->id);
-                $newModel->setName($model->name);
-                $newModel->setBuilderName($model->buildername);
-                $newModel->setBuilderId($model->builder);
-                $newModel->setBrandId($model->brand);
-                $newModel->setBrandName($model->brandname);
-                $newModel->setRef($model->reference);
-                if(is_null($model->scalemates)) {
-                    $model->scalemates='';
-                }
-                $newModel->setScalemates($model->scalemates);
-                if(is_null($model->picture)) {
-                    $model->picture='';
-                }
-                $newModel->setImage($model->picture);
-                $newModel->setCategoryId($model->category);
-                $newModel->setCategoryName($model->categoryname);
-                $newModel->setPeriodId($model->period);
-                $newModel->setPeriodName($model->periodname);
-                $newModel->setScaleId($model->scale);
-                $newModel->setScaleName($model->scalename);
-                $newModel->setCountryName($model->countryname);
+            $newModel = new Model();
+            $newModel->setId($model->id);
+            $newModel->setName($model->name);
+            $newModel->setBuilderName($model->buildername);
+            $newModel->setBuilderId($model->builder);
+            $newModel->setBrandId($model->brand);
+            $newModel->setBrandName($model->brandname);
+            $newModel->setRef($model->reference);
+            if (is_null($model->scalemates)) {
+                $model->scalemates = '';
+            }
+            $newModel->setScalemates($model->scalemates);
+            if (is_null($model->picture)) {
+                $model->picture = '';
+            }
+            $newModel->setImage($model->picture);
+            $newModel->setCategoryId($model->category);
+            $newModel->setCategoryName($model->categoryname);
+            $newModel->setPeriodId($model->period);
+            $newModel->setPeriodName($model->periodname);
+            $newModel->setScaleId($model->scale);
+            $newModel->setScaleName($model->scalename);
+            $newModel->setCountryName($model->countryname);
             return $newModel;
         } catch (DbException $e) {
             $message = 'SQL : ' . $query . 'a poser problème';

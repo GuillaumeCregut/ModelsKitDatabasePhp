@@ -367,10 +367,10 @@ class User extends Entity
      * return users orders list
      * @return array
      */
-    public function getOrders(): array
+    public function getOrders(?array $filters=[]): array
     {
         try {
-            $this->orders = $this->manager->getOrders($this);
+            $this->orders = $this->manager->getOrders($this,$filters);
         } catch (Exception $e) {
             $this->orders = [];
         }

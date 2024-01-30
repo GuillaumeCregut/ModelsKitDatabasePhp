@@ -10,7 +10,7 @@ use Editiel98\DbException;
 use Editiel98\Entity\User;
 use Exception;
 
-class UserManager extends Manager 
+class UserManager extends Manager
 {
     public function __construct(Database $db)
     {
@@ -404,11 +404,26 @@ class UserManager extends Manager
      * 
      * @return array
      */
-    public function getOrders(User $entity): array
+    public function getOrders(User $entity, array $filters): array
     {
         $query = "SELECT o.provider, o.owner,o.reference,DATE_FORMAT(o.dateOrder,\"%d/%m/%Y\") as dateOrder, p.name 
         FROM orders o INNER JOIN provider p ON o.provider=p.id 
-        WHERE o.owner=:id ORDER BY o.dateOrder DESC";
+        WHERE o.owner=:id ";
+        if (!empty($filters)) {
+            switch ($filters[0]) {
+                case 'reference':
+                    $name = 'o.reference';
+                    break;
+                case 'supplier':
+                    $name = 'p.name';
+                    break;
+                case 'date':
+                    $name='o.dateOrder';
+            }
+            $query.="ORDER BY ".$name." ". $filters[1];
+        } else {
+            $query.="ORDER BY o.dateOrder DESC";
+        }
         $values = [':id' => $entity->getId()];
         try {
             return $this->db->prepare($query, null, $values);
@@ -553,7 +568,7 @@ class UserManager extends Manager
         }
     }
 
-   
+
     /**
      * Remove user directory
      * @param int $user

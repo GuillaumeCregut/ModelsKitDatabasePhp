@@ -15,6 +15,7 @@ class Invoice extends Controller
     private User $user;
     private array $providers;
     private CSRFCheck $csfrCheck;
+    private array $filtered=[];
 
     public  function render()
     {
@@ -35,8 +36,51 @@ class Invoice extends Controller
             $flashes = $this->flash->getFlash();
             $this->smarty->assign('flash', $flashes);
         }
-        //todo 
+        if(!empty($this->params)){
+            $this->setFilter();
+        }
         $this->displayPage();
+    }
+
+    /**
+     * set filter if needed
+     * 
+     * @return void
+     */
+    private function setFilter(): void
+    {
+        $filterName = explode('=', $this->params[0]);
+        if ($filterName[0] !== 'sort') {
+            return ;
+        }
+
+        $sorted = explode('=', $this->params[1]);
+        if ($sorted[0] !== 'by') {
+            $this->filtered=[];
+            return;
+        }
+        switch($filterName[1]) {
+            case 'reference':
+                $this->filtered[0]='reference'; 
+                break;
+            case 'supplier':
+                $this->filtered[0]='supplier'; 
+                break;
+            case 'date':
+                $this->filtered[0]='date'; 
+                break;
+            default: 
+            $this->filtered[0]='date'; 
+        }
+
+        if ($sorted[1] === 'asc'){
+            $this->filtered[1] ='asc';
+            $returnArray[] = 'asc';
+        }    
+        else{
+            $returnArray[] = 'desc';
+            $this->filtered[1] ='desc';
+        }
     }
 
     /**
@@ -86,8 +130,19 @@ class Invoice extends Controller
 
     private function displayPage()
     {
-        $orders = $this->user->getOrders();
+        $orders = $this->user->getOrders($this->filtered);
         $token = $this->csfrCheck->createToken();
+        if(!empty ($this->filtered)){
+            $this->smarty->assign('open',true);
+            $sortDisplay = $this->filtered[1];
+            $sortBy = $this->filtered[0];
+        }
+        else{
+            $sortDisplay = 'asc';
+            $sortBy = '';
+        }
+        $this->smarty->assign('sortBy',$sortBy);
+        $this->smarty->assign('orderBy',$sortDisplay);
         $this->smarty->assign('token', $token);
         $this->smarty->assign('providers', $this->providers);
         $this->smarty->assign('orders', $orders);

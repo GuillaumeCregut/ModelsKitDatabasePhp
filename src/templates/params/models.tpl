@@ -325,7 +325,7 @@
                         <circle cx="3.5" cy="6" r="1.5"></circle>
                         <circle cx="3.5" cy="12" r="1.5"></circle>
                     </svg>
-                    Ajouter
+                    Enregistrer
                 </button>
             </div>
         </form>

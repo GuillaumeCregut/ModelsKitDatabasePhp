@@ -128,8 +128,18 @@ class Provider extends Controller
         $user = $userManager->findById($userId);
         $this->user = $user;
         $providers = $this->user->getProviders();
-        $this->providers = $providers;
+        $this->providers = $this->getOrders($providers);
         $this->stringToLink();
+    }
+
+    private function getOrders(array $providers): array
+    {
+        $providersFull=[];
+        foreach($providers as $provider){
+            $provider->getOrders();
+            $providersFull[]=$provider;
+        }
+        return $providersFull;
     }
 
     /**

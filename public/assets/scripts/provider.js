@@ -61,3 +61,56 @@ formupdate.addEventListener('submit',(e)=>{
     }
 
 })
+/* Order details Btn */
+let mypopup=null;
+const detailItemBtns=document.querySelectorAll('.order-item');
+
+const openDetailPopup=(ref,key)=>{
+    if(mypopup==null || mypopup.closed){
+        mypopup=window.open(
+           `./profil_popup?ref=${ref}&key=${key}`,
+            'test',
+            `popup,
+            top=50px,
+            left=100px,
+            width=640px,
+            height=480px,
+            toolbar=no,
+            status=no,
+            menubar=no,
+            scrollbars=yes`
+        )
+    }else{
+        mypopup.focus();
+    }
+}
+
+
+
+detailItemBtns.forEach((btn)=>{
+    const ref=btn.dataset.id;
+    const key=btn.dataset.key;
+    btn.addEventListener('click',()=>{
+        openDetailPopup(ref,key);
+    })
+});
+
+//Details buttons
+const detailsBtn=document.querySelectorAll('.details-btn');
+
+const toggleDetails=(id)=>{
+    const allDetailsDiv=document.querySelectorAll(".hidden-details");
+    allDetailsDiv.forEach((div)=>{
+        if(div.dataset.id!=id)
+            div.classList.remove('displayDetails');
+    });
+    const divDetails=document.querySelector(`[data-id="${id}"]`);
+    divDetails.classList.toggle('displayDetails');
+}
+
+detailsBtn.forEach((btn)=>{
+    const id=btn.dataset.supplier;
+    btn.addEventListener('click',()=>{
+        toggleDetails(id);
+    })
+})

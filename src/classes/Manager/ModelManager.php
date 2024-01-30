@@ -121,8 +121,30 @@ class ModelManager extends Manager implements ManagerInterface
             }
         }
         $query = $startQuery . $searchString;
-        $result = $this->db->prepare($query, $this->className, $values);
-        return $result;
+        $result=$this->db->prepare($query, null, $values);
+        $models=[];
+        foreach ($result as $model){
+            $newModel=new Model();
+            $newModel->setId($model->id);
+            $newModel->setName($model->name);
+            $newModel->setBuilderId($model->builder);
+            $newModel->setCategoryId($model->category);
+            $newModel->setBrandId($model->brand);
+            $newModel->setPeriodId($model->period);
+            $newModel->setScaleId($model->scale);
+            $newModel->setRef($model->reference);
+            $newModel->setImage($model->picture);
+            $newModel->setScalemates($model->scalemates);
+            $newModel->setBuilderName($model->buildername);
+            $newModel->setCountryId($model->countryid);
+            $newModel->setCategoryName($model->categoryname);
+            $newModel->setBrandName($model->brandname);
+            $newModel->setPeriodName($model->periodname);
+            $newModel->setScaleName($model->scalename);
+            $newModel->setCountryName($model->countryname);
+            $models[]=$newModel;
+        }
+        return $models;
     }
 
     /**

@@ -20,14 +20,14 @@ class Model extends Entity
     private string $reference;
     private string $scalename;
     private string $brandname;
-    private bool $liked = false;
     private string | null $picture;
-
+    private bool $liked = false;
     private int $builder;
     private int $category;
     private int $period;
     private int $scale;
     private int $brand;
+    private int $countryId;
 
     private ModelManager $manager;
 
@@ -132,6 +132,7 @@ class Model extends Entity
         $this->countryname=$name;
         return $this;
     }
+
 
     /**
      * @return string
@@ -387,6 +388,26 @@ class Model extends Entity
     public function setPeriodId(int $id): self
     {
         $this->period = $id;
+        return $this;
+    }
+
+    /**
+     * Get the value of countryId
+     */ 
+    public function getCountryId()
+    {
+        return $this->countryId;
+    }
+
+    /**
+     * Set the value of countryId
+     *
+     * @return  self
+     */ 
+    public function setCountryId($countryId)
+    {
+        $this->countryId = $countryId;
+
         return $this;
     }
 }

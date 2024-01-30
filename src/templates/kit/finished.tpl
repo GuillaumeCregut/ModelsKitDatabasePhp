@@ -13,9 +13,6 @@
         <div class="tableContainer">
             {if isset($dataList)} 
             <table class="list-table">
-                {* temp to avoid bug*}
-                {$sortBy='pictures'}
-                {$orderBy="desc"}
                 <thead>
                     <tr>
                         <th class="table-cell head-table">Nom
@@ -27,6 +24,48 @@
                             <svg width="30" height="30" viewBox="0 0 264.58332 264.58334" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
                             class="sort-by {if $sortBy=='modelName' && $orderBy=='desc'}sorted{/if}"
+                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                            xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+                            <defs />
+                            <rect
+                                style="fill:#f7f7f7;fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+                                 width="264.58334" height="264.58334" x="-1.350586e-05"
+                                y="-1.4210855e-14" />
+                            <g  transform="translate(50.262283,10.171626)">
+                                <path
+                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                                    d="M 65.517103,79.786786 H 144.89211" id="path7857" />
+                                <path
+                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                                    d="M 65.517103,107.56579 H 131.66294" id="path7859" />
+                                <path
+                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                                    d="M 65.517103,135.34479 H 118.43377" id="path7861" />
+                                <path
+                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.93747;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                                    d="M 65.517103,163.12379 H 105.2046" id="path7863" />
+                            </g>
+                            <g  transform="translate(-87.32106,9.411583)"
+                                style="stroke:#0573e1;stroke-opacity:1">
+                                <path
+                                    style="fill:none;stroke:#0573e1;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+                                    d="M 171.36926,80.546827 V 159.92184" id="path7867" />
+                                <path 
+                                    style="fill:none;fill-opacity:1;stroke:#0573e1;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+                                    d="m 185.98853,150.59424 -14.61927,14.61927 -14.61927,-14.61927" />
+                            </g>
+                        </svg>
+                        </a>
+                        </th>
+                        <th class="table-cell head-table">Constructeur
+                            {if $sortBy=='builderName' }
+                        <a href="?sort=builder&by={if $orderBy=='asc'}desc{else}asc{/if}">
+                        {else}
+                        <a href="?sort=builder&by=asc">
+                        {/if}
+                            <svg width="30" height="30" viewBox="0 0 264.58332 264.58334" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+                            class="sort-by {if $sortBy=='builderName' && $orderBy=='desc'}sorted{/if}"
                             xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                             xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
                             <defs />
@@ -187,53 +226,14 @@
                             </a>
                         </th>
                         <th class="table-cell head-table">Messages
-                            {if $sortBy=='messages' }
-                        <a href="?sort=messages&by={if $orderBy=='asc'}desc{else}asc{/if}">
-                        {else}
-                        <a href="?sort=messages&by=asc">
-                        {/if}
-                            <svg width="30" height="30" viewBox="0 0 264.58332 264.58334" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
-                            class="sort-by {if $sortBy=='messages' && $orderBy=='desc'}sorted{/if}"
-                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                            xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
-                            <defs />
-                            <rect
-                                style="fill:#f7f7f7;fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-                                 width="264.58334" height="264.58334" x="-1.350586e-05"
-                                y="-1.4210855e-14" />
-                            <g  transform="translate(50.262283,10.171626)">
-                                <path
-                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-                                    d="M 65.517103,79.786786 H 144.89211" id="path7857" />
-                                <path
-                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-                                    d="M 65.517103,107.56579 H 131.66294" id="path7859" />
-                                <path
-                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-                                    d="M 65.517103,135.34479 H 118.43377" id="path7861" />
-                                <path
-                                    style="fill:none;stroke:#4d4d4d;stroke-width:7.93747;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-                                    d="M 65.517103,163.12379 H 105.2046" id="path7863" />
-                            </g>
-                            <g  transform="translate(-87.32106,9.411583)"
-                                style="stroke:#0573e1;stroke-opacity:1">
-                                <path
-                                    style="fill:none;stroke:#0573e1;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-                                    d="M 171.36926,80.546827 V 159.92184" id="path7867" />
-                                <path 
-                                    style="fill:none;fill-opacity:1;stroke:#0573e1;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-                                    d="m 185.98853,150.59424 -14.61927,14.61927 -14.61927,-14.61927" />
-                            </g>
-                        </svg>
-                        </a>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {foreach from=$dataList item=data}
                     <tr>
-                        <td class="table-cell"><span ><a href="kit_finishedDetails?id={$data->id}" class="name-details">{$data->modelName} - {$data->builderName}</a></td>
+                        <td class="table-cell"><span ><a href="kit_finishedDetails?id={$data->id}" class="name-details">{$data->modelName}</a></td>
+                        <td class="table-cell"> {$data->builderName}</td>
                         <td class="table-cell">{$data->brandName}</td>
                         <td class="table-cell">{$data->scaleName}</td>
                         <td class="table-cell">

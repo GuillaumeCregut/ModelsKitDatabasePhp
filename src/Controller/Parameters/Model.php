@@ -22,6 +22,7 @@ class Model extends Controller
     private array $models = [];
     private array $filters = [];
     private CSRFCheck $csfrCheck;
+    private bool $onlyLike = false;
 
     public function render()
     {
@@ -72,6 +73,7 @@ class Model extends Controller
         $countries = $countryManager->getAll();
         $token = $this->csfrCheck->createToken();
         $this->smarty->assign('token', $token);
+        $this->smarty->assign('isLiked',$this->onlyLike);
         $this->smarty->assign('nbKits', count($this->models));
         $this->smarty->assign('list', $this->models);
         $this->smarty->assign('countries', $countries);
@@ -282,6 +284,9 @@ class Model extends Controller
                 $this->filters['fRef'] = $ref;
             }
         }
+        if(isset($_POST['only-like'])){
+            $this->onlyLike=true;
+        }
         return $request;
     }
 
@@ -309,7 +314,28 @@ class Model extends Controller
                 }
             }
         }
-        $this->models = $models;
+        if($this->onlyLike){
+            $this->models = $this->getLiked($models);
+        }
+        else{
+            $this->models = $models;
+        }
+    }
+
+    /**
+     * Filter model array and get only liked models
+     * 
+     * @param array $models
+     * 
+     * @return array
+     */
+    private function getLiked(array $models): array
+    {
+        return array_filter($models,function($model){
+            if($model->getLiked()){
+                return $model;
+            }
+        });
     }
 
     /**

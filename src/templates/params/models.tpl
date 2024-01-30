@@ -96,6 +96,11 @@
                     </label>
                     <label for="ref-filter" class='model-filter-label'>par référence :
                         <input type="text" name="filter-ref" id="ref-filter" class="filter-name-input" {if isset($fRef)}value="{$fRef}" {/if}>
+                    </label>      
+                </div>
+                <div class='filter-element-container'>
+                    <label for="only-like">Seulement les kits que j'ai likés
+                        <input type="checkbox" name="only-like" id="only-like" {if $isLiked}checked{/if}>
                     </label>
                 </div>
                 <button class='btn-filter' type="submit">

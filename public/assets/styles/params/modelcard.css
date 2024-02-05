@@ -151,11 +151,17 @@
     height: 30px;
   }
 
+
   /*Sar rating */
+.user-rate-container {
+    display: flex;
+    font-size: 0.7rem;
+}
+
   .rating-stars {
 	display: block;
-	width: 80%;
-	padding: 1.5vmin 1vmin 1.5vmin 1vmin;
+	width: 70%;
+	padding: 0.5vmin 1vmin 0.5vmin 1vmin;
 	background: linear-gradient(60deg, #ffffff90 50vmin, #fff0 40vmin 100%);
 	border-radius: 5vmin;
 	position: relative;
@@ -165,8 +171,8 @@
 .radio-rating { display: none; }
 
 .label-rating {
-	width: 3vmin;
-	height: 3vmin;
+	width: 2.5vmin;
+	height: 2.5vmin;
 	background: #000b;
 	display: inline-flex;
 	cursor: pointer;

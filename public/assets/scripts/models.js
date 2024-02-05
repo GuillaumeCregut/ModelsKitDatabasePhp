@@ -116,3 +116,13 @@ const launchFlash=(typeFlash,message)=>{
     flashContainer.appendChild(toast);
     toast.timeouId=setTimeout(()=>removeToast(toast),toastDetails.timer);
 }
+
+//starRating
+const starBtns=document.querySelectorAll('.rating-stars');
+console.log(starBtns);
+starBtns.forEach((btn)=>{
+    btn.addEventListener('click',(e)=>{
+        e.stopPropagation();
+     console.log('toto')
+    })
+ })

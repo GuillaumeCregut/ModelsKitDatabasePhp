@@ -121,10 +121,10 @@ class ModelManager extends Manager implements ManagerInterface
             }
         }
         $query = $startQuery . $searchString;
-        $result=$this->db->prepare($query, null, $values);
-        $models=[];
-        foreach ($result as $model){
-            $newModel=new Model();
+        $result = $this->db->prepare($query, null, $values);
+        $models = [];
+        foreach ($result as $model) {
+            $newModel = new Model();
             $newModel->setId($model->id);
             $newModel->setName($model->name);
             $newModel->setBuilderId($model->builder);
@@ -142,7 +142,7 @@ class ModelManager extends Manager implements ManagerInterface
             $newModel->setPeriodName($model->periodname);
             $newModel->setScaleName($model->scalename);
             $newModel->setCountryName($model->countryname);
-            $models[]=$newModel;
+            $models[] = $newModel;
         }
         return $models;
     }
@@ -362,8 +362,8 @@ class ModelManager extends Manager implements ManagerInterface
         }
         $query = "SELECT * FROM mymodels WHERE owner=:owner AND state=:state";
         if (!empty($params)) {
-            
-            $query .= ' ORDER BY '.$params[0] .' '.$params[1];
+
+            $query .= ' ORDER BY ' . $params[0] . ' ' . $params[1];
         }
         $value[':state'] = App::STATE_FINISHED;
         try {
@@ -468,6 +468,43 @@ class ModelManager extends Manager implements ManagerInterface
             return $this->db->exec($query, [':id' => $idKit]);
         } catch (DbException $e) {
             throw new Exception('Error in remove');
+        }
+    }
+
+    /**
+     * Add or update rate of model per user
+     * @param int $model
+     * @param int $user
+     * @param int $rate 
+     * 
+     * @return int : average note for the model
+     */
+    public function addRate(int $model, int $user, int $rate): int
+    {
+        //Vérifier si le vote existe déjà
+        $query = "SELECT count(*) as nb FROM model_rate WHERE user_id=:user and model_id=:model";
+        $values = [
+            ':user' => $user,
+            ':model' => $model
+        ];
+        try {
+            $response = $this->db->prepare($query, null, $values);
+            if ($response[0]->nb === 0) {
+                $query = 'INSERT INTO model_rate (user_id, model_id, rate_model) VALUES (:user, :model, :rate)';
+            } else {
+                $query = 'UPDATE model_rate SET rate_model=:rate WHERE user_id=:user and model_id=:model';
+            }
+            $setValues = [
+                ':user' => $user,
+                ':model' => $model,
+                ':rate' => $rate
+            ];
+            $this->db->exec($query, $setValues);
+            $query = 'SELECT AVG(rate_model) as average FROM model_rate WHERE model_id=:model';
+            $result = $this->db->prepare($query, null, [':model' => $model]);
+            return intval(round(floatval($result[0]->average)));
+        } catch (DbException $e) {
+            return -1;
         }
     }
 

@@ -11,7 +11,7 @@ class Api extends Controller
          * Select controller for api from URL
          * @return void
          */
-        public function render():void
+        public function render(): void
         {
                 if (empty($this->subPages)) {
                         $this->smarty->assign('admin', 'params');
@@ -38,6 +38,9 @@ class Api extends Controller
                                         break;
                                 case 'friend':
                                         $className = 'Profil\\Friend';
+                                        break;
+                                case 'addRate':
+                                        $className = 'Params\\AddRate';
                                         break;
                                 default:
                                         header("HTTP/1.1 404 Not Found");

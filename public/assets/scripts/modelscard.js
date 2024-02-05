@@ -144,3 +144,48 @@ updateButtons.forEach((updateBtn)=>{
     });
 });
 
+//starRating
+
+const addRate=(id,newRate)=>{
+   // console.log(id,newRate);
+    const myInit = {
+        method: "PUT",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify({idModel:id,token:token, newRate})
+      };
+      fetch('api_addRate',myInit)
+      .then((response)=>{
+          if(response.ok){
+              return response.json()
+          }
+          else{
+              //Une erreur réseau c'esdt produite (voir pour l'afficher)
+              return response;
+          }
+      })
+      .then((json)=>{
+        if(json.result){
+            console.log('coucou')
+             //En réponse, nouvelle note de moyenne. Changer l'affichage
+            const response=3;
+            const name=`rs-${id}-${response}`;
+            document.getElementById(name).checked=true;
+        }
+      });
+   
+}
+
+document.querySelectorAll('.rating-stars').forEach((btn)=>{
+    btn.addEventListener('click',(e)=>{
+        e.stopPropagation();
+    })
+ })
+
+ document.querySelectorAll('.radio-rating').forEach((radioStarBtn)=>{
+    radioStarBtn.addEventListener('click',()=>{
+        addRate(radioStarBtn.dataset.id,radioStarBtn.dataset.value)
+    })
+ })

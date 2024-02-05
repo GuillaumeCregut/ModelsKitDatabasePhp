@@ -175,6 +175,10 @@
 	clip-path: polygon(50% 0%, 66% 32%, 100% 38%, 78% 64%, 83% 100%, 50% 83%, 17% 100%, 22% 64%, 0 38%, 34% 32%);
 }
 
+.star-hidden {
+    display: none;
+}
+
 .label-rating:before {
 	width: 90%;
 	height: 90%;

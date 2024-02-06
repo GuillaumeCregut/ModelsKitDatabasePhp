@@ -526,6 +526,16 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    public function getUserRate(int $user): array
+    {
+        $query="SELECT model_id, rate_model FROM model_rate WHERE user_id=:user";
+        try{
+            return $this->db->prepare($query, null, [':user' => $user]);
+        } catch(DbException $e) {
+            return [];
+        }
+    }
+
     /**
      * Exec the query
      *

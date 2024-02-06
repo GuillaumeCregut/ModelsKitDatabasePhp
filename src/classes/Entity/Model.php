@@ -29,6 +29,7 @@ class Model extends Entity
     private int $brand;
     private int $countryId;
     private int $globalRate=0;
+    private int $userRate=0;
 
     private ModelManager $manager;
 
@@ -428,6 +429,25 @@ class Model extends Entity
     public function setGlobalRate(int $rate): self
     {
         $this->globalRate=$rate;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserRate(): int
+    {
+        return $this->userRate;
+    }
+
+    /**
+     * @param int $rate
+     * 
+     * @return self
+     */
+    public function setUserRate(int $rate): self
+    {
+        $this->userRate=$rate;
         return $this;
     }
 }

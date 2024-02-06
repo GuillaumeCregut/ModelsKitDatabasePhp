@@ -183,7 +183,7 @@ class Info extends Controller
         $userManager = new UserManager($this->dbConnection);
         $user = $userManager->findById($userId);
         if(!$user){
-            $this->loadErrorPage(500,'Une erreur est survenue');
+            $this->loadErrorPage('500','Une erreur est survenue');
         }
         $this->user = $user;
     }

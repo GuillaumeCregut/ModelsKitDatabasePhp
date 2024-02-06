@@ -307,10 +307,16 @@ class Model extends Controller
         }
         if ($this->user) {
             $favorite = $this->user->getFavorite();
+            $rates = $modelManager->getUserRate($this->user->getId());
             foreach ($models as $model) {
                 $id = $model->getId();
                 if (in_array($id, $favorite)) {
                     $model->setLiked(true);
+                }
+                foreach($rates as $rate) {
+                    if($rate->model_id===$id) {
+                        $model->setUserRate($rate->rate_model);
+                    }
                 }
             }
         }

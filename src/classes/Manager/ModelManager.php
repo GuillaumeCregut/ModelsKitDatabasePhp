@@ -526,6 +526,11 @@ class ModelManager extends Manager implements ManagerInterface
         }
     }
 
+    /**
+     * @param int $user
+     * 
+     * @return array user's rates for models 
+     */
     public function getUserRate(int $user): array
     {
         $query="SELECT model_id, rate_model FROM model_rate WHERE user_id=:user";

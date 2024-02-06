@@ -28,6 +28,7 @@ class Model extends Entity
     private int $scale;
     private int $brand;
     private int $countryId;
+    private int $globalRate=0;
 
     private ModelManager $manager;
 
@@ -408,6 +409,25 @@ class Model extends Entity
     {
         $this->countryId = $countryId;
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGlobalRate(): int
+    {
+        return $this->globalRate;
+    }
+
+    /**
+     * @param int $rate
+     * 
+     * @return self
+     */
+    public function setGlobalRate(int $rate): self
+    {
+        $this->globalRate=$rate;
         return $this;
     }
 }

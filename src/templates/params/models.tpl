@@ -144,7 +144,7 @@
                                 {if {$model->getScalemates()}!='' or $model->getScalemates()!=null }
                                     <a href="{$model->getScalemates()}" target="_blank">scalemates</a>
                                 {/if}
-                                {include file='params/_starRating.tpl' id=$model->getId() rating=0 globalrate=0}
+                                {include file='params/_starRating.tpl' id=$model->getId() rating=0 globalrate=$model->getGlobalRate()}
                             </div>
                         </div>
                     </div>

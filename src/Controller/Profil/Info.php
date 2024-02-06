@@ -7,6 +7,7 @@ use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
 use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
+use App\Controller\Error;
 
 class Info extends Controller
 {
@@ -29,6 +30,16 @@ class Info extends Controller
         $this->getUser();
         $this->displayPage($template);
     }
+
+    private  function loadErrorPage(string $message)
+    {
+        //Log to error log
+        //display error page
+        $errPage = new Error('500', $message);
+        $errPage->render();
+        die();
+    }
+
 
     private function usePost(): string
     {
@@ -171,6 +182,9 @@ class Info extends Controller
         $userId = $this->session->getKey(Session::SESSION_USER_ID);
         $userManager = new UserManager($this->dbConnection);
         $user = $userManager->findById($userId);
+        if(!$user){
+            $this->loadErrorPage(500,'Une erreur est survenue');
+        }
         $this->user = $user;
     }
 

@@ -47,9 +47,9 @@ class UserManager extends Manager
                 $user->setAvatar($avatar);
                 $user->setRankUser($result->rankUser);
                 return $user;
-            } else return null;
+            } else return false;
         } catch (DbException $e) {
-            throw new Exception($e->getdbMessage());
+            return false;
         }
     }
 

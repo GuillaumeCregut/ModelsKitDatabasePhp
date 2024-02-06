@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="assets/styles/params/model.css">
 <link rel="stylesheet" href="assets/styles/params/modelfilter.css">
 <link rel="stylesheet" href="assets/styles/params/modelcard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {/block}
+
 {block name=script}
 {if isset($connected) && isset(isAdmin)}
 <script src="assets/scripts/models.js" defer></script>
@@ -116,7 +118,7 @@
                 </button>
             </form>
         </section>
-        {if isset($filtered)}Filtrage actif{/if}
+        {if isset($filtered) }Filtrage actif{/if}
         <div class="model-container">
             {if isset($connected) && isset(isAdmin)}
             <form action="parametres_models" method="post" id="form-delete-model">
@@ -142,6 +144,7 @@
                                 {if {$model->getScalemates()}!='' or $model->getScalemates()!=null }
                                     <a href="{$model->getScalemates()}" target="_blank">scalemates</a>
                                 {/if}
+                                {include file='params/_starRating.tpl' id=$model->getId() rating=$model->getUserRate() globalrate=$model->getGlobalRate()}
                             </div>
                         </div>
                     </div>

@@ -32,8 +32,8 @@ class ModelManager extends Manager implements ManagerInterface
     public function getAll(): array
     {
         $query = "SELECT id,name, builder, category, brand, period, scale, reference, picture, scalemates,
-        buildername, countryid, categoryname, brandname, periodname, scalename, countryname  
-        FROM model_full ORDER BY id DESC";
+        buildername, countryid, categoryname, brandname, periodname, scalename, countryname,v_average.average  
+        FROM model_full  LEFT JOIN v_average ON v_average.model_id=id  ORDER BY id DESC";
         try {
             $result = $this->db->query($query, null);
             $arrayModels = [];
@@ -54,6 +54,13 @@ class ModelManager extends Manager implements ManagerInterface
                     $model->picture = '';
                 }
                 $newModel->setImage($model->picture);
+                if (is_null($model->average)) {
+                    $model->average = 0;
+                } else {
+                    $temp = intval(round(floatval($model->average)));
+                    $model->average = $temp;
+                }
+                $newModel->setGlobalRate($model->average);
                 $newModel->setCategoryId($model->category);
                 $newModel->setCategoryName($model->categoryname);
                 $newModel->setPeriodId($model->period);
@@ -61,8 +68,6 @@ class ModelManager extends Manager implements ManagerInterface
                 $newModel->setScaleId($model->scale);
                 $newModel->setScaleName($model->scalename);
                 $newModel->setCountryName($model->countryname);
-
-
                 $arrayModels[] = $newModel;
             }
             // return $result;
@@ -83,8 +88,8 @@ class ModelManager extends Manager implements ManagerInterface
         $values = [];
         $searchString = '';
         $startQuery = "SELECT id,name, builder, category, brand, period, scale, reference, picture, scalemates,
-        buildername, countryid, categoryname, brandname, periodname, scalename, countryname  
-        FROM model_full";
+        buildername, countryid, categoryname, brandname, periodname, scalename, countryname,  v_average.average
+        FROM model_full LEFT JOIN v_average ON v_average.model_id=id";
         if (count($filter) > 0) {
             $count = 0;
             foreach ($filter as $k => $v) {
@@ -121,10 +126,10 @@ class ModelManager extends Manager implements ManagerInterface
             }
         }
         $query = $startQuery . $searchString;
-        $result=$this->db->prepare($query, null, $values);
-        $models=[];
-        foreach ($result as $model){
-            $newModel=new Model();
+        $result = $this->db->prepare($query, null, $values);
+        $models = [];
+        foreach ($result as $model) {
+            $newModel = new Model();
             $newModel->setId($model->id);
             $newModel->setName($model->name);
             $newModel->setBuilderId($model->builder);
@@ -133,8 +138,14 @@ class ModelManager extends Manager implements ManagerInterface
             $newModel->setPeriodId($model->period);
             $newModel->setScaleId($model->scale);
             $newModel->setRef($model->reference);
-            $newModel->setImage($model->picture);
+            if (is_null($model->scalemates)) {
+                $model->scalemates = '';
+            }
             $newModel->setScalemates($model->scalemates);
+            if (is_null($model->picture)) {
+                $model->picture = '';
+            }
+            $newModel->setImage($model->picture);
             $newModel->setBuilderName($model->buildername);
             $newModel->setCountryId($model->countryid);
             $newModel->setCategoryName($model->categoryname);
@@ -142,7 +153,14 @@ class ModelManager extends Manager implements ManagerInterface
             $newModel->setPeriodName($model->periodname);
             $newModel->setScaleName($model->scalename);
             $newModel->setCountryName($model->countryname);
-            $models[]=$newModel;
+            $newModel->setImage($model->picture);
+            if (is_null($model->average)) {
+                $model->average = 0;
+            } else {
+                $temp = intval(round(floatval($model->average)));
+                $model->average = $temp;
+            }
+            $models[] = $newModel;
         }
         return $models;
     }
@@ -362,8 +380,8 @@ class ModelManager extends Manager implements ManagerInterface
         }
         $query = "SELECT * FROM mymodels WHERE owner=:owner AND state=:state";
         if (!empty($params)) {
-            
-            $query .= ' ORDER BY '.$params[0] .' '.$params[1];
+
+            $query .= ' ORDER BY ' . $params[0] . ' ' . $params[1];
         }
         $value[':state'] = App::STATE_FINISHED;
         try {
@@ -468,6 +486,58 @@ class ModelManager extends Manager implements ManagerInterface
             return $this->db->exec($query, [':id' => $idKit]);
         } catch (DbException $e) {
             throw new Exception('Error in remove');
+        }
+    }
+
+    /**
+     * Add or update rate of model per user
+     * @param int $model
+     * @param int $user
+     * @param int $rate 
+     * 
+     * @return int : average note for the model
+     */
+    public function addRate(int $model, int $user, int $rate): int
+    {
+        //Vérifier si le vote existe déjà
+        $query = "SELECT count(*) as nb FROM model_rate WHERE user_id=:user and model_id=:model";
+        $values = [
+            ':user' => $user,
+            ':model' => $model
+        ];
+        try {
+            $response = $this->db->prepare($query, null, $values);
+            if ($response[0]->nb === 0) {
+                $query = 'INSERT INTO model_rate (user_id, model_id, rate_model) VALUES (:user, :model, :rate)';
+            } else {
+                $query = 'UPDATE model_rate SET rate_model=:rate WHERE user_id=:user and model_id=:model';
+            }
+            $setValues = [
+                ':user' => $user,
+                ':model' => $model,
+                ':rate' => $rate
+            ];
+            $this->db->exec($query, $setValues);
+            $query = 'SELECT AVG(rate_model) as average FROM model_rate WHERE model_id=:model';
+            $result = $this->db->prepare($query, null, [':model' => $model]);
+            return intval(round(floatval($result[0]->average)));
+        } catch (DbException $e) {
+            return -1;
+        }
+    }
+
+    /**
+     * @param int $user
+     * 
+     * @return array user's rates for models 
+     */
+    public function getUserRate(int $user): array
+    {
+        $query="SELECT model_id, rate_model FROM model_rate WHERE user_id=:user";
+        try{
+            return $this->db->prepare($query, null, [':user' => $user]);
+        } catch(DbException $e) {
+            return [];
         }
     }
 

@@ -45,6 +45,7 @@
 .flip-card-back {
     background-color: #2980b9;
     color: white;
+    font-size: 0.92rem;
     padding: 5px;
     backface-visibility: hidden;
     left: 0px;
@@ -150,3 +151,85 @@
     width: 30px;
     height: 30px;
   }
+
+
+  /*Sar rating */
+.user-rate-container {
+    display: flex;
+    font-size: 0.7rem;
+}
+
+  .rating-stars {
+	display: block;
+	width: 70%;
+	padding: 0.5vmin 1vmin 0.5vmin 1vmin;
+	background: linear-gradient(60deg, #ffffff90 50vmin, #fff0 40vmin 100%);
+	border-radius: 5vmin;
+	position: relative;
+    margin: 10px;
+}
+
+.radio-rating { display: none; }
+
+.label-rating {
+	width: 2.5vmin;
+	height: 2.5vmin;
+	background: #000b;
+	display: inline-flex;
+	cursor: pointer;
+	margin: 0.5vmin 0.65vmin;
+	transition: all 1s ease 0s;	
+	clip-path: polygon(50% 0%, 66% 32%, 100% 38%, 78% 64%, 83% 100%, 50% 83%, 17% 100%, 22% 64%, 0 38%, 34% 32%);
+}
+
+.star-hidden {
+    display: none;
+}
+
+.label-rating:before {
+	width: 90%;
+	height: 90%;
+	content: "";
+	background: orange;
+	z-index: -1;
+	display: block;
+	margin-left: 5%;
+	margin-top: 5%;
+	clip-path: polygon(50% 0%, 66% 32%, 100% 38%, 78% 64%, 83% 100%, 50% 83%, 17% 100%, 22% 64%, 0 38%, 34% 32%);
+	background: linear-gradient(90deg, yellow, orange 30% 50%, #184580 50%, 70%, #173a75 100%);
+	background-size: 205% 100%;
+	background-position: 0 0;
+}
+
+.label-rating:hover:before {
+	transition: all 0.25s ease 0s;		
+}
+
+.radio-rating:checked + .label-rating ~ .label-rating:before {
+	background-position: 100% 0;
+	transition: all 0.25s ease 0s;	
+}
+
+.radio-rating:checked + .label-rating ~ .label-rating:hover:before {
+	background-position: 0% 0
+}
+
+.label-rating + .radio-rating:checked ~ .rating-counter:before {
+	color: #ffab00 !important;
+	transition: all 0.25s ease 0s;
+}
+
+.label-rating:hover ~ .rating-counter:before {
+	color: #9aacc6 !important;
+	transition: all 0.5s ease 0s;	
+	animation: pulse 1s ease 0s infinite;
+}
+
+@keyframes pulse {
+	  50% { font-size: 6.25vmin; }
+}
+
+.radio-rating:checked:hover ~ .rating-counter:before {
+	animation: none !important;
+	color: #ffab00 !important ;
+}

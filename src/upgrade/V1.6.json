@@ -15,8 +15,12 @@
             "SQL": "ALTER TABLE `model_rate` ADD CONSTRAINT `c_model_rate` FOREIGN KEY (`model_id`) REFERENCES `model`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;"
         },
         {
+            "description":"Création vue average.",
+            "SQL":"CREATE VIEW `v_average` AS SELECT AVG(rate_model) as average, model_id FROM model_rate group by model_id;"
+        },
+        {
             "description":"Mise à jour de la version.",
             "SQL":"UPDATE system_mkd SET `value`='1.6' WHERE name='version';"
         }
     ]
-}
+    }

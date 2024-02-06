@@ -1,4 +1,5 @@
 <div>
+    {if isset($connected)}
     <div class="user-rate-container">
         <p>Votre note :</p>
         <div class="rating-stars">
@@ -16,6 +17,7 @@
                 name="rating-{$id}" id="rs-{$id}-5"><label class="label-rating" for="rs-{$id}-5"></label>
         </div>
     </div>
+    {/if}
     <div>
         Note globale : <span id="global-{$id}">{$globalrate}</span>/5
     </div>

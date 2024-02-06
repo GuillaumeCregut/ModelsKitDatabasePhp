@@ -118,7 +118,7 @@
                 </button>
             </form>
         </section>
-        {if isset($filtered)}Filtrage actif{/if}
+        {if isset($filtered) }Filtrage actif{/if}
         <div class="model-container">
             {if isset($connected) && isset(isAdmin)}
             <form action="parametres_models" method="post" id="form-delete-model">
@@ -144,7 +144,7 @@
                                 {if {$model->getScalemates()}!='' or $model->getScalemates()!=null }
                                     <a href="{$model->getScalemates()}" target="_blank">scalemates</a>
                                 {/if}
-                                {include file='params/_starRating.tpl' id=$model->getId() rating=0 globalrate=$model->getGlobalRate()}
+                                {include file='params/_starRating.tpl' id=$model->getId() rating=$model->getUserRate() globalrate=$model->getGlobalRate()}
                             </div>
                         </div>
                     </div>

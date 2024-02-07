@@ -18,6 +18,7 @@ class Database
     private string $host;
     private string $name;
     private string $pass;
+    private string $port;
     private $pdo;
     private static $_instance;
 
@@ -52,7 +53,7 @@ class Database
                 $options = array(
                     PDO::MYSQL_ATTR_INIT_COMMAND => "set lc_time_names = 'fr_FR'"
                 );
-                $this->pdo = new PDO('mysql:dbname=' . $this->name . ';host=' . $this->host . ';charset=UTF8', $this->user, $this->pass, $options);
+                $this->pdo = new PDO('mysql:dbname=' . $this->name . ';host=' . $this->host . '; port=' . $this->port . 'charset=UTF8', $this->user, $this->pass, $options);
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 $errCode = $e->getCode();
@@ -82,6 +83,7 @@ class Database
             $this->pass = $config->database->pass;
             $this->name = $config->database->name;
             $this->host = $config->database->host;
+            $this->port = $config->database->port;
         } catch (Exception $e) {
             $emitter = Emitter::getInstance();
             $emitter->emit(Emitter::DATABASE_ERROR, 'database : Impossible de lire les credentials');

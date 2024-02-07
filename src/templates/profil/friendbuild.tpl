@@ -53,7 +53,7 @@
                 <div class="friend-build-message-container">
                     <div className="friend-identity-message-container">
                         <div class="avatar-container">
-                            {if $message.message->avatar==null||$message->avatar==''}
+                            {if $message.message->avatar==null||$message.message->avatar==''}
                             {$message.message->firstname|truncate:1:""|upper}{$message.message->lastname|truncate:1:""|upper}
                             {else}
                             <img src="assets/uploads/users/{$message.message->userId}/{$message.message->avatar}"

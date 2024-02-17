@@ -36,6 +36,7 @@
     {if isset($allow)}
     <div class="message-zone-model">
         <form action="" method="post">
+            <input type="hidden" name="token" value="{$token}">
             <section class="new-model-message">
                 <p>Laisser un message :</p>
                 <input type="hidden" name="action" value="add">
@@ -52,7 +53,7 @@
                 <div class="friend-build-message-container">
                     <div className="friend-identity-message-container">
                         <div class="avatar-container">
-                            {if $message.message->avatar==null||$message->avatar==''}
+                            {if $message.message->avatar==null||$message.message->avatar==''}
                             {$message.message->firstname|truncate:1:""|upper}{$message.message->lastname|truncate:1:""|upper}
                             {else}
                             <img src="assets/uploads/users/{$message.message->userId}/{$message.message->avatar}"

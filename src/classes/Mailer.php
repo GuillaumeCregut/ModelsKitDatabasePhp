@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98;
 
 use Editiel98\Event\Emitter;
@@ -11,30 +12,32 @@ class Mailer
 {
     private string $adminMail;
     private SmartyMKD $smarty;
-    
+
     public function __construct()
     {
         $this->loadParams();
-        $this->smarty=new SmartyMKD();
+        $this->smarty = new SmartyMKD();
     }
+
     
-    private function loadParams()
+    /**
+     * Load config file
+     * @return void
+     */
+    private function loadParams(): void
     {
-        try{
-            $config= simplexml_load_file(__DIR__ . '/../config.xml');
-            if ($config===false){
+        try {
+            $config = simplexml_load_file(__DIR__ . '/../config.xml');
+            if ($config === false) {
                 throw new Exception('Impossible de lire les credentials');
             }
-            if($config->general->env=='debug'){
-                ini_set('SMTP','192.168.1.10');
+            if ($config->general->env == 'debug') {
+                ini_set('SMTP', '192.168.1.10');
             }
-            $this->adminMail=$config->mail->admin;
-          
-        }
-        catch (Exception $e)
-        {
-            $errCode=$e->getCode();
-            $errMessage=$e->getMessage();
+            $this->adminMail = $config->mail->admin;
+        } catch (Exception $e) {
+            $errCode = $e->getCode();
+            $errMessage = $e->getMessage();
             throw new Exception('Impossible de lire les credentials');
         }
     }
@@ -50,24 +53,23 @@ class Mailer
      * @param boolean|null $html
      * @return boolean
      */
-    private function sendMail(string $to, string $from, string $subject, string $message,?bool $html=false): bool
+    private function sendMail(string $to, string $from, string $subject, string $message, ?bool $html = false): bool
     {
-        $headers=[
-            "From"=>$from,
-            "Reply-To"=>$from,
+        $headers = [
+            "From" => $from,
+            "Reply-To" => $from,
         ];
-        if($html){
-            $headers['Content-Type']='text/html; charset=utf-8';
+        if ($html) {
+            $headers['Content-Type'] = 'text/html; charset=utf-8';
         }
-        try{
-            $mailSent= mail($to,$subject,$message,$headers);
-            if(!$mailSent){
-                $emitter=Emitter::getInstance();
-                $emitter->emit(Emitter::MAIL_ERROR,$to);
+        try {
+            $mailSent = mail($to, $subject, $message, $headers);
+            if (!$mailSent) {
+                $emitter = Emitter::getInstance();
+                $emitter->emit(Emitter::MAIL_ERROR, $to);
             }
             return $mailSent;
-        } catch(Exception $e){
-
+        } catch (Exception $e) {
         }
     }
     /**
@@ -78,10 +80,10 @@ class Mailer
      * @param string $message
      * @return boolean
      */
-    public function sendMailToAdmin(string $from,string $subject,string $message): bool
+    public function sendMailToAdmin(string $from, string $subject, string $message): bool
     {
-        $MessageMail=wordwrap($message,70,'\n');
-        return $this->sendMail($this->adminMail,$from,$subject,$MessageMail,false);
+        $MessageMail = wordwrap($message, 70, '\n');
+        return $this->sendMail($this->adminMail, $from, $subject, $MessageMail, false);
     }
 
     /**
@@ -93,14 +95,14 @@ class Mailer
      * @param string $template HTML template of the mail
      * @return boolean
      */
-    public function sendHTMLMailToAdmin(string $from,string $subject,array $values, string $template): bool
+    public function sendHTMLMailToAdmin(string $from, string $subject, array $values, string $template): bool
     {
-        $MailTemplate='mail/' . $template . '.tpl';
-        foreach($values as $k=>$v){
-            $this->smarty->assign($k,$v);
+        $MailTemplate = 'mail/' . $template . '.tpl';
+        foreach ($values as $k => $v) {
+            $this->smarty->assign($k, $v);
         }
-        $content=$this->smarty->fetch($MailTemplate);
-        return $this->sendMail($this->adminMail,$from,$subject,$content,true);
+        $content = $this->smarty->fetch($MailTemplate);
+        return $this->sendMail($this->adminMail, $from, $subject, $content, true);
     }
 
     /**
@@ -111,10 +113,10 @@ class Mailer
      * @param string $message
      * @return boolean
      */
-    public function sendMailToUser(string $to,string $subject, string $message): bool
+    public function sendMailToUser(string $to, string $subject, string $message): bool
     {
-        $MessageMail=wordwrap($message,70,'\r\n');
-        return $this->sendMail($to,$this->adminMail,$subject,$MessageMail,false);
+        $MessageMail = wordwrap($message, 70, '\r\n');
+        return $this->sendMail($to, $this->adminMail, $subject, $MessageMail, false);
     }
 
     /**
@@ -126,13 +128,13 @@ class Mailer
      * @param string $template
      * @return boolean
      */
-    public function sendHTMLMailToUser(string $to,string $subject,array $values, string $template): bool
+    public function sendHTMLMailToUser(string $to, string $subject, array $values, string $template): bool
     {
-        $MailTemplate='mail/' . $template . '.tpl';
-        foreach($values as $k=>$v){
-            $this->smarty->assign($k,$v);
+        $MailTemplate = 'mail/' . $template . '.tpl';
+        foreach ($values as $k => $v) {
+            $this->smarty->assign($k, $v);
         }
-        $content=$this->smarty->fetch($MailTemplate);
-        return $this->sendMail($to,$this->adminMail,$subject,$content,true);
+        $content = $this->smarty->fetch($MailTemplate);
+        return $this->sendMail($to, $this->adminMail, $subject, $content, true);
     }
 }

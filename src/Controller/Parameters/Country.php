@@ -6,11 +6,15 @@ use Editiel98\App;
 use Editiel98\Entity\Country as EntityCountry;
 use Editiel98\Manager\CountryManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class Country extends Controller
 {
+    private CSRFCheck $csfrCheck;
+
     public function render()
     {
+        $this->csfrCheck = new CSRFCheck($this->session);
         if (!empty($_POST)) {
             if (!$this->usePost()) {
                 $this->hasFlash = $this->flash->hasFlash();
@@ -25,18 +29,30 @@ class Country extends Controller
         $countries = $countryManager->getAll();
         if ($this->isConnected) {
             $this->smarty->assign('connected', true);
-            if (App::ADMIN === $this->userRank || App::MODERATE===$this->userRank) {
+            if (App::ADMIN === $this->userRank || App::MODERATE === $this->userRank) {
                 $this->smarty->assign('isAdmin', true);
             }
         }
+        $token = $this->csfrCheck->createToken();
+        $this->smarty->assign('token', $token);
         $this->smarty->assign('list', $countries);
         $this->smarty->assign('params', 'params');
         $this->smarty->assign('country_menu', 'params');
         $this->smarty->display('params/countries.tpl');
     }
 
+    /**
+     * @return bool
+     */
     private function usePost(): bool
     {
+        if (empty($_POST['token'])) {
+            return false;
+        }
+        $token = $_POST['token'];
+        if (!$this->csfrCheck->checkToken($token)) {
+            return false;
+        }
         if (isset($_POST['action'])) {
             switch ($_POST['action']) {
                 case "add":
@@ -76,6 +92,11 @@ class Country extends Controller
         }
     }
 
+    /**
+     * @param string $name
+     * 
+     * @return bool
+     */
     private function add(string $name): bool
     {
         if (!$this->isConnected) {
@@ -87,9 +108,14 @@ class Country extends Controller
         return !!$result;
     }
 
+    /**
+     * @param int $id
+     * 
+     * @return bool
+     */
     private function remove(int $id): bool
     {
-        if (!(App::ADMIN === $this->userRank || App::MODERATE===$this->userRank)) {
+        if (!(App::ADMIN === $this->userRank || App::MODERATE === $this->userRank)) {
             return false;
         }
         $country = new EntityCountry();
@@ -97,9 +123,15 @@ class Country extends Controller
         return $country->delete();
     }
 
+    /**
+     * @param int $id
+     * @param string $name
+     * 
+     * @return bool
+     */
     private function update(int $id, string $name): bool
     {
-        if(!(App::ADMIN===$this->userRank || App::MODERATE==$this->userRank)) {
+        if (!(App::ADMIN === $this->userRank || App::MODERATE == $this->userRank)) {
             return false;
         }
         $country = new EntityCountry();

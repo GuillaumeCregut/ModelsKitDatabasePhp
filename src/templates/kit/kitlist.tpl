@@ -253,11 +253,13 @@
         </table>
         <form action="{$actionPage}" method="post" id="form-delete">
             <input type="hidden" name="id" id="id-delete">
+            <input type="hidden" name="token" value="{$token}">
             <input type="hidden" name="action" value="delete">
             <input type="hidden" name="search" value="{$searchValue}">
         </form>
         <form action="{$actionPage}" method="post" id="form-move">
             <input type="hidden" name="action" value="move">
+            <input type="hidden" name="token" value="{$token}">
             <input type="hidden" name="id" id="id-move">
             <input type="hidden" name="newStock" value="0" id="new-stock">
         </form>

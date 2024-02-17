@@ -1,5 +1,6 @@
 const likeBtns=document.querySelectorAll('.btn-friend-state');
 const removeFriendBtns=document.querySelectorAll('.heart-container');
+const token=document.getElementById('token').value;
 
 const USER_UNKNOWN=0;
 let sentFlash=false;
@@ -43,7 +44,7 @@ const userChangeState=(id, status)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-        body:JSON.stringify({idUser:id})
+        body:JSON.stringify({idUser:id, token:token})
       };
     fetch('api_friend',myInit)
     .then((response)=>{

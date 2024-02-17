@@ -19,6 +19,7 @@
         <div class="delete-kit">
             <form action="kit_finishedDetails?id={$model->id}" method="post" id="deleteKitForm">
                 <input type="hidden" name="action" value="removeKit">
+                <input type="hidden" name="token" value="{$token}" id="token">
                 <input type="hidden" name="id" value="{$model->id}">
             </form>
             <button type="button" class="remove-kit-btn" id="delete-kit-btn">
@@ -43,6 +44,7 @@
     </div>
     <form action="kit_finishedDetails?id={$model->id}" method="post" id="delete-picture-form">
         <input type="hidden" name="action" value="deletePicture">
+        <input type="hidden" name="token" value="{$token}">
         <input type="hidden" name="id" value="{$model->id}">
         <input type="hidden" name="file" value="" id="filename-delete">
     </form>
@@ -156,6 +158,7 @@
                     <div id="msg-{$message.message->id}" class="answer-container">
                         <form action="kit_finishedDetails?id={$model->id}" method="post">
                             <input type="hidden" name="action" value="reply">
+                            <input type="hidden" name="token" value="{$token}">
                             <input type="hidden" name="messageId" value="{$message.message->id}">
                             <label for="response{$message.message->id}">Votre réponse : </label>
                             <textarea name="response" id="response{$message.message->id}" cols="30"

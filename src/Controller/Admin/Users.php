@@ -6,14 +6,17 @@ use Editiel98\App;
 use Editiel98\Flash;
 use Editiel98\Manager\UserManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class Users extends Controller
 {
     private UserManager $userManager;
+    private CSRFCheck $csrfCheck;
 
     public function render()
     {
         if (App::ADMIN === $this->userRank) {
+            $this->csrfCheck = new CSRFCheck($this->session);
             $this->userManager = new UserManager($this->dbConnection);
             if (!empty($_POST)) {
                 $this->usePost();
@@ -24,6 +27,8 @@ class Users extends Controller
                 $this->smarty->assign('flash', $flashes);
             }
             $users = $this->userManager->getAll();
+            $token = $this->csrfCheck->createToken();
+            $this->smarty->assign('token', $token);
             $this->smarty->assign('defaultUser', App::DEFAULT_ADMIN);
             $this->smarty->assign('users', $users);
             $this->smarty->display('admin/users.tpl');
@@ -39,6 +44,13 @@ class Users extends Controller
             return;
         }
         if (!isset($_POST['id']) || intval($_POST['id']) === 0) {
+            return;
+        }
+        if (empty($_POST['token'])) {
+            return;
+        }
+        $token = $_POST['token'];
+        if (!$this->csrfCheck->checkToken($token)) {
             return;
         }
         $id = intval($_POST['id']);

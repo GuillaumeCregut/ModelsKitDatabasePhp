@@ -19,6 +19,7 @@
                 {if isset($connected) &&  isset($isAdmin)}
                     <form action="parametres_periods" method="post" id="form-delete-period">
                         <input type="hidden" name="action" value="remove">
+                        <input type="hidden" name="token" value="{$token}">
                         <input type="hidden" name="id" value="0" id="id_hidden">
                     </form>
                 {/if}
@@ -89,6 +90,7 @@
             <h2>Ajouter une nouvelle période</h2>
             <form action="parametres_periods" class="form-add-simple" method="post" id="form-add">
                 <input type="hidden" name="action" value="add">
+                <input type="hidden" name="token" value="{$token}">
                 <label for="new-name">Nom du nouvel élément : 
                     <input 
                         type="text" 
@@ -130,6 +132,7 @@
                         <input type="text" name="name" id="newNameMod" class="input_simple">    
                     </label>
                     <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="token" value="{$token}">
                     <input type="hidden" name="id" value="0" id="modSingle">
                         <button type="submit">Modifier</button>
                 </form>

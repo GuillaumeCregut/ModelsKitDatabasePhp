@@ -2,9 +2,13 @@
 
 namespace Editiel98\Database;
 
+/**
+ * DatabaseMake
+ * Used for init a new database
+ */
 class DatabaseMake
 {
-  private array $queries;
+    private array $queries;
 
     public function __construct()
     {
@@ -274,6 +278,12 @@ class DatabaseMake
             CREATE VIEW `mymodels`  AS SELECT `mu`.`id` AS `id`, `mu`.`model` AS `idModel`, `mu`.`state` AS `state`, `mu`.`pictures` AS `pictures`, `mu`.`price` AS `price`, `mu`.`owner` AS `owner`, `s`.`name` AS `stateName`, `m`.`name` AS `modelName`, `m`.`reference` AS `reference`, `m`.`picture` AS `boxPicture`, `bu`.`name` AS `builderName`, `st`.`name` AS `scaleName`, `br`.`name` AS `brandName`, `p`.`name` AS `providerName` FROM ((((((`model_user` `mu` join `state` `s` on((`mu`.`state` = `s`.`id`))) join `model` `m` on((`mu`.`model` = `m`.`id`))) join `builders` `bu` on((`m`.`builder` = `bu`.`id`))) join `scale` `st` on((`m`.`scale` = `st`.`id`))) join `brand` `br` on((`m`.`brand` = `br`.`id`))) left join `provider` `p` on((`mu`.`provider` = `p`.`id`)));";
     }
 
+    /**
+     * getQueries
+     *  return the queries to create database
+     * 
+     * @return array
+     */
     public function getQueries(): array
     {
         return $this->queries;

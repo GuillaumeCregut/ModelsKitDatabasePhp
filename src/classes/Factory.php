@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98;
 
 use Editiel98\Database\Database;
@@ -12,48 +13,78 @@ class Factory
     private static $smarty;
     private static $session;
 
+    /**
+     * create a singleton of Factory
+     * @return [type] Factory
+     */
     public static function getInstance()
     {
-        if(is_null(self::$_instance)){
-            self::$_instance=new Factory();
+        if (is_null(self::$_instance)) {
+            self::$_instance = new Factory();
         }
         return self::$_instance;
     }
 
+    /**
+     * return a new Entity 
+     * @param string $name : name of entity to create
+     * 
+     * @return Entity
+     */
     public static function getEntity(string $name): Entity
     {
-        $className='Editiel98\\Entity\\' . ucFirst($name);
+        $className = 'Editiel98\\Entity\\' . ucFirst($name);
         return new $className;
     }
 
-    public static function getdB(): Database{
-        if(is_null(self::$db)){
-            self::$db=new Database();
+    
+    /**
+     * return instance of Database
+     * @return Database
+     */
+    public static function getdB(): Database
+    {
+        if (is_null(self::$db)) {
+            self::$db = new Database();
         }
         return self::$db;
     }
 
+    /**
+     * Return an instance of manager
+     * @param string $name
+     * 
+     * @return Manager
+     */
     public static function getManager(string $name): Manager
     {
-        if(is_null(self::$db)){
+        if (is_null(self::$db)) {
             self::getdB();
         }
-        $className='Editiel98\\Manager\\' . ucFirst($name);
+        $className = 'Editiel98\\Manager\\' . ucFirst($name);
         return new $className(self::$db);
     }
 
-    public static function getSmarty():SmartyMKD
+    /**
+     * Return an instance of smarty
+     * @return SmartyMKD
+     */
+    public static function getSmarty(): SmartyMKD
     {
-        if(is_null(self::$smarty)){
-            self::$smarty=new SmartyMKD();
+        if (is_null(self::$smarty)) {
+            self::$smarty = new SmartyMKD();
         }
         return self::$smarty;
     }
 
-    public static function getSession():Session
+    /**
+     * return an instance of session
+     * @return Session
+     */
+    public static function getSession(): Session
     {
-        if(is_null(self::$session)){
-            self::$session=new Session();
+        if (is_null(self::$session)) {
+            self::$session = new Session();
         }
         return self::$session;
     }

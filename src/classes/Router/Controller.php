@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Router;
 
 use Editiel98\App;
@@ -8,6 +9,7 @@ use Editiel98\Factory;
 use Editiel98\Flash;
 use Editiel98\Session;
 use Editiel98\SmartyMKD;
+
 /**
  * Class to generate views
  */
@@ -53,7 +55,7 @@ abstract class Controller
      *
      * @var boolean hasFlash
      */
-    protected bool $hasFlash=false;
+    protected bool $hasFlash = false;
 
     /**
      * Allow to emit an action to event listener
@@ -66,29 +68,29 @@ abstract class Controller
 
     protected int $userRank;
 
-    protected bool $isConnected=false;
+    protected bool $isConnected = false;
 
     protected Database $dbConnection;
 
-    public function __construct(array $subPages=[], array $params=[])
+    public function __construct(array $subPages = [], array $params = [])
     {
-        $this->smarty=new SmartyMKD();
-        $this->subPages=$subPages;
-        $this->params=$params;
-        $this->session=Factory::getSession();
-        $this->flash=new Flash();
-        $this->hasFlash=$this->flash->hasFlash();
+        $this->smarty = new SmartyMKD();
+        $this->subPages = $subPages;
+        $this->params = $params;
+        $this->session = Factory::getSession();
+        $this->flash = new Flash();
+        $this->hasFlash = $this->flash->hasFlash();
         /* Render flashes messages */
-        if($this->hasFlash){
-            $flashes=$this->flash->getFlash();
-            $this->smarty->assign('flash',$flashes);
+        if ($this->hasFlash) {
+            $flashes = $this->flash->getFlash();
+            $this->smarty->assign('flash', $flashes);
         }
-        $this->smarty->assign('AppVersion',App::VERSION);
-        $this->emitter=Emitter::getInstance();
+        $this->smarty->assign('AppVersion', App::VERSION);
+        $this->emitter = Emitter::getInstance();
         $this->getCredentials();
-        $this->dbConnection=Database::getInstance();
-}
-    
+        $this->dbConnection = Database::getInstance();
+    }
+
     abstract public function render();
 
     /**
@@ -96,23 +98,22 @@ abstract class Controller
      * And set Smarty with 
      * @return void
      */
-    protected function getCredentials(){
-        $connected=$this->session->getKey(Session::SESSION_CONNECTED);
-        if(!is_null($connected)){
-            if($connected){
-                $this->isConnected=true;
-                $this->smarty->assign('logged_in','accueil');
-                $this->smarty->assign('fullname',$this->session->getKey(Session::SESSION_FULLNAME));
-                $this->userRank=$this->session->getKey(Session::SESSION_RANK_USER);
-                $this->userId=$this->session->getKey(Session::SESSION_USER_ID);
-                if (App::ADMIN===$this->session->getKey(Session::SESSION_RANK_USER)){
-                    $this->smarty->assign('loggedInAdmin','true');
+    protected function getCredentials()
+    {
+        $connected = $this->session->getKey(Session::SESSION_CONNECTED);
+        if (!is_null($connected)) {
+            if ($connected) {
+                $this->isConnected = true;
+                $this->smarty->assign('logged_in', 'accueil');
+                $this->smarty->assign('fullname', $this->session->getKey(Session::SESSION_FULLNAME));
+                $this->userRank = $this->session->getKey(Session::SESSION_RANK_USER);
+                $this->userId = $this->session->getKey(Session::SESSION_USER_ID);
+                if (App::ADMIN === $this->session->getKey(Session::SESSION_RANK_USER)) {
+                    $this->smarty->assign('loggedInAdmin', 'true');
                 }
             }
-        }
-        else{
-            $this->userRank=0;
+        } else {
+            $this->userRank = 0;
         }
     }
-
 }

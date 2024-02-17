@@ -5,11 +5,13 @@ namespace App\Controller\Profil;
 use App\Controller\Error;
 use Editiel98\Manager\SocialManager;
 use Editiel98\Router\Controller;
-
+use Editiel98\Services\CSRFCheck;
 
 class FriendBuild extends Controller
 {
     private SocialManager $socialManager;
+    private CSRFCheck $csfrCheck;
+
     public function render()
     {
         $this->socialManager = new SocialManager($this->dbConnection);
@@ -19,6 +21,7 @@ class FriendBuild extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
+        $this->csfrCheck = new CSRFCheck($this->session);
         if (empty($_POST) || !isset($_POST['action'])) {
             $this->displayError();
         }
@@ -72,37 +75,57 @@ class FriendBuild extends Controller
         if (!empty($messages)) {
             $this->smarty->assign('messages', $messages);
         }
+        $token = $this->csfrCheck->createToken();
+        $this->smarty->assign('token', $token);
         $this->smarty->assign('model', $model);
         $this->smarty->assign('friend', $idFriend);
         $this->smarty->assign('profil', true);
         $this->smarty->assign('social_menu', true);
         $this->smarty->display('profil/friendbuild.tpl');
+        die();
     }
 
-    private function getMessages($idModel)
+    
+    /**
+     * Get all messages from db for a model
+     * @param int $idModel
+     * 
+     * @return array
+     */
+    private function getMessages(int $idModel): array
     {
         $messages = $this->socialManager->getModelMessages($idModel);
         //Organise les messages comme dans finishedModel
-        
-        $allMessages=[];
-        foreach($messages as $message) {
-            if(is_null($message->replyId)) {
-                $newMessage=[
-                    'message'=>$message,
-                    'replies'=>[]
+
+        $allMessages = [];
+        foreach ($messages as $message) {
+            if (is_null($message->replyId)) {
+                $newMessage = [
+                    'message' => $message,
+                    'replies' => []
                 ];
-                $allMessages[$message->id]=$newMessage;
-               
+                $allMessages[$message->id] = $newMessage;
             } else {
-                $allMessages[$message->replyId]['replies'][]=$message;
+                $allMessages[$message->replyId]['replies'][] = $message;
             }
         }
         return $allMessages;
     }
 
-    private function storeMessage()
+    /**
+     * Store a message in DB
+     * @return void
+     */
+    private function storeMessage(): void
     {
-        //Do some stuff
+        //Check token
+        if (empty($_POST['token'])) {
+            $this->displayPage();
+        }
+        $token = $_POST['token'];
+        if (!$this->csfrCheck->checkToken($token)) {
+            $this->displayPage();
+        }
         if (!isset($_POST['id']) || intval($_POST['id']) === 0 || !isset($_POST['message']) || $_POST['message'] === '' || !isset($_POST['friend']) || intval($_POST['friend']) === 0) {
             $this->displayError();
         }

@@ -10,6 +10,9 @@ use PDO;
 use PDOException;
 
 
+/**
+ * Controller for init app
+ */
 class Init
 {
     private SmartyMKD $smarty;
@@ -20,6 +23,7 @@ class Init
     private array $messages;
     private $pdo;
     private array $subPages;
+    private string $port;
 
     public function __construct(array $subPages = [], array $params = [])
     {
@@ -38,7 +42,7 @@ class Init
         $this->loadCredentials();
         $init = false;
         try {
-            $this->pdo = new PDO('mysql:dbname=' . $this->name . ';host=' . $this->host, $this->user, $this->pass);
+            $this->pdo = new PDO('mysql:dbname=' . $this->name . ';host=' . $this->host . '; port=' . $this->port, $this->user, $this->pass);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->messages[] = "Connexion base OK";
         } catch (PDOException $e) {
@@ -72,17 +76,17 @@ class Init
         $this->smarty->assign('display_form', true);
         //Ici, la base n'est pas crée, on la créée.
         $this->messages[] = "Base non initialisée";
-        $databaseMake=new DatabaseMake();
-        $makeQueries=$databaseMake->getQueries();
+        $databaseMake = new DatabaseMake();
+        $makeQueries = $databaseMake->getQueries();
         try {
             $this->messages[] = "Création de la base de données.";
             $this->pdo->exec('DROP DATABASE IF EXISTS ' . $this->name);
             $this->pdo->exec('CREATE DATABASE ' . $this->name);
             $this->pdo->exec('USE ' . $this->name);
-            foreach($makeQueries as $query){
+            foreach ($makeQueries as $query) {
                 $statement = $this->pdo->prepare($query);
                 $statement->execute();
-            } 
+            }
             //Create database
             $this->messages[] = "Création de la base de données effectuée.";
         } catch (PDOException $e) {
@@ -105,6 +109,7 @@ class Init
             $this->pass = $config->database->pass;
             $this->name = $config->database->name;
             $this->host = $config->database->host;
+            $this->port = $config->database->port;
         } catch (Exception $e) {
             //Echec de lecture du fichier init
             $this->messages[] = "erreur de lecture du fichier init";

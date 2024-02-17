@@ -4,6 +4,7 @@ namespace App\Controller\Profil;
 
 use Editiel98\Manager\SocialManager;
 use Editiel98\Router\Controller;
+use Editiel98\Services\CSRFCheck;
 
 class Social extends Controller
 {
@@ -11,6 +12,7 @@ class Social extends Controller
     private array $allUsers = [];
     private array $friends = [];
     private array $demands = [];
+    private CSRFCheck $csfrCheck;
 
     public function render()
     {
@@ -20,6 +22,7 @@ class Social extends Controller
             $this->smarty->display('profil/notconnected.tpl');
             die();
         }
+        $this->csfrCheck = new CSRFCheck($this->session);
         $this->socialManager = new SocialManager($this->dbConnection);
         if (!empty($_POST)) {
             $this->usePost();
@@ -41,24 +44,23 @@ class Social extends Controller
         if (!empty($this->demands)) {
             $this->smarty->assign('demandList', $this->demands);
         }
+        $token = $this->csfrCheck->createToken();
+        $this->smarty->assign('token', $token);
         $this->smarty->assign('profil', true);
         $this->smarty->assign('social_menu', true);
         $this->smarty->display('profil/socialhome.tpl');
     }
 
-    private function getDemands()
+    private function getDemands(): void
     {
         $list = $this->socialManager->getDemand($this->userId);
         $this->demands = $list;
     }
 
-    private function getAllVisibleUsers()
+    private function getAllVisibleUsers(): void
     {
-        //Get All People
         $allUsers = $this->socialManager->findVisible($this->userId);
-        //getFriend
         $friendList = $this->socialManager->getFriendList($this->userId);
-        //mix lists to have users friend displayed with heart
         $userList = [];
         foreach ($allUsers as $user) {
             $user->is_ok = 0;
@@ -87,7 +89,7 @@ class Social extends Controller
         $this->allUsers = $userList;
     }
 
-    private function getFriends()
+    private function getFriends():  void
     {
         $listFriends = $this->socialManager->getFriends($this->userId);
         $listMessages = $this->socialManager->getMessageCount($this->userId);
@@ -107,6 +109,13 @@ class Social extends Controller
 
     private function usePost()
     {
+        if (empty($_POST['token'])) {
+            return false;
+        }
+        $token = $_POST['token'];
+        if (!$this->csfrCheck->checkToken($token)) {
+            return false;
+        }
         if (!isset($_POST['action'])) {
             return;
         }
@@ -122,16 +131,16 @@ class Social extends Controller
         }
     }
 
-    private function removeFriend()
+    private function removeFriend(): void
     {
         if (!isset($_POST['idFriend']) || intval($_POST['idFriend']) === 0) {
             return;
         }
         $friendId = intval($_POST['idFriend']);
-        $result = $this->socialManager->changeStatusFriend($this->userId, $friendId, SocialManager::USER_UNKNOWN);
+        $this->socialManager->changeStatusFriend($this->userId, $friendId, SocialManager::USER_UNKNOWN);
     }
 
-    private function processDemand()
+    private function processDemand(): void
     {
         if (!isset($_POST['user']) || intval($_POST['user']) === 0 || !isset($_POST['choice']) || intval($_POST['choice']) === 0) {
             return;
@@ -139,9 +148,9 @@ class Social extends Controller
         $friendId = intval($_POST['user']);
         $choice = intval($_POST['choice']);
         if ($choice === 1) {
-            $result = $this->socialManager->changeStatusFriend($this->userId, $friendId, SocialManager::USER_REFUSED);
+            $this->socialManager->changeStatusFriend($this->userId, $friendId, SocialManager::USER_REFUSED);
         } elseif ($choice === 2) {
-            $result = $this->socialManager->changeStatusFriend($this->userId, $friendId, SocialManager::USER_FRIEND);
+            $this->socialManager->changeStatusFriend($this->userId, $friendId, SocialManager::USER_FRIEND);
         } else {
             return;
         }

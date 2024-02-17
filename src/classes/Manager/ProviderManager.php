@@ -1,4 +1,5 @@
 <?php
+
 namespace Editiel98\Manager;
 
 use Editiel98\Database\Database;
@@ -12,9 +13,9 @@ class ProviderManager extends SingleManager
 {
     public function __construct(Database $db)
     {
-        $this->db=$db;
-        $this->table='provider';
-        $this->className='Editiel98\Entity\Provider';
+        $this->db = $db;
+        $this->table = 'provider';
+        $this->className = 'Editiel98\Entity\Provider';
     }
 
     /**
@@ -26,12 +27,12 @@ class ProviderManager extends SingleManager
      */
     public function save(Entity $provider): bool
     {
-        $query='INSERT INTO ' . $this->table . ' (owner, name) VALUES (:owner,:name)';
-        $values=[
-            ':owner'=>$provider->getOwner(),
-            ':name'=>$provider->getName(),
+        $query = 'INSERT INTO ' . $this->table . ' (owner, name) VALUES (:owner,:name)';
+        $values = [
+            ':owner' => $provider->getOwner(),
+            ':name' => $provider->getName(),
         ];
-        return $this->execSQL($query,$values);
+        return $this->execSQL($query, $values);
     }
 
     /**
@@ -43,12 +44,12 @@ class ProviderManager extends SingleManager
      */
     public function update(Entity $provider): bool
     {
-        $query='UPDATE ' . $this->table . ' SET name=:name WHERE id=:id';
-        $values=[
-            ':id'=>$provider->getId(),
-            ':name'=>$provider->getName(),
+        $query = 'UPDATE ' . $this->table . ' SET name=:name WHERE id=:id';
+        $values = [
+            ':id' => $provider->getId(),
+            ':name' => $provider->getName(),
         ];
-        return $this->execSQL($query,$values);
+        return $this->execSQL($query, $values);
     }
     /**
      * delete
@@ -59,59 +60,56 @@ class ProviderManager extends SingleManager
      */
     public function delete(Entity $provider): bool
     {
-        $query='DELETE FROM ' . $this->table . ' WHERE id=:id';
-        $values=[
-            ':id'=>$provider->getId(),
+        $query = 'DELETE FROM ' . $this->table . ' WHERE id=:id';
+        $values = [
+            ':id' => $provider->getId(),
         ];
-        return $this->execSQL($query,$values);
+        return $this->execSQL($query, $values);
     }
 
-     /**
+    public function getOrders(int $providerId): array
+    {
+        $query="SELECT owner, reference,  DATE_FORMAT(dateOrder,\"%d/%m/%Y\") as dateOfOrder FROM orders WHERE provider=:provider";
+        $values =  [
+            ':provider'=>$providerId
+        ];
+        try {
+            $result= $this->db->prepare($query, null, $values);
+            return $result;
+        } catch (DbException $e) {
+            $message = 'SQL : ' . $query . 'a poser problème';
+            $emitter = Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR, $message);
+            return [];
+        }
+        
+       
+    }
+
+    /**
      * Exec the query
      *
      * @param string $query : Query to execute
      * @param array $vars : vars for the query
      * @return mixed
      */
-    private function execSQL(string $query,array $vars): mixed
+    private function execSQL(string $query, array $vars): mixed
     {
-        try{
-            $result=$this->db->exec($query,$vars);
+        try {
+            $result = $this->db->exec($query, $vars);
             return $result;
-        }
-        catch(DbException $e){
-            if($e->getDbCode()===23000){
-                $flash=new Flash();
-                $flash->setFlash('Modification impossible','error');
+        } catch (DbException $e) {
+            if ($e->getDbCode() === 23000) {
+                $flash = new Flash();
+                $flash->setFlash('Modification impossible', 'error');
                 return false;
             }
-            $message='SQL : ' . $query .'a poser problème';
-            $emitter=Emitter::getInstance();
-            $emitter->emit(Emitter::DATABASE_ERROR,$message);
+            $message = 'SQL : ' . $query . 'a poser problème';
+            $emitter = Emitter::getInstance();
+            $emitter->emit(Emitter::DATABASE_ERROR, $message);
             $this->loadErrorPage($e->getdbMessage());
         }
-
     }
 
-    /**
-     * Execute a prepared query
-     *
-     * @param string $query : query to execute
-     * @param array $vars : vars for the query
-     * @param boolean $single : return one result or not
-     * @return mixed
-     */
-    private function prepareSQL(string $query, array $vars, bool $single): mixed
-    {
-        try{
-            $result=$this->db->prepare($query,$this->className,$vars,$single);
-            return $result;
-        }
-        catch(DbException $e){
-            $message='SQL : ' . $query .'a poser problème';
-            $emitter=Emitter::getInstance();
-            $emitter->emit(Emitter::DATABASE_ERROR,$message); 
-            $this->loadErrorPage($e->getMessage());
-        }
-    }
+   
 }

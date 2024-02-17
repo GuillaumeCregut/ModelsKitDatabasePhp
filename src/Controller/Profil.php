@@ -29,7 +29,7 @@ class Profil extends Controller
                     $className = 'PdfController';
                     break;
                 case 'statexport':
-                    $className='ExportCSV';
+                    $className = 'ExportCSV';
                     break;
                 case 'social':
                     $className = 'Social';
@@ -44,10 +44,10 @@ class Profil extends Controller
                     $className = 'PersonnalMessage';
                     break;
                 case 'ami':
-                    $className='FriendHomePage';
+                    $className = 'FriendHomePage';
                     break;
                 case 'montage':
-                    $className='FriendBuild';
+                    $className = 'FriendBuild';
                     break;
                 default:
                     $page = new Error('404');

@@ -135,6 +135,19 @@
     margin-left: 10px;
 }
 
+.sort-by {
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    margin-right: 10px;
+}
+
+.sorted {
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+}
+
+
 @media screen and (max-width: 768px) {
     .detail-btn{
         font-size: 0.875rem;

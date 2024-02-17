@@ -61,6 +61,14 @@ class Stats extends Controller
         $this->smarty->display('profil/stats.tpl');
     }
 
+    /**
+     * Draw graph
+     * @param array $stat : data for graph
+     * @param string $title : graph title
+     * @param string $filename : filename to save graph
+     * 
+     * @return bool
+     */
     private function drawGraph(array $stat, string $title, string $filename): bool
     {
         if (empty($stat)) {
@@ -83,7 +91,11 @@ class Stats extends Controller
         }
     }
 
-    private function manageDir()
+    /**
+     * Create folder if not exists, else clean it
+     * @return void
+     */
+    private function manageDir(): void
     {
         $folder = dirname(dirname(dirname(__DIR__))) . '/public/assets/uploads/users/' . $this->userId . '/stats/';
         if (!is_dir($folder)) {
@@ -107,10 +119,10 @@ class Stats extends Controller
             if ($v->count < self::LIMIT_NUMBER) {
                 $count += $v->count;
             } else {
-                $tempArray[]=$v;
+                $tempArray[] = $v;
             }
         }
-        $tempArray[]=(object)['count'=>$count,'name'=>'autres'];
+        $tempArray[] = (object)['count' => $count, 'name' => 'autres'];
         return $tempArray;
     }
 }

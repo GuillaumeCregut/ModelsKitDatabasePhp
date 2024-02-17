@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="assets/styles/params/model.css">
 <link rel="stylesheet" href="assets/styles/params/modelfilter.css">
 <link rel="stylesheet" href="assets/styles/params/modelcard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {/block}
+
 {block name=script}
 {if isset($connected) && isset(isAdmin)}
 <script src="assets/scripts/models.js" defer></script>
@@ -22,6 +24,7 @@
         <section class="filter-models">
             <h3>Filtrage des modèles</h3>
             <form action="parametres_models" method="post">
+                <input type="hidden" name="token" value="{$token}" id="token">
                 <input type="hidden" name="action" value="search">
                 <div class="filters-list">
                     <div class='filter-element-container'>
@@ -95,6 +98,11 @@
                     </label>
                     <label for="ref-filter" class='model-filter-label'>par référence :
                         <input type="text" name="filter-ref" id="ref-filter" class="filter-name-input" {if isset($fRef)}value="{$fRef}" {/if}>
+                    </label>      
+                </div>
+                <div class='filter-element-container'>
+                    <label for="only-like">Seulement les kits que j'ai likés
+                        <input type="checkbox" name="only-like" id="only-like" {if $isLiked}checked{/if}>
                     </label>
                 </div>
                 <button class='btn-filter' type="submit">
@@ -110,11 +118,12 @@
                 </button>
             </form>
         </section>
-        {if isset($filtered)}Filtrage actif{/if}
+        {if isset($filtered) }Filtrage actif{/if}
         <div class="model-container">
             {if isset($connected) && isset(isAdmin)}
             <form action="parametres_models" method="post" id="form-delete-model">
                 <input type="hidden" name="action" value="remove">
+                <input type="hidden" name="token" value="{$token}">
                 <input type="hidden" name="id" value="0" id="id_hidden">
             </form>
             {/if}
@@ -135,6 +144,7 @@
                                 {if {$model->getScalemates()}!='' or $model->getScalemates()!=null }
                                     <a href="{$model->getScalemates()}" target="_blank">scalemates</a>
                                 {/if}
+                                {include file='params/_starRating.tpl' id=$model->getId() rating=$model->getUserRate() globalrate=$model->getGlobalRate()}
                             </div>
                         </div>
                     </div>
@@ -217,6 +227,7 @@
             id="form-add">
             <div class="form-add-model-inputs-container">
                 <input type="hidden" name="action" value="add">
+                <input type="hidden" name="token" value="{$token}">
                 <label for="new-name">Nom du nouvel élément :
                     <input type="text" name="name" id="new-name" class="add-model-form-input" placeholder="Nom"
                         autocomplete="off">
@@ -317,7 +328,7 @@
                         <circle cx="3.5" cy="6" r="1.5"></circle>
                         <circle cx="3.5" cy="12" r="1.5"></circle>
                     </svg>
-                    Ajouter
+                    Enregistrer
                 </button>
             </div>
         </form>

@@ -13,3 +13,7 @@ src/Controller/Profil/template.php
 /public/assets/uploads/users/*
 !/public/assets/uploads/users/index.html
 v1.4Fix.txt
+phpdoc.phar
+etc/ssl
+mysql/
+config copy.xml

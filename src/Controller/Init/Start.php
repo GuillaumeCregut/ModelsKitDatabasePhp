@@ -71,7 +71,7 @@ class Start
         $pass = $_POST['password'];
         try {
             $auth = new DbAuth();
-            $isOK = $auth->signUp($login, $email, $firstname, $lastname, $pass,true,App::ADMIN);
+            $isOK = $auth->signUp($login, $email, $firstname, $lastname, $pass, true, App::ADMIN);
             if ($isOK) {
                 $this->messages[] = "Inscription effectuée";
                 //set init to true in DB

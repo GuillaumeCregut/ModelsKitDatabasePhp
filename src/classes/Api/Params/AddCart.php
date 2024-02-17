@@ -3,13 +3,25 @@ namespace Editiel98\Api\Params;
 
 use Editiel98\Entity\User;
 use Editiel98\Router\ApiController;
+use Editiel98\Services\CSRFCheck;
 use Editiel98\Session;
 
+/**
+ * AddCart : Add kit to user stock
+ */
 class AddCart extends ApiController
 {
+    private CSRFCheck $csfrCheck;
+
+    /**
+     * Manage : dispatch request
+     *
+     * @return void
+     */
     public function manage()
     {
         error_reporting(0);
+        $this->csfrCheck=new CSRFCheck($this->session);
        if($this->isConnected){
                 $method=$_SERVER['REQUEST_METHOD'];
                 switch ($method){
@@ -37,6 +49,14 @@ class AddCart extends ApiController
         }
     }
 
+    /**
+     * AddCart
+     * 
+     * Add kit to user stock
+     * Return JSON response
+     *
+     * @return void
+     */
     private function addCart()
     {
         $datas=$this->datas;
@@ -50,6 +70,27 @@ class AddCart extends ApiController
             echo json_encode($return);
             die();
         }
+        //test token
+        if (!isset($datas->token)) {
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return = [
+                "result" => false,
+            ];
+            echo json_encode($return);
+            die();
+        }
+        $token=$datas->token;
+        if(!$this->csfrCheck->checkToken($token)){
+            header("HTTP/1.1 422 Unprocessable entity");
+
+            $return=[
+                "result"=>false,
+            ];
+            echo json_encode($return);
+            die();
+         }
+        //then
         $userId=$this->session->getKey(Session::SESSION_USER_ID);
         $user=new User();
         $user->setId($userId);

@@ -1,6 +1,10 @@
 <?php
+
 namespace Editiel98\Entity;
 
-abstract class Entity{
- 
+/**
+ * Abstract class Entity
+ */
+abstract class Entity
+{
 }

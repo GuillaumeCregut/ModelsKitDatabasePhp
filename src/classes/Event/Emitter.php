@@ -2,18 +2,21 @@
 
 namespace Editiel98\Event;
 
+/**
+ * Message system for application
+ */
 class Emitter
 {
 
     private static $instance;
-    private array $listeners=[];
+    private array $listeners = [];
 
-    const DATABASE_ERROR='database.error';
-    const DATABASE_WARNING='database.warning';
-    const USER_SUBSCRIBED='user.subscribed';
-    const MAIL_ERROR='mail.error';
-    const USER_VALIDATED="user.validated";
-    const PDF_CREATOR="pdf.error";
+    const DATABASE_ERROR = 'database.error';
+    const DATABASE_WARNING = 'database.warning';
+    const USER_SUBSCRIBED = 'user.subscribed';
+    const MAIL_ERROR = 'mail.error';
+    const USER_VALIDATED = "user.validated";
+    const PDF_CREATOR = "pdf.error";
 
     /**
      * Get Emitter instance (singleton)
@@ -37,9 +40,9 @@ class Emitter
      */
     public function emit(string $event, ...$args)
     {
-        if($this->hasListener($event)){
-            foreach($this->listeners[$event] as $listener){
-                call_user_func_array($listener,$args);
+        if ($this->hasListener($event)) {
+            foreach ($this->listeners[$event] as $listener) {
+                call_user_func_array($listener, $args);
             }
         }
     }
@@ -53,14 +56,14 @@ class Emitter
      */
     public function on(string $event, callable $action)
     {
-        if(!$this->hasListener($event)){
-            $this->listeners[$event]=[];
+        if (!$this->hasListener($event)) {
+            $this->listeners[$event] = [];
         }
-        $this->listeners[$event][]=$action;
+        $this->listeners[$event][] = $action;
     }
 
     private function hasListener(string $event): bool
     {
-        return array_key_exists($event,$this->listeners);
-    } 
+        return array_key_exists($event, $this->listeners);
+    }
 }

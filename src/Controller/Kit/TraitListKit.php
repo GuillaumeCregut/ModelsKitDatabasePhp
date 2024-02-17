@@ -6,30 +6,30 @@ trait TraitListKit
 {
     private function makeSearch(string $searchParam): array
     {
-        $key='';
-        $sort='asc';
+        $key = '';
+        $sort = 'asc';
         switch ($searchParam) {
             case 'name':
-                $key='modelName';
+                $key = 'modelName';
                 break;
             case 'scale':
-                $key='scaleName';
+                $key = 'scaleName';
                 break;
             case 'builder':
-                $key='builderName';
+                $key = 'builderName';
                 break;
             case 'brand':
-                $key='brandName';
+                $key = 'brandName';
                 break;
         }
-        if(!empty($_GET['by'])){
-            if($_GET['by']==='desc') {
-                $sort='desc';
+        if (!empty($_GET['by'])) {
+            if ($_GET['by'] === 'desc') {
+                $sort = 'desc';
             }
         }
-        if($key!=='') {
-            return [$key,$sort];
-        } 
+        if ($key !== '') {
+            return [$key, $sort];
+        }
         return [];
     }
 }

@@ -4,6 +4,23 @@ The aim of this project is to have a multi users management tool for managing pl
 
 The original project is developped with React and Node, this one is full PHP but is the same.
 
+## V1.6
+
+### Fixed Bugs
+- Entities
+- Recovery Password
+- Fix bug  display kits
+
+### new Features
+- More documented files
+- User can rate models
+- Models are sorted in finished stock display
+- User can display only liked models
+- Orders are sorted
+- User can see orders made from a provider
+
+
+
 ## V1.5
 
 ### Fixed Bugs: 

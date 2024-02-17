@@ -162,9 +162,10 @@
   .rating-stars {
 	display: block;
 	width: 70%;
-	padding: 0.5vmin 1vmin 0.5vmin 1vmin;
+	padding: 0.3vmin;
 	background: linear-gradient(60deg, #ffffff90 50vmin, #fff0 40vmin 100%);
 	border-radius: 5vmin;
+    max-height: 20px;
 	position: relative;
     margin: 10px;
 }
@@ -172,12 +173,12 @@
 .radio-rating { display: none; }
 
 .label-rating {
-	width: 2.5vmin;
-	height: 2.5vmin;
+	width: 1.2vmin;
+	height: 1.2vmin;
 	background: #000b;
 	display: inline-flex;
 	cursor: pointer;
-	margin: 0.5vmin 0.65vmin;
+	margin: 0.2vmin 0.3vmin;
 	transition: all 1s ease 0s;	
 	clip-path: polygon(50% 0%, 66% 32%, 100% 38%, 78% 64%, 83% 100%, 50% 83%, 17% 100%, 22% 64%, 0 38%, 34% 32%);
 }

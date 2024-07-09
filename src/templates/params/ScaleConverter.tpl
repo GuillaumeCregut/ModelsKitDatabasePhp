@@ -24,7 +24,8 @@
         <h3 class="title-section">Conversion d'une distance entre deux échelles</h3>
         <input type="text" id="distance" class="scale-input"> 
         <select  id="multiplicator" class="select-multiplicator">
-            <option value="1">cm</option>
+            <option value="1">mm</option>
+            <option value="10">cm</option>
             <option value="100">m</option>
         </select> à l'échelle 
         <label for="scale1-dist" class="scale-Label">
@@ -34,7 +35,7 @@
             <span class="scale-item">1/</span><input type="text" id="scale2-dist" class="scale-input">
         </label>
         <p><button id="btn-calc" class="btn-convert">Calculer</button></p>
-        <p>Résultat : <span class="result-convert" id="calc-result">0</span> cm</p>
+        <p>Résultat : <span class="result-convert" id="calc-result">0</span></p>
     </section>
 </div>
 {/block}

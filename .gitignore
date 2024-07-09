@@ -17,3 +17,6 @@ phpdoc.phar
 etc/ssl
 mysql/
 config copy.xml
+public/assets/uploads/_users/
+users/*
+!users/.gitkeep
